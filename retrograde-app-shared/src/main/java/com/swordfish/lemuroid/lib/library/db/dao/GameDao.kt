@@ -36,6 +36,13 @@ interface GameDao {
     @Query("SELECT * FROM games WHERE fileUri = :fileUri")
     fun selectByFileUri(fileUri: String): Game?
 
+    @Query("SELECT * FROM games WHERE fileName = :fileName")
+    suspend fun selectByFileName(fileName: String): List<Game>
+
+    /** Games whose file name is [stem] plus an extension (LIKE wildcards in [stem] may add extra rows). */
+    @Query("SELECT * FROM games WHERE fileName LIKE :stem || '.%'")
+    suspend fun selectByFileStem(stem: String): List<Game>
+
     @Query("SELECT * FROM games WHERE lastIndexedAt < :lastIndexedAt")
     fun selectByLastIndexedAtLessThan(lastIndexedAt: Long): List<Game>
 

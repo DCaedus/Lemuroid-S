@@ -5,6 +5,7 @@ import android.content.Context
 import android.net.Uri
 import android.os.Build
 import android.provider.DocumentsContract
+import com.swordfish.lemuroid.common.kotlin.writeBytesAtomic
 import com.swordfish.lemuroid.lib.R
 import com.swordfish.lemuroid.lib.library.db.entity.Game
 import com.swordfish.lemuroid.lib.preferences.SharedPreferencesHelper
@@ -19,9 +20,9 @@ import java.io.File
  *  - Lemuroid-S folder (default): Lemuroid-S/saves/<system>/<rom>.srm and Lemuroid-S/states/<system>/...
  *  - ROMs folder: next to each game's ROM
  *
- * Lemuroid-S also keeps a working copy in its private app storage: emulator cores and the rest of
- * the app read from there, and nothing is lost if the folder becomes unavailable. Files in the
- * folder above are preferred when they are newer.
+ * The folder above is the only copy. Lemuroid-S's private app storage (Android/data) is used only
+ * while the folder can't be reached (not chosen yet, access lost); those files move into the
+ * folder as soon as it is available again.
  */
 class ExternalSavesStorage(private val appContext: Context) {
     enum class Location(val prefValue: String) {
@@ -147,16 +148,23 @@ class ExternalSavesStorage(private val appContext: Context) {
     /** A save file found in the chosen folder. */
     data class ExternalFile(val data: ByteArray, val lastModified: Long)
 
+    /**
+     * A folder holding saves or states. Its file listing is read once and remembered until the
+     * next write or delete, so use one instance per operation (a game load, a save...).
+     */
     sealed interface SaveFolder {
         /** File name -> last modified time, for the files in this folder. */
         fun lastModifiedTimes(): Map<String, Long>
 
         fun read(fileName: String): ExternalFile?
 
+        /** Writes [fileName] so an interrupted write never leaves a half-written file. */
         fun write(
             fileName: String,
             data: ByteArray,
         )
+
+        fun delete(fileName: String)
 
         class Local(private val directory: File) : SaveFolder {
             override fun lastModifiedTimes(): Map<String, Long> {
@@ -172,17 +180,36 @@ class ExternalSavesStorage(private val appContext: Context) {
                 fileName: String,
                 data: ByteArray,
             ) {
-                File(directory, fileName).writeBytes(data)
+                File(directory, fileName).writeBytesAtomic(data)
+            }
+
+            override fun delete(fileName: String) {
+                File(directory, fileName).delete()
             }
         }
 
         class Document(private val folder: DocumentFolder) : SaveFolder {
+            private var listing: Map<String, DocumentFolder.Child>? = null
+
+            private fun children(): Map<String, DocumentFolder.Child> {
+                return listing ?: folder.children().also { listing = it }
+            }
+
             override fun lastModifiedTimes(): Map<String, Long> {
-                return folder.children().mapValues { it.value.lastModified }
+                val children = children()
+                val times = children.mapValues { it.value.lastModified }.toMutableMap()
+                // A write interrupted before its last step leaves only "<name>.tmp" (complete data).
+                children.keys
+                    .filter { it.endsWith(DocumentFolder.TEMP_SUFFIX) }
+                    .map { it.removeSuffix(DocumentFolder.TEMP_SUFFIX) }
+                    .filter { it !in children }
+                    .forEach { times[it] = children.getValue(it + DocumentFolder.TEMP_SUFFIX).lastModified }
+                return times
             }
 
             override fun read(fileName: String): ExternalFile? {
-                val child = folder.children()[fileName] ?: return null
+                val children = children()
+                val child = children[fileName] ?: children[fileName + DocumentFolder.TEMP_SUFFIX] ?: return null
                 val data = folder.read(child) ?: return null
                 return ExternalFile(data, child.lastModified)
             }
@@ -191,13 +218,22 @@ class ExternalSavesStorage(private val appContext: Context) {
                 fileName: String,
                 data: ByteArray,
             ) {
-                folder.write(fileName, data)
+                try {
+                    folder.writeSafely(fileName, data, children())
+                } finally {
+                    listing = null
+                }
+            }
+
+            override fun delete(fileName: String) {
+                children()[fileName]?.let { folder.deleteFile(it.uri) }
+                listing = null
             }
         }
     }
 
     companion object {
-        /** Logs and swallows errors: the app storage copy always exists. */
+        /** Logs and swallows errors (callers fall back to app storage). */
         inline fun <T> safely(
             what: String,
             block: () -> T,

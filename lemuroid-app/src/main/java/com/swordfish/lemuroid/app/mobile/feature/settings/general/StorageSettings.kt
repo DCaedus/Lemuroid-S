@@ -16,6 +16,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import com.swordfish.lemuroid.R
+import com.swordfish.lemuroid.app.shared.saves.SavesMoveWork
 import com.swordfish.lemuroid.app.shared.settings.RomsFolder
 import com.swordfish.lemuroid.app.shared.settings.StorageFrameworkPickerLauncher
 import com.swordfish.lemuroid.app.utils.android.ComposableLifecycle
@@ -62,7 +63,10 @@ private fun useMainFolder(
 ): Boolean {
     val readWrite = Intent.FLAG_GRANT_READ_URI_PERMISSION or Intent.FLAG_GRANT_WRITE_URI_PERMISSION
     runCatching { context.contentResolver.takePersistableUriPermission(treeUri, readWrite) }
-    return runCatching { MainFolder(context).setFromPickedTree(treeUri) }.getOrDefault(false)
+    val chosen = runCatching { MainFolder(context).setFromPickedTree(treeUri) }.getOrDefault(false)
+    // Saves made while no folder was available move into it.
+    if (chosen) SavesMoveWork.enqueue(context.applicationContext)
+    return chosen
 }
 
 /** Shows the Lemuroid-S folder (normally in storage root) and lets the user choose it again. */

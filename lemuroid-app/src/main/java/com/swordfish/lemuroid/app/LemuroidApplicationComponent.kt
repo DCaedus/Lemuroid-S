@@ -22,6 +22,7 @@ package com.swordfish.lemuroid.app
 import com.swordfish.lemuroid.app.shared.library.CoreUpdateWork
 import com.swordfish.lemuroid.app.shared.library.LibraryIndexWork
 import com.swordfish.lemuroid.app.shared.saves.SavesImportWork
+import com.swordfish.lemuroid.app.shared.saves.SavesMoveWork
 import com.swordfish.lemuroid.app.shared.savesync.SaveSyncWork
 import com.swordfish.lemuroid.app.shared.storage.cache.CacheCleanerWork
 import com.swordfish.lemuroid.app.tv.LemuroidTVApplicationModule
@@ -39,6 +40,7 @@ import dagger.android.support.AndroidSupportInjectionModule
         LemuroidApplicationModule::class,
         LibraryIndexWork.Module::class,
         SavesImportWork.Module::class,
+        SavesMoveWork.Module::class,
         SaveSyncWork.Module::class,
         ChannelUpdateWork.Module::class,
         CoreUpdateWork.Module::class,

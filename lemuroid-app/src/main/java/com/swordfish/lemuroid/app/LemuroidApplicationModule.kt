@@ -61,6 +61,7 @@ import com.swordfish.lemuroid.lib.migration.DesmumeMigrationHandler
 import com.swordfish.lemuroid.lib.preferences.SharedPreferencesHelper
 import com.swordfish.lemuroid.lib.saves.ExternalSavesStorage
 import com.swordfish.lemuroid.lib.saves.SavesCoherencyEngine
+import com.swordfish.lemuroid.lib.saves.SavesFallbackMover
 import com.swordfish.lemuroid.lib.saves.SavesManager
 import com.swordfish.lemuroid.lib.saves.StatesManager
 import com.swordfish.lemuroid.lib.saves.StatesPreviewManager
@@ -345,6 +346,16 @@ abstract class LemuroidApplicationModule {
             savesManager: SavesManager,
             statesManager: StatesManager,
         ) = SavesCoherencyEngine(savesManager, statesManager)
+
+        @Provides
+        @PerApp
+        @JvmStatic
+        fun savesFallbackMover(
+            directoriesManager: DirectoriesManager,
+            retrogradeDatabase: RetrogradeDatabase,
+            savesManager: SavesManager,
+            statesManager: StatesManager,
+        ) = SavesFallbackMover(directoriesManager, retrogradeDatabase, savesManager, statesManager)
 
         @Provides
         @PerApp

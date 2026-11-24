@@ -1,8 +1,10 @@
 package com.swordfish.lemuroid.lib.saves
 
+import com.swordfish.lemuroid.common.kotlin.gzipped
 import com.swordfish.lemuroid.common.kotlin.readBytesUncompressedAtomic
 import com.swordfish.lemuroid.common.kotlin.readTextAtomic
 import com.swordfish.lemuroid.common.kotlin.runCatchingWithRetry
+import com.swordfish.lemuroid.common.kotlin.uncompressedIfGzipped
 import com.swordfish.lemuroid.common.kotlin.writeBytesCompressedAtomic
 import com.swordfish.lemuroid.common.kotlin.writeTextAtomic
 import com.swordfish.lemuroid.lib.library.CoreID
@@ -14,6 +16,11 @@ import kotlinx.coroutines.withContext
 import kotlinx.serialization.json.Json
 import java.io.File
 
+/**
+ * Save states (resume point and slots). Like battery saves they live only in the SAVES folder:
+ * Lemuroid-S/states/<system> or the ROMs folder. App storage (states/<core>) is a fallback used
+ * while that folder can't be reached; anything left there moves into the folder on the next access.
+ */
 class StatesManager(
     private val directoriesManager: DirectoriesManager,
     private val externalSavesStorage: ExternalSavesStorage? = null,
@@ -25,8 +32,7 @@ class StatesManager(
     ): SaveState? =
         withContext(Dispatchers.IO) {
             assert(index in 0 until MAX_STATES)
-            syncFromExternal(game, coreID.coreName)
-            getSaveState(getSlotSaveFileName(game, index), coreID.coreName)
+            getSaveState(game, getSlotSaveFileName(game, index), coreID.coreName)
         }
 
     suspend fun setSlotSave(
@@ -36,8 +42,7 @@ class StatesManager(
         index: Int,
     ) = withContext(Dispatchers.IO) {
         assert(index in 0 until MAX_STATES)
-        setSaveState(getSlotSaveFileName(game, index), coreID.coreName, saveState)
-        copyToExternal(game, coreID.coreName, getSlotSaveFileName(game, index))
+        setSaveState(game, getSlotSaveFileName(game, index), coreID.coreName, saveState)
     }
 
     suspend fun getAutoSaveInfo(
@@ -45,18 +50,14 @@ class StatesManager(
         coreID: CoreID,
     ): SaveInfo =
         withContext(Dispatchers.IO) {
-            syncFromExternal(game, coreID.coreName)
-            val autoSaveFile = getStateFile(getAutoSaveFileName(game), coreID.coreName)
-            val autoSaveHasData = autoSaveFile.length() > 0
-            SaveInfo(autoSaveFile.exists() && autoSaveHasData, autoSaveFile.lastModified())
+            stateInfos(game, coreID.coreName, listOf(getAutoSaveFileName(game))).first()
         }
 
     suspend fun getAutoSave(
         game: Game,
         coreID: CoreID,
     ) = withContext(Dispatchers.IO) {
-        syncFromExternal(game, coreID.coreName)
-        getSaveState(getAutoSaveFileName(game), coreID.coreName)
+        getSaveState(game, getAutoSaveFileName(game), coreID.coreName)
     }
 
     suspend fun setAutoSave(
@@ -64,8 +65,7 @@ class StatesManager(
         coreID: CoreID,
         saveState: SaveState,
     ) = withContext(Dispatchers.IO) {
-        setSaveState(getAutoSaveFileName(game), coreID.coreName, saveState)
-        copyToExternal(game, coreID.coreName, getAutoSaveFileName(game))
+        setSaveState(game, getAutoSaveFileName(game), coreID.coreName, saveState)
     }
 
     suspend fun getSavedSlotsInfo(
@@ -73,155 +73,176 @@ class StatesManager(
         coreID: CoreID,
     ): List<SaveInfo> =
         withContext(Dispatchers.IO) {
-            syncFromExternal(game, coreID.coreName)
-            (0 until MAX_STATES)
-                .map { getStateFile(getSlotSaveFileName(game, it), coreID.coreName) }
-                .map { SaveInfo(it.exists(), it.lastModified()) }
-                .toList()
+            stateInfos(game, coreID.coreName, (0 until MAX_STATES).map { getSlotSaveFileName(game, it) })
         }
 
+    /** Moves [game]'s states from app storage into the SAVES folder, if any are left there. */
+    suspend fun moveFallbackToFolder(
+        game: Game,
+        coreName: String,
+    ) = withContext(Dispatchers.IO) {
+        openFolder(game, coreName)
+        Unit
+    }
+
+    /**
+     * [game]'s states folder, ready to use: states left in app storage have been moved in, and
+     * imported RetroArch states converted. Null if the folder can't be reached.
+     */
+    private fun openFolder(
+        game: Game,
+        coreName: String,
+    ): ExternalSavesStorage.SaveFolder? {
+        val storage = externalSavesStorage ?: return null
+        val folder = ExternalSavesStorage.safely("open states") { storage.statesFolder(game, coreName) } ?: return null
+        ExternalSavesStorage.safely("move states") { moveFallbackStates(game, coreName, folder) }
+        ExternalSavesStorage.safely("convert states") {
+            convertImportedRetroArchStates(game, coreName, folder, folder)
+            storage.importedStatesFolder()?.let { convertImportedRetroArchStates(game, coreName, it, folder) }
+        }
+        return folder
+    }
+
+    private fun stateInfos(
+        game: Game,
+        coreName: String,
+        fileNames: List<String>,
+    ): List<SaveInfo> {
+        val folderTimes =
+            openFolder(game, coreName)?.let { folder ->
+                ExternalSavesStorage.safely("list states") { folder.lastModifiedTimes() }
+            } ?: emptyMap()
+        return fileNames.map { name ->
+            val folderTime = folderTimes[name]
+            val fallbackFile = getFallbackStateFile(name, coreName)
+            when {
+                folderTime != null -> SaveInfo(true, folderTime)
+                fallbackFile.exists() && fallbackFile.length() > 0 -> SaveInfo(true, fallbackFile.lastModified())
+                else -> SaveInfo(false, 0)
+            }
+        }
+    }
+
     private suspend fun getSaveState(
+        game: Game,
         fileName: String,
         coreName: String,
     ): SaveState? {
-        return runCatchingWithRetry(FILE_ACCESS_RETRIES) {
-            val saveFile = getStateFile(fileName, coreName)
-            val metadataFile = getMetadataStateFile(fileName, coreName)
-            if (saveFile.exists()) {
-                val byteArray = saveFile.readBytesUncompressedAtomic()
-                val stateMetadata =
-                    runCatching {
-                        Json.Default.decodeFromString(
-                            SaveState.Metadata.serializer(),
-                            metadataFile.readTextAtomic(),
-                        )
-                    }
-                SaveState(byteArray, stateMetadata.getOrNull() ?: SaveState.Metadata())
-            } else {
-                null
+        val folder = openFolder(game, coreName)
+        val fromFolder =
+            folder?.let {
+                ExternalSavesStorage.safely("read state") {
+                    val state = it.read(fileName)?.data?.takeIf { data -> data.isNotEmpty() } ?: return@safely null
+                    SaveState(state.uncompressedIfGzipped(), decodeMetadata(it.read(metadataName(fileName))?.data))
+                }
             }
+        if (fromFolder != null) return fromFolder
+
+        return runCatchingWithRetry(FILE_ACCESS_RETRIES) {
+            val stateFile = getFallbackStateFile(fileName, coreName)
+            if (!stateFile.exists()) return@runCatchingWithRetry null
+            val metadataFile = getFallbackStateFile(metadataName(fileName), coreName)
+            val metadata = if (metadataFile.exists()) metadataFile.readTextAtomic().toByteArray() else null
+            SaveState(stateFile.readBytesUncompressedAtomic(), decodeMetadata(metadata))
         }.getOrNull()
     }
 
     private suspend fun setSaveState(
+        game: Game,
         fileName: String,
         coreName: String,
         saveState: SaveState,
     ) {
+        val metadata = saveState.metadata.copy(coreName = coreName)
+        val savedToFolder =
+            openFolder(game, coreName)?.let { folder ->
+                ExternalSavesStorage.safely("write state") {
+                    writeToFolder(folder, fileName, saveState.state, metadata)
+                    true
+                }
+            } == true
+
+        val stateFile = getFallbackStateFile(fileName, coreName)
+        val metadataFile = getFallbackStateFile(metadataName(fileName), coreName)
+        if (savedToFolder) {
+            stateFile.delete()
+            metadataFile.delete()
+            return
+        }
         runCatchingWithRetry(FILE_ACCESS_RETRIES) {
-            writeStateToDisk(fileName, coreName, saveState.state)
-            writeMetadataToDisk(fileName, coreName, saveState.metadata.copy(coreName = coreName))
+            stateFile.parentFile?.mkdirs()
+            stateFile.writeBytesCompressedAtomic(saveState.state)
+            metadataFile.writeTextAtomic(encodeMetadata(metadata))
         }
     }
 
-    private fun writeMetadataToDisk(
+    /** Writes a state (GZIP-compressed, as Lemuroid always stored them) and its metadata. */
+    private fun writeToFolder(
+        folder: ExternalSavesStorage.SaveFolder,
         fileName: String,
-        coreName: String,
+        state: ByteArray,
         metadata: SaveState.Metadata,
     ) {
-        val metadataFile = getMetadataStateFile(fileName, coreName)
-        metadataFile.writeTextAtomic(Json.encodeToString(SaveState.Metadata.serializer(), metadata))
+        folder.write(fileName, state.gzipped())
+        folder.write(metadataName(fileName), encodeMetadata(metadata).toByteArray())
     }
 
-    private fun writeStateToDisk(
+    private fun decodeMetadata(data: ByteArray?): SaveState.Metadata {
+        if (data == null) return SaveState.Metadata()
+        return runCatching {
+            Json.Default.decodeFromString(SaveState.Metadata.serializer(), data.decodeToString())
+        }.getOrDefault(SaveState.Metadata())
+    }
+
+    private fun encodeMetadata(metadata: SaveState.Metadata): String {
+        return Json.encodeToString(SaveState.Metadata.serializer(), metadata)
+    }
+
+    private fun metadataName(stateFileName: String) = "$stateFileName.metadata"
+
+    private fun getFallbackStateFile(
         fileName: String,
         coreName: String,
-        stateArray: ByteArray,
-    ) {
-        val saveFile = getStateFile(fileName, coreName)
-        saveFile.writeBytesCompressedAtomic(stateArray)
-    }
-
-    private fun getStateFile(
-        fileName: String,
-        coreName: String,
-    ): File {
-        val statesDirectories = File(directoriesManager.getStatesDirectory(), coreName)
-        statesDirectories.mkdirs()
-        return File(statesDirectories, fileName)
-    }
-
-    private fun getMetadataStateFile(
-        stateFileName: String,
-        coreName: String,
-    ): File {
-        val statesDirectories = File(directoriesManager.getStatesDirectory(), coreName)
-        statesDirectories.mkdirs()
-        return File(statesDirectories, "$stateFileName.metadata")
-    }
+    ): File = File(File(directoriesManager.getStatesDirectory(), coreName), fileName)
 
     /** All state file names Lemuroid-S uses for [game] (auto save, slots, and their metadata). */
     private fun allStateFileNames(game: Game): List<String> {
         val states = listOf(getAutoSaveFileName(game)) + (0 until MAX_STATES).map { getSlotSaveFileName(game, it) }
-        return states.flatMap { listOf(it, "$it.metadata") }
-    }
-
-    /** Copies a state (and its metadata) to the SAVES folder chosen in Settings. */
-    private fun copyToExternal(
-        game: Game,
-        coreName: String,
-        fileName: String,
-    ) {
-        val storage = externalSavesStorage ?: return
-        ExternalSavesStorage.safely("write state") {
-            val folder = storage.statesFolder(game, coreName) ?: return@safely
-            listOf(getStateFile(fileName, coreName), getMetadataStateFile(fileName, coreName))
-                .filter { it.exists() }
-                .forEach { folder.write(it.name, it.readBytes()) }
-        }
+        return states.flatMap { listOf(it, metadataName(it)) }
     }
 
     /**
-     * Brings newer states from the SAVES folder into app storage, e.g. after reinstalling or copying
-     * files in by hand. Only files belonging to [game] are touched.
+     * Moves [game]'s states left in app storage into [folder] (unless the folder has a newer copy),
+     * then deletes them from app storage.
      */
-    private fun syncFromExternal(
-        game: Game,
-        coreName: String,
-    ) {
-        val storage = externalSavesStorage ?: return
-        ExternalSavesStorage.safely("read states") {
-            storage.statesFolder(game, coreName)?.let {
-                copyNewerStates(game, coreName, it)
-                convertImportedRetroArchStates(game, coreName, it)
-            }
-        }
-        ExternalSavesStorage.safely("read imported states") {
-            storage.importedStatesFolder()?.let {
-                copyNewerStates(game, coreName, it)
-                convertImportedRetroArchStates(game, coreName, it)
-            }
-        }
-    }
-
-    /** Copies Lemuroid-S states for [game] that are newer in [folder] into app storage. */
-    private fun copyNewerStates(
+    private fun moveFallbackStates(
         game: Game,
         coreName: String,
         folder: ExternalSavesStorage.SaveFolder,
     ) {
-        val externalTimes = folder.lastModifiedTimes()
-        for (name in allStateFileNames(game)) {
-            val externalTime = externalTimes[name] ?: continue
-            val internalFile = File(File(directoriesManager.getStatesDirectory(), coreName), name)
-            if (isInternalCurrent(internalFile, externalTime)) continue
-
-            val external = folder.read(name) ?: continue
-            internalFile.parentFile?.mkdirs()
-            internalFile.writeBytes(external.data)
-            internalFile.setLastModified(external.lastModified)
+        val files = allStateFileNames(game).map { getFallbackStateFile(it, coreName) }.filter { it.exists() }
+        if (files.isEmpty()) return
+        val folderTimes = folder.lastModifiedTimes()
+        for (file in files) {
+            val folderTime = folderTimes[file.name]
+            if (file.length() > 0 && (folderTime == null || !isCurrent(folderTime, file.lastModified()))) {
+                folder.write(file.name, file.readBytes())
+            }
+            file.delete()
         }
     }
 
     /**
      * States imported from RetroArch keep RetroArch's names ("Game.state.auto", "Game.state",
-     * "Game.state1"...) and format. When [game] is opened they become Lemuroid-S states: the resume
-     * point and save slots 1-4.
+     * "Game.state1"...) and format. When [game] is opened they become Lemuroid-S states in
+     * [target]: the resume point and save slots 1-4. A RetroArch state is converted again only if
+     * it is newer than the Lemuroid-S state.
      */
     private fun convertImportedRetroArchStates(
         game: Game,
         coreName: String,
-        folder: ExternalSavesStorage.SaveFolder,
+        source: ExternalSavesStorage.SaveFolder,
+        target: ExternalSavesStorage.SaveFolder,
     ) {
         val romName = game.fileName.substringBeforeLast(".")
         val retroArchNames =
@@ -231,28 +252,28 @@ class StatesManager(
                     "$romName.state$suffix" to getSlotSaveFileName(game, slot)
                 }
 
-        val externalTimes = folder.lastModifiedTimes()
+        val sourceTimes = source.lastModifiedTimes()
+        if (retroArchNames.keys.none { it in sourceTimes }) return
+        val targetTimes = target.lastModifiedTimes()
         for ((retroArchName, lemuroidName) in retroArchNames) {
-            val externalTime = externalTimes[retroArchName] ?: continue
-            val internalFile = getStateFile(lemuroidName, coreName)
-            if (isInternalCurrent(internalFile, externalTime)) continue
+            // The auto save is named "<rom file>.state", which can equal a RetroArch slot name.
+            if (retroArchName == lemuroidName) continue
+            val sourceTime = sourceTimes[retroArchName] ?: continue
+            val targetTime = targetTimes[lemuroidName]
+            if (targetTime != null && isCurrent(targetTime, sourceTime)) continue
 
-            val external = folder.read(retroArchName) ?: continue
+            val external = source.read(retroArchName) ?: continue
             val state = RetroArchStates.decode(external.data) ?: continue
-            writeStateToDisk(lemuroidName, coreName, state)
-            writeMetadataToDisk(lemuroidName, coreName, SaveState.Metadata(0, statesVersion(game, coreName), coreName))
-            internalFile.setLastModified(external.lastModified)
-            getMetadataStateFile(lemuroidName, coreName).setLastModified(external.lastModified)
+            val metadata = SaveState.Metadata(0, statesVersion(game, coreName), coreName)
+            writeToFolder(target, lemuroidName, state, metadata)
         }
     }
 
-    private fun isInternalCurrent(
-        internalFile: File,
-        externalTime: Long,
-    ): Boolean {
-        val internalTime = if (internalFile.exists()) internalFile.lastModified() else Long.MIN_VALUE / 2
-        return internalTime + SavesManager.SYNC_TOLERANCE_MS >= externalTime
-    }
+    /** True if a file dated [time] is at least as new as one dated [otherTime]. */
+    private fun isCurrent(
+        time: Long,
+        otherTime: Long,
+    ): Boolean = time + SavesManager.SYNC_TOLERANCE_MS >= otherTime
 
     private fun statesVersion(
         game: Game,

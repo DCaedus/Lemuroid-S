@@ -119,8 +119,41 @@ class DocumentFolder(
         return fileUri
     }
 
+    /**
+     * Writes [name] so that an interrupted write never leaves a half-written file in its place: the
+     * data goes to "[name].tmp" first, which then replaces the old file. If the app is killed
+     * between the two steps, "[name].tmp" holds the complete new data (see [TEMP_SUFFIX] readers).
+     * [children] is a listing of this folder taken before the write.
+     */
+    fun writeSafely(
+        name: String,
+        data: ByteArray,
+        children: Map<String, Child> = children(),
+    ) {
+        val tempName = name + TEMP_SUFFIX
+        children[tempName]?.let { deleteFile(it.uri) }
+        val existing = children[name]
+        if (existing == null) {
+            write(name, data, null)
+            return
+        }
+        val tempUri = write(tempName, data, null)
+        deleteFile(existing.uri)
+        val renamed = runCatching { DocumentsContract.renameDocument(contentResolver, tempUri, name) }.getOrNull()
+        if (renamed == null) {
+            // This storage can't rename files: write the file itself, then drop the temporary copy.
+            write(name, data, null)
+            deleteFile(tempUri)
+        }
+    }
+
+    fun deleteFile(fileUri: Uri): Boolean {
+        return runCatching { DocumentsContract.deleteDocument(contentResolver, fileUri) }.getOrDefault(false)
+    }
+
     companion object {
         const val MIME_TYPE_BINARY = "application/octet-stream"
+        const val TEMP_SUFFIX = ".tmp"
 
         private val folderLock = Any()
         private val knownFolders = java.util.concurrent.ConcurrentHashMap<String, Uri>()

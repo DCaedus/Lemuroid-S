@@ -163,3 +163,15 @@ fun File.readBytesUncompressedAtomic(): ByteArray {
         readBytesUncompressedStream(input.uncompressedInputStream())
     }
 }
+
+/** GZIP-compresses these bytes (the format Lemuroid uses for save states). */
+fun ByteArray.gzipped(): ByteArray {
+    val output = ByteArrayOutputStream()
+    GZIPOutputStream(output).use { it.write(this) }
+    return output.toByteArray()
+}
+
+/** These bytes uncompressed if they are GZIP data, otherwise unchanged. */
+fun ByteArray.uncompressedIfGzipped(): ByteArray {
+    return readBytesUncompressedStream(ByteArrayInputStream(this).uncompressedInputStream())
+}
