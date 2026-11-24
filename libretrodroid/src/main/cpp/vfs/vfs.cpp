@@ -87,7 +87,8 @@ int64_t VFS::seek(struct retro_vfs_file_handle *stream, int64_t offset, int seek
             int64_t target = base + offset;
             if (target < 0) return -1;
             it->second.position = target;
-            return target;
+            // Like libretro's reference VFS (fseek semantics): 0 on success, not the new position.
+            return 0;
         }
     }
     return retro_vfs_file_seek_impl(stream, offset, seek_position);
