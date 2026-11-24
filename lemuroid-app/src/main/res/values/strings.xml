@@ -60,12 +60,12 @@
     <string name="import_saves_confirm_title">Import saves?</string>
     <string name="import_saves_confirm_message">Battery saves (.srm) and save states found in the folder you pick will be copied into Lemuroid-S.\n\nExisting Lemuroid-S saves for the same games may be overwritten when the imported ones are newer. Replaced battery saves are backed up first.</string>
     <string name="import_saves_confirm_action">Pick folder</string>
-    <string name="home_import_saves_title">Coming from Lemuroid or RetroArch?</string>
-    <string name="home_import_saves_message">Import your battery saves and save states: pick the folder that contains them, for example the RetroArch folder.</string>
-    <string name="home_import_saves_action">Import saves</string>
+    <string name="home_import_saves_title">Import Saves from other Emulators</string>
+    <string name="home_import_saves_message">Bring your battery saves and save states from RetroArch or Lemuroid: pick the folder that contains them, for example the RetroArch folder.</string>
+    <string name="home_import_saves_action">Import Saves</string>
     <string name="home_card_not_now">Not now</string>
     <string name="done">Done</string>
-    <string name="settings_title_import_saves">Import saves</string>
+    <string name="settings_title_import_saves">Import Saves from other Emulators</string>
     <string name="settings_description_import_saves">Copy battery saves and save states from RetroArch or a copy of Lemuroid\'s folder</string>
     <string name="import_saves_result">Imported %1$d battery saves and %2$d save states. %3$d skipped because Lemuroid-S\'s copy was newer.</string>
     <string name="import_saves_failed">Could not import saves from this folder</string>
