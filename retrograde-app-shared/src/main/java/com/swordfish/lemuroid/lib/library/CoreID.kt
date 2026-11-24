@@ -102,14 +102,59 @@ enum class CoreID(
         "libmednafen_wswan_libretro_android.so",
     ),
     CITRA(
-        "citra",
-        "Citra",
-        "libcitra_libretro_android.so",
+        "azahar",
+        "Azahar",
+        "libazahar_libretro_android.so",
     ),
     DOSBOX_PURE(
         "dosbox_pure",
         "DosBox Pure",
         "libdosbox_pure_libretro_android.so",
+    ),
+    PICODRIVE(
+        "picodrive",
+        "PicoDrive",
+        "libpicodrive_libretro_android.so",
+    ),
+    A5200(
+        "a5200",
+        "a5200",
+        "liba5200_libretro_android.so",
+    ),
+    FLYCAST(
+        "flycast",
+        "Flycast",
+        "libflycast_libretro_android.so",
+    ),
+    NEOCD(
+        "neocd",
+        "NeoCD",
+        "libneocd_libretro_android.so",
+    ),
+    MEDNAFEN_VB(
+        "mednafen_vb",
+        "Beetle VB",
+        "libmednafen_vb_libretro_android.so",
+    ),
+    POKEMINI(
+        "pokemini",
+        "PokeMini",
+        "libpokemini_libretro_android.so",
+    ),
+    VECX(
+        "vecx",
+        "vecx",
+        "libvecx_libretro_android.so",
+    ),
+    GEARCOLECO(
+        "gearcoleco",
+        "Gearcoleco",
+        "libgearcoleco_libretro_android.so",
+    ),
+    FREEINTV(
+        "freeintv",
+        "FreeIntv",
+        "libfreeintv_libretro_android.so",
     ),
     ;
 

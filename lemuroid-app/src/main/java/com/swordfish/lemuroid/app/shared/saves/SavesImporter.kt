@@ -296,6 +296,16 @@ class SavesImporter(
                 "dosbox-pure" to "dos",
                 "dosbox_pure" to "dos",
                 "citra" to "n3ds",
+                "azahar" to "n3ds",
+                "a5200" to "atari5200",
+                "flycast" to "dreamcast",
+                "neocd" to "neogeocd",
+                "beetle vb" to "virtualboy",
+                "mednafen_vb" to "virtualboy",
+                "pokemini" to "pokemini",
+                "vecx" to "vectrex",
+                "gearcoleco" to "colecovision",
+                "freeintv" to "intellivision",
             )
     }
 }

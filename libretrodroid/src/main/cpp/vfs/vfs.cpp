@@ -18,6 +18,7 @@
 #include "vfs.h"
 
 #include <unistd.h>
+#include <sys/stat.h>
 #include <optional>
 
 #include "vfs/vfs_implementation.h"
@@ -107,7 +108,16 @@ retro_vfs_interface * VFS::getInterface() {
         &VFS::rename,
 
         /* Introduced in VFS API v2 */
-        &VFS::truncate
+        &VFS::truncate,
+
+        /* Introduced in VFS API v3 */
+        &VFS::stat,
+        &VFS::mkdir,
+        &VFS::opendir,
+        &VFS::readdir,
+        &VFS::direntGetName,
+        &VFS::direntIsDir,
+        &VFS::closedir
     };
 }
 
@@ -150,6 +160,49 @@ struct retro_vfs_file_handle* VFS::virtualOpen(const char *path, unsigned int mo
     stream->scheme = VFS_SCHEME_NONE;
 
     return stream;
+}
+
+int VFS::stat(const char *path, int32_t *size) {
+    LOGV("VFS Calling stat: %s", path);
+    VFSFile* virtualFile = VFS::getInstance().findVirtualFile(path);
+    if (virtualFile != nullptr) {
+        // Game files given by the app (Android content URIs) only exist as file descriptors.
+        struct ::stat info {};
+        if (fstat(virtualFile->getFD(), &info) != 0) {
+            return 0;
+        }
+        if (size != nullptr) {
+            *size = static_cast<int32_t>(info.st_size);
+        }
+        return RETRO_VFS_STAT_IS_VALID;
+    }
+    return retro_vfs_stat_impl(path, size);
+}
+
+int VFS::mkdir(const char *dir) {
+    LOGV("VFS Calling mkdir: %s", dir);
+    return retro_vfs_mkdir_impl(dir);
+}
+
+struct retro_vfs_dir_handle* VFS::opendir(const char *dir, bool include_hidden) {
+    LOGV("VFS Calling opendir: %s", dir);
+    return retro_vfs_opendir_impl(dir, include_hidden);
+}
+
+bool VFS::readdir(struct retro_vfs_dir_handle *dirstream) {
+    return retro_vfs_readdir_impl(dirstream);
+}
+
+const char* VFS::direntGetName(struct retro_vfs_dir_handle *dirstream) {
+    return retro_vfs_dirent_get_name_impl(dirstream);
+}
+
+bool VFS::direntIsDir(struct retro_vfs_dir_handle *dirstream) {
+    return retro_vfs_dirent_is_dir_impl(dirstream);
+}
+
+int VFS::closedir(struct retro_vfs_dir_handle *dirstream) {
+    return retro_vfs_closedir_impl(dirstream);
 }
 
 VFSFile* VFS::findVirtualFile(const char *path) {

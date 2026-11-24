@@ -1212,6 +1212,213 @@ data class GameSystem(
                         ),
                 ),
                 GameSystem(
+                    SystemID.SG1000,
+                    "Sega - SG-1000",
+                    R.string.game_system_title_sg1000,
+                    R.string.game_system_abbr_sg1000,
+                    listOf(
+                        SystemCoreConfig(
+                            CoreID.GENESIS_PLUS_GX,
+                            controllerConfigs =
+                                hashMapOf(
+                                    0 to arrayListOf(ControllerConfigs.SMS),
+                                    1 to arrayListOf(ControllerConfigs.SMS),
+                                ),
+                        ),
+                    ),
+                    uniqueExtensions = listOf("sg"),
+                ),
+                GameSystem(
+                    SystemID.SEGA32X,
+                    "Sega - 32X",
+                    R.string.game_system_title_sega32x,
+                    R.string.game_system_abbr_sega32x,
+                    listOf(
+                        SystemCoreConfig(
+                            CoreID.PICODRIVE,
+                            controllerConfigs =
+                                hashMapOf(
+                                    0 to arrayListOf(ControllerConfigs.GENESIS_6, ControllerConfigs.GENESIS_3),
+                                    1 to arrayListOf(ControllerConfigs.GENESIS_6, ControllerConfigs.GENESIS_3),
+                                ),
+                        ),
+                    ),
+                    uniqueExtensions = listOf("32x"),
+                ),
+                GameSystem(
+                    SystemID.ATARI5200,
+                    "Atari - 5200",
+                    R.string.game_system_title_atari5200,
+                    R.string.game_system_abbr_atari5200,
+                    listOf(
+                        SystemCoreConfig(
+                            CoreID.A5200,
+                            controllerConfigs =
+                                hashMapOf(
+                                    0 to arrayListOf(ControllerConfigs.ATARI7800),
+                                    1 to arrayListOf(ControllerConfigs.ATARI7800),
+                                ),
+                        ),
+                    ),
+                    uniqueExtensions = listOf("a52"),
+                    supportedExtensions = listOf("a52", "bin"),
+                    scanOptions =
+                        ScanOptions(
+                            scanByPathAndSupportedExtensions = true,
+                        ),
+                ),
+                GameSystem(
+                    SystemID.DREAMCAST,
+                    "Sega - Dreamcast",
+                    R.string.game_system_title_dreamcast,
+                    R.string.game_system_abbr_dreamcast,
+                    listOf(
+                        SystemCoreConfig(
+                            CoreID.FLYCAST,
+                            controllerConfigs =
+                                hashMapOf(
+                                    0 to arrayListOf(ControllerConfigs.PSX_DUALSHOCK),
+                                    1 to arrayListOf(ControllerConfigs.PSX_DUALSHOCK),
+                                ),
+                            rumbleSupported = true,
+                            supportsLibretroVFS = true,
+                        ),
+                    ),
+                    uniqueExtensions = listOf("gdi", "cdi"),
+                    supportedExtensions = listOf("gdi", "cdi", "chd", "m3u"),
+                    scanOptions =
+                        ScanOptions(
+                            scanByPathAndSupportedExtensions = true,
+                        ),
+                ),
+                GameSystem(
+                    SystemID.NEOGEOCD,
+                    "SNK - Neo Geo CD",
+                    R.string.game_system_title_neogeocd,
+                    R.string.game_system_abbr_neogeocd,
+                    listOf(
+                        SystemCoreConfig(
+                            CoreID.NEOCD,
+                            controllerConfigs =
+                                hashMapOf(
+                                    0 to arrayListOf(ControllerConfigs.FB_NEO_4),
+                                    1 to arrayListOf(ControllerConfigs.FB_NEO_4),
+                                ),
+                        ),
+                    ),
+                    uniqueExtensions = listOf(),
+                    supportedExtensions = listOf("cue", "chd"),
+                    scanOptions =
+                        ScanOptions(
+                            scanByFilename = false,
+                            scanByUniqueExtension = false,
+                            scanByPathAndSupportedExtensions = true,
+                        ),
+                ),
+                GameSystem(
+                    SystemID.VIRTUALBOY,
+                    "Nintendo - Virtual Boy",
+                    R.string.game_system_title_virtualboy,
+                    R.string.game_system_abbr_virtualboy,
+                    listOf(
+                        SystemCoreConfig(
+                            CoreID.MEDNAFEN_VB,
+                            controllerConfigs =
+                                hashMapOf(
+                                    0 to arrayListOf(ControllerConfigs.SNES),
+                                    1 to arrayListOf(ControllerConfigs.SNES),
+                                ),
+                        ),
+                    ),
+                    uniqueExtensions = listOf("vb", "vboy"),
+                ),
+                GameSystem(
+                    SystemID.POKEMINI,
+                    "Nintendo - Pokemon Mini",
+                    R.string.game_system_title_pokemini,
+                    R.string.game_system_abbr_pokemini,
+                    listOf(
+                        SystemCoreConfig(
+                            CoreID.POKEMINI,
+                            controllerConfigs =
+                                hashMapOf(
+                                    0 to arrayListOf(ControllerConfigs.GBA),
+                                    1 to arrayListOf(ControllerConfigs.GBA),
+                                ),
+                            rumbleSupported = true,
+                        ),
+                    ),
+                    uniqueExtensions = listOf("min"),
+                ),
+                GameSystem(
+                    SystemID.VECTREX,
+                    "GCE - Vectrex",
+                    R.string.game_system_title_vectrex,
+                    R.string.game_system_abbr_vectrex,
+                    listOf(
+                        SystemCoreConfig(
+                            CoreID.VECX,
+                            controllerConfigs =
+                                hashMapOf(
+                                    0 to arrayListOf(ControllerConfigs.SNES),
+                                    1 to arrayListOf(ControllerConfigs.SNES),
+                                ),
+                        ),
+                    ),
+                    uniqueExtensions = listOf("vec"),
+                    supportedExtensions = listOf("vec", "gam", "bin"),
+                    scanOptions =
+                        ScanOptions(
+                            scanByPathAndSupportedExtensions = true,
+                        ),
+                ),
+                GameSystem(
+                    SystemID.COLECOVISION,
+                    "Coleco - ColecoVision",
+                    R.string.game_system_title_colecovision,
+                    R.string.game_system_abbr_colecovision,
+                    listOf(
+                        SystemCoreConfig(
+                            CoreID.GEARCOLECO,
+                            controllerConfigs =
+                                hashMapOf(
+                                    0 to arrayListOf(ControllerConfigs.SNES),
+                                    1 to arrayListOf(ControllerConfigs.SNES),
+                                ),
+                            requiredBIOSFiles = listOf("colecovision.rom"),
+                        ),
+                    ),
+                    uniqueExtensions = listOf("col", "cv"),
+                    supportedExtensions = listOf("col", "cv", "rom", "bin"),
+                    scanOptions =
+                        ScanOptions(
+                            scanByPathAndSupportedExtensions = true,
+                        ),
+                ),
+                GameSystem(
+                    SystemID.INTELLIVISION,
+                    "Mattel - Intellivision",
+                    R.string.game_system_title_intellivision,
+                    R.string.game_system_abbr_intellivision,
+                    listOf(
+                        SystemCoreConfig(
+                            CoreID.FREEINTV,
+                            controllerConfigs =
+                                hashMapOf(
+                                    0 to arrayListOf(ControllerConfigs.SNES),
+                                    1 to arrayListOf(ControllerConfigs.SNES),
+                                ),
+                            requiredBIOSFiles = listOf("exec.bin", "grom.bin"),
+                        ),
+                    ),
+                    uniqueExtensions = listOf("int"),
+                    supportedExtensions = listOf("int", "rom", "bin"),
+                    scanOptions =
+                        ScanOptions(
+                            scanByPathAndSupportedExtensions = true,
+                        ),
+                ),
+                GameSystem(
                     SystemID.NINTENDO_3DS,
                     "Nintendo - Nintendo 3DS",
                     R.string.game_system_title_3ds,
@@ -1223,13 +1430,15 @@ data class GameSystem(
                                 hashMapOf(
                                     0 to arrayListOf(ControllerConfigs.NINTENDO_3DS),
                                 ),
+                            // Azahar (Citra's successor). It picks Vulkan on Android by default;
+                            // LibretroDroid renders with OpenGL ES, so ask for OpenGL.
                             defaultSettings =
                                 listOf(
-                                    CoreVariable("citra_use_acc_mul", "disabled"),
-                                    CoreVariable("citra_touch_touchscreen", "enabled"),
-                                    CoreVariable("citra_mouse_touchscreen", "disabled"),
-                                    CoreVariable("citra_render_touchscreen", "disabled"),
-                                    CoreVariable("citra_use_hw_shader_cache", "disabled"),
+                                    CoreVariable("citra_graphics_api", "OpenGL"),
+                                    CoreVariable("citra_shaders_accurate_mul", "disabled"),
+                                    CoreVariable("citra_enable_touch_touchscreen", "enabled"),
+                                    CoreVariable("citra_enable_mouse_touchscreen", "disabled"),
+                                    CoreVariable("citra_use_disk_shader_cache", "disabled"),
                                 ),
                             exposedSettings =
                                 listOf(
@@ -1238,11 +1447,11 @@ data class GameSystem(
                                         R.string.setting_citra_layout_option,
                                         arrayListOf(
                                             ExposedSetting.Value(
-                                                "Default Top-Bottom Screen",
+                                                "default",
                                                 R.string.value_citra_layout_option_topbottom,
                                             ),
                                             ExposedSetting.Value(
-                                                "Side by Side",
+                                                "side_by_side",
                                                 R.string.value_citra_layout_option_sidebyside,
                                             ),
                                         ),
@@ -1252,12 +1461,8 @@ data class GameSystem(
                                         R.string.setting_citra_resolution_factor,
                                     ),
                                     ExposedSetting(
-                                        "citra_use_acc_mul",
+                                        "citra_shaders_accurate_mul",
                                         R.string.setting_citra_use_acc_mul,
-                                    ),
-                                    ExposedSetting(
-                                        "citra_use_acc_geo_shaders",
-                                        R.string.setting_citra_use_acc_geo_shaders,
                                     ),
                                 ),
                             statesSupported = false,

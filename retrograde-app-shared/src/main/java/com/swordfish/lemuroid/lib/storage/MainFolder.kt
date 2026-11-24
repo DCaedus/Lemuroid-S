@@ -153,6 +153,16 @@ class MainFolder(private val appContext: Context) {
                 SystemID.WSC to "wonderswancolor",
                 SystemID.DOS to "dos",
                 SystemID.NINTENDO_3DS to "n3ds",
+                SystemID.SG1000 to "sg-1000",
+                SystemID.SEGA32X to "sega32x",
+                SystemID.ATARI5200 to "atari5200",
+                SystemID.DREAMCAST to "dreamcast",
+                SystemID.NEOGEOCD to "neogeocd",
+                SystemID.VIRTUALBOY to "virtualboy",
+                SystemID.POKEMINI to "pokemini",
+                SystemID.VECTREX to "vectrex",
+                SystemID.COLECOVISION to "colecovision",
+                SystemID.INTELLIVISION to "intellivision",
             )
 
         /** ES-DE folder name for a system id (as stored in games), e.g. "md" -> "genesis". */

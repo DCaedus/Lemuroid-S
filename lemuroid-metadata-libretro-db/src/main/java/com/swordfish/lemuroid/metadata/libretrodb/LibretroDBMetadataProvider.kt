@@ -5,6 +5,7 @@ import com.swordfish.lemuroid.lib.library.GameSystem
 import com.swordfish.lemuroid.lib.library.SystemID
 import com.swordfish.lemuroid.lib.library.metadata.GameMetadata
 import com.swordfish.lemuroid.lib.library.metadata.GameMetadataProvider
+import com.swordfish.lemuroid.lib.storage.MainFolder
 import com.swordfish.lemuroid.lib.storage.StorageFile
 import com.swordfish.lemuroid.metadata.libretrodb.db.LibretroDBManager
 import com.swordfish.lemuroid.metadata.libretrodb.db.LibretroDatabase
@@ -126,11 +127,19 @@ class LibretroDBMetadataProvider(private val ovgdbManager: LibretroDBManager) :
         }
     }
 
+    /**
+     * True if [parent] mentions the system: its database name anywhere in the path, or (Lemuroid-S)
+     * its ES-DE folder name ("dreamcast", "sg-1000"...) as one of the folders.
+     */
     private fun parentContainsSystem(
         parent: String?,
         dbname: String,
     ): Boolean {
-        return parent?.toLowerCase(Locale.getDefault())?.contains(dbname) == true
+        val path = parent?.lowercase(Locale.US) ?: return false
+        if (path.contains(dbname)) return true
+        val systemId = SystemID.values().firstOrNull { it.dbname == dbname } ?: return false
+        val folderName = MainFolder.SYSTEM_FOLDERS[systemId] ?: return false
+        return path.split('/', ':').dropLast(1).any { it == folderName }
     }
 
     private suspend fun findByCRC(

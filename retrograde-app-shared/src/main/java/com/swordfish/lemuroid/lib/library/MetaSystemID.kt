@@ -113,6 +113,56 @@ enum class MetaSystemID(val titleResId: Int, val imageResId: Int, val systemIDs:
         R.drawable.game_system_3ds,
         listOf(SystemID.NINTENDO_3DS),
     ),
+    SG1000(
+        R.string.game_system_title_sg1000,
+        R.drawable.game_system_sms,
+        listOf(SystemID.SG1000),
+    ),
+    SEGA32X(
+        R.string.game_system_title_sega32x,
+        R.drawable.game_system_genesis,
+        listOf(SystemID.SEGA32X),
+    ),
+    ATARI5200(
+        R.string.game_system_title_atari5200,
+        R.drawable.game_system_atari7800,
+        listOf(SystemID.ATARI5200),
+    ),
+    DREAMCAST(
+        R.string.game_system_title_dreamcast,
+        R.drawable.game_system_psx,
+        listOf(SystemID.DREAMCAST),
+    ),
+    NEOGEOCD(
+        R.string.game_system_title_neogeocd,
+        R.drawable.game_system_arcade,
+        listOf(SystemID.NEOGEOCD),
+    ),
+    VIRTUALBOY(
+        R.string.game_system_title_virtualboy,
+        R.drawable.game_system_gb,
+        listOf(SystemID.VIRTUALBOY),
+    ),
+    POKEMINI(
+        R.string.game_system_title_pokemini,
+        R.drawable.game_system_gb,
+        listOf(SystemID.POKEMINI),
+    ),
+    VECTREX(
+        R.string.game_system_title_vectrex,
+        R.drawable.game_system_atari2600,
+        listOf(SystemID.VECTREX),
+    ),
+    COLECOVISION(
+        R.string.game_system_title_colecovision,
+        R.drawable.game_system_atari2600,
+        listOf(SystemID.COLECOVISION),
+    ),
+    INTELLIVISION(
+        R.string.game_system_title_intellivision,
+        R.drawable.game_system_atari7800,
+        listOf(SystemID.INTELLIVISION),
+    ),
     ;
 
     fun color(): Int {
@@ -147,6 +197,16 @@ enum class MetaSystemID(val titleResId: Int, val imageResId: Int, val systemIDs:
                 SystemID.WS -> WS
                 SystemID.WSC -> WS
                 SystemID.NINTENDO_3DS -> NINTENDO_3DS
+                SystemID.SG1000 -> SG1000
+                SystemID.SEGA32X -> SEGA32X
+                SystemID.ATARI5200 -> ATARI5200
+                SystemID.DREAMCAST -> DREAMCAST
+                SystemID.NEOGEOCD -> NEOGEOCD
+                SystemID.VIRTUALBOY -> VIRTUALBOY
+                SystemID.POKEMINI -> POKEMINI
+                SystemID.VECTREX -> VECTREX
+                SystemID.COLECOVISION -> COLECOVISION
+                SystemID.INTELLIVISION -> INTELLIVISION
             }
         }
     }
