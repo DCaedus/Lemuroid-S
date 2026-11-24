@@ -58,8 +58,9 @@
     <string name="saves_option_roms">ROMs folder (next to each game)</string>
     <string name="home_choose">Choose</string>
     <string name="import_saves_confirm_title">Import saves?</string>
-    <string name="import_saves_confirm_message">Everything in RetroArch\'s saves and states folders will be copied into Lemuroid-S\'s saves folders. Your games pick them up when you open them.\n\nExisting Lemuroid-S saves may be overwritten by newer RetroArch ones.</string>
+    <string name="import_saves_confirm_message">RetroArch: everything in its saves and states folders is copied into Lemuroid-S and sorted by system.\nOther emulator (e.g. Pizza Boy): pick the folder with its saves; battery saves (.srm, .sav) are copied.\n\nExisting Lemuroid-S saves may be overwritten by newer imported ones.</string>
     <string name="import_saves_started">Importing saves…</string>
+    <string name="import_saves_other_emulator">Other emulator</string>
     <string name="import_saves_from_retroarch">Import from RetroArch</string>
     <string name="import_covers_title">Import RetroArch Covers</string>
     <string name="import_covers_description">Copy covers from RetroArch\'s thumbnails folder into the Lemuroid-S folder</string>
@@ -73,8 +74,8 @@
     <string name="done">Done</string>
     <string name="settings_title_import_saves">Import Saves from RetroArch</string>
     <string name="settings_description_import_saves">Copy RetroArch\'s battery saves and save states into Lemuroid-S</string>
-    <string name="import_saves_result">Copied %1$d battery saves and %2$d save states from RetroArch. %3$d skipped (Lemuroid-S already had a newer copy). Games pick them up when you open them.</string>
-    <string name="import_saves_failed">Couldn\'t find RetroArch\'s saves or states folder, or the Lemuroid-S folder isn\'t set up.</string>
+    <string name="import_saves_result">Imported %1$d battery saves and %2$d save states. %3$d skipped (already up to date or not readable).</string>
+    <string name="import_saves_failed">No saves found there, or the Lemuroid-S folder isn\'t set up.</string>
     <string name="settings_title_show_framerate">Show framerate</string>
     <string name="settings_description_show_framerate">Shows game fps, game speed (%) and new pictures per second in a corner while playing</string>
     <string name="framerate_overlay">Game %1$d fps (%2$d%%) · Screen %3$d fps</string>

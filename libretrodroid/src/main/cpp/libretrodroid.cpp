@@ -163,8 +163,10 @@ JNIEXPORT jboolean JNICALL LibretroDroid::unserializeSRAM(int8_t* data, size_t s
     }
 
     if (size > sramSize) {
-        LOGE("Cannot load SRAM: size mismatch");
-        return false;
+        // Lemuroid-S: some emulators (e.g. Pizza Boy) store extra data after the save itself.
+        // Like RetroArch, load the part that fits instead of refusing the save.
+        LOGI("SRAM file larger than the game's save memory (%zu > %zu): loading the first part", size, sramSize);
+        size = sramSize;
     }
 
     memcpy(sramState, data, size);

@@ -2,6 +2,9 @@ package com.swordfish.lemuroid.app.mobile.feature.settings.general
 
 import android.net.Uri
 import android.widget.Toast
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.foundation.layout.Row
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
@@ -44,6 +47,11 @@ fun ImportSavesDialog(
         onImportStarted()
     }
     val retroArch = rememberRetroArchFolderAccess { runImport(it) }
+    // Other emulators (e.g. Pizza Boy): pick their saves folder; only battery saves are imported.
+    val otherEmulator =
+        rememberLauncherForActivityResult(ActivityResultContracts.OpenDocumentTree()) { uri ->
+            if (uri != null) runImport(uri)
+        }
     if (!show) return
 
     AlertDialog(
@@ -51,12 +59,20 @@ fun ImportSavesDialog(
         title = { Text(text = stringResource(R.string.import_saves_confirm_title)) },
         text = { Text(text = stringResource(R.string.import_saves_confirm_message)) },
         confirmButton = {
-            TextButton(
-                onClick = {
-                    onDismiss()
-                    retroArch()
-                },
-            ) { Text(text = stringResource(R.string.import_saves_from_retroarch)) }
+            Row {
+                TextButton(
+                    onClick = {
+                        onDismiss()
+                        otherEmulator.launch(null)
+                    },
+                ) { Text(text = stringResource(R.string.import_saves_other_emulator)) }
+                TextButton(
+                    onClick = {
+                        onDismiss()
+                        retroArch()
+                    },
+                ) { Text(text = stringResource(R.string.import_saves_from_retroarch)) }
+            }
         },
         dismissButton = {
             TextButton(onClick = onDismiss) { Text(text = stringResource(android.R.string.cancel)) }

@@ -4,6 +4,7 @@ import android.content.Context
 import android.net.Uri
 import android.provider.DocumentsContract
 import com.swordfish.lemuroid.lib.saves.ExternalSavesStorage
+import com.swordfish.lemuroid.lib.saves.RetroArchStates
 import com.swordfish.lemuroid.lib.storage.DirectoriesManager
 import com.swordfish.lemuroid.lib.storage.DocumentFolder
 import com.swordfish.lemuroid.lib.storage.MainFolder
@@ -71,14 +72,21 @@ class SavesImporter(
             // Works with RetroArch's main folder, or its saves/states folder picked directly.
             val savesSource = if (pickedName == SAVES) picked else child(SAVES)
             val statesSource = if (pickedName == STATES) picked else child(STATES)
-            if (savesSource == null && statesSource == null) return@withContext null
 
             val files = mutableListOf<SourceFile>()
-            savesSource?.let { collect(it, SAVES, isStates = false, files, depth = 0) }
-            statesSource?.let { collect(it, STATES, isStates = true, files, depth = 0) }
+            if (savesSource == null && statesSource == null) {
+                // Another emulator's folder (e.g. Pizza Boy): only battery saves, with a limited search.
+                collectBatterySaves(picked, pickedName ?: "", files, depth = 0, budget = intArrayOf(MAX_ENTRIES))
+            } else {
+                savesSource?.let { collect(it, SAVES, isStates = false, files, depth = 0) }
+                statesSource?.let { collect(it, STATES, isStates = true, files, depth = 0) }
+            }
+            if (files.isEmpty()) return@withContext null
 
+            // RetroArch's folder names first; the game database only for files they don't place.
+            val unplaced = files.filter { folderSystem(it.parentName) == null }.map { stemOf(it.file.name) }.toSet()
             val systemsByStem =
-                runCatching { libretroDBManager.findSystemsByFileStem(files.map { stemOf(it.file.name) }.toSet()) }
+                runCatching { libretroDBManager.findSystemsByFileStem(unplaced) }
                     .onFailure { Timber.w(it, "Game database lookup failed") }
                     .getOrDefault(emptyMap())
 
@@ -90,7 +98,7 @@ class SavesImporter(
                     targets.getOrPut(source.isStates to system) {
                         externalSavesStorage.importTargetFolder(source.isStates, system)?.let { Target(it) }
                     } ?: continue
-                copy(source, target, counters)
+                copy(source, target, system, counters)
             }
             Result(counters.saves, counters.states, counters.skipped)
         }
@@ -99,15 +107,43 @@ class SavesImporter(
         val existing: Map<String, Long> by lazy { folder.lastModifiedTimes() }
     }
 
-    /** ES-DE system folder for a file: from the game database, else from RetroArch's core folder name. */
+    /** ES-DE system folder for a file: from its folder name (RetroArch core or system), else the game database. */
     private fun systemFolderFor(
         source: SourceFile,
         systemsByStem: Map<String, String>,
     ): String? {
-        systemsByStem[stemOf(source.file.name)]?.let { return MainFolder.systemFolderName(it) }
-        val folderName = source.parentName.lowercase()
-        if (folderName in MainFolder.SYSTEM_FOLDERS.values) return folderName
-        return CORE_FOLDERS[folderName]
+        folderSystem(source.parentName)?.let { return it }
+        return systemsByStem[stemOf(source.file.name)]?.let { MainFolder.systemFolderName(it) }
+    }
+
+    private fun folderSystem(folderName: String): String? {
+        val name = folderName.lowercase()
+        if (name in MainFolder.SYSTEM_FOLDERS.values) return name
+        return CORE_FOLDERS[name]
+    }
+
+    /**
+     * Searches another emulator's folder for battery saves (.srm, .sav). Limited to a few folder
+     * levels and [MAX_ENTRIES] entries, so picking a big unrelated folder can't take too long.
+     */
+    private fun collectBatterySaves(
+        folder: DocumentFolder,
+        folderName: String,
+        files: MutableList<SourceFile>,
+        depth: Int,
+        budget: IntArray,
+    ) {
+        for (child in folder.children().values) {
+            if (--budget[0] < 0) return
+            if (child.isDirectory) {
+                if (depth < MAX_DEPTH) {
+                    val subFolder = DocumentFolder(appContext.contentResolver, child.uri)
+                    collectBatterySaves(subFolder, child.name, files, depth + 1, budget)
+                }
+            } else if (BATTERY_SAVE.matches(child.name)) {
+                files.add(SourceFile(folder, child, folderName, isStates = false))
+            }
+        }
     }
 
     private fun collect(
@@ -129,44 +165,70 @@ class SavesImporter(
         }
     }
 
+    /**
+     * Copies one file, doing the conversion work now rather than when a game is opened:
+     *  - battery saves are stored as "<name>.srm"; GBA saves with extra data after the save
+     *    (e.g. Pizza Boy) are trimmed to the real save (GBA saves are at most 128 KB)
+     *  - RetroArch states are unpacked (rzip / RASTATE) to the core's plain state data; their
+     *    screenshots (.png) are skipped
+     */
     private fun copy(
         source: SourceFile,
         target: Target,
+        system: String?,
         counters: Counters,
     ) {
         val file = source.file
-        val targetTime = target.existing[file.name]
+        if (source.isStates && file.name.endsWith(".png", ignoreCase = true)) return
+
+        val targetName = if (source.isStates) file.name else file.name.substringBeforeLast('.') + ".srm"
+        val targetTime = target.existing[targetName]
         if (targetTime != null && targetTime >= file.lastModified) {
             counters.skipped++
             return
         }
-        if (!source.isStates && hasNewerSave(file)) {
+        if (!source.isStates && hasNewerSave(targetName, file.lastModified)) {
             counters.skipped++
             return
         }
-        runCatching { source.folder.read(file)?.let { target.folder.write(file.name, it) } }
-            .onSuccess {
-                if (it != null) {
-                    if (source.isStates) counters.states++ else counters.saves++
+
+        runCatching {
+            val bytes = source.folder.read(file) ?: return
+            val converted =
+                when {
+                    source.isStates -> RetroArchStates.decode(bytes)
+                    system == GBA && bytes.size > GBA_MAX_SAVE_SIZE -> bytes.copyOf(GBA_MAX_SAVE_SIZE)
+                    else -> bytes
                 }
+            if (converted == null) {
+                counters.skipped++
+                return
             }
-            .onFailure { Timber.w(it, "Could not import ${file.name}") }
+            target.folder.write(targetName, converted)
+            if (source.isStates) counters.states++ else counters.saves++
+        }.onFailure { Timber.w(it, "Could not import ${file.name}") }
     }
 
     /** "Game.state1.png" / "Game.state.auto" / "Game.srm" -> "Game". */
     private fun stemOf(name: String): String = name.replace(SAVE_SUFFIXES, "")
 
     /** Lemuroid-S keeps battery saves by name, so a newer one there is kept. */
-    private fun hasNewerSave(file: DocumentFolder.Child): Boolean {
-        val saveName = file.name.substringBeforeLast('.') + ".srm"
+    private fun hasNewerSave(
+        saveName: String,
+        lastModified: Long,
+    ): Boolean {
         val current = File(directoriesManager.getSavesDirectory(), saveName)
-        return current.exists() && current.length() > 0 && current.lastModified() >= file.lastModified
+        return current.exists() && current.length() > 0 && current.lastModified() >= lastModified
     }
 
     companion object {
         private const val SAVES = "saves"
         private const val STATES = "states"
         private const val MAX_DEPTH = 2
+        private const val MAX_ENTRIES = 5000
+        private const val GBA = "gba"
+        private const val GBA_MAX_SAVE_SIZE = 128 * 1024
+        private val BATTERY_SAVE = Regex(""".+\.(srm|sav)$""", RegexOption.IGNORE_CASE)
         private val SAVE_SUFFIXES = Regex("""(\.(srm|sav|png|auto|state\d*))+$""", RegexOption.IGNORE_CASE)
 
         /**
@@ -194,6 +256,9 @@ class SavesImporter(
                 "beetle pce fast" to "pcengine",
                 "dosbox-pure" to "dos",
                 "citra" to "n3ds",
+                // Pizza Boy (standalone GBA / GBC emulators)
+                "pizzaboygba" to "gba",
+                "pizza boy gba" to "gba",
             )
     }
 }
