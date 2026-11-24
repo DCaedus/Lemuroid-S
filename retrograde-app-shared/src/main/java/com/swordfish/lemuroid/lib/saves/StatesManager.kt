@@ -181,7 +181,10 @@ class StatesManager(
     ) {
         val storage = externalSavesStorage ?: return
         ExternalSavesStorage.safely("read states") {
-            storage.statesFolder(game, coreName)?.let { copyNewerStates(game, coreName, it) }
+            storage.statesFolder(game, coreName)?.let {
+                copyNewerStates(game, coreName, it)
+                convertImportedRetroArchStates(game, coreName, it)
+            }
         }
         ExternalSavesStorage.safely("read imported states") {
             storage.importedStatesFolder()?.let {

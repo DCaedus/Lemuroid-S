@@ -77,11 +77,10 @@ class SavesManager(
     ) {
         ExternalSavesStorage.safely("read save") {
             // Imported RetroArch saves sit at the top of the saves folder, under the same name.
+            val savName = saveFile.name.removeSuffix(".srm") + ".sav"
             val external =
-                externalSavesStorage.savesFolder(game)?.read(saveFile.name)
-                    ?: externalSavesStorage.importedSavesFolder()?.let { folder ->
-                        folder.read(saveFile.name) ?: folder.read(saveFile.name.removeSuffix(".srm") + ".sav")
-                    }
+                listOfNotNull(externalSavesStorage.savesFolder(game), externalSavesStorage.importedSavesFolder())
+                    .firstNotNullOfOrNull { folder -> folder.read(saveFile.name) ?: folder.read(savName) }
                     ?: return@safely
             if (external.data.isEmpty()) return@safely
             val internalTime = if (saveFile.exists()) saveFile.lastModified() else Long.MIN_VALUE / 2

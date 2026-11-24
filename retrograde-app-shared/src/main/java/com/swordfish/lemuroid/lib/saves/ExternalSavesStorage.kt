@@ -74,6 +74,25 @@ class ExternalSavesStorage(private val appContext: Context) {
 
     fun importedStatesFolder(): SaveFolder? = importFolder(MainFolder.STATES)
 
+    /**
+     * Where to put an imported file whose system is known ([systemFolder], ES-DE name): the
+     * system's saves/states folder, or that system's folder inside the ROMs folder (if it exists).
+     * Falls back to the top folder.
+     */
+    fun importTargetFolder(
+        isStates: Boolean,
+        systemFolder: String?,
+    ): SaveFolder? {
+        val kind = if (isStates) MainFolder.STATES else MainFolder.SAVES
+        if (systemFolder == null) return importFolder(kind)
+        val folder =
+            when (getLocation()) {
+                Location.MAIN_FOLDER -> mainFolder.folder(kind, systemFolder)
+                Location.ROMS_FOLDER -> romsRootFolder()?.let { it.subFolder(systemFolder, create = false) ?: it }
+            }
+        return folder?.let { SaveFolder.Document(it) }
+    }
+
     private fun importFolder(mainFolderName: String): SaveFolder? {
         val folder =
             when (getLocation()) {
