@@ -32,7 +32,8 @@ import java.util.zip.Inflater
  *  - RetroArch states:   "<rom name>.state.auto" (resume point), ".state", ".state1".."state3" (slots 1-4)
  *
  * Existing Lemuroid-S files are only replaced by newer ones; replaced battery saves are backed up.
- * Save states only work with the same emulator core (and usually the same core version).
+ * Save states generally only load in the same emulator core (and usually the same core version).
+ * RetroArch states may be compressed (rzip) and/or wrapped in a RASTATE container; both are handled.
  */
 class SavesImporter(
     private val appContext: Context,
@@ -102,7 +103,6 @@ class SavesImporter(
         val coreConfig = coresSelection.getCoreConfigForSystem(system)
         if (!coreConfig.statesSupported) return
 
-        val coreName = coreConfig.coreID.coreName
         val romName = game.fileName.substringBeforeLast(".")
         val slotsInfo = statesManager.getSavedSlotsInfo(game, coreConfig.coreID)
         val autoInfo = statesManager.getAutoSaveInfo(game, coreConfig.coreID)
@@ -126,17 +126,12 @@ class SavesImporter(
             if (slot in handledSlots) continue
             val file = found[fileName] ?: continue
 
-            // Lemuroid keeps states per core; a state from another core can't be loaded.
-            if (isLemuroidFormat && isCoreFolderName(file.parentName) && file.parentName != coreName) continue
-
             val current = if (slot == null) autoInfo else slotsInfo[slot]
             if (isCurrentNewer(current, file)) {
                 counters.skipped++
                 handledSlots.add(slot)
                 continue
             }
-
-            if (isLemuroidFormat && isFromOtherCore(found["$fileName.metadata"], coreName)) continue
 
             val saveState =
                 if (isLemuroidFormat) {
@@ -185,10 +180,8 @@ class SavesImporter(
         val state =
             when {
                 startsWith(bytes, RZIP_MAGIC) -> decodeRzip(bytes) ?: return null
-                // Newer RetroArch state container; not supported yet.
-                startsWith(bytes, RASTATE_MAGIC) -> return null
                 else -> bytes
-            }
+            }.let { if (startsWith(it, RASTATE_MAGIC)) extractRastateMemory(it) ?: return null else it }
         return SaveState(state, SaveState.Metadata(diskIndex = 0, version = coreConfig.statesVersion))
     }
 
@@ -222,24 +215,43 @@ class SavesImporter(
         }.onFailure { Timber.w(it, "Could not decode RetroArch state") }.getOrNull()
     }
 
-    /** Lemuroid-S records the core in a state's metadata; states from another core can't be loaded. */
-    private fun isFromOtherCore(
-        metadataFile: FoundFile?,
-        coreName: String,
-    ): Boolean {
-        val json = metadataFile?.let { readBytes(it) }?.decodeToString() ?: return false
-        val metadata = runCatching { Json.decodeFromString(SaveState.Metadata.serializer(), json) }.getOrNull()
-        val stateCore = metadata?.coreName
-        return stateCore != null && stateCore != coreName
+    /**
+     * Newer RetroArch versions wrap states in a "RASTATE" container: an 8-byte header ("RASTATE" +
+     * version), then blocks of [4-byte id, 4-byte little-endian size, data] padded to 8 bytes.
+     * The "MEM " block holds the core's own state data, which is what Lemuroid-S needs.
+     */
+    private fun extractRastateMemory(bytes: ByteArray): ByteArray? {
+        for (aligned in listOf(true, false)) {
+            runCatching { findRastateBlock(bytes, "MEM ", aligned) }.getOrNull()?.let { return it }
+        }
+        Timber.w("Could not read RetroArch RASTATE state")
+        return null
+    }
+
+    private fun findRastateBlock(
+        bytes: ByteArray,
+        blockId: String,
+        aligned: Boolean,
+    ): ByteArray? {
+        val buffer = ByteBuffer.wrap(bytes).order(ByteOrder.LITTLE_ENDIAN)
+        buffer.position(RASTATE_HEADER_SIZE)
+        while (buffer.remaining() >= 8) {
+            val id = ByteArray(4).also { buffer.get(it) }.decodeToString()
+            val size = buffer.int
+            if (size < 0 || size > buffer.remaining()) return null
+            if (id == blockId) return ByteArray(size).also { buffer.get(it) }
+            if (id == "END ") return null
+            val skip = if (aligned) (size + 7) / 8 * 8 else size
+            if (skip > buffer.remaining()) return null
+            buffer.position(buffer.position() + skip)
+        }
+        return null
     }
 
     private fun isCurrentNewer(
         current: SaveInfo,
         file: FoundFile,
     ) = current.exists && current.date >= file.lastModified
-
-    private fun isCoreFolderName(name: String) =
-        com.swordfish.lemuroid.lib.library.CoreID.values().any { it.coreName == name }
 
     private fun readBytes(file: FoundFile): ByteArray? {
         return runCatching { appContext.contentResolver.openInputStream(file.uri)?.use { it.readBytes() } }
@@ -308,6 +320,7 @@ class SavesImporter(
         private const val RZIP_HEADER_SIZE = 20
         private val RZIP_MAGIC = "#RZIPv".toByteArray()
         private val RASTATE_MAGIC = "RASTATE".toByteArray()
+        private const val RASTATE_HEADER_SIZE = 8
         private val STATE_SUFFIX = Regex("""\.(state\d*|slot\d)$""")
     }
 }

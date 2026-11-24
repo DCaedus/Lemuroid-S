@@ -64,11 +64,6 @@ fun SettingsScreen(
     LemuroidSettingsPage(modifier = modifier) {
         RomsSettings(
             state = state,
-            onMainFolderChosen = {
-                viewModel.onMainFolderChosen {
-                    Toast.makeText(context, R.string.main_folder_migrated, Toast.LENGTH_LONG).show()
-                }
-            },
             indexingInProgress = indexingInProgress,
             scanInProgress = scanInProgress,
         )
@@ -218,6 +213,7 @@ private fun TestSettings(onImportSaves: (Uri, (SavesImporter.Result?) -> Unit) -
             title = { Text(text = stringResource(id = R.string.settings_title_periodic_autosave)) },
             items = stringListResource(R.array.pref_key_periodic_autosave_display_names),
         )
+        MainFolderSetting()
         var showImportConfirmation by remember { mutableStateOf(false) }
         LemuroidSettingsMenuLink(
             title = { Text(text = stringResource(id = R.string.settings_title_import_saves)) },
@@ -397,7 +393,6 @@ private fun GeneralSettings() {
 @Composable
 private fun RomsSettings(
     state: SettingsViewModel.State,
-    onMainFolderChosen: () -> Unit,
     indexingInProgress: Boolean,
     scanInProgress: Boolean,
 ) {
@@ -411,13 +406,8 @@ private fun RomsSettings(
         }
 
     LemuroidCardSettingsGroup(title = { Text(text = stringResource(id = R.string.settings_category_storage)) }) {
-        MainFolderSetupItem(onChosen = onMainFolderChosen)
-        RomsFolderSettings(
-            enabled = !indexingInProgress,
-            currentCustomFolderName = currentDirectoryName,
-            onMainFolderChosen = onMainFolderChosen,
-        )
-        SavesFolderSettings(onMainFolderChosen = onMainFolderChosen)
+        RomsFolderSettings(enabled = !indexingInProgress, currentCustomFolderName = currentDirectoryName)
+        SavesFolderSettings()
         if (scanInProgress) {
             LemuroidSettingsMenuLink(
                 title = { Text(text = stringResource(id = R.string.stop)) },

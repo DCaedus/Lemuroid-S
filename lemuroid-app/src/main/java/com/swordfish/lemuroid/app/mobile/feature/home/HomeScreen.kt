@@ -77,11 +77,7 @@ fun HomeScreen(
 
     var showRomsFolderDialog by remember { mutableStateOf(false) }
     var showImportConfirmation by remember { mutableStateOf(false) }
-    val onMainFolderChosen = {
-        viewModel.onMainFolderChosen {
-            Toast.makeText(context, R.string.main_folder_migrated, Toast.LENGTH_LONG).show()
-        }
-    }
+    val onMainFolderChosen = { viewModel.onMainFolderChosen() }
     val mainFolderPicker = rememberMainFolderPicker(onMainFolderChosen)
     val importFolderPicker =
         rememberLauncherForActivityResult(ActivityResultContracts.OpenDocumentTree()) { uri ->

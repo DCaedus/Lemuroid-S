@@ -65,25 +65,19 @@ private fun useMainFolder(
     return runCatching { MainFolder(context).setFromPickedTree(treeUri) }.getOrDefault(false)
 }
 
-/**
- * The Lemuroid-S folder isn't a setting: it's where everything goes by default. This only shows
- * while it hasn't been chosen yet (or access to it was lost).
- */
+/** Shows the Lemuroid-S folder (normally in storage root) and lets the user choose it again. */
 @Composable
-fun MainFolderSetupItem(onChosen: () -> Unit) {
+fun MainFolderSetting() {
     val context = LocalContext.current
     var isSet by remember { mutableStateOf(MainFolder(context).isSet()) }
     ComposableLifecycle { _, _ -> isSet = MainFolder(context).isSet() }
-    val picker =
-        rememberMainFolderPicker {
-            isSet = true
-            onChosen()
-        }
-    if (isSet) return
+    val picker = rememberMainFolderPicker { isSet = true }
 
     LemuroidSettingsMenuLink(
-        title = { Text(text = stringResource(R.string.main_folder_card_title)) },
-        subtitle = { Text(text = stringResource(R.string.main_folder_not_set)) },
+        title = { Text(text = stringResource(R.string.main_folder_setting_title)) },
+        subtitle = {
+            Text(text = if (isSet) MainFolder.FOLDER_NAME else stringResource(R.string.main_folder_not_set))
+        },
         onClick = picker,
     )
 }
