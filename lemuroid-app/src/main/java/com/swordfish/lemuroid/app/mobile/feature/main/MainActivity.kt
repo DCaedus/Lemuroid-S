@@ -121,7 +121,11 @@ class MainActivity : RetrogradeComponentActivity(), BusyActivity {
 
         setContent {
             val navController = rememberNavController()
-            MainScreen(navController)
+            AppTheme {
+                MainFolderAccessGate {
+                    MainScreen(navController)
+                }
+            }
         }
     }
 

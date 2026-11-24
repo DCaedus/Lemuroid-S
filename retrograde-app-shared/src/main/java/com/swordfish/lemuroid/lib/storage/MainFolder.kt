@@ -23,6 +23,37 @@ class MainFolder(private val appContext: Context) {
 
     fun isSet(): Boolean = getRoot() != null
 
+    enum class Access {
+        /** Never chosen: the first-run setup asks for it. */
+        NOT_SET,
+        OK,
+
+        /** Chosen before but Android no longer lets Lemuroid-S in (revoked, moved, renamed, deleted...). */
+        LOST,
+    }
+
+    /** Whether the Lemuroid-S folder can be used right now. Quick (one small query), but not for the UI thread loop. */
+    fun checkAccess(): Access {
+        val root = getRoot() ?: return Access.NOT_SET
+        val tree = getTreeUri()?.let { Uri.parse(it) }
+        val hasPermission =
+            appContext.contentResolver.persistedUriPermissions.any {
+                (tree == null || it.uri == tree) && it.isReadPermission && it.isWritePermission
+            }
+        if (!hasPermission) return Access.LOST
+        val exists =
+            runCatching {
+                appContext.contentResolver.query(
+                    root.uri,
+                    arrayOf(DocumentsContract.Document.COLUMN_MIME_TYPE),
+                    null,
+                    null,
+                    null,
+                )?.use { it.moveToFirst() && it.getString(0) == DocumentsContract.Document.MIME_TYPE_DIR } == true
+            }.getOrDefault(false)
+        return if (exists) Access.OK else Access.LOST
+    }
+
     fun getRoot(): DocumentFolder? {
         val value = preferences().getString(appContext.getString(R.string.pref_key_main_folder), null) ?: return null
         return DocumentFolder(appContext.contentResolver, Uri.parse(value))

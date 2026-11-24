@@ -44,6 +44,14 @@ object RomsFolder {
         setLocation(context, LOCATION_CUSTOM)
     }
 
+    /** True if the ROMs folder is Lemuroid-S/roms (the default) rather than a custom folder. */
+    fun isMainLocation(context: Context): Boolean {
+        val location =
+            SharedPreferencesHelper.getSharedPreferences(context)
+                .getString(context.getString(com.swordfish.lemuroid.lib.R.string.pref_key_roms_location), null)
+        return location == LOCATION_MAIN
+    }
+
     /**
      * Adds folders for systems added since the ROMs folder was set up (run before each library scan).
      * A custom ROMs folder only gets them if it is already organized in system folders.

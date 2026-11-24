@@ -7,6 +7,7 @@ import com.swordfish.lemuroid.common.displayToast
 import com.swordfish.lemuroid.lib.core.CoresSelection
 import com.swordfish.lemuroid.lib.library.GameSystem
 import com.swordfish.lemuroid.lib.library.db.entity.Game
+import com.swordfish.lemuroid.lib.storage.MainFolder
 import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -22,6 +23,12 @@ class GameLauncher(
         loadSave: Boolean,
         leanback: Boolean,
     ): Boolean {
+        // Saves live in the Lemuroid-S folder: no playing while Android doesn't let us in.
+        if (MainFolder(activity.applicationContext).checkAccess() == MainFolder.Access.LOST) {
+            activity.displayToast(R.string.main_folder_lost_title)
+            return false
+        }
+
         if (GameProcessLock.isHeldByAnotherProcess(activity.applicationContext)) {
             activity.displayToast(R.string.game_process_another_game_running)
             return false

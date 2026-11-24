@@ -47,6 +47,9 @@
     <string name="main_folder_card_action">Choose</string>
     <string name="main_folder_failed">This folder can\'t be used. Please create or choose another one.</string>
     <string name="main_folder_required">Choose the Lemuroid-S folder first</string>
+    <string name="main_folder_lost_title">Can\'t reach the Lemuroid-S folder</string>
+    <string name="main_folder_lost_message">Your saves, ROMs and covers live in the Lemuroid-S folder, but Android no longer lets Lemuroid-S open it. It may have been moved, renamed or deleted, or access was removed.\n\nChoose the Lemuroid-S folder again to keep playing. Nothing is lost while you do.</string>
+    <string name="main_folder_lost_action">Choose folder</string>
     <string name="select_roms_folder">Select ROMS folder</string>
     <string name="folder_option_main">Lemuroid-S folder</string>
     <string name="folder_option_roms">ROMs folder</string>
