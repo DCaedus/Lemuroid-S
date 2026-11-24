@@ -29,6 +29,7 @@ namespace libretrodroid {
 
 const char *VFS::path(struct retro_vfs_file_handle* stream) {
     LOGV("VFS Calling path");
+    if (VFS::getInstance().isVirtual(stream)) return stream->orig_path;
     return retro_vfs_file_get_path_impl(stream);
 }
 
@@ -44,36 +45,84 @@ struct retro_vfs_file_handle* VFS::open(const char* path, unsigned int mode, uns
 
 int VFS::close(struct retro_vfs_file_handle *stream) {
     LOGV("VFS Calling close");
+    VFS& vfs = VFS::getInstance();
+    {
+        std::lock_guard<std::mutex> lock(vfs.handlesLock);
+        auto it = vfs.virtualHandles.find(stream);
+        if (it != vfs.virtualHandles.end()) {
+            ::close(it->second.fd);
+            vfs.virtualHandles.erase(it);
+            free(const_cast<char*>(stream->orig_path));
+            delete stream;
+            return 0;
+        }
+    }
     return retro_vfs_file_close_impl(stream);
 }
 
 int64_t VFS::size(struct retro_vfs_file_handle *stream) {
     LOGV("VFS Calling size");
+    VirtualHandle handle {};
+    if (VFS::getInstance().isVirtual(stream, &handle)) return handle.size;
     return retro_vfs_file_size_impl(stream);
 }
 
 int64_t VFS::tell(struct retro_vfs_file_handle *stream) {
     LOGV("VFS Calling tell");
+    VirtualHandle handle {};
+    if (VFS::getInstance().isVirtual(stream, &handle)) return handle.position;
     return retro_vfs_file_tell_impl(stream);
 }
 
 int64_t VFS::seek(struct retro_vfs_file_handle *stream, int64_t offset, int seek_position) {
     LOGV("VFS Calling seek");
+    VFS& vfs = VFS::getInstance();
+    {
+        std::lock_guard<std::mutex> lock(vfs.handlesLock);
+        auto it = vfs.virtualHandles.find(stream);
+        if (it != vfs.virtualHandles.end()) {
+            int64_t base = 0;
+            if (seek_position == RETRO_VFS_SEEK_POSITION_CURRENT) base = it->second.position;
+            else if (seek_position == RETRO_VFS_SEEK_POSITION_END) base = it->second.size;
+            int64_t target = base + offset;
+            if (target < 0) return -1;
+            it->second.position = target;
+            return target;
+        }
+    }
     return retro_vfs_file_seek_impl(stream, offset, seek_position);
 }
 
 int64_t VFS::read(struct retro_vfs_file_handle *stream, void *s, uint64_t len) {
     LOGV("VFS Calling read");
+    VFS& vfs = VFS::getInstance();
+    VirtualHandle handle {};
+    if (vfs.isVirtual(stream, &handle)) {
+        uint64_t done = 0;
+        while (done < len) {
+            ssize_t count = pread(handle.fd, static_cast<uint8_t*>(s) + done, len - done, handle.position + done);
+            if (count < 0) return -1;
+            if (count == 0) break;
+            done += static_cast<uint64_t>(count);
+        }
+        std::lock_guard<std::mutex> lock(vfs.handlesLock);
+        auto it = vfs.virtualHandles.find(stream);
+        if (it != vfs.virtualHandles.end()) it->second.position = handle.position + static_cast<int64_t>(done);
+        return static_cast<int64_t>(done);
+    }
     return retro_vfs_file_read_impl(stream, s, len);
 }
 
 int64_t VFS::write(struct retro_vfs_file_handle *stream, const void *s, uint64_t len) {
     LOGV("VFS Calling write");
+    // Game files are read-only.
+    if (VFS::getInstance().isVirtual(stream)) return -1;
     return retro_vfs_file_write_impl(stream, s, len);
 }
 
 int VFS::flush(struct retro_vfs_file_handle *stream) {
     LOGV("VFS Calling flush");
+    if (VFS::getInstance().isVirtual(stream)) return 0;
     return retro_vfs_file_flush_impl(stream);
 }
 
@@ -89,6 +138,7 @@ int VFS::rename(const char *old_path, const char *new_path) {
 
 int64_t VFS::truncate(struct retro_vfs_file_handle* stream, int64_t length) {
     LOGV("VFS Calling truncate");
+    if (VFS::getInstance().isVirtual(stream)) return -1;
     return retro_vfs_file_truncate_impl(stream, length);
 }
 
@@ -140,26 +190,36 @@ struct retro_vfs_file_handle* VFS::virtualOpen(const char *path, unsigned int mo
 
     LOGD("VFS Performing virtual file open: %s", virtualFile->getFileName().data());
 
-    auto stream = new retro_vfs_file_handle;
-
+    // A separate descriptor per handle, but positions are tracked per handle (see VirtualHandle):
+    // dup() shares one file offset between all handles.
     int duplicateFD = dup(virtualFile->getFD());
-    FILE* file = fdopen(duplicateFD, "rb");
-    size_t size = Utils::getFileSize(file);
+    if (duplicateFD < 0) return nullptr;
+    struct stat info {};
+    int64_t size = fstat(duplicateFD, &info) == 0 ? static_cast<int64_t>(info.st_size) : 0;
 
-    LOGV("VFS Virtual file size: %i", size);
-
+    auto stream = new retro_vfs_file_handle {};
     stream->fd = duplicateFD;
     stream->hints = hints;
     stream->size = size;
     stream->buf = nullptr;
-    stream->fp = file;
+    stream->fp = nullptr;
     stream->orig_path = strdup(virtualFile->getFileName().data());
     stream->mappos = 0;
     stream->mapsize = 0;
     stream->mapped = nullptr;
     stream->scheme = VFS_SCHEME_NONE;
 
+    std::lock_guard<std::mutex> lock(handlesLock);
+    virtualHandles[stream] = VirtualHandle { duplicateFD, 0, size };
     return stream;
+}
+
+bool VFS::isVirtual(struct retro_vfs_file_handle* stream, VirtualHandle* out) {
+    std::lock_guard<std::mutex> lock(handlesLock);
+    auto it = virtualHandles.find(stream);
+    if (it == virtualHandles.end()) return false;
+    if (out != nullptr) *out = it->second;
+    return true;
 }
 
 int VFS::stat(const char *path, int32_t *size) {

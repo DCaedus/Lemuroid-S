@@ -28,6 +28,8 @@
 #include <string>
 #include <memory>
 #include <optional>
+#include <mutex>
+#include <unordered_map>
 
 namespace libretrodroid {
 
@@ -80,6 +82,18 @@ public:
 
 private:
     std::vector<VFSFile> virtualFiles;
+
+    // Lemuroid-S: open handles on virtual files. Each has its own position and reads with pread(),
+    // so a core opening the same file twice (e.g. FBNeo with big romsets) can't disturb itself.
+    struct VirtualHandle {
+        int fd;
+        int64_t position;
+        int64_t size;
+    };
+    std::mutex handlesLock;
+    std::unordered_map<struct retro_vfs_file_handle*, VirtualHandle> virtualHandles;
+
+    bool isVirtual(struct retro_vfs_file_handle* stream, VirtualHandle* out = nullptr);
 
 };
 
