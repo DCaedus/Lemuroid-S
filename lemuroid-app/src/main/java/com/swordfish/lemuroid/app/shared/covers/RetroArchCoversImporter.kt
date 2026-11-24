@@ -13,8 +13,8 @@ import timber.log.Timber
 
 /**
  * "Import RetroArch Covers": copies artwork from RetroArch's thumbnails folder
- * (thumbnails/<RetroArch console name>/Named_Boxarts|Named_Snaps|Named_Titles) into
- * Lemuroid-S/thumbnails/<system>/..., for the systems Lemuroid-S runs. Existing files are kept.
+ * (thumbnails/<RetroArch console name>/Named_Boxarts|Named_Snaps|Named_Titles) into Lemuroid-S's
+ * covers/<system>/boxarts|screenshots|titles, for the systems Lemuroid-S runs. Existing files are kept.
  */
 class RetroArchCoversImporter(private val appContext: Context) {
     /** Number of covers copied, or null if the Lemuroid-S folder or RetroArch's thumbnails aren't available. */
@@ -40,7 +40,8 @@ class RetroArchCoversImporter(private val appContext: Context) {
                 val system = mainFolderSystem(console.name) ?: continue
                 val consoleFolder = DocumentFolder(appContext.contentResolver, console.uri)
                 for (type in consoleFolder.children().values.filter { it.isDirectory && it.name in ARTWORK_FOLDERS }) {
-                    val target = mainFolder.folder(MainFolder.THUMBNAILS, system, type.name) ?: continue
+                    val artworkType = ArtworkType.fromLibretroFolder(type.name) ?: continue
+                    val target = mainFolder.folder(MainFolder.COVERS, system, artworkType.folderName) ?: continue
                     copied += copyMissing(DocumentFolder(appContext.contentResolver, type.uri), target)
                 }
             }
@@ -71,6 +72,7 @@ class RetroArchCoversImporter(private val appContext: Context) {
     }
 
     companion object {
+        /** RetroArch's own folder name. */
         private const val THUMBNAILS = "thumbnails"
         private val ARTWORK_FOLDERS = ArtworkType.values().map { it.libretroFolder }.toSet()
     }

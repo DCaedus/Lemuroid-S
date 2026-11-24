@@ -54,6 +54,8 @@
 
 namespace libretrodroid {
 
+static std::string extractedDirectoryFor(const std::string& linkDirectory);
+
 uintptr_t LibretroDroid::callback_get_current_framebuffer() {
     return LibretroDroid::getInstance().handleGetCurrentFrameBuffer();
 }
@@ -397,8 +399,10 @@ void LibretroDroid::loadGameFromVirtualFiles(
         throw std::runtime_error("Calling loadGameFromVirtualFiles without any file.");
     }
 
-    // Links and unzipped files from the previous game are no longer needed.
+    // Links and unpacked files from the previous game are no longer needed.
+    std::string extractedDirectory = extractedDirectoryFor(linkDirectory);
     clearLinkDirectory(linkDirectory);
+    clearLinkDirectory(extractedDirectory);
 
     bool singleFile = virtualFiles.size() == 1;
 
@@ -427,6 +431,8 @@ void LibretroDroid::loadGameFromVirtualFiles(
             if (!unpackToMemoryFile(virtualFiles[0].getFD(), archiveEntry, romName, path)) {
                 LOGW("Unpacking %s to a temporary file", romName.c_str());
                 unlink(path.c_str());
+                mkdir(extractedDirectory.c_str(), 0700);
+                path = extractedDirectory + "/" + romName;
                 if (!ZipReader::extractEntry(virtualFiles[0].getFD(), archiveEntry, path)) {
                     throw std::runtime_error("Cannot unpack game");
                 }
@@ -484,6 +490,13 @@ void LibretroDroid::loadGameFromVirtualFiles(
 
 static constexpr uint64_t MAX_MEMORY_FILE_SIZE = 64ull * 1024 * 1024;
 
+/** Lemuroid-S: unpacked or copied game files go in "extracted", next to the "game-links" folder. */
+static std::string extractedDirectoryFor(const std::string& linkDirectory) {
+    size_t slash = linkDirectory.find_last_of('/');
+    std::string parent = slash == std::string::npos ? "." : linkDirectory.substr(0, slash);
+    return parent + "/extracted";
+}
+
 bool LibretroDroid::unpackToMemoryFile(
     int zipFd,
     const std::string& entryName,
@@ -534,31 +547,41 @@ void LibretroDroid::clearLinkDirectory(const std::string& linkDirectory) {
 std::string LibretroDroid::linkGameFiles(std::vector<VFSFile>& files, const std::string& linkDirectory) {
     mkdir(linkDirectory.c_str(), 0700);
 
-    std::string firstPath;
-    for (auto& file : files) {
+    auto nameOf = [](const VFSFile& file) {
         const std::string& virtualPath = file.getFileName();
-        std::string name = virtualPath.substr(virtualPath.find_last_of('/') + 1);
-        std::string linkPath = linkDirectory + "/" + name;
-        std::string target = "/proc/self/fd/" + std::to_string(file.getFD());
+        return virtualPath.substr(virtualPath.find_last_of('/') + 1);
+    };
 
+    // Named links to the open files (no copy). Files that belong together (e.g. .cue + .bin) must
+    // sit in one folder, so if any link can't be opened, all files are copied instead.
+    bool allLinked = true;
+    for (auto& file : files) {
+        std::string linkPath = linkDirectory + "/" + nameOf(file);
+        std::string target = "/proc/self/fd/" + std::to_string(file.getFD());
         bool linked = symlink(target.c_str(), linkPath.c_str()) == 0;
         if (linked) {
             int test = open(linkPath.c_str(), O_RDONLY);
             linked = test >= 0;
             if (test >= 0) close(test);
         }
-
         if (!linked) {
-            LOGW("Cannot link %s, copying it instead", name.c_str());
-            unlink(linkPath.c_str());
-            if (!Utils::copyFileDescriptorToPath(file.getFD(), linkPath)) {
-                throw std::runtime_error("Cannot prepare game file " + name);
-            }
+            allLinked = false;
+            break;
         }
-
-        if (firstPath.empty()) firstPath = linkPath;
     }
-    return firstPath;
+    if (allLinked) return linkDirectory + "/" + nameOf(files[0]);
+
+    LOGW("Cannot link game files, copying them instead");
+    clearLinkDirectory(linkDirectory);
+    std::string extractedDirectory = extractedDirectoryFor(linkDirectory);
+    mkdir(extractedDirectory.c_str(), 0700);
+    for (auto& file : files) {
+        std::string path = extractedDirectory + "/" + nameOf(file);
+        if (!Utils::copyFileDescriptorToPath(file.getFD(), path)) {
+            throw std::runtime_error("Cannot prepare game file " + nameOf(file));
+        }
+    }
+    return extractedDirectory + "/" + nameOf(files[0]);
 }
 
 void LibretroDroid::destroy() {

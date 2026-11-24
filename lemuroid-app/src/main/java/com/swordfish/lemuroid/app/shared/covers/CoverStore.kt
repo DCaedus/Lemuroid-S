@@ -16,12 +16,12 @@ import java.util.concurrent.ConcurrentHashMap
 
 /**
  * Finds game artwork, in this order (like RetroArch):
- *  1. Lemuroid-S's thumbnails folder: Lemuroid-S/thumbnails/<system (ES-DE name)>/Named_* in phone
+ *  1. Lemuroid-S's covers folder: Lemuroid-S/covers/<system (ES-DE name)>/boxarts|screenshots|titles in phone
  *     storage once the Lemuroid-S folder is chosen, otherwise the app's private storage
  *  2. Download from libretro (server, then GitHub backup) and save it into folder 1
  * RetroArch's own covers can be copied in with "Import RetroArch Covers".
  *
- * Both folders use RetroArch's layout: thumbnails/<console>/Named_Boxarts|Named_Snaps|Named_Titles/<game>.png
+ * Both folders use the same layout: covers/<system>/boxarts|screenshots|titles/<game>.png
  */
 class CoverStore(private val appContext: Context) {
     data class Resolved(val data: Any, val downloaded: Boolean)
@@ -33,14 +33,14 @@ class CoverStore(private val appContext: Context) {
 
     private val mainFolder = MainFolder(appContext)
 
-    /** Lemuroid-S/thumbnails folder listings, cached per "<console>/<artwork folder>". */
+    /** Lemuroid-S/covers folder listings, cached per "<system>/<artwork folder>". */
     private val mainFolderListings = ConcurrentHashMap<String, MainFolderListing>()
     private var mainFolderListingsRoot: String? = null
 
     private class MainFolderListing(val folder: DocumentFolder?, val files: MutableMap<String, Uri>)
 
-    val localThumbnailsDirectory: File
-        get() = File(appContext.getExternalFilesDir(null), "thumbnails")
+    val localCoversDirectory: File
+        get() = File(appContext.getExternalFilesDir(null), "covers")
 
     suspend fun resolve(target: CoverTarget): Resolved? =
         withContext(Dispatchers.IO) {
@@ -57,7 +57,7 @@ class CoverStore(private val appContext: Context) {
         target: CoverTarget,
         name: String,
     ): File {
-        return File(localThumbnailsDirectory, "${target.systemFolder}/${target.artworkType.libretroFolder}/$name.png")
+        return File(localCoversDirectory, "${target.systemFolder}/${target.artworkType.folderName}/$name.png")
     }
 
     private fun findInLocalFolder(target: CoverTarget): File? {
@@ -79,11 +79,11 @@ class CoverStore(private val appContext: Context) {
             mainFolderListings.clear()
             mainFolderListingsRoot = rootValue
         }
-        val key = "${target.mainFolderSystem}/${target.artworkType.libretroFolder}"
+        val key = "${target.mainFolderSystem}/${target.artworkType.folderName}"
         return mainFolderListings.getOrPut(key) {
             val folder =
                 runCatching {
-                    mainFolder.folder(MainFolder.THUMBNAILS, target.mainFolderSystem, target.artworkType.libretroFolder)
+                    mainFolder.folder(MainFolder.COVERS, target.mainFolderSystem, target.artworkType.folderName)
                 }.getOrNull()
             val files = runCatching { folder?.children()?.mapValues { it.value.uri } }.getOrNull() ?: emptyMap()
             MainFolderListing(folder, ConcurrentHashMap(files))

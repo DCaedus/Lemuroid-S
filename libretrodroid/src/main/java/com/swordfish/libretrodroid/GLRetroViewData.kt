@@ -28,7 +28,11 @@ class GLRetroViewData(context: Context) {
     var gameSupportsVirtualFileSystem: Boolean = true
     /** Lemuroid-S: name of the ROM inside the zip, when the (only) game file is a zip holding it. */
     var gameArchiveEntry: String? = null
-    /** Lemuroid-S: where named links to the game files go, for cores that need a real file path. */
+    /**
+     * Lemuroid-S: where named links to the game files go, for cores that need a real file path.
+     * Unpacked or copied files (rare fallback) go in "extracted", next to it. Both are emptied when
+     * the next game starts.
+     */
     var gameLinkDirectory: String = context.cacheDir.absolutePath + "/game-links"
     var systemDirectory: String = context.filesDir.absolutePath
     var savesDirectory: String = context.filesDir.absolutePath

@@ -13,7 +13,7 @@ import com.swordfish.lemuroid.lib.preferences.SharedPreferencesHelper
  *   Lemuroid-S/roms/<system>/      ROMs, one folder per system (ES-DE names), if chosen
  *   Lemuroid-S/saves/              in-game (battery) saves, <rom name>.srm
  *   Lemuroid-S/states/<core>/      save states
- *   Lemuroid-S/thumbnails/<system>/Named_Boxarts|Named_Snaps|Named_Titles/
+ *   Lemuroid-S/covers/<system>/boxarts|screenshots|titles/
  *
  * The user picks it once with Android's folder picker; without full file access Android doesn't let
  * apps create folders in storage root on their own.
@@ -97,7 +97,7 @@ class MainFolder(private val appContext: Context) {
      */
     fun mergeDuplicateFolders() {
         val root = getRoot() ?: return
-        for (name in listOf(THUMBNAILS, SAVES, STATES)) {
+        for (name in listOf(COVERS, SAVES, STATES)) {
             val folder = runCatching { root.subFolder(name, create = false) }.getOrNull() ?: continue
             runCatching { mergeDuplicates(folder, depth = 0) }
         }
@@ -154,7 +154,7 @@ class MainFolder(private val appContext: Context) {
         const val BIOS = "bios"
         const val SAVES = "saves"
         const val STATES = "states"
-        const val THUMBNAILS = "thumbnails"
+        const val COVERS = "covers"
 
         /** ROM folder names per system, following ES-DE's naming. */
         val SYSTEM_FOLDERS: Map<SystemID, String> =
