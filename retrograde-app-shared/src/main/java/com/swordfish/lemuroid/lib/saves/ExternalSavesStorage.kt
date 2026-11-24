@@ -1,12 +1,14 @@
 package com.swordfish.lemuroid.lib.saves
 
 import android.content.Context
+import android.os.SystemClock
 import com.swordfish.lemuroid.common.kotlin.writeBytesAtomic
 import com.swordfish.lemuroid.lib.library.db.entity.Game
 import com.swordfish.lemuroid.lib.storage.DocumentFolder
 import com.swordfish.lemuroid.lib.storage.MainFolder
 import timber.log.Timber
 import java.io.File
+import java.util.concurrent.ConcurrentHashMap
 
 /**
  * Where in-game (battery) saves and save states are kept in phone storage, like RetroArch's save
@@ -21,9 +23,30 @@ import java.io.File
 class ExternalSavesStorage(private val appContext: Context) {
     val mainFolder = MainFolder(appContext)
 
+    /**
+     * Folders reused for a few seconds, so starting a game lists each folder through Android's folder
+     * access once instead of several times (each listing is a slow call to another app). A folder's
+     * listing is refreshed after every write made through it.
+     */
+    private val recentFolders = ConcurrentHashMap<String, Pair<Long, SaveFolder>>()
+
+    private fun recentFolder(
+        key: String,
+        open: () -> SaveFolder?,
+    ): SaveFolder? {
+        val now = SystemClock.elapsedRealtime()
+        recentFolders[key]?.let { (openedAt, folder) -> if (now - openedAt < REUSE_FOLDER_MS) return folder }
+        val folder = open() ?: return null
+        recentFolders[key] = now to folder
+        return folder
+    }
+
     /** Folder for [game]'s battery save, or null if the Lemuroid-S folder can't be reached. */
     fun savesFolder(game: Game): SaveFolder? {
-        return mainFolder.folder(MainFolder.SAVES, systemFolder(game))?.let { SaveFolder.Document(it) }
+        val system = systemFolder(game)
+        return recentFolder("saves/$system") {
+            mainFolder.folder(MainFolder.SAVES, system)?.let { SaveFolder.Document(it) }
+        }
     }
 
     /** Folder for [game]'s save states, or null if the Lemuroid-S folder can't be reached. */
@@ -32,16 +55,19 @@ class ExternalSavesStorage(private val appContext: Context) {
         game: Game,
         coreName: String,
     ): SaveFolder? {
-        return mainFolder.folder(MainFolder.STATES, systemFolder(game))?.let { SaveFolder.Document(it) }
+        val system = systemFolder(game)
+        return recentFolder("states/$system") {
+            mainFolder.folder(MainFolder.STATES, system)?.let { SaveFolder.Document(it) }
+        }
     }
 
     /**
      * Where "Import Saves from other Emulators" puts files whose system isn't known, as they are:
      * the top of Lemuroid-S/saves and Lemuroid-S/states. Lemuroid-S also looks here when a game opens.
      */
-    fun importedSavesFolder(): SaveFolder? = importFolder(MainFolder.SAVES)
+    fun importedSavesFolder(): SaveFolder? = recentFolder(MainFolder.SAVES) { importFolder(MainFolder.SAVES) }
 
-    fun importedStatesFolder(): SaveFolder? = importFolder(MainFolder.STATES)
+    fun importedStatesFolder(): SaveFolder? = recentFolder(MainFolder.STATES) { importFolder(MainFolder.STATES) }
 
     /**
      * Where to put an imported file whose system is known ([systemFolder], ES-DE name): that
@@ -106,6 +132,7 @@ class ExternalSavesStorage(private val appContext: Context) {
         }
 
         class Document(private val folder: DocumentFolder) : SaveFolder {
+            @Volatile
             private var listing: Map<String, DocumentFolder.Child>? = null
 
             private fun children(): Map<String, DocumentFolder.Child> {
@@ -150,6 +177,8 @@ class ExternalSavesStorage(private val appContext: Context) {
     }
 
     companion object {
+        private const val REUSE_FOLDER_MS = 10_000L
+
         /** Logs and swallows errors (callers fall back to app storage). */
         inline fun <T> safely(
             what: String,
