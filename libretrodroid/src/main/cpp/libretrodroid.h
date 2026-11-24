@@ -160,6 +160,7 @@ private:
     unsigned int frameSpeed = 1;
     bool audioEnabled = true;
     float audioVolume = 1.0f;
+    bool skipVideoForCurrentRun = false;
     bool preferLowLatencyAudio = false;
     bool rumbleEnabled = false;
 

@@ -54,6 +54,7 @@ public:
 
     void setEnableVirtualFileSystem(bool value);
     void setEnableMicrophone(bool value);
+    void setVideoEnabled(bool value);
 
 private:
     Environment() {}
@@ -127,6 +128,7 @@ private:
     unsigned language = RETRO_LANGUAGE_ENGLISH;
     bool useVirtualFileSystem = false;
     bool enableMicrophone = false;
+    bool videoEnabled = true;
 
     int pixelFormat = RETRO_PIXEL_FORMAT_RGB565;
     bool useHWAcceleration = false;

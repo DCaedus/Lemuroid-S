@@ -458,8 +458,17 @@ void LibretroDroid::step() {
         frames = std::min(requestedFrames, 2u);
     }
 
-    for (size_t i = 0; i < frames * frameSpeed; i++)
+    // Lemuroid-S frameskip: when fast-forwarding, only the last frame of each step is shown on screen
+    // (so the display stays at the screen refresh rate, about 60 fps). The other frames are run with
+    // video disabled, which saves GPU work and battery.
+    const size_t totalRuns = frames * frameSpeed;
+    for (size_t i = 0; i < totalRuns; i++) {
+        skipVideoForCurrentRun = frameSpeed > 1 && i + 1 < totalRuns;
+        Environment::getInstance().setVideoEnabled(!skipVideoForCurrentRun);
         core->retro_run();
+    }
+    skipVideoForCurrentRun = false;
+    Environment::getInstance().setVideoEnabled(true);
 
     if (video && !video->rendersInVideoCallback()) {
         video->renderFrame();
@@ -538,6 +547,10 @@ void LibretroDroid::handleVideoRefresh(
     unsigned int height,
     size_t pitch
 ) {
+    if (skipVideoForCurrentRun) {
+        return;
+    }
+
     if (video) {
         video->onNewFrame(data, width, height, pitch);
 

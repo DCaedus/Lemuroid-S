@@ -320,7 +320,12 @@ bool Environment::handle_callback_environment(unsigned cmd, void *data) {
 
         case RETRO_ENVIRONMENT_GET_AUDIO_VIDEO_ENABLE:
             LOGD("Called RETRO_ENVIRONMENT_GET_AUDIO_VIDEO_ENABLE");
-            return false;
+            // Lemuroid-S: during fast-forward, frames that won't be shown are run with video disabled,
+            // so cores that support it can skip drawing them (bit 0: video, bit 1: audio).
+            if (data != nullptr) {
+                *static_cast<int*>(data) = (videoEnabled ? 1 : 0) | 2;
+            }
+            return true;
 
         case RETRO_ENVIRONMENT_GET_LANGUAGE:
             LOGD("Called RETRO_ENVIRONMENT_GET_LANGUAGE");
@@ -475,6 +480,10 @@ std::array<libretrodroid::RumbleState, 4>& Environment::getLastRumbleStates() {
 
 void Environment::setEnableVirtualFileSystem(bool value) {
     this->useVirtualFileSystem = value;
+}
+
+void Environment::setVideoEnabled(bool value) {
+    videoEnabled = value;
 }
 
 void Environment::setEnableMicrophone(bool value) {
