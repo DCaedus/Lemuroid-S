@@ -2,9 +2,6 @@ package com.swordfish.lemuroid.app.mobile.feature.settings.general
 
 import android.net.Uri
 import android.widget.Toast
-import androidx.activity.compose.rememberLauncherForActivityResult
-import androidx.activity.result.contract.ActivityResultContracts
-import androidx.compose.foundation.layout.Row
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
@@ -27,8 +24,8 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 /**
- * "Import saves?" confirmation for Import Saves from other Emulators. Imports from RetroArch's
- * folder (no picking once confirmed), or from another folder if the user prefers.
+ * "Import saves?" confirmation for Import Saves from RetroArch. Uses RetroArch's folder
+ * (confirmed once in the folder picker, then remembered).
  * Always keep this in the composition; [show] controls the dialog (the folder pickers must stay
  * registered while they are open).
  */
@@ -47,11 +44,6 @@ fun ImportSavesDialog(
         onImportStarted()
     }
     val retroArch = rememberRetroArchFolderAccess { runImport(it) }
-    val otherFolder =
-        rememberLauncherForActivityResult(ActivityResultContracts.OpenDocumentTree()) { uri ->
-            if (uri != null) runImport(uri)
-        }
-
     if (!show) return
 
     AlertDialog(
@@ -59,20 +51,12 @@ fun ImportSavesDialog(
         title = { Text(text = stringResource(R.string.import_saves_confirm_title)) },
         text = { Text(text = stringResource(R.string.import_saves_confirm_message)) },
         confirmButton = {
-            Row {
-                TextButton(
-                    onClick = {
-                        onDismiss()
-                        otherFolder.launch(null)
-                    },
-                ) { Text(text = stringResource(R.string.import_saves_other_folder)) }
-                TextButton(
-                    onClick = {
-                        onDismiss()
-                        retroArch()
-                    },
-                ) { Text(text = stringResource(R.string.import_saves_from_retroarch)) }
-            }
+            TextButton(
+                onClick = {
+                    onDismiss()
+                    retroArch()
+                },
+            ) { Text(text = stringResource(R.string.import_saves_from_retroarch)) }
         },
         dismissButton = {
             TextButton(onClick = onDismiss) { Text(text = stringResource(android.R.string.cancel)) }

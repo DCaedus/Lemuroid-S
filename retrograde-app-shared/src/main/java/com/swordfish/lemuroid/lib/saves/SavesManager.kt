@@ -76,7 +76,13 @@ class SavesManager(
         saveFile: File,
     ) {
         ExternalSavesStorage.safely("read save") {
-            val external = externalSavesStorage.savesFolder(game)?.read(saveFile.name) ?: return@safely
+            // Imported RetroArch saves sit at the top of the saves folder, under the same name.
+            val external =
+                externalSavesStorage.savesFolder(game)?.read(saveFile.name)
+                    ?: externalSavesStorage.importedSavesFolder()?.let { folder ->
+                        folder.read(saveFile.name) ?: folder.read(saveFile.name.removeSuffix(".srm") + ".sav")
+                    }
+                    ?: return@safely
             if (external.data.isEmpty()) return@safely
             val internalTime = if (saveFile.exists()) saveFile.lastModified() else Long.MIN_VALUE / 2
             val internalIsCurrent = internalTime + SYNC_TOLERANCE_MS >= external.lastModified
@@ -86,44 +92,6 @@ class SavesManager(
         }
     }
 
-    /** Copies the current in-game save to saves/import-backups before it gets replaced. */
-    suspend fun backupSaveRAM(game: Game) {
-        withContext(Dispatchers.IO) {
-            val saveFile = getSaveFile(getSaveRAMFileName(game))
-            if (!saveFile.exists() || saveFile.length() == 0L) return@withContext
-            val backupDirectory = File(directoriesManager.getSavesDirectory(), "import-backups").apply { mkdirs() }
-            saveFile.copyTo(File(backupDirectory, "${saveFile.name}.${System.currentTimeMillis()}"), overwrite = true)
-        }
-    }
-
-    /**
-     * Stores an imported battery save by file name ("Game (USA).srm"), even if the game isn't in the
-     * library yet: Lemuroid-S finds saves by name. Keeps the existing save if it's newer.
-     * Returns false if it was kept.
-     */
-    suspend fun importSaveRAMFile(
-        fileName: String,
-        data: ByteArray,
-        lastModified: Long,
-    ): Boolean =
-        withContext(Dispatchers.IO) {
-            val saveFile = getSaveFile(fileName)
-            if (saveFile.exists() && saveFile.length() > 0 && saveFile.lastModified() >= lastModified) {
-                return@withContext false
-            }
-            if (saveFile.exists() && saveFile.length() > 0) {
-                val backupDirectory = File(directoriesManager.getSavesDirectory(), "import-backups").apply { mkdirs() }
-                saveFile.copyTo(
-                    File(backupDirectory, "${saveFile.name}.${System.currentTimeMillis()}"),
-                    overwrite = true,
-                )
-            }
-            saveFile.writeBytesAtomic(data)
-            saveFile.setLastModified(lastModified)
-            true
-        }
-
-    /** RetroArch-compatible save file name for [game], e.g. "Game (USA).srm". */
     fun saveRAMFileName(game: Game) = getSaveRAMFileName(game)
 
     private suspend fun getSaveFile(fileName: String): File {

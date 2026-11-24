@@ -65,6 +65,39 @@ class ExternalSavesStorage(private val appContext: Context) {
         }
     }
 
+    /**
+     * Where "Import Saves from other Emulators" puts RetroArch's files, as they are (RetroArch's
+     * names, no sorting): the top of Lemuroid-S/saves and Lemuroid-S/states, or the top of the ROMs
+     * folder when saves are kept in the ROMs folder. Lemuroid-S also looks here when a game opens.
+     */
+    fun importedSavesFolder(): SaveFolder? = importFolder(MainFolder.SAVES)
+
+    fun importedStatesFolder(): SaveFolder? = importFolder(MainFolder.STATES)
+
+    private fun importFolder(mainFolderName: String): SaveFolder? {
+        val folder =
+            when (getLocation()) {
+                Location.MAIN_FOLDER -> mainFolder.folder(mainFolderName)
+                Location.ROMS_FOLDER -> romsRootFolder()
+            }
+        return folder?.let { SaveFolder.Document(it) }
+    }
+
+    private fun romsRootFolder(): DocumentFolder? {
+        @Suppress("DEPRECATION")
+        val value =
+            SharedPreferencesHelper.getLegacySharedPreferences(appContext)
+                .getString(appContext.getString(R.string.pref_key_extenral_folder), null) ?: return null
+        val uri = Uri.parse(value)
+        val folderUri =
+            if (DocumentsContract.isDocumentUri(appContext, uri)) {
+                uri
+            } else {
+                DocumentsContract.buildDocumentUriUsingTree(uri, DocumentsContract.getTreeDocumentId(uri))
+            }
+        return DocumentFolder(contentResolver, folderUri)
+    }
+
     private fun systemFolder(game: Game): String = MainFolder.systemFolderName(game.systemId)
 
     private fun romFolder(game: Game): SaveFolder? {

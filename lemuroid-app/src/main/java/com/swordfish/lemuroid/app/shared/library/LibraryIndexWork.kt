@@ -5,7 +5,6 @@ import androidx.work.CoroutineWorker
 import androidx.work.ListenableWorker
 import androidx.work.WorkerParameters
 import com.swordfish.lemuroid.app.mobile.shared.NotificationsManager
-import com.swordfish.lemuroid.app.shared.saves.SavesImporter
 import com.swordfish.lemuroid.app.utils.android.createSyncForegroundInfo
 import com.swordfish.lemuroid.lib.injection.AndroidWorkerInjection
 import com.swordfish.lemuroid.lib.injection.WorkerKey
@@ -22,9 +21,6 @@ class LibraryIndexWork(context: Context, workerParams: WorkerParameters) :
     CoroutineWorker(context, workerParams) {
     @Inject
     lateinit var lemuroidLibrary: LemuroidLibrary
-
-    @Inject
-    lateinit var savesImporter: SavesImporter
 
     override suspend fun doWork(): Result {
         AndroidWorkerInjection.inject(this)
@@ -49,10 +45,6 @@ class LibraryIndexWork(context: Context, workerParams: WorkerParameters) :
         result.exceptionOrNull()?.let {
             Timber.e("Library indexing work terminated with an exception:", it)
         }
-
-        // Lemuroid-S: imported saves waiting for their games are brought in once the games are found.
-        runCatching { savesImporter.importPending() }
-            .onFailure { Timber.e(it, "Could not import pending saves") }
 
         LibraryIndexScheduler.scheduleCoreUpdate(applicationContext)
 

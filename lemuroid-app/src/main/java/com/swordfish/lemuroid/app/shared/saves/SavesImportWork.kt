@@ -52,13 +52,7 @@ class SavesImportWork(context: Context, workerParams: WorkerParameters) :
     private fun showResult(result: SavesImporter.Result?) {
         val message =
             if (result != null) {
-                applicationContext.getString(
-                    R.string.import_saves_result,
-                    result.imported,
-                    result.importedStates,
-                    result.skippedOlder,
-                    result.pending,
-                )
+                applicationContext.getString(R.string.import_saves_result, result.saves, result.states, result.skipped)
             } else {
                 applicationContext.getString(R.string.import_saves_failed)
             }

@@ -58,26 +58,23 @@
     <string name="saves_option_roms">ROMs folder (next to each game)</string>
     <string name="home_choose">Choose</string>
     <string name="import_saves_confirm_title">Import saves?</string>
-    <string name="import_saves_confirm_message">Battery saves (.srm, .sav) and save states will be copied into Lemuroid-S from RetroArch\'s folder (or another folder you choose). Saves for games not in your library yet are imported automatically once you add them.
-
-Existing Lemuroid-S saves for the same games may be overwritten when the imported ones are newer. Replaced battery saves are backed up first.</string>
+    <string name="import_saves_confirm_message">Everything in RetroArch\'s saves and states folders will be copied into Lemuroid-S\'s saves folders. Your games pick them up when you open them.\n\nExisting Lemuroid-S saves may be overwritten by newer RetroArch ones.</string>
     <string name="import_saves_started">Importing saves…</string>
     <string name="import_saves_from_retroarch">Import from RetroArch</string>
-    <string name="import_saves_other_folder">Other folder</string>
     <string name="import_covers_title">Import RetroArch Covers</string>
     <string name="import_covers_description">Copy covers from RetroArch\'s thumbnails folder into the Lemuroid-S folder</string>
     <string name="import_covers_running">Importing covers…</string>
     <string name="import_covers_result">Imported %1$d covers from RetroArch.</string>
     <string name="import_covers_failed">Could not find RetroArch\'s thumbnails folder, or the Lemuroid-S folder isn\'t set up.</string>
-    <string name="home_import_saves_title">Import Saves from other Emulators</string>
-    <string name="home_import_saves_message">Copy your battery saves and save states from RetroArch (or another emulator\'s folder) into Lemuroid-S. Works even before your games are added.</string>
+    <string name="home_import_saves_title">Import Saves from RetroArch</string>
+    <string name="home_import_saves_message">Copy your battery saves and save states from RetroArch into Lemuroid-S. Works even before your games are added.</string>
     <string name="home_import_saves_action">Import Saves</string>
     <string name="home_card_not_now">Not now</string>
     <string name="done">Done</string>
-    <string name="settings_title_import_saves">Import Saves from other Emulators</string>
-    <string name="settings_description_import_saves">Copy battery saves and save states from RetroArch or a copy of Lemuroid\'s folder</string>
-    <string name="import_saves_result">Imported %1$d battery saves and %2$d save states. %3$d skipped (Lemuroid-S\'s copy was newer). %4$d waiting for their games to be added to your library.</string>
-    <string name="import_saves_failed">Could not import saves from this folder</string>
+    <string name="settings_title_import_saves">Import Saves from RetroArch</string>
+    <string name="settings_description_import_saves">Copy RetroArch\'s battery saves and save states into Lemuroid-S</string>
+    <string name="import_saves_result">Copied %1$d battery saves and %2$d save states from RetroArch. %3$d skipped (Lemuroid-S already had a newer copy). Games pick them up when you open them.</string>
+    <string name="import_saves_failed">Couldn\'t find RetroArch\'s saves or states folder, or the Lemuroid-S folder isn\'t set up.</string>
     <string name="settings_title_show_framerate">Show framerate</string>
     <string name="settings_description_show_framerate">Shows game fps, game speed (%) and new pictures per second in a corner while playing</string>
     <string name="framerate_overlay">Game %1$d fps (%2$d%%) · Screen %3$d fps</string>

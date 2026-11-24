@@ -259,11 +259,9 @@ abstract class LemuroidApplicationModule {
         @JvmStatic
         fun savesImporter(
             context: Context,
-            retrogradeDb: RetrogradeDatabase,
-            savesManager: SavesManager,
-            statesManager: StatesManager,
-            coresSelection: CoresSelection,
-        ) = SavesImporter(context, retrogradeDb, savesManager, statesManager, coresSelection)
+            externalSavesStorage: ExternalSavesStorage,
+            directoriesManager: DirectoriesManager,
+        ) = SavesImporter(context, externalSavesStorage, directoriesManager)
 
         @Provides
         @PerApp
