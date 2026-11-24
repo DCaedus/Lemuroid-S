@@ -21,11 +21,10 @@ package com.swordfish.lemuroid.ext.feature.core
 
 import android.content.Context
 import android.content.SharedPreferences
-import android.net.Uri
 import android.os.Build
 import com.swordfish.lemuroid.common.files.safeDelete
-import com.swordfish.lemuroid.common.kotlin.writeToFile
 import com.swordfish.lemuroid.lib.core.CoreUpdater
+import com.swordfish.lemuroid.lib.core.CoresRelease
 import com.swordfish.lemuroid.lib.library.CoreID
 import com.swordfish.lemuroid.lib.preferences.SharedPreferencesHelper
 import com.swordfish.lemuroid.lib.storage.DirectoriesManager
@@ -42,12 +41,7 @@ class CoreUpdaterImpl(
     private val directoriesManager: DirectoriesManager,
     retrofit: Retrofit,
 ) : CoreUpdater {
-    // This is the last tagged versions of cores.
-    companion object {
-        private const val CORES_VERSION = "1.17.0"
-    }
-
-    private val baseUri = Uri.parse("https://github.com/Swordfish90/LemuroidCores/")
+    private val coresVersion = CoresRelease.VERSION
 
     private val api = retrofit.create(CoreUpdater.CoreManagerApi::class.java)
 
@@ -66,7 +60,7 @@ class CoreUpdaterImpl(
         context: Context,
         coreID: CoreID,
     ) {
-        findBundledLibrary(context, coreID) ?: downloadCoreFromGithub(coreID)
+        findBundledLibrary(context, coreID) ?: downloadCore(coreID)
     }
 
     private suspend fun retrieveAssets(
@@ -77,12 +71,12 @@ class CoreUpdaterImpl(
             .retrieveAssetsIfNeeded(api, directoriesManager, sharedPreferences)
     }
 
-    private suspend fun downloadCoreFromGithub(coreID: CoreID): File {
-        Timber.i("Downloading core $coreID from github")
+    private suspend fun downloadCore(coreID: CoreID): File {
+        Timber.i("Downloading core $coreID")
 
         val mainCoresDirectory = directoriesManager.getCoresDirectory()
         val coresDirectory =
-            File(mainCoresDirectory, CORES_VERSION).apply {
+            File(mainCoresDirectory, coresVersion).apply {
                 mkdirs()
             }
 
@@ -94,37 +88,45 @@ class CoreUpdaterImpl(
         }
 
         runCatching {
-            deleteOutdatedCores(mainCoresDirectory, CORES_VERSION)
+            deleteOutdatedCores(mainCoresDirectory, coresVersion)
         }
 
-        val uri =
-            baseUri.buildUpon()
-                .appendEncodedPath("raw/$CORES_VERSION/lemuroid_core_${coreID.coreName}/src/main/jniLibs/")
-                .appendPath(Build.SUPPORTED_ABIS.first())
-                .appendPath(libFileName)
-                .build()
-
+        val url = CoresRelease.coreUrl(Build.SUPPORTED_ABIS.first(), libFileName)
+        val tempFile = File(coresDirectory, "$libFileName.download")
         try {
-            downloadFile(uri, destFile)
+            downloadZippedLibrary(url, tempFile)
+            if (!tempFile.renameTo(destFile)) throw IllegalStateException("Could not save $libFileName")
             return destFile
         } catch (e: Throwable) {
+            tempFile.safeDelete()
             destFile.safeDelete()
             throw e
         }
     }
 
-    private suspend fun downloadFile(
-        uri: Uri,
+    /** Downloads a zipped core and writes the library inside it to [destFile]. */
+    private suspend fun downloadZippedLibrary(
+        url: String,
         destFile: File,
     ) {
-        val response = api.downloadFile(uri.toString())
+        val response = api.downloadZip(url)
 
         if (!response.isSuccessful) {
             Timber.e("Download core response was unsuccessful")
             throw Exception(response.errorBody()?.string() ?: "Download error")
         }
 
-        response.body()?.writeToFile(destFile)
+        withContext(Dispatchers.IO) {
+            val zip = response.body() ?: throw Exception("Empty download")
+            zip.use {
+                while (true) {
+                    val entry = it.nextEntry ?: throw Exception("No library in $url")
+                    if (entry.isDirectory || !entry.name.endsWith(".so")) continue
+                    destFile.outputStream().use { output -> it.copyTo(output) }
+                    return@withContext
+                }
+            }
+        }
     }
 
     private suspend fun findBundledLibrary(

@@ -1,8 +1,8 @@
 package com.swordfish.lemuroid.lib.core.assetsmanager
 
 import android.content.SharedPreferences
-import android.net.Uri
 import com.swordfish.lemuroid.lib.core.CoreUpdater
+import com.swordfish.lemuroid.lib.core.CoresRelease
 import com.swordfish.lemuroid.lib.library.CoreID
 import com.swordfish.lemuroid.lib.storage.DirectoriesManager
 import kotlinx.coroutines.Dispatchers
@@ -27,7 +27,7 @@ class PPSSPPAssetsManager : CoreID.AssetsManager {
         }
 
         try {
-            val response = coreUpdaterApi.downloadZip(PPSSPP_ASSETS_URL.toString())
+            val response = coreUpdaterApi.downloadZip(CoresRelease.PPSSPP_ASSETS_URL)
             handleSuccess(directoriesManager, response, sharedPreferences)
         } catch (e: Throwable) {
             getAssetsDirectory(directoriesManager).deleteRecursively()
@@ -44,18 +44,20 @@ class PPSSPPAssetsManager : CoreID.AssetsManager {
         coreAssetsDirectory.mkdirs()
 
         response.body()?.use { zipInputStream ->
+            val rootPath = coreAssetsDirectory.canonicalPath + File.separator
             while (true) {
                 val entry = zipInputStream.nextEntry ?: break
-                Timber.d("Writing file: ${entry.name}")
-                val destFile =
-                    File(
-                        coreAssetsDirectory,
-                        entry.name,
-                    )
+                // libretro's PPSSPP.zip keeps everything inside a "PPSSPP/" folder.
+                val name = entry.name.removePrefix("$PPSSPP_ASSETS_FOLDER_NAME/")
+                if (name.isEmpty()) continue
+                val destFile = File(coreAssetsDirectory, name)
+                if (!destFile.canonicalPath.startsWith(rootPath)) continue
+                Timber.d("Writing file: $name")
                 if (entry.isDirectory) {
                     destFile.mkdirs()
                 } else {
-                    zipInputStream.copyTo(destFile.outputStream())
+                    destFile.parentFile?.mkdirs()
+                    destFile.outputStream().use { zipInputStream.copyTo(it) }
                 }
             }
         }
@@ -85,13 +87,7 @@ class PPSSPPAssetsManager : CoreID.AssetsManager {
     }
 
     companion object {
-        const val PPSSPP_ASSETS_VERSION = "1.15"
-
-        val PPSSPP_ASSETS_URL: Uri =
-            Uri.parse("https://github.com/Swordfish90/LemuroidCores/")
-                .buildUpon()
-                .appendEncodedPath("raw/$PPSSPP_ASSETS_VERSION/assets/ppsspp.zip")
-                .build()
+        const val PPSSPP_ASSETS_VERSION = CoresRelease.VERSION
 
         const val PPSSPP_ASSETS_VERSION_KEY = "ppsspp_assets_version_key"
 
