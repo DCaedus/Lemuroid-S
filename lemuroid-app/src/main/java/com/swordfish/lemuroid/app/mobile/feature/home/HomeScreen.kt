@@ -2,6 +2,7 @@ package com.swordfish.lemuroid.app.mobile.feature.home
 
 import android.Manifest
 import android.os.Build
+import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.animation.AnimatedVisibility
@@ -9,18 +10,25 @@ import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -28,6 +36,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.Lifecycle
 import com.swordfish.lemuroid.R
+import com.swordfish.lemuroid.app.mobile.feature.settings.general.SavesLocationSettings
 import com.swordfish.lemuroid.app.mobile.shared.compose.ui.LemuroidGameCard
 import com.swordfish.lemuroid.app.utils.android.ComposableLifecycle
 import com.swordfish.lemuroid.common.displayDetailsSettingsScreen
@@ -63,9 +72,39 @@ fun HomeScreen(
         }
 
     val state = viewModel.getViewStates().collectAsState(HomeViewModel.UIState())
+    val setupCards = viewModel.getSetupCards().collectAsState(HomeViewModel.SetupCards())
+
+    var showSavesLocationDialog by remember { mutableStateOf(false) }
+    val importFolderPicker =
+        rememberLauncherForActivityResult(ActivityResultContracts.OpenDocumentTree()) { uri ->
+            if (uri == null) return@rememberLauncherForActivityResult
+            viewModel.importSaves(uri) { result ->
+                val message =
+                    if (result != null) {
+                        context.getString(R.string.import_saves_result, result.imported, result.skippedOlder)
+                    } else {
+                        context.getString(R.string.import_saves_failed)
+                    }
+                Toast.makeText(context, message, Toast.LENGTH_LONG).show()
+            }
+        }
+
+    if (showSavesLocationDialog) {
+        SavesLocationDialog(
+            onDone = {
+                showSavesLocationDialog = false
+                viewModel.dismissSavesLocationCard()
+            },
+        )
+    }
+
     HomeScreen(
         modifier,
         state.value,
+        setupCards.value,
+        { showSavesLocationDialog = true },
+        { importFolderPicker.launch(null) },
+        { viewModel.dismissImportSavesCard() },
         onGameClick,
         onGameLongClick,
         onOpenCoreSelection,
@@ -85,6 +124,10 @@ fun HomeScreen(
 private fun HomeScreen(
     modifier: Modifier = Modifier,
     state: HomeViewModel.UIState,
+    setupCards: HomeViewModel.SetupCards,
+    onChooseSavesLocation: () -> Unit,
+    onImportSaves: () -> Unit,
+    onDismissImportSaves: () -> Unit,
     onGameClicked: (Game) -> Unit,
     onGameLongClick: (Game) -> Unit,
     onOpenCoreSelection: () -> Unit,
@@ -114,6 +157,25 @@ private fun HomeScreen(
                 actionId = R.string.home_empty_action,
                 onAction = onSetDirectoryClicked,
                 enabled = !state.indexInProgress,
+            )
+        }
+        AnimatedVisibility(setupCards.showSavesLocation) {
+            HomeNotification(
+                titleId = R.string.home_saves_location_title,
+                messageId = R.string.home_saves_location_message,
+                actionId = R.string.home_saves_location_action,
+                onAction = onChooseSavesLocation,
+            )
+        }
+        // Import only makes sense once there are games to match the saves to.
+        AnimatedVisibility(setupCards.showImportSaves && !state.showNoGamesCard && !state.indexInProgress) {
+            HomeNotification(
+                titleId = R.string.home_import_saves_title,
+                messageId = R.string.home_import_saves_message,
+                actionId = R.string.home_import_saves_action,
+                onAction = onImportSaves,
+                secondaryActionId = R.string.home_card_not_now,
+                onSecondaryAction = onDismissImportSaves,
             )
         }
         AnimatedVisibility(state.showNoMicrophonePermissionCard) {
@@ -201,6 +263,8 @@ private fun HomeNotification(
     actionId: Int,
     enabled: Boolean = true,
     onAction: () -> Unit = { },
+    secondaryActionId: Int? = null,
+    onSecondaryAction: () -> Unit = { },
 ) {
     ElevatedCard(
         modifier =
@@ -223,13 +287,35 @@ private fun HomeNotification(
                 text = stringResource(messageId),
                 style = MaterialTheme.typography.bodyMedium,
             )
-            OutlinedButton(
+            Row(
                 modifier = Modifier.align(Alignment.End),
-                onClick = onAction,
-                enabled = enabled,
+                horizontalArrangement = Arrangement.spacedBy(8.dp),
             ) {
-                Text(stringResource(id = actionId))
+                if (secondaryActionId != null) {
+                    TextButton(onClick = onSecondaryAction) {
+                        Text(stringResource(id = secondaryActionId))
+                    }
+                }
+                OutlinedButton(
+                    onClick = onAction,
+                    enabled = enabled,
+                ) {
+                    Text(stringResource(id = actionId))
+                }
             }
         }
     }
+}
+
+/** Lets the user pick the saves location from the home screen, with the same controls as Settings. */
+@Composable
+private fun SavesLocationDialog(onDone: () -> Unit) {
+    AlertDialog(
+        onDismissRequest = onDone,
+        title = { Text(text = stringResource(R.string.home_saves_location_title)) },
+        text = { Column { SavesLocationSettings() } },
+        confirmButton = {
+            TextButton(onClick = onDone) { Text(text = stringResource(R.string.done)) }
+        },
+    )
 }

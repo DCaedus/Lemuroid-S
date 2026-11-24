@@ -35,6 +35,7 @@ import com.swordfish.lemuroid.app.shared.game.GameLauncher
 import com.swordfish.lemuroid.app.shared.input.InputDeviceManager
 import com.swordfish.lemuroid.app.shared.main.GameLaunchTaskHandler
 import com.swordfish.lemuroid.app.shared.rumble.RumbleManager
+import com.swordfish.lemuroid.app.shared.saves.SavesImporter
 import com.swordfish.lemuroid.app.shared.settings.ControllerConfigsManager
 import com.swordfish.lemuroid.app.shared.settings.StorageFrameworkPickerLauncher
 import com.swordfish.lemuroid.app.tv.channel.ChannelHandler
@@ -243,6 +244,15 @@ abstract class LemuroidApplicationModule {
             context: Context,
             directoriesManager: DirectoriesManager,
         ) = SavesManager(directoriesManager, ExternalSavesStorage(context))
+
+        @Provides
+        @PerApp
+        @JvmStatic
+        fun savesImporter(
+            context: Context,
+            retrogradeDb: RetrogradeDatabase,
+            savesManager: SavesManager,
+        ) = SavesImporter(context, retrogradeDb, savesManager)
 
         @Provides
         @PerApp

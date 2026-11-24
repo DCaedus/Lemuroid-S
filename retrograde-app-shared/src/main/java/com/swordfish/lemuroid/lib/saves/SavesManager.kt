@@ -67,6 +67,19 @@ class SavesManager(
         }
     }
 
+    /** Copies the current in-game save to saves/import-backups before it gets replaced. */
+    suspend fun backupSaveRAM(game: Game) {
+        withContext(Dispatchers.IO) {
+            val saveFile = getSaveFile(getSaveRAMFileName(game))
+            if (!saveFile.exists() || saveFile.length() == 0L) return@withContext
+            val backupDirectory = File(directoriesManager.getSavesDirectory(), "import-backups").apply { mkdirs() }
+            saveFile.copyTo(File(backupDirectory, "${saveFile.name}.${System.currentTimeMillis()}"), overwrite = true)
+        }
+    }
+
+    /** RetroArch-compatible save file name for [game], e.g. "Game (USA).srm". */
+    fun saveRAMFileName(game: Game) = getSaveRAMFileName(game)
+
     private suspend fun getSaveFile(fileName: String): File {
         return withContext(Dispatchers.IO) {
             val savesDirectory = directoriesManager.getSavesDirectory()

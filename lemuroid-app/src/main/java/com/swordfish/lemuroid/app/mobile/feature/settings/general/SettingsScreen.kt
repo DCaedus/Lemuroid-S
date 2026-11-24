@@ -2,6 +2,7 @@ package com.swordfish.lemuroid.app.mobile.feature.settings.general
 
 import android.content.Intent
 import android.net.Uri
+import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.material3.Text
@@ -22,6 +23,7 @@ import com.swordfish.lemuroid.app.mobile.feature.main.navigateToRoute
 import com.swordfish.lemuroid.app.mobile.feature.settings.SettingsManager
 import com.swordfish.lemuroid.app.shared.covers.ArtworkType
 import com.swordfish.lemuroid.app.shared.library.LibraryIndexScheduler
+import com.swordfish.lemuroid.app.shared.saves.SavesImporter
 import com.swordfish.lemuroid.app.utils.android.settings.LemuroidCardSettingsGroup
 import com.swordfish.lemuroid.app.utils.android.settings.LemuroidSettingsList
 import com.swordfish.lemuroid.app.utils.android.settings.LemuroidSettingsMenuLink
@@ -66,7 +68,7 @@ fun SettingsScreen(
         GeneralSettings()
         FastForwardSettings()
         ArtworkSettings(navController = navController)
-        TestSettings()
+        TestSettings(onImportSaves = viewModel::importSaves)
         InputSettings(navController = navController)
         MiscSettings(
             indexingInProgress = indexingInProgress,
@@ -175,7 +177,22 @@ private fun FastForwardSettings() {
 
 /** Lemuroid-S settings that are new and still being tested. */
 @Composable
-private fun TestSettings() {
+private fun TestSettings(onImportSaves: (Uri, (SavesImporter.Result?) -> Unit) -> Unit) {
+    val context = LocalContext.current
+    val importFolderPicker =
+        rememberLauncherForActivityResult(ActivityResultContracts.OpenDocumentTree()) { uri ->
+            if (uri == null) return@rememberLauncherForActivityResult
+            onImportSaves(uri) { result ->
+                val message =
+                    if (result != null) {
+                        context.getString(R.string.import_saves_result, result.imported, result.skippedOlder)
+                    } else {
+                        context.getString(R.string.import_saves_failed)
+                    }
+                Toast.makeText(context, message, Toast.LENGTH_LONG).show()
+            }
+        }
+
     LemuroidCardSettingsGroup(
         title = { Text(text = stringResource(id = R.string.settings_category_test)) },
     ) {
@@ -190,6 +207,11 @@ private fun TestSettings() {
             items = stringListResource(R.array.pref_key_periodic_autosave_display_names),
         )
         SavesLocationSettings()
+        LemuroidSettingsMenuLink(
+            title = { Text(text = stringResource(id = R.string.settings_title_import_saves)) },
+            subtitle = { Text(text = stringResource(id = R.string.settings_description_import_saves)) },
+            onClick = { importFolderPicker.launch(null) },
+        )
     }
 }
 

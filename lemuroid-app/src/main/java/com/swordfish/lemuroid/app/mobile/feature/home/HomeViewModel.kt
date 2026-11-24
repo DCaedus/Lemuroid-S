@@ -3,12 +3,15 @@ package com.swordfish.lemuroid.app.mobile.feature.home
 import android.Manifest
 import android.content.Context
 import android.content.pm.PackageManager
+import android.net.Uri
 import android.os.Build
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
+import com.swordfish.lemuroid.R
 import com.swordfish.lemuroid.app.shared.library.PendingOperationsMonitor
+import com.swordfish.lemuroid.app.shared.saves.SavesImporter
 import com.swordfish.lemuroid.app.shared.settings.StorageFrameworkPickerLauncher
 import com.swordfish.lemuroid.common.coroutines.combine
 import com.swordfish.lemuroid.lib.core.CoresSelection
@@ -16,6 +19,7 @@ import com.swordfish.lemuroid.lib.library.CoreID
 import com.swordfish.lemuroid.lib.library.SystemID
 import com.swordfish.lemuroid.lib.library.db.RetrogradeDatabase
 import com.swordfish.lemuroid.lib.library.db.entity.Game
+import com.swordfish.lemuroid.lib.preferences.SharedPreferencesHelper
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
@@ -32,9 +36,10 @@ import kotlinx.coroutines.launch
 
 @OptIn(FlowPreview::class)
 class HomeViewModel(
-    appContext: Context,
+    private val appContext: Context,
     retrogradeDb: RetrogradeDatabase,
     private val coresSelection: CoresSelection,
+    private val savesImporter: SavesImporter,
 ) : ViewModel() {
     companion object {
         const val CAROUSEL_MAX_ITEMS = 10
@@ -45,9 +50,55 @@ class HomeViewModel(
         val appContext: Context,
         val retrogradeDb: RetrogradeDatabase,
         val coresSelection: CoresSelection,
+        val savesImporter: SavesImporter,
     ) : ViewModelProvider.Factory {
         override fun <T : ViewModel> create(modelClass: Class<T>): T {
-            return HomeViewModel(appContext, retrogradeDb, coresSelection) as T
+            return HomeViewModel(appContext, retrogradeDb, coresSelection, savesImporter) as T
+        }
+    }
+
+    /** Lemuroid-S setup cards shown on the home screen until handled or dismissed. */
+    data class SetupCards(
+        val showSavesLocation: Boolean = false,
+        val showImportSaves: Boolean = false,
+    )
+
+    private val setupPreferences = SharedPreferencesHelper.getSharedPreferences(appContext)
+
+    private fun wasPrompted(keyId: Int) = setupPreferences.getBoolean(appContext.getString(keyId), false)
+
+    private fun markPrompted(keyId: Int) {
+        setupPreferences.edit().putBoolean(appContext.getString(keyId), true).apply()
+    }
+
+    private val setupCards =
+        MutableStateFlow(
+            SetupCards(
+                showSavesLocation = !wasPrompted(R.string.pref_key_home_saves_location_prompted),
+                showImportSaves = !wasPrompted(R.string.pref_key_home_import_saves_prompted),
+            ),
+        )
+
+    fun getSetupCards(): Flow<SetupCards> = setupCards
+
+    fun dismissSavesLocationCard() {
+        markPrompted(R.string.pref_key_home_saves_location_prompted)
+        setupCards.value = setupCards.value.copy(showSavesLocation = false)
+    }
+
+    fun dismissImportSavesCard() {
+        markPrompted(R.string.pref_key_home_import_saves_prompted)
+        setupCards.value = setupCards.value.copy(showImportSaves = false)
+    }
+
+    fun importSaves(
+        folder: Uri,
+        onResult: (SavesImporter.Result?) -> Unit,
+    ) {
+        viewModelScope.launch {
+            val result = runCatching { savesImporter.importFrom(folder) }.getOrNull()
+            if (result != null) dismissImportSavesCard()
+            onResult(result)
         }
     }
 
