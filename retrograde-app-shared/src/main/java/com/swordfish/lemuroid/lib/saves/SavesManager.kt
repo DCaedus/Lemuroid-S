@@ -86,6 +86,20 @@ class SavesManager(
         }
     }
 
+    /** Copies [game]'s battery save to the SAVES folder if it's newer there (used when first set up). */
+    suspend fun exportToExternal(game: Game) =
+        withContext(Dispatchers.IO) {
+            val saveFile = getSaveFile(getSaveRAMFileName(game))
+            if (!saveFile.exists() || saveFile.length() == 0L) return@withContext
+            ExternalSavesStorage.safely("export save") {
+                val folder = externalSavesStorage.savesFolder(game) ?: return@safely
+                val externalTime = folder.lastModifiedTimes()[saveFile.name]
+                if (externalTime == null || externalTime < saveFile.lastModified()) {
+                    folder.write(saveFile.name, saveFile.readBytes())
+                }
+            }
+        }
+
     /** Copies the current in-game save to saves/import-backups before it gets replaced. */
     suspend fun backupSaveRAM(game: Game) {
         withContext(Dispatchers.IO) {

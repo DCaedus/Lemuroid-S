@@ -10,6 +10,7 @@ import com.swordfish.lemuroid.R
 import com.swordfish.lemuroid.app.shared.library.PendingOperationsMonitor
 import com.swordfish.lemuroid.app.shared.saves.SavesImporter
 import com.swordfish.lemuroid.app.shared.settings.SettingsInteractor
+import com.swordfish.lemuroid.app.shared.storage.MainFolderMigration
 import com.swordfish.lemuroid.lib.savesync.SaveSyncManager
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.SharingStarted
@@ -24,6 +25,7 @@ class SettingsViewModel(
     saveSyncManager: SaveSyncManager,
     sharedPreferences: FlowSharedPreferences,
     private val savesImporter: SavesImporter,
+    private val mainFolderMigration: MainFolderMigration,
 ) : ViewModel() {
     class Factory(
         private val context: Context,
@@ -31,6 +33,7 @@ class SettingsViewModel(
         private val saveSyncManager: SaveSyncManager,
         private val sharedPreferences: FlowSharedPreferences,
         private val savesImporter: SavesImporter,
+        private val mainFolderMigration: MainFolderMigration,
     ) : ViewModelProvider.Factory {
         override fun <T : ViewModel> create(modelClass: Class<T>): T {
             return SettingsViewModel(
@@ -39,6 +42,7 @@ class SettingsViewModel(
                 saveSyncManager,
                 sharedPreferences,
                 savesImporter,
+                mainFolderMigration,
             ) as T
         }
     }
@@ -66,6 +70,10 @@ class SettingsViewModel(
         viewModelScope.launch {
             onResult(runCatching { savesImporter.importFrom(folder) }.getOrNull())
         }
+    }
+
+    fun onMainFolderChosen(onDone: () -> Unit) {
+        mainFolderMigration.startInBackground(onDone)
     }
 
     fun changeLocalStorageFolder() {

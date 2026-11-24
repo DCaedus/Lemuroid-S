@@ -40,13 +40,12 @@
     <string name="settings_category_artwork">Artwork</string>
     <string name="settings_category_test">New test settings</string>
     <string name="settings_category_storage">Storage</string>
-    <string name="main_folder_title">Lemuroid-S folder</string>
     <string name="main_folder_not_set">Not set. Choose where the Lemuroid-S folder goes</string>
     <string name="main_folder_card_title">Choose the Lemuroid-S folder</string>
     <string name="main_folder_card_message">Lemuroid-S keeps your ROMs, saves, save states and covers in a Lemuroid-S folder in your phone storage, like RetroArch.\nTap Choose, create a folder named Lemuroid-S, then tap Use this folder.</string>
     <string name="main_folder_card_action">Choose</string>
     <string name="main_folder_failed">This folder can\'t be used. Please create or choose another one.</string>
-    <string name="main_folder_migrated">Lemuroid-S folder ready. Copied %1$d existing files into it.</string>
+    <string name="main_folder_migrated">Lemuroid-S folder ready. Your existing saves, states and covers were copied into it.</string>
     <string name="main_folder_required">Choose the Lemuroid-S folder first</string>
     <string name="select_roms_folder">Select ROMS folder</string>
     <string name="select_saves_folder">Select SAVES folder</string>
@@ -57,7 +56,6 @@
     <string name="saves_folder_main_path">Lemuroid-S/saves and Lemuroid-S/states</string>
     <string name="saves_folder_roms_path">Next to each game\'s ROM</string>
     <string name="custom_roms_folder">Custom ROMs folder</string>
-    <string name="home_saves_folder_message">Keep battery saves and save states in the Lemuroid-S folder, or next to your ROMs. You can change this later in Settings.</string>
     <string name="home_choose">Choose</string>
     <string name="import_saves_confirm_title">Import saves?</string>
     <string name="import_saves_confirm_message">Battery saves (.srm) and save states found in the folder you pick will be copied into Lemuroid-S.\n\nExisting Lemuroid-S saves for the same games may be overwritten when the imported ones are newer. Replaced battery saves are backed up first.</string>

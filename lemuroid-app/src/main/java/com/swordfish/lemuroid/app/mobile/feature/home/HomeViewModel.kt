@@ -13,6 +13,7 @@ import com.swordfish.lemuroid.R
 import com.swordfish.lemuroid.app.shared.library.PendingOperationsMonitor
 import com.swordfish.lemuroid.app.shared.saves.SavesImporter
 import com.swordfish.lemuroid.app.shared.settings.StorageFrameworkPickerLauncher
+import com.swordfish.lemuroid.app.shared.storage.MainFolderMigration
 import com.swordfish.lemuroid.common.coroutines.combine
 import com.swordfish.lemuroid.lib.core.CoresSelection
 import com.swordfish.lemuroid.lib.library.CoreID
@@ -41,6 +42,7 @@ class HomeViewModel(
     retrogradeDb: RetrogradeDatabase,
     private val coresSelection: CoresSelection,
     private val savesImporter: SavesImporter,
+    private val mainFolderMigration: MainFolderMigration,
 ) : ViewModel() {
     companion object {
         const val CAROUSEL_MAX_ITEMS = 10
@@ -52,16 +54,16 @@ class HomeViewModel(
         val retrogradeDb: RetrogradeDatabase,
         val coresSelection: CoresSelection,
         val savesImporter: SavesImporter,
+        val mainFolderMigration: MainFolderMigration,
     ) : ViewModelProvider.Factory {
         override fun <T : ViewModel> create(modelClass: Class<T>): T {
-            return HomeViewModel(appContext, retrogradeDb, coresSelection, savesImporter) as T
+            return HomeViewModel(appContext, retrogradeDb, coresSelection, savesImporter, mainFolderMigration) as T
         }
     }
 
     /** Lemuroid-S setup cards shown on the home screen until handled or dismissed. */
     data class SetupCards(
         val showMainFolder: Boolean = false,
-        val showSavesLocation: Boolean = false,
         val showImportSaves: Boolean = false,
     )
 
@@ -77,16 +79,15 @@ class HomeViewModel(
         MutableStateFlow(
             SetupCards(
                 showMainFolder = !MainFolder(appContext).isSet(),
-                showSavesLocation = !wasPrompted(R.string.pref_key_home_saves_location_prompted),
                 showImportSaves = !wasPrompted(R.string.pref_key_home_import_saves_prompted),
             ),
         )
 
     fun getSetupCards(): Flow<SetupCards> = setupCards
 
-    fun dismissSavesLocationCard() {
-        markPrompted(R.string.pref_key_home_saves_location_prompted)
-        setupCards.value = setupCards.value.copy(showSavesLocation = false)
+    fun onMainFolderChosen(onDone: () -> Unit) {
+        setupCards.value = setupCards.value.copy(showMainFolder = false)
+        mainFolderMigration.startInBackground(onDone)
     }
 
     fun dismissImportSavesCard() {

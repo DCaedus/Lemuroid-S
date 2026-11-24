@@ -37,7 +37,6 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.Lifecycle
 import com.swordfish.lemuroid.R
 import com.swordfish.lemuroid.app.mobile.feature.settings.general.RomsFolderSettings
-import com.swordfish.lemuroid.app.mobile.feature.settings.general.SavesFolderSettings
 import com.swordfish.lemuroid.app.mobile.feature.settings.general.rememberMainFolderPicker
 import com.swordfish.lemuroid.app.mobile.shared.compose.ui.LemuroidGameCard
 import com.swordfish.lemuroid.app.utils.android.ComposableLifecycle
@@ -76,10 +75,14 @@ fun HomeScreen(
     val state = viewModel.getViewStates().collectAsState(HomeViewModel.UIState())
     val setupCards = viewModel.getSetupCards().collectAsState(HomeViewModel.SetupCards())
 
-    var showSavesLocationDialog by remember { mutableStateOf(false) }
     var showRomsFolderDialog by remember { mutableStateOf(false) }
     var showImportConfirmation by remember { mutableStateOf(false) }
-    val mainFolderPicker = rememberMainFolderPicker { viewModel.updatePermissions(applicationContext) }
+    val onMainFolderChosen = {
+        viewModel.onMainFolderChosen {
+            Toast.makeText(context, R.string.main_folder_migrated, Toast.LENGTH_LONG).show()
+        }
+    }
+    val mainFolderPicker = rememberMainFolderPicker(onMainFolderChosen)
     val importFolderPicker =
         rememberLauncherForActivityResult(ActivityResultContracts.OpenDocumentTree()) { uri ->
             if (uri == null) return@rememberLauncherForActivityResult
@@ -99,21 +102,11 @@ fun HomeScreen(
             }
         }
 
-    if (showSavesLocationDialog) {
-        SettingsDialog(
-            titleId = R.string.select_saves_folder,
-            onDone = {
-                showSavesLocationDialog = false
-                viewModel.dismissSavesLocationCard()
-            },
-        ) { SavesFolderSettings() }
-    }
-
     if (showRomsFolderDialog) {
         SettingsDialog(
             titleId = R.string.select_roms_folder,
             onDone = { showRomsFolderDialog = false },
-        ) { RomsFolderSettings() }
+        ) { RomsFolderSettings(onMainFolderChosen = onMainFolderChosen) }
     }
 
     if (showImportConfirmation) {
@@ -142,7 +135,6 @@ fun HomeScreen(
         state.value,
         setupCards.value,
         mainFolderPicker,
-        { showSavesLocationDialog = true },
         { showImportConfirmation = true },
         { viewModel.dismissImportSavesCard() },
         onGameClick,
@@ -166,7 +158,6 @@ private fun HomeScreen(
     state: HomeViewModel.UIState,
     setupCards: HomeViewModel.SetupCards,
     onChooseMainFolder: () -> Unit,
-    onChooseSavesLocation: () -> Unit,
     onImportSaves: () -> Unit,
     onDismissImportSaves: () -> Unit,
     onGameClicked: (Game) -> Unit,
@@ -206,14 +197,6 @@ private fun HomeScreen(
                 actionId = R.string.home_empty_action,
                 onAction = onSetDirectoryClicked,
                 enabled = !state.indexInProgress,
-            )
-        }
-        AnimatedVisibility(setupCards.showSavesLocation) {
-            HomeNotification(
-                titleId = R.string.select_saves_folder,
-                messageId = R.string.home_saves_folder_message,
-                actionId = R.string.home_choose,
-                onAction = onChooseSavesLocation,
             )
         }
         // Import only makes sense once there are games to match the saves to.

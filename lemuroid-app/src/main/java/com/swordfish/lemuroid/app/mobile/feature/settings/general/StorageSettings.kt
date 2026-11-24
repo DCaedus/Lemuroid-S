@@ -25,10 +25,7 @@ import com.swordfish.lemuroid.app.utils.android.settings.indexPreferenceState
 import com.swordfish.lemuroid.app.utils.android.stringListResource
 import com.swordfish.lemuroid.lib.saves.ExternalSavesStorage
 import com.swordfish.lemuroid.lib.storage.MainFolder
-import com.swordfish.lemuroid.lib.storage.MainFolderMigration
-import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
@@ -37,11 +34,11 @@ private val STORAGE_ROOT: Uri = Uri.parse("content://com.android.externalstorage
 
 /**
  * Returns a function that opens Android's folder picker to choose (or create) the Lemuroid-S folder.
- * After it's chosen, what was stored in app storage is copied into it in the background.
+ * Android only lets apps write to a folder in phone storage that the user picked, so this is a
+ * one-time step. [onChosen] runs once it's set (callers then move existing files into it).
  */
-@OptIn(DelicateCoroutinesApi::class)
 @Composable
-fun rememberMainFolderPicker(onChosen: (Boolean) -> Unit = { }): () -> Unit {
+fun rememberMainFolderPicker(onChosen: () -> Unit = { }): () -> Unit {
     val context = LocalContext.current
     val scope = rememberCoroutineScope()
     val launcher =
@@ -53,17 +50,7 @@ fun rememberMainFolderPicker(onChosen: (Boolean) -> Unit = { }): () -> Unit {
                     Toast.makeText(context, R.string.main_folder_failed, Toast.LENGTH_LONG).show()
                     return@launch
                 }
-                onChosen(true)
-
-                // Runs outside this screen's lifetime so leaving Settings doesn't cancel the copy.
-                val appContext = context.applicationContext
-                GlobalScope.launch {
-                    val result = MainFolderMigration(appContext).copyAppStorageToMainFolder()
-                    withContext(Dispatchers.Main) {
-                        val message = appContext.getString(R.string.main_folder_migrated, result.copied)
-                        Toast.makeText(appContext, message, Toast.LENGTH_LONG).show()
-                    }
-                }
+                onChosen()
             }
         }
     return { launcher.launch(STORAGE_ROOT) }
@@ -78,19 +65,25 @@ private fun useMainFolder(
     return runCatching { MainFolder(context).setFromPickedTree(treeUri) }.getOrDefault(false)
 }
 
-/** Shows the Lemuroid-S folder, and lets the user choose it. */
+/**
+ * The Lemuroid-S folder isn't a setting: it's where everything goes by default. This only shows
+ * while it hasn't been chosen yet (or access to it was lost).
+ */
 @Composable
-fun MainFolderSetting() {
+fun MainFolderSetupItem(onChosen: () -> Unit) {
     val context = LocalContext.current
     var isSet by remember { mutableStateOf(MainFolder(context).isSet()) }
     ComposableLifecycle { _, _ -> isSet = MainFolder(context).isSet() }
-    val picker = rememberMainFolderPicker { isSet = it }
+    val picker =
+        rememberMainFolderPicker {
+            isSet = true
+            onChosen()
+        }
+    if (isSet) return
 
     LemuroidSettingsMenuLink(
-        title = { Text(text = stringResource(R.string.main_folder_title)) },
-        subtitle = {
-            Text(text = if (isSet) MainFolder.FOLDER_NAME else stringResource(R.string.main_folder_not_set))
-        },
+        title = { Text(text = stringResource(R.string.main_folder_card_title)) },
+        subtitle = { Text(text = stringResource(R.string.main_folder_not_set)) },
         onClick = picker,
     )
 }
@@ -100,6 +93,7 @@ fun MainFolderSetting() {
 fun RomsFolderSettings(
     enabled: Boolean = true,
     currentCustomFolderName: String? = null,
+    onMainFolderChosen: () -> Unit = { },
 ) {
     val context = LocalContext.current
     val scope = rememberCoroutineScope()
@@ -123,7 +117,11 @@ fun RomsFolderSettings(
             }
         }
     }
-    val mainFolderPicker = rememberMainFolderPicker { chosen -> if (chosen) useMainFolder() }
+    val mainFolderPicker =
+        rememberMainFolderPicker {
+            onMainFolderChosen()
+            useMainFolder()
+        }
 
     LemuroidSettingsList(
         enabled = enabled,
@@ -168,7 +166,7 @@ fun RomsFolderSettings(
 
 /** "Select SAVES folder": where battery saves and save states go (Lemuroid-S folder or ROMs folder). */
 @Composable
-fun SavesFolderSettings() {
+fun SavesFolderSettings(onMainFolderChosen: () -> Unit = { }) {
     val context = LocalContext.current
     val values = stringListResource(R.array.pref_key_saves_location_values)
     val location =
@@ -179,7 +177,11 @@ fun SavesFolderSettings() {
         )
     val isMain = values.getOrNull(location.value) == ExternalSavesStorage.Location.MAIN_FOLDER.prefValue
     var mainFolderSet by remember { mutableStateOf(MainFolder(context).isSet()) }
-    val mainFolderPicker = rememberMainFolderPicker { mainFolderSet = it }
+    val mainFolderPicker =
+        rememberMainFolderPicker {
+            mainFolderSet = true
+            onMainFolderChosen()
+        }
 
     LemuroidSettingsList(
         state = location,

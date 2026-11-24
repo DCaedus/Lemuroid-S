@@ -38,6 +38,7 @@ import com.swordfish.lemuroid.app.shared.rumble.RumbleManager
 import com.swordfish.lemuroid.app.shared.saves.SavesImporter
 import com.swordfish.lemuroid.app.shared.settings.ControllerConfigsManager
 import com.swordfish.lemuroid.app.shared.settings.StorageFrameworkPickerLauncher
+import com.swordfish.lemuroid.app.shared.storage.MainFolderMigration
 import com.swordfish.lemuroid.app.tv.channel.ChannelHandler
 import com.swordfish.lemuroid.app.tv.settings.BiosPreferences
 import com.swordfish.lemuroid.app.tv.settings.CoresSelectionPreferences
@@ -182,12 +183,13 @@ abstract class LemuroidApplicationModule {
         @PerApp
         @JvmStatic
         fun lemuroidLibrary(
+            context: Context,
             db: RetrogradeDatabase,
             storageProviderRegistry: Lazy<StorageProviderRegistry>,
             gameMetadataProvider: Lazy<GameMetadataProvider>,
             biosManager: BiosManager,
             customCoverManager: CustomCoverManager,
-        ) = LemuroidLibrary(db, storageProviderRegistry, gameMetadataProvider, biosManager, customCoverManager)
+        ) = LemuroidLibrary(context, db, storageProviderRegistry, gameMetadataProvider, biosManager, customCoverManager)
 
         @Provides
         @PerApp
@@ -252,6 +254,16 @@ abstract class LemuroidApplicationModule {
             directoriesManager: DirectoriesManager,
             externalSavesStorage: ExternalSavesStorage,
         ) = SavesManager(directoriesManager, externalSavesStorage)
+
+        @Provides
+        @PerApp
+        @JvmStatic
+        fun mainFolderMigration(
+            context: Context,
+            retrogradeDb: RetrogradeDatabase,
+            savesManager: SavesManager,
+            statesManager: StatesManager,
+        ) = MainFolderMigration(context, retrogradeDb, savesManager, statesManager)
 
         @Provides
         @PerApp

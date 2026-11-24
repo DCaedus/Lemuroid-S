@@ -109,7 +109,7 @@ class StatesManager(
     ) {
         runCatchingWithRetry(FILE_ACCESS_RETRIES) {
             writeStateToDisk(fileName, coreName, saveState.state)
-            writeMetadataToDisk(fileName, coreName, saveState.metadata)
+            writeMetadataToDisk(fileName, coreName, saveState.metadata.copy(coreName = coreName))
         }
     }
 
@@ -182,8 +182,15 @@ class StatesManager(
         ExternalSavesStorage.safely("read states") {
             val folder = storage.statesFolder(game, coreName) ?: return@safely
             val externalTimes = folder.lastModifiedTimes()
+            val otherCoreStates = mutableSetOf<String>()
             for (name in allStateFileNames(game)) {
+                // Metadata names come right after their state; skip both if made by another core.
+                if (name.removeSuffix(".metadata") in otherCoreStates) continue
                 val externalTime = externalTimes[name] ?: continue
+                if (!name.endsWith(".metadata") && isFromOtherCore(folder, name, coreName)) {
+                    otherCoreStates.add(name)
+                    continue
+                }
                 val internalFile = File(File(directoriesManager.getStatesDirectory(), coreName), name)
                 val internalTime = if (internalFile.exists()) internalFile.lastModified() else Long.MIN_VALUE / 2
                 val internalIsCurrent = internalTime + SavesManager.SYNC_TOLERANCE_MS >= externalTime
@@ -193,6 +200,38 @@ class StatesManager(
                 internalFile.parentFile?.mkdirs()
                 internalFile.writeBytes(external.data)
                 internalFile.setLastModified(external.lastModified)
+            }
+        }
+    }
+
+    private fun isFromOtherCore(
+        folder: ExternalSavesStorage.SaveFolder,
+        stateName: String,
+        coreName: String,
+    ): Boolean {
+        val metadata = folder.read("$stateName.metadata") ?: return false
+        val stateCore =
+            runCatching {
+                Json.decodeFromString(SaveState.Metadata.serializer(), metadata.data.decodeToString()).coreName
+            }.getOrNull()
+        return stateCore != null && stateCore != coreName
+    }
+
+    /** Copies [game]'s existing states for [coreName] to the SAVES folder (used when it's first set up). */
+    suspend fun exportToExternal(
+        game: Game,
+        coreName: String,
+    ) = withContext(Dispatchers.IO) {
+        val storage = externalSavesStorage ?: return@withContext
+        ExternalSavesStorage.safely("export states") {
+            val folder = storage.statesFolder(game, coreName) ?: return@safely
+            val externalTimes = folder.lastModifiedTimes()
+            for (name in allStateFileNames(game)) {
+                val internalFile = File(File(directoriesManager.getStatesDirectory(), coreName), name)
+                if (!internalFile.exists()) continue
+                val externalTime = externalTimes[name]
+                if (externalTime != null && externalTime >= internalFile.lastModified()) continue
+                folder.write(name, internalFile.readBytes())
             }
         }
     }

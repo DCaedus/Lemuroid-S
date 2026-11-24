@@ -1,11 +1,14 @@
 package com.swordfish.lemuroid.app.shared.covers
 
 /**
- * A game's artwork in RetroArch's thumbnails layout: `<systemFolder>/<artwork folder>/<name>.png`.
+ * A game's artwork in RetroArch's thumbnails layout: `<system>/<artwork folder>/<name>.png`.
+ * [systemFolder] is RetroArch's/libretro's console name (used online and in RetroArch's folder),
+ * [mainFolderSystem] is the ES-DE name used in the Lemuroid-S folder (e.g. "gba").
  * [names] are already sanitized; the first is the exact name, the others are fallbacks without tags.
  */
 data class CoverTarget(
     val systemFolder: String,
+    val mainFolderSystem: String,
     val artworkType: ArtworkType,
     val names: List<String>,
 ) {

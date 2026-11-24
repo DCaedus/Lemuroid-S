@@ -7,6 +7,7 @@ import com.swordfish.lemuroid.lib.library.GameSystem
 import com.swordfish.lemuroid.lib.library.SystemID
 import com.swordfish.lemuroid.lib.library.db.entity.Game
 import com.swordfish.lemuroid.lib.preferences.SharedPreferencesHelper
+import com.swordfish.lemuroid.lib.storage.MainFolder
 
 /**
  * Builds the list of URLs to try for a game's artwork, following RetroArch's thumbnail method:
@@ -31,7 +32,8 @@ object CoverUrls {
         val system = runCatching { GameSystem.findById(game.systemId) }.getOrNull() ?: return null
         val names = nameVariants(game.title)
         if (names.isEmpty()) return null
-        return CoverTarget(thumbnailSystemName(system), artworkType(context, system), names)
+        val mainFolderSystem = MainFolder.SYSTEM_FOLDERS[system.id] ?: system.id.dbname
+        return CoverTarget(thumbnailSystemName(system), mainFolderSystem, artworkType(context, system), names)
     }
 
     /** Ordered list of artwork URLs to try for [game]. Empty when nothing can be computed. */

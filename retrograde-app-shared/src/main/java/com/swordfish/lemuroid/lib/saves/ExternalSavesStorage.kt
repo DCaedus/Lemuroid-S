@@ -16,7 +16,7 @@ import java.io.File
 /**
  * Where in-game (battery) saves and save states are kept in phone storage ("Select SAVES folder"),
  * like RetroArch's save directories:
- *  - Lemuroid-S folder (default): Lemuroid-S/saves/<rom>.srm and Lemuroid-S/states/<core>/...
+ *  - Lemuroid-S folder (default): Lemuroid-S/saves/<system>/<rom>.srm and Lemuroid-S/states/<system>/...
  *  - ROMs folder: next to each game's ROM
  *
  * Lemuroid-S also keeps a working copy in its private app storage: emulator cores and the rest of
@@ -41,7 +41,11 @@ class ExternalSavesStorage(private val appContext: Context) {
     /** Folder for [game]'s battery save, or null if saves are only kept in app storage. */
     fun savesFolder(game: Game): SaveFolder? {
         return when (getLocation()) {
-            Location.MAIN_FOLDER -> mainFolder.folder(MainFolder.SAVES)?.let { SaveFolder.Document(it) }
+            Location.MAIN_FOLDER ->
+                mainFolder.folder(
+                    MainFolder.SAVES,
+                    systemFolder(game),
+                )?.let { SaveFolder.Document(it) }
             Location.ROMS_FOLDER -> romFolder(game)
         }
     }
@@ -52,10 +56,16 @@ class ExternalSavesStorage(private val appContext: Context) {
         coreName: String,
     ): SaveFolder? {
         return when (getLocation()) {
-            Location.MAIN_FOLDER -> mainFolder.folder(MainFolder.STATES, coreName)?.let { SaveFolder.Document(it) }
+            Location.MAIN_FOLDER ->
+                mainFolder.folder(
+                    MainFolder.STATES,
+                    systemFolder(game),
+                )?.let { SaveFolder.Document(it) }
             Location.ROMS_FOLDER -> romFolder(game)
         }
     }
+
+    private fun systemFolder(game: Game): String = MainFolder.systemFolderName(game.systemId)
 
     private fun romFolder(game: Game): SaveFolder? {
         val romUri = Uri.parse(game.fileUri)

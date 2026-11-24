@@ -69,6 +69,7 @@ class MainFolder(private val appContext: Context) {
     companion object {
         const val FOLDER_NAME = "Lemuroid-S"
         const val ROMS = "roms"
+        const val BIOS = "bios"
         const val SAVES = "saves"
         const val STATES = "states"
         const val THUMBNAILS = "thumbnails"
@@ -102,6 +103,12 @@ class MainFolder(private val appContext: Context) {
                 SystemID.DOS to "dos",
                 SystemID.NINTENDO_3DS to "n3ds",
             )
+
+        /** ES-DE folder name for a system id (as stored in games), e.g. "md" -> "genesis". */
+        fun systemFolderName(systemDbName: String): String {
+            val systemId = SystemID.values().firstOrNull { it.dbname == systemDbName }
+            return systemId?.let { SYSTEM_FOLDERS[it] } ?: systemDbName
+        }
 
         /** Creates one subfolder per system, but only if [romsFolder] is empty (never touches existing files). */
         fun createSystemFoldersIfEmpty(romsFolder: DocumentFolder) {

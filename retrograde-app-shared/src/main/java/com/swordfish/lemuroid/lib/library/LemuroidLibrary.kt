@@ -19,6 +19,7 @@
 
 package com.swordfish.lemuroid.lib.library
 
+import android.content.Context
 import com.swordfish.lemuroid.common.coroutines.batchWithSizeAndTime
 import com.swordfish.lemuroid.lib.bios.BiosManager
 import com.swordfish.lemuroid.lib.library.covers.CustomCoverManager
@@ -28,11 +29,14 @@ import com.swordfish.lemuroid.lib.library.db.entity.Game
 import com.swordfish.lemuroid.lib.library.metadata.GameMetadata
 import com.swordfish.lemuroid.lib.library.metadata.GameMetadataProvider
 import com.swordfish.lemuroid.lib.storage.BaseStorageFile
+import com.swordfish.lemuroid.lib.storage.DocumentFolder
 import com.swordfish.lemuroid.lib.storage.GroupedStorageFiles
+import com.swordfish.lemuroid.lib.storage.MainFolder
 import com.swordfish.lemuroid.lib.storage.RomFiles
 import com.swordfish.lemuroid.lib.storage.StorageFile
 import com.swordfish.lemuroid.lib.storage.StorageProvider
 import com.swordfish.lemuroid.lib.storage.StorageProviderRegistry
+import com.swordfish.lemuroid.lib.storage.local.DocumentFileParser
 import dagger.Lazy
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.Flow
@@ -46,6 +50,7 @@ import kotlinx.coroutines.flow.mapNotNull
 import timber.log.Timber
 
 class LemuroidLibrary(
+    private val appContext: Context,
     private val retrogradedb: RetrogradeDatabase,
     private val storageProviderRegistry: Lazy<StorageProviderRegistry>,
     private val gameMetadataProvider: Lazy<GameMetadataProvider>,
@@ -56,6 +61,7 @@ class LemuroidLibrary(
         val startedAtMs = System.currentTimeMillis()
 
         try {
+            indexBiosFolder(startedAtMs)
             indexProviders(startedAtMs)
         } catch (e: Throwable) {
             Timber.e(e, "Library indexing stopped due to exception")
@@ -65,6 +71,39 @@ class LemuroidLibrary(
 
         val executionTime = System.currentTimeMillis() - startedAtMs
         Timber.i("Library indexing completed in: $executionTime ms")
+    }
+
+    /**
+     * BIOS files in Lemuroid-S/bios (like RetroArch's system folder) are checked first; the ROMs
+     * folder is still searched afterwards, as Lemuroid does. Subfolders are included.
+     */
+    private fun indexBiosFolder(startedAtMs: Long) {
+        val biosFolder = runCatching { MainFolder(appContext).folder(MainFolder.BIOS) }.getOrNull() ?: return
+        indexBiosFiles(biosFolder, startedAtMs, depth = 0)
+    }
+
+    private fun indexBiosFiles(
+        folder: DocumentFolder,
+        startedAtMs: Long,
+        depth: Int,
+    ) {
+        val children = runCatching { folder.children() }.getOrDefault(emptyMap())
+        for (child in children.values) {
+            if (child.isDirectory) {
+                if (depth < MAX_BIOS_DEPTH) {
+                    val subFolder = DocumentFolder(appContext.contentResolver, child.uri)
+                    indexBiosFiles(subFolder, startedAtMs, depth + 1)
+                }
+                continue
+            }
+            runCatching {
+                val baseFile = BaseStorageFile(child.name, child.size, child.uri, child.uri.path)
+                val storageFile = DocumentFileParser.parseDocumentFile(appContext, baseFile)
+                appContext.contentResolver.openInputStream(child.uri)?.use {
+                    biosManager.tryAddBiosAfter(storageFile, it, startedAtMs)
+                }
+            }.onFailure { Timber.w(it, "Could not check BIOS file ${child.name}") }
+        }
     }
 
     @OptIn(FlowPreview::class)
@@ -343,5 +382,7 @@ class LemuroidLibrary(
         // We batch database updates to avoid unnecessary UI updates.
         const val MAX_BUFFER_SIZE = 200
         const val MAX_TIME = 5000
+
+        private const val MAX_BIOS_DEPTH = 2
     }
 }

@@ -45,6 +45,7 @@ fun SettingsScreen(
     viewModel: SettingsViewModel,
     navController: NavController,
 ) {
+    val context = LocalContext.current
     val state =
         viewModel.uiState
             .collectAsState(SettingsViewModel.State())
@@ -63,6 +64,11 @@ fun SettingsScreen(
     LemuroidSettingsPage(modifier = modifier) {
         RomsSettings(
             state = state,
+            onMainFolderChosen = {
+                viewModel.onMainFolderChosen {
+                    Toast.makeText(context, R.string.main_folder_migrated, Toast.LENGTH_LONG).show()
+                }
+            },
             indexingInProgress = indexingInProgress,
             scanInProgress = scanInProgress,
         )
@@ -391,6 +397,7 @@ private fun GeneralSettings() {
 @Composable
 private fun RomsSettings(
     state: SettingsViewModel.State,
+    onMainFolderChosen: () -> Unit,
     indexingInProgress: Boolean,
     scanInProgress: Boolean,
 ) {
@@ -404,9 +411,13 @@ private fun RomsSettings(
         }
 
     LemuroidCardSettingsGroup(title = { Text(text = stringResource(id = R.string.settings_category_storage)) }) {
-        MainFolderSetting()
-        RomsFolderSettings(enabled = !indexingInProgress, currentCustomFolderName = currentDirectoryName)
-        SavesFolderSettings()
+        MainFolderSetupItem(onChosen = onMainFolderChosen)
+        RomsFolderSettings(
+            enabled = !indexingInProgress,
+            currentCustomFolderName = currentDirectoryName,
+            onMainFolderChosen = onMainFolderChosen,
+        )
+        SavesFolderSettings(onMainFolderChosen = onMainFolderChosen)
         if (scanInProgress) {
             LemuroidSettingsMenuLink(
                 title = { Text(text = stringResource(id = R.string.stop)) },

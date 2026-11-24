@@ -59,6 +59,7 @@ import com.swordfish.lemuroid.app.shared.main.BusyActivity
 import com.swordfish.lemuroid.app.shared.main.GameLaunchTaskHandler
 import com.swordfish.lemuroid.app.shared.saves.SavesImporter
 import com.swordfish.lemuroid.app.shared.settings.SettingsInteractor
+import com.swordfish.lemuroid.app.shared.storage.MainFolderMigration
 import com.swordfish.lemuroid.common.coroutines.safeLaunch
 import com.swordfish.lemuroid.ext.feature.review.ReviewManager
 import com.swordfish.lemuroid.lib.android.RetrogradeComponentActivity
@@ -107,6 +108,9 @@ class MainActivity : RetrogradeComponentActivity(), BusyActivity {
 
     @Inject
     lateinit var savesImporter: SavesImporter
+
+    @Inject
+    lateinit var mainFolderMigration: MainFolderMigration
 
     private val reviewManager = ReviewManager()
 
@@ -205,6 +209,7 @@ class MainActivity : RetrogradeComponentActivity(), BusyActivity {
                                             retrogradeDb,
                                             coresSelection,
                                             savesImporter,
+                                            mainFolderMigration,
                                         ),
                                 ),
                             onGameClick = onGameClick,
@@ -284,6 +289,7 @@ class MainActivity : RetrogradeComponentActivity(), BusyActivity {
                                                 ),
                                             ),
                                             savesImporter,
+                                            mainFolderMigration,
                                         ),
                                 ),
                             navController = navController,

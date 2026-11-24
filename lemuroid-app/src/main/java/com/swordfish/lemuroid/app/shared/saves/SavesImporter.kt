@@ -27,7 +27,7 @@ import java.util.zip.Inflater
  * Imports battery saves and save states from another emulator's folder: RetroArch (its whole
  * folder, or its saves/states folders) or a copy of Lemuroid's files folder. Subfolders are
  * searched too. Files are matched to library games by name:
- *  - battery saves:      "<rom name>.srm" (Lemuroid, RetroArch and Lemuroid-S all use this)
+ *  - battery saves:      "<rom name>.srm" (Lemuroid, RetroArch, Lemuroid-S) or "<rom name>.sav"
  *  - Lemuroid states:    "<rom file>.state" (resume point) and "<rom file>.slot1".."slot4"
  *  - RetroArch states:   "<rom name>.state.auto" (resume point), ".state", ".state1".."state3" (slots 1-4)
  *
@@ -78,7 +78,9 @@ class SavesImporter(
         found: Map<String, FoundFile>,
         counters: Counters,
     ) {
-        val file = found[savesManager.saveRAMFileName(game)] ?: return
+        // ".srm" (RetroArch, Lemuroid) first, then ".sav" (used by some standalone emulators).
+        val saveName = savesManager.saveRAMFileName(game)
+        val file = found[saveName] ?: found[saveName.removeSuffix(".srm") + ".sav"] ?: return
         if (isCurrentNewer(savesManager.getSaveRAMInfo(game), file)) {
             counters.skipped++
             return
@@ -133,6 +135,8 @@ class SavesImporter(
                 handledSlots.add(slot)
                 continue
             }
+
+            if (isLemuroidFormat && isFromOtherCore(found["$fileName.metadata"], coreName)) continue
 
             val saveState =
                 if (isLemuroidFormat) {
@@ -218,6 +222,17 @@ class SavesImporter(
         }.onFailure { Timber.w(it, "Could not decode RetroArch state") }.getOrNull()
     }
 
+    /** Lemuroid-S records the core in a state's metadata; states from another core can't be loaded. */
+    private fun isFromOtherCore(
+        metadataFile: FoundFile?,
+        coreName: String,
+    ): Boolean {
+        val json = metadataFile?.let { readBytes(it) }?.decodeToString() ?: return false
+        val metadata = runCatching { Json.decodeFromString(SaveState.Metadata.serializer(), json) }.getOrNull()
+        val stateCore = metadata?.coreName
+        return stateCore != null && stateCore != coreName
+    }
+
     private fun isCurrentNewer(
         current: SaveInfo,
         file: FoundFile,
@@ -282,6 +297,7 @@ class SavesImporter(
     private fun isSaveFile(name: String): Boolean {
         val lower = name.lowercase()
         return lower.endsWith(".srm") ||
+            lower.endsWith(".sav") ||
             lower.endsWith(".metadata") ||
             lower.endsWith(".state.auto") ||
             STATE_SUFFIX.containsMatchIn(lower)

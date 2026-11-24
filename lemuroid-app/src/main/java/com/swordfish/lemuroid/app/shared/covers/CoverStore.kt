@@ -20,8 +20,8 @@ import java.util.concurrent.ConcurrentHashMap
 /**
  * Finds game artwork, in this order (like RetroArch):
  *  1. RetroArch's thumbnails folder, if the user picked it in Settings (read only)
- *  2. Lemuroid-S's thumbnails folder: Lemuroid-S/thumbnails in phone storage once the Lemuroid-S
- *     folder is chosen, otherwise the app's private storage
+ *  2. Lemuroid-S's thumbnails folder: Lemuroid-S/thumbnails/<system (ES-DE name)>/Named_* in phone
+ *     storage once the Lemuroid-S folder is chosen, otherwise the app's private storage
  *  3. Download from libretro (server, then GitHub backup) and save it into folder 2
  *
  * Both folders use RetroArch's layout: thumbnails/<console>/Named_Boxarts|Named_Snaps|Named_Titles/<game>.png
@@ -81,11 +81,11 @@ class CoverStore(private val appContext: Context) {
             mainFolderListings.clear()
             mainFolderListingsRoot = rootValue
         }
-        val key = "${target.systemFolder}/${target.artworkType.libretroFolder}"
+        val key = "${target.mainFolderSystem}/${target.artworkType.libretroFolder}"
         return mainFolderListings.getOrPut(key) {
             val folder =
                 runCatching {
-                    mainFolder.folder(MainFolder.THUMBNAILS, target.systemFolder, target.artworkType.libretroFolder)
+                    mainFolder.folder(MainFolder.THUMBNAILS, target.mainFolderSystem, target.artworkType.libretroFolder)
                 }.getOrNull()
             val files = runCatching { folder?.children()?.mapValues { it.value.uri } }.getOrNull() ?: emptyMap()
             MainFolderListing(folder, ConcurrentHashMap(files))
