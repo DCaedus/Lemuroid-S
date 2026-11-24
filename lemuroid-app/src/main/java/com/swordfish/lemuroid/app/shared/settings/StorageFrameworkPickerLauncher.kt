@@ -73,15 +73,21 @@ class StorageFrameworkPickerLauncher : RetrogradeActivity() {
     }
 
     private fun updatePersistableUris(uri: Uri) {
-        // Keep the permission for the custom saves folder, if one was chosen.
-        val savesFolder =
-            SharedPreferencesHelper.getSharedPreferences(this)
-                .getString(getString(com.swordfish.lemuroid.lib.R.string.pref_key_saves_custom_folder), null)
+        // Keep the permissions for the custom saves folder and RetroArch thumbnails folder, if chosen.
+        val preferences = SharedPreferencesHelper.getSharedPreferences(this)
+        val keptFolders =
+            setOfNotNull(
+                preferences.getString(
+                    getString(com.swordfish.lemuroid.lib.R.string.pref_key_saves_custom_folder),
+                    null,
+                ),
+                preferences.getString(getString(R.string.pref_key_artwork_retroarch_folder), null),
+            )
 
         contentResolver.persistedUriPermissions
             .filter { it.isReadPermission }
             .filter { it.uri != uri }
-            .filter { it.uri.toString() != savesFolder }
+            .filter { it.uri.toString() !in keptFolders }
             .forEach {
                 val flags =
                     Intent.FLAG_GRANT_READ_URI_PERMISSION or

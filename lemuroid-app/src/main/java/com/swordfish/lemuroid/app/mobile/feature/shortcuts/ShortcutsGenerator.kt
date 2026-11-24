@@ -9,6 +9,7 @@ import android.graphics.BitmapFactory
 import android.graphics.drawable.Icon
 import android.net.Uri
 import android.os.Build
+import com.swordfish.lemuroid.app.shared.covers.CoverStore
 import com.swordfish.lemuroid.app.shared.covers.CoverUrls
 import com.swordfish.lemuroid.app.shared.covers.CoverUtils
 import com.swordfish.lemuroid.app.shared.deeplink.DeepLink
@@ -17,19 +18,12 @@ import com.swordfish.lemuroid.common.bitmap.toBitmap
 import com.swordfish.lemuroid.lib.library.db.entity.Game
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import retrofit2.Response
 import retrofit2.Retrofit
-import retrofit2.http.GET
-import retrofit2.http.Streaming
-import retrofit2.http.Url
-import java.io.InputStream
 
 class ShortcutsGenerator(
     private val appContext: Context,
     retrofit: Retrofit,
 ) {
-    private val thumbnailsApi = retrofit.create(ThumbnailsApi::class.java)
-
     suspend fun pinShortcutForGame(game: Game) {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
             return
@@ -65,17 +59,17 @@ class ShortcutsGenerator(
             result.getOrElse { retrieveFallbackBitmap(game) }
         }
 
-    /** Tries each artwork URL in order, like the library screens do. */
+    /** Same artwork as the library screens: stored on the phone, or downloaded once and stored. */
     private suspend fun downloadArtwork(game: Game): Bitmap {
-        for (url in CoverUrls.candidates(appContext, game)) {
-            val bitmap =
-                runCatching {
-                    val response = thumbnailsApi.downloadThumbnail(url)
-                    if (response.isSuccessful) BitmapFactory.decodeStream(response.body()) else null
-                }.getOrNull()
-            if (bitmap != null) return bitmap
-        }
-        throw IllegalStateException("No artwork found for ${game.title}")
+        val target = CoverUrls.target(appContext, game) ?: throw IllegalStateException("No artwork for ${game.title}")
+        val resolved = CoverStore.get(appContext).resolve(target)?.data
+        val bitmap =
+            when (resolved) {
+                is java.io.File -> BitmapFactory.decodeFile(resolved.absolutePath)
+                is Uri -> appContext.contentResolver.openInputStream(resolved)?.use { BitmapFactory.decodeStream(it) }
+                else -> null
+            }
+        return bitmap ?: throw IllegalStateException("No artwork found for ${game.title}")
     }
 
     private fun retrieveFallbackBitmap(game: Game): Bitmap {
@@ -95,13 +89,5 @@ class ShortcutsGenerator(
 
         val shortcutManager = appContext.getSystemService(ShortcutManager::class.java)!!
         return shortcutManager.isRequestPinShortcutSupported
-    }
-
-    interface ThumbnailsApi {
-        @GET
-        @Streaming
-        suspend fun downloadThumbnail(
-            @Url url: String,
-        ): Response<InputStream>
     }
 }

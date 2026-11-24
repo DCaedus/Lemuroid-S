@@ -23,25 +23,30 @@ object CoverUrls {
     private val SQUARE_BRACKET_TAGS = Regex("\\s*\\[[^]]*]")
     private val ROUND_BRACKET_TAGS = Regex("\\s*\\([^)]*\\)")
 
+    /** Which artwork to look for: console folder, artwork type and file names, like RetroArch. */
+    fun target(
+        context: Context,
+        game: Game,
+    ): CoverTarget? {
+        val system = runCatching { GameSystem.findById(game.systemId) }.getOrNull() ?: return null
+        val names = nameVariants(game.title)
+        if (names.isEmpty()) return null
+        return CoverTarget(thumbnailSystemName(system), artworkType(context, system), names)
+    }
+
     /** Ordered list of artwork URLs to try for [game]. Empty when nothing can be computed. */
     fun candidates(
         context: Context,
         game: Game,
     ): List<String> {
-        val system = runCatching { GameSystem.findById(game.systemId) }.getOrNull() ?: return emptyList()
-        return candidates(system, game.title, artworkType(context, system))
+        return target(context, game)?.let { candidates(it) } ?: emptyList()
     }
 
-    fun candidates(
-        system: GameSystem,
-        gameName: String,
-        artworkType: ArtworkType,
-    ): List<String> {
-        val systemName = thumbnailSystemName(system)
-        return nameVariants(gameName).flatMap { name ->
+    fun candidates(target: CoverTarget): List<String> {
+        return target.names.flatMap { name ->
             listOf(
-                libretroServerUrl(systemName, artworkType, name),
-                githubUrl(systemName, artworkType, name),
+                libretroServerUrl(target.systemFolder, target.artworkType, name),
+                githubUrl(target.systemFolder, target.artworkType, name),
             )
         }
     }

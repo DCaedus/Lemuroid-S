@@ -3,24 +3,29 @@ package com.swordfish.lemuroid.app.shared.covers
 import coil.intercept.Interceptor
 import coil.request.ErrorResult
 import coil.request.ImageResult
-import coil.request.SuccessResult
 
-/** Loads a [CoverRequest] by trying each of its URLs in order and returning the first that works. */
-object CoverFallbackInterceptor : Interceptor {
+/**
+ * Loads a [CoverRequest]: finds the artwork on the phone (RetroArch's folder, then Lemuroid-S's)
+ * or downloads it once and stores it permanently, then loads that file.
+ */
+class CoverFallbackInterceptor(private val coverStore: CoverStore) : Interceptor {
     override suspend fun intercept(chain: Interceptor.Chain): ImageResult {
         val coverRequest = chain.request.data as? CoverRequest ?: return chain.proceed(chain.request)
 
-        var lastResult: ImageResult? = null
-        for (url in coverRequest.urls) {
-            val result = chain.proceed(chain.request.newBuilder().data(url).build())
-            if (result is SuccessResult) return result
-            lastResult = result
-        }
+        val resolved =
+            coverStore.resolve(coverRequest.target)
+                ?: return ErrorResult(
+                    drawable = null,
+                    request = chain.request,
+                    throwable = IllegalStateException("No artwork found"),
+                )
 
-        return lastResult ?: ErrorResult(
-            drawable = null,
-            request = chain.request,
-            throwable = IllegalStateException("No artwork found"),
-        )
+        val request =
+            chain.request.newBuilder()
+                .data(resolved.data)
+                // Only fade in artwork that was just downloaded; stored artwork shows right away.
+                .crossfade(resolved.downloaded)
+                .build()
+        return chain.proceed(request)
     }
 }

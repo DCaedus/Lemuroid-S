@@ -260,7 +260,40 @@ private fun ArtworkSettings(navController: NavController) {
             subtitle = { Text(text = stringResource(id = R.string.settings_description_artwork_per_system)) },
             onClick = { navController.navigateToRoute(MainRoute.SETTINGS_ARTWORK) },
         )
+        RetroArchThumbnailsFolderSetting()
     }
+}
+
+/** Optional: RetroArch's "thumbnails" folder, checked before Lemuroid-S's own artwork folder. */
+@Composable
+private fun RetroArchThumbnailsFolderSetting() {
+    val context = LocalContext.current
+    val folderKey = stringResource(R.string.pref_key_artwork_retroarch_folder)
+    val preferences = remember { SharedPreferencesHelper.getSharedPreferences(context) }
+    var folderUri by remember { mutableStateOf(preferences.getString(folderKey, null)) }
+
+    val folderPicker =
+        rememberLauncherForActivityResult(ActivityResultContracts.OpenDocumentTree()) { uri ->
+            if (uri == null) return@rememberLauncherForActivityResult
+            runCatching {
+                context.contentResolver.takePersistableUriPermission(uri, Intent.FLAG_GRANT_READ_URI_PERMISSION)
+            }
+            preferences.edit().putString(folderKey, uri.toString()).apply()
+            folderUri = uri.toString()
+        }
+
+    val folderName =
+        remember(folderUri) {
+            folderUri?.let { runCatching { DocumentFile.fromTreeUri(context, Uri.parse(it))?.name }.getOrNull() }
+        }
+
+    LemuroidSettingsMenuLink(
+        title = { Text(text = stringResource(id = R.string.settings_title_artwork_retroarch_folder)) },
+        subtitle = {
+            Text(text = folderName ?: stringResource(id = R.string.settings_description_artwork_retroarch_folder))
+        },
+        onClick = { folderPicker.launch(null) },
+    )
 }
 
 @Composable

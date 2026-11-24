@@ -3,7 +3,6 @@ package com.swordfish.lemuroid.app.shared.covers
 import android.content.Context
 import android.widget.ImageView
 import coil.ImageLoader
-import coil.disk.DiskCache
 import coil.imageLoader
 import coil.load
 import coil.memory.MemoryCache
@@ -12,7 +11,6 @@ import com.swordfish.lemuroid.common.drawable.TextDrawable
 import com.swordfish.lemuroid.common.graphics.ColorUtils
 import com.swordfish.lemuroid.lib.library.db.entity.Game
 import kotlinx.coroutines.Dispatchers
-import okhttp3.OkHttpClient
 
 object CoverUtils {
     fun loadCover(
@@ -30,41 +28,32 @@ object CoverUtils {
 
     /**
      * What to load for a game's artwork: the user's custom cover if set, otherwise a [CoverRequest]
-     * with the libretro thumbnail URLs to try, using the artwork type chosen in Settings.
+     * for the artwork type chosen in Settings (found or downloaded by [CoverStore]).
      */
     fun coverData(
         context: Context,
         game: Game,
     ): Any? {
         game.customCoverUri?.let { return it }
-        val urls = CoverUrls.candidates(context, game)
-        return if (urls.isEmpty()) null else CoverRequest(urls)
+        return CoverUrls.target(context, game)?.let { CoverRequest(it) }
     }
 
     fun buildImageLoader(applicationContext: Context): ImageLoader {
+        // Artwork is stored permanently by CoverStore, so the temporary disk cache isn't used anymore.
+        // Remove the one older test builds created.
+        Thread { runCatching { applicationContext.cacheDir.resolve("image_cache").deleteRecursively() } }.start()
+
         return ImageLoader.Builder(applicationContext)
-            .components { add(CoverFallbackInterceptor) }
-            .diskCache(
-                DiskCache.Builder()
-                    .directory(applicationContext.cacheDir.resolve("image_cache"))
-                    .maxSizePercent(0.20)
-                    .build(),
-            )
+            .components { add(CoverFallbackInterceptor(CoverStore.get(applicationContext))) }
             .memoryCache {
                 MemoryCache.Builder(applicationContext)
                     .maxSizePercent(0.20)
                     .build()
             }
-            .okHttpClient {
-                OkHttpClient.Builder()
-                    .addNetworkInterceptor(ThrottleFailedThumbnailsInterceptor)
-                    .build()
-            }
             .crossfade(true)
             .interceptorDispatcher(Dispatchers.IO)
-            .diskCachePolicy(CachePolicy.ENABLED)
+            .diskCachePolicy(CachePolicy.DISABLED)
             .memoryCachePolicy(CachePolicy.ENABLED)
-            .respectCacheHeaders(false)
             .build()
     }
 

@@ -60,6 +60,8 @@
     <string name="artwork_type_names_snap">In-game screenshot</string>
     <string name="artwork_type_names_title">Title screen</string>
     <string name="artwork_type_names_default">Default (%1$s)</string>
+    <string name="settings_title_artwork_retroarch_folder">RetroArch thumbnails folder</string>
+    <string name="settings_description_artwork_retroarch_folder">Not set. Pick RetroArch\'s "thumbnails" folder to use its artwork first</string>
     <string name="settings_title_enable_autosave">Autosave state</string>
     <string name="settings_description_enable_autosave">Save state when exiting via game menu</string>
     <string name="settings_title_enable_touch_feedback">Vibrate on touch</string>
