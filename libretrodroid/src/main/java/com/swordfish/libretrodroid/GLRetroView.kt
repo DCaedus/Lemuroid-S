@@ -424,6 +424,9 @@ class GLRetroView(
             is ShaderConfig.CRT -> GLRetroShader(LibretroDroid.SHADER_CRT)
             is ShaderConfig.LCD -> GLRetroShader(LibretroDroid.SHADER_LCD)
             is ShaderConfig.Sharp -> GLRetroShader(LibretroDroid.SHADER_SHARP)
+            is ShaderConfig.Scale2x -> GLRetroShader(LibretroDroid.SHADER_SCALE2X)
+            is ShaderConfig.XBR -> GLRetroShader(LibretroDroid.SHADER_XBR)
+            is ShaderConfig.SABR -> GLRetroShader(LibretroDroid.SHADER_SABR)
             is ShaderConfig.CUT -> GLRetroShader(
                 LibretroDroid.SHADER_UPSCALE_CUT,
                 buildParams(

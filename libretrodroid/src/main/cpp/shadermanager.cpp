@@ -1527,6 +1527,192 @@ const std::string ShaderManager::cut3UpscalePass2Fragment =
     "  gl_FragColor = vec4(final.rgb, 1.0);\n"
     "}";
 
+// Lemuroid-S: light pixel-art upscalers (single pass, run on the GPU).
+const std::string ShaderManager::scale2xFragment = R"GLSL(
+#ifdef GL_FRAGMENT_PRECISION_HIGH
+#define HIGHP highp
+#else
+#define HIGHP mediump
+#endif
+precision mediump float;
+uniform lowp sampler2D texture;
+uniform HIGHP vec2 textureSize;
+varying HIGHP vec2 coords;
+
+vec3 px(HIGHP vec2 base, float x, float y) {
+  return texture2D(texture, base + vec2(x, y) / textureSize).rgb;
+}
+
+bool same(vec3 a, vec3 b) {
+  vec3 d = abs(a - b);
+  return d.r + d.g + d.b < 0.01;
+}
+
+void main() {
+  HIGHP vec2 pos = coords * textureSize;
+  HIGHP vec2 base = (floor(pos) + 0.5) / textureSize;
+  vec2 fp = fract(pos);
+  vec3 E = px(base, 0.0, 0.0);
+  vec3 B = px(base, 0.0, -1.0);
+  vec3 D = px(base, -1.0, 0.0);
+  vec3 F = px(base, 1.0, 0.0);
+  vec3 H = px(base, 0.0, 1.0);
+  bool db = same(D, B);
+  bool bf = same(B, F);
+  bool dh = same(D, H);
+  bool hf = same(H, F);
+  vec3 r = E;
+  if (fp.x < 0.5 && fp.y < 0.5) {
+    if (db && !bf && !dh) r = D;
+  } else if (fp.y < 0.5) {
+    if (bf && !db && !hf) r = F;
+  } else if (fp.x < 0.5) {
+    if (dh && !db && !hf) r = D;
+  } else {
+    if (hf && !dh && !bf) r = F;
+  }
+  gl_FragColor = vec4(r, 1.0);
+}
+)GLSL";
+
+const std::string ShaderManager::xbrFragment = R"GLSL(
+#ifdef GL_FRAGMENT_PRECISION_HIGH
+#define HIGHP highp
+#else
+#define HIGHP mediump
+#endif
+precision mediump float;
+uniform lowp sampler2D texture;
+uniform HIGHP vec2 textureSize;
+varying HIGHP vec2 coords;
+
+vec3 px(HIGHP vec2 base, float x, float y) {
+  return texture2D(texture, base + vec2(x, y) / textureSize).rgb;
+}
+
+// xBR level 2 by Hyllian (MIT) and SABR v3.0 by Joshua Street (GPL), single pass.
+// SABR is defined for the SABR variant: same edge detection, smoother transitions.
+const vec4 Ao = vec4(1.0, -1.0, -1.0, 1.0);
+const vec4 Bo = vec4(1.0, 1.0, -1.0, -1.0);
+const vec4 Co = vec4(1.5, 0.5, -0.5, 0.5);
+const vec4 Ax = vec4(1.0, -1.0, -1.0, 1.0);
+const vec4 Bx = vec4(0.5, 2.0, -0.5, -2.0);
+const vec4 Cx = vec4(1.0, 1.0, -0.5, 0.0);
+const vec4 Ay = vec4(1.0, -1.0, -1.0, 1.0);
+const vec4 By = vec4(2.0, 0.5, -2.0, -0.5);
+const vec4 Cy = vec4(2.0, 0.0, -1.0, 0.5);
+const vec4 Ci = vec4(0.25, 0.25, 0.25, 0.25);
+const float coef = 2.0;
+#ifdef SABR
+const vec3 lumw = vec3(0.21, 0.72, 0.07);
+const vec4 eqThreshold = vec4(0.32, 0.32, 0.32, 0.32);
+#else
+const vec3 lumw = vec3(14.352, 28.176, 5.472);
+const vec4 eqThreshold = vec4(15.0, 15.0, 15.0, 15.0);
+#endif
+
+vec4 lum4(vec3 a, vec3 b, vec3 c, vec3 d) {
+  return vec4(dot(a, lumw), dot(b, lumw), dot(c, lumw), dot(d, lumw));
+}
+vec4 df(vec4 a, vec4 b) { return abs(a - b); }
+vec4 eq(vec4 a, vec4 b) { return vec4(1.0) - step(eqThreshold, df(a, b)); }
+vec4 neq(vec4 a, vec4 b) { return step(vec4(0.0001), df(a, b)); }
+vec4 not4(vec4 a) { return vec4(1.0) - a; }
+vec4 or4(vec4 a, vec4 b) { return min(a + b, vec4(1.0)); }
+vec4 wd(vec4 a, vec4 b, vec4 c, vec4 d, vec4 e, vec4 f, vec4 g, vec4 h) {
+  return df(a, b) + df(a, c) + df(d, e) + df(d, f) + 4.0 * df(g, h);
+}
+float cdf(vec3 a, vec3 b) {
+  vec3 d = abs(a - b);
+  return d.r + d.g + d.b;
+}
+
+void main() {
+  HIGHP vec2 pos = coords * textureSize;
+  HIGHP vec2 base = (floor(pos) + 0.5) / textureSize;
+  vec2 fp = fract(pos);
+
+  vec3 A1 = px(base, -1.0, -2.0); vec3 B1 = px(base, 0.0, -2.0); vec3 C1 = px(base, 1.0, -2.0);
+  vec3 A0 = px(base, -2.0, -1.0); vec3 A = px(base, -1.0, -1.0); vec3 B = px(base, 0.0, -1.0);
+  vec3 C = px(base, 1.0, -1.0); vec3 C4 = px(base, 2.0, -1.0);
+  vec3 D0 = px(base, -2.0, 0.0); vec3 D = px(base, -1.0, 0.0); vec3 E = px(base, 0.0, 0.0);
+  vec3 F = px(base, 1.0, 0.0); vec3 F4 = px(base, 2.0, 0.0);
+  vec3 G0 = px(base, -2.0, 1.0); vec3 G = px(base, -1.0, 1.0); vec3 H = px(base, 0.0, 1.0);
+  vec3 I = px(base, 1.0, 1.0); vec3 I4 = px(base, 2.0, 1.0);
+  vec3 G5 = px(base, -1.0, 2.0); vec3 H5 = px(base, 0.0, 2.0); vec3 I5 = px(base, 1.0, 2.0);
+
+  vec4 b = lum4(B, D, H, F);
+  vec4 c = lum4(C, A, G, I);
+  vec4 e = lum4(E, E, E, E);
+  vec4 d = b.yzwx;
+  vec4 f = b.wxyz;
+  vec4 g = c.zwxy;
+  vec4 h = b.zwxy;
+  vec4 i = c.wxyz;
+  vec4 i4 = lum4(I4, C1, A0, G5);
+  vec4 i5 = lum4(I5, C4, A1, G0);
+  vec4 h5 = lum4(H5, F4, B1, D0);
+  vec4 f4 = h5.yzwx;
+
+  vec4 fx = Ao * fp.y + Bo * fp.x;
+  vec4 fxL = Ax * fp.y + Bx * fp.x;
+  vec4 fxU = Ay * fp.y + By * fp.x;
+
+  vec4 lv0 = neq(e, f) * neq(e, h);
+  vec4 lv1 = lv0 * or4(
+    or4(not4(eq(f, b)) * not4(eq(f, c)), not4(eq(h, d)) * not4(eq(h, g))),
+    or4(
+      eq(e, i) * or4(not4(eq(f, f4)) * not4(eq(f, i4)), not4(eq(h, h5)) * not4(eq(h, i5))),
+      or4(eq(e, g), eq(e, c))
+    )
+  );
+  vec4 lv2L = neq(e, g) * neq(d, g);
+  vec4 lv2U = neq(e, c) * neq(b, c);
+
+#ifdef SABR
+  vec4 M45 = vec4(0.4, 0.4, 0.4, 0.4);
+  vec4 M30 = vec4(0.2, 0.4, 0.2, 0.4);
+  vec4 M60 = M30.yxwz;
+  vec4 fx45i = smoothstep(Co + Ci - M45, Co + Ci + M45, fx);
+  vec4 fx45 = smoothstep(Co - M45, Co + M45, fx);
+  vec4 fx30 = smoothstep(Cx - M30, Cx + M30, fxL);
+  vec4 fx60 = smoothstep(Cy - M60, Cy + M60, fxU);
+#else
+  vec4 delta = vec4(1.0 / 3.0);
+  vec4 deltaL = vec4(0.5 / 3.0, 1.0 / 3.0, 0.5 / 3.0, 1.0 / 3.0);
+  vec4 deltaU = deltaL.yxwz;
+  vec4 fx45i = clamp((fx + delta - Co - Ci) / (2.0 * delta), 0.0, 1.0);
+  vec4 fx45 = clamp((fx + delta - Co) / (2.0 * delta), 0.0, 1.0);
+  vec4 fx30 = clamp((fxL + deltaL - Cx) / (2.0 * deltaL), 0.0, 1.0);
+  vec4 fx60 = clamp((fxU + deltaU - Cy) / (2.0 * deltaU), 0.0, 1.0);
+#endif
+
+  vec4 wd1 = wd(e, c, g, i, h5, f4, h, f);
+  vec4 wd2 = wd(h, d, i5, f, i4, b, e, i);
+  vec4 edri = step(wd1, wd2) * lv0;
+  vec4 edr = (vec4(1.0) - step(wd2, wd1)) * lv1;
+  vec4 edrL = step(coef * df(f, g), df(h, c)) * lv2L * edr;
+  vec4 edrU = step(coef * df(h, c), df(f, g)) * lv2U * edr;
+
+  fx45 = edr * fx45;
+  fx30 = edrL * fx30;
+  fx60 = edrU * fx60;
+  fx45i = edri * fx45i;
+
+  vec4 pxv = step(df(e, f), df(e, h));
+  vec4 m = max(max(fx30, fx60), max(fx45, fx45i));
+
+  vec3 res1 = mix(E, mix(H, F, pxv.x), m.x);
+  vec3 res2 = mix(E, mix(F, B, pxv.y), m.y);
+  vec3 res3 = mix(E, mix(B, D, pxv.z), m.z);
+  vec3 res4 = mix(E, mix(D, H, pxv.w), m.w);
+  res1 = mix(res1, res2, step(cdf(E, res1), cdf(E, res2)));
+  res3 = mix(res3, res4, step(cdf(E, res3), cdf(E, res4)));
+  vec3 res = mix(res1, res3, step(cdf(E, res1), cdf(E, res3)));
+  gl_FragColor = vec4(res, 1.0);
+}
+)GLSL";
+
 ShaderManager::Chain ShaderManager::getShader(const ShaderManager::Config& config) {
     switch (config.type) {
     case Type::SHADER_DEFAULT: {
@@ -1543,6 +1729,18 @@ ShaderManager::Chain ShaderManager::getShader(const ShaderManager::Config& confi
 
     case Type::SHADER_SHARP: {
         return { { { defaultShaderVertex, defaultSharpFragment, true, 1.0 } }, true };
+    }
+
+    case Type::SHADER_SCALE2X: {
+        return { { { defaultShaderVertex, scale2xFragment, false, 1.0 } }, false };
+    }
+
+    case Type::SHADER_XBR: {
+        return { { { defaultShaderVertex, xbrFragment, false, 1.0 } }, false };
+    }
+
+    case Type::SHADER_SABR: {
+        return { { { defaultShaderVertex, "#define SABR 1\n" + xbrFragment, false, 1.0 } }, false };
     }
 
     case Type::SHADER_UPSCALE_CUT: {

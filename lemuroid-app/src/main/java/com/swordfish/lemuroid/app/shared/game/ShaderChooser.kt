@@ -33,6 +33,9 @@ object ShaderChooser {
                     "lcd" -> ShaderConfig.LCD
                     "smooth" -> ShaderConfig.Default
                     "sharp" -> ShaderConfig.Sharp
+                    "scale2x" -> ShaderConfig.Scale2x
+                    "xbr" -> ShaderConfig.XBR
+                    "sabr" -> ShaderConfig.SABR
                     else -> getDefaultShaderForSystem(system)
                 }
         }

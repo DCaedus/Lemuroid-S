@@ -61,6 +61,9 @@
         <item>smooth</item>
         <item>crt</item>
         <item>lcd</item>
+        <item>scale2x</item>
+        <item>xbr</item>
+        <item>sabr</item>
     </string-array>
 
     <string-array translatable="false" name="pref_key_shader_filter_display_names">
@@ -69,6 +72,9 @@
         <item>@string/shader_filter_names_smooth</item>
         <item>@string/shader_filter_names_crt</item>
         <item>@string/shader_filter_names_lcd</item>
+        <item>@string/shader_filter_names_scale2x</item>
+        <item>@string/shader_filter_names_xbr</item>
+        <item>@string/shader_filter_names_sabr</item>
     </string-array>
 
     <string-array translatable="false" name="pref_key_viewport_alignment_values">

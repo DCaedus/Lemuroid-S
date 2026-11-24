@@ -24,6 +24,11 @@ sealed interface ShaderConfig {
     object LCD : ShaderConfig
     object Sharp : ShaderConfig
 
+    /** Lemuroid-S: light pixel-art upscalers. */
+    object Scale2x : ShaderConfig
+    object XBR : ShaderConfig
+    object SABR : ShaderConfig
+
     data class CUT(
         val useDynamicBlend: Boolean = true,
         val blendMinContrastEdge: Float = 0.0f,
