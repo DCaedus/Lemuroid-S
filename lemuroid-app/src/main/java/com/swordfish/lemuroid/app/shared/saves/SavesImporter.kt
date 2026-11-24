@@ -282,6 +282,7 @@ class SavesImporter(
                 "ppsspp" to "psp",
                 "melonds" to "nds",
                 "melonds ds" to "nds",
+                "melondsds" to "nds",
                 "desmume" to "nds",
                 "finalburn neo" to "fbneo",
                 "fbneo" to "fbneo",

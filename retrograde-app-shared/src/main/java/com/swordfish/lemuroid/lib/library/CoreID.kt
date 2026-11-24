@@ -72,9 +72,9 @@ enum class CoreID(
         "libdesmume_libretro_android.so",
     ),
     MELONDS(
-        "melonds",
-        "MelonDS",
-        "libmelonds_libretro_android.so",
+        "melondsds",
+        "melonDS DS",
+        "libmelondsds_libretro_android.so",
     ),
     HANDY(
         "handy",

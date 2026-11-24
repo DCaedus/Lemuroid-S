@@ -976,14 +976,19 @@ data class GameSystem(
                             defaultSettings =
                                 listOf(
                                     CoreVariable("melonds_number_of_screen_layouts", "1"),
-                                    CoreVariable("melonds_touch_mode", "Touch"),
+                                    CoreVariable("melonds_touch_mode", "touch"),
                                     CoreVariable("melonds_threaded_renderer", "enabled"),
+                                    // melonDS DS: software rendering (its OpenGL renderer needs desktop
+                                    // OpenGL); real BIOS/firmware from the bios folder when present,
+                                    // otherwise its built-in replacements.
+                                    CoreVariable("melonds_render_mode", "software"),
+                                    CoreVariable("melonds_sysfile_mode", "native"),
                                 ),
                             controllerConfigs =
                                 hashMapOf(
                                     0 to arrayListOf(ControllerConfigs.MELONDS),
                                 ),
-                            statesVersion = 2,
+                            statesVersion = 3,
                             supportsMicrophone = true,
                         ),
                     ),
