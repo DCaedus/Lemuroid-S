@@ -126,7 +126,12 @@ class GameViewModelTouchControls(
         events.forEach { event ->
             when (event) {
                 is InputEvent.Button -> {
-                    handleVirtualInputButton(event)
+                    if (event.id == ComposeTouchLayouts.KEYCODE_FAST_FORWARD) {
+                        // On-screen fast-forward button: tap to toggle. Not sent to the core.
+                        if (event.pressed) sideEffects.toggleFastForward()
+                    } else {
+                        handleVirtualInputButton(event)
+                    }
                 }
 
                 is InputEvent.DiscreteDirection -> {

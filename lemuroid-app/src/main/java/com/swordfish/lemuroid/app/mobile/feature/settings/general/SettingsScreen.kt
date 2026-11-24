@@ -13,6 +13,7 @@ import androidx.navigation.NavController
 import com.swordfish.lemuroid.R
 import com.swordfish.lemuroid.app.mobile.feature.main.MainRoute
 import com.swordfish.lemuroid.app.mobile.feature.main.navigateToRoute
+import com.swordfish.lemuroid.app.mobile.feature.settings.SettingsManager
 import com.swordfish.lemuroid.app.shared.library.LibraryIndexScheduler
 import com.swordfish.lemuroid.app.utils.android.settings.LemuroidCardSettingsGroup
 import com.swordfish.lemuroid.app.utils.android.settings.LemuroidSettingsList
@@ -54,6 +55,7 @@ fun SettingsScreen(
             scanInProgress = scanInProgress,
         )
         GeneralSettings()
+        FastForwardSettings()
         InputSettings(navController = navController)
         MiscSettings(
             indexingInProgress = indexingInProgress,
@@ -102,6 +104,60 @@ private fun MiscSettings(
                 Text(text = stringResource(id = R.string.settings_description_advanced_settings))
             },
             onClick = { navController.navigateToRoute(MainRoute.SETTINGS_ADVANCED) },
+        )
+    }
+}
+
+@Composable
+private fun FastForwardSettings() {
+    val audioModeValues = stringListResource(R.array.pref_key_fast_forward_audio_values)
+    val audioMode =
+        indexPreferenceState(
+            R.string.pref_key_fast_forward_audio,
+            SettingsManager.FAST_FORWARD_AUDIO_NORMAL,
+            audioModeValues,
+        )
+    val volume =
+        intPreferenceState(
+            key = stringResource(id = R.string.pref_key_fast_forward_volume),
+            default = SettingsManager.DEFAULT_FAST_FORWARD_VOLUME_STEPS,
+        )
+    val isLowerVolumeMode = audioModeValues.getOrNull(audioMode.value) == SettingsManager.FAST_FORWARD_AUDIO_LOWER
+
+    LemuroidCardSettingsGroup(
+        title = { Text(text = stringResource(id = R.string.settings_category_fast_forward)) },
+    ) {
+        LemuroidSettingsList(
+            state =
+                indexPreferenceState(
+                    R.string.pref_key_fast_forward_speed,
+                    SettingsManager.DEFAULT_FAST_FORWARD_SPEED,
+                    stringListResource(R.array.pref_key_fast_forward_speed_values),
+                ),
+            title = { Text(text = stringResource(id = R.string.settings_title_fast_forward_speed)) },
+            items = stringListResource(R.array.pref_key_fast_forward_speed_display_names),
+        )
+        LemuroidSettingsList(
+            state = audioMode,
+            title = { Text(text = stringResource(id = R.string.settings_title_fast_forward_audio)) },
+            items = stringListResource(R.array.pref_key_fast_forward_audio_display_names),
+        )
+        if (isLowerVolumeMode) {
+            LemuroidSettingsSlider(
+                enabled = true,
+                state = volume,
+                steps = 9,
+                valueRange = 0f..10f,
+                title = { Text(text = stringResource(R.string.settings_title_fast_forward_volume)) },
+                subtitle = {
+                    Text(text = stringResource(R.string.settings_description_fast_forward_volume, volume.value * 10))
+                },
+            )
+        }
+        LemuroidSettingsSwitch(
+            state = booleanPreferenceState(R.string.pref_key_fast_forward_button, true),
+            title = { Text(text = stringResource(id = R.string.settings_title_fast_forward_button)) },
+            subtitle = { Text(text = stringResource(id = R.string.settings_description_fast_forward_button)) },
         )
     }
 }

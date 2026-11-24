@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import com.swordfish.touchinput.controller.R
+import com.swordfish.touchinput.radial.LocalFastForwardButtonEnabled
 import com.swordfish.touchinput.radial.controls.LemuroidControlAnalog
 import com.swordfish.touchinput.radial.controls.LemuroidControlButton
 import com.swordfish.touchinput.radial.settings.TouchControllerSettingsManager
@@ -105,12 +106,21 @@ fun SecondaryButtonMenu(settings: TouchControllerSettingsManager.Settings) {
 context(PadKitScope, LayoutRadialSecondaryDialsScope)
 @Composable
 fun SecondaryButtonMenuPlaceholder(settings: TouchControllerSettingsManager.Settings) {
-    Box(
-        modifier =
-            Modifier.radialPosition(
-                -120f - 2f * settings.rotation * TouchControllerSettingsManager.MAX_ROTATION,
-            ),
-    )
+    val position =
+        Modifier.radialPosition(
+            -120f - 2f * settings.rotation * TouchControllerSettingsManager.MAX_ROTATION,
+        )
+
+    // Lemuroid-S: the empty spot mirroring the menu button holds the fast-forward button.
+    if (LocalFastForwardButtonEnabled.current) {
+        LemuroidControlButton(
+            modifier = position,
+            id = Id.Key(ComposeTouchLayouts.KEYCODE_FAST_FORWARD),
+            icon = R.drawable.button_fast_forward,
+        )
+    } else {
+        Box(modifier = position)
+    }
 }
 
 context(PadKitScope, LayoutRadialSecondaryDialsScope)
@@ -155,4 +165,7 @@ object ComposeTouchLayouts {
     const val MOTION_SOURCE_RIGHT_STICK = 2
     const val MOTION_SOURCE_DPAD_AND_LEFT_STICK = 3
     const val MOTION_SOURCE_RIGHT_DPAD = 4
+
+    /** Key sent by the on-screen fast-forward button. It's handled by the app and never sent to the core. */
+    const val KEYCODE_FAST_FORWARD = KeyEvent.KEYCODE_MEDIA_FAST_FORWARD
 }

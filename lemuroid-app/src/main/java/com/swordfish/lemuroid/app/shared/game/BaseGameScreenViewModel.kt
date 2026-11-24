@@ -41,16 +41,17 @@ import gg.padkit.inputstate.InputState
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.launch
 import timber.log.Timber
 
 class BaseGameScreenViewModel(
     private val appContext: Context,
     game: Game,
-    settingsManager: SettingsManager,
+    private val settingsManager: SettingsManager,
     inputDeviceManager: InputDeviceManager,
     controllerConfigsManager: ControllerConfigsManager,
-    system: GameSystem,
+    private val system: GameSystem,
     systemCoreConfig: SystemCoreConfig,
     sharedPreferences: SharedPreferences,
     savesManager: SavesManager,
@@ -267,10 +268,41 @@ class BaseGameScreenViewModel(
         }
     }
 
+    fun isFastForwardButtonVisible(): Flow<Boolean> =
+        flow {
+            emit(system.fastForwardSupport && settingsManager.showFastForwardButton())
+        }
+
+    fun isFastForwardEnabled(): Boolean {
+        return (retroGameView.retroGameView?.frameSpeed ?: 1) > 1
+    }
+
     fun toggleFastForward() {
-        Timber.d("Loading quick save")
-        retroGameView.retroGameView?.apply {
-            frameSpeed = if (frameSpeed == 1) 2 else 1
+        setFastForward(!isFastForwardEnabled())
+    }
+
+    /**
+     * Turns fast-forward on or off, using the speed and audio behavior from the Fast Forward settings.
+     * Calling it while fast-forward is already on re-applies the current settings.
+     */
+    fun setFastForward(enabled: Boolean) {
+        viewModelScope.launch {
+            val speed = if (enabled) settingsManager.fastForwardSpeed() else 1
+            val volume =
+                when {
+                    !enabled -> 1.0f
+                    else ->
+                        when (settingsManager.fastForwardAudioMode()) {
+                            SettingsManager.FAST_FORWARD_AUDIO_MUTE -> 0.0f
+                            SettingsManager.FAST_FORWARD_AUDIO_LOWER -> settingsManager.fastForwardVolume()
+                            else -> 1.0f
+                        }
+                }
+            Timber.d("Setting fast-forward: enabled=$enabled speed=$speed volume=$volume")
+            retroGameView.retroGameView?.apply {
+                frameSpeed = speed
+                audioVolume = volume
+            }
         }
     }
 

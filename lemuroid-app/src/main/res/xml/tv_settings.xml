@@ -53,6 +53,40 @@
     </PreferenceCategory>
 
     <PreferenceCategory
+        android:title="@string/settings_category_fast_forward"
+        app:iconSpaceReserved="false">
+
+        <ListPreference
+            android:key="@string/pref_key_fast_forward_speed"
+            android:title="@string/settings_title_fast_forward_speed"
+            app:iconSpaceReserved="false"
+            app:useSimpleSummaryProvider="true"
+            android:entries="@array/pref_key_fast_forward_speed_display_names"
+            app:entryValues="@array/pref_key_fast_forward_speed_values"
+            android:defaultValue="2"/>
+
+        <ListPreference
+            android:key="@string/pref_key_fast_forward_audio"
+            android:title="@string/settings_title_fast_forward_audio"
+            app:iconSpaceReserved="false"
+            app:useSimpleSummaryProvider="true"
+            android:entries="@array/pref_key_fast_forward_audio_display_names"
+            app:entryValues="@array/pref_key_fast_forward_audio_values"
+            android:defaultValue="normal"/>
+
+        <SeekBarPreference
+            android:key="@string/pref_key_fast_forward_volume"
+            android:title="@string/settings_title_fast_forward_volume"
+            app:min="0"
+            android:max="10"
+            app:seekBarIncrement="1"
+            app:showSeekBarValue="true"
+            app:iconSpaceReserved="false"
+            android:defaultValue="5"/>
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
         android:title="@string/settings_category_input"
         app:iconSpaceReserved="false">
 

@@ -212,7 +212,7 @@ abstract class BaseGameActivity : ImmersiveActivity() {
                 this.putExtra(GameMenuContract.EXTRA_FAST_FORWARD_SUPPORTED, system.fastForwardSupport)
                 this.putExtra(
                     GameMenuContract.EXTRA_FAST_FORWARD,
-                    (baseGameScreenViewModel.retroGameView.retroGameView?.frameSpeed ?: 1) > 1,
+                    baseGameScreenViewModel.isFastForwardEnabled(),
                 )
                 this.putExtra(GameMenuContract.EXTRA_CURRENT_TILT_CONFIG, currentTiltConfiguration)
                 // TODO PADS... Make sure to avoid passing this if a physical pad is connected.
@@ -396,16 +396,13 @@ abstract class BaseGameActivity : ImmersiveActivity() {
                         )
                 }
             }
-            if (data?.hasExtra(GameMenuContract.RESULT_ENABLE_FAST_FORWARD) == true) {
-                baseGameScreenViewModel.retroGameView.retroGameView?.apply {
-                    val fastForwardEnabled =
-                        data.getBooleanExtra(
-                            GameMenuContract.RESULT_ENABLE_FAST_FORWARD,
-                            false,
-                        )
-                    this.frameSpeed = if (fastForwardEnabled) 2 else 1
-                }
-            }
+            // Always re-apply fast-forward: the speed or audio settings may have changed in the menu.
+            val fastForwardEnabled =
+                data?.getBooleanExtra(
+                    GameMenuContract.RESULT_ENABLE_FAST_FORWARD,
+                    baseGameScreenViewModel.isFastForwardEnabled(),
+                ) ?: baseGameScreenViewModel.isFastForwardEnabled()
+            baseGameScreenViewModel.setFastForward(fastForwardEnabled)
             if (data?.getBooleanExtra(GameMenuContract.RESULT_EDIT_TOUCH_CONTROLS, false) == true) {
                 baseGameScreenViewModel.showEditControls(true)
             }

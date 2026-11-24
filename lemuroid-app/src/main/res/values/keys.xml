@@ -21,6 +21,11 @@
     <string name="pref_key_allow_direct_game_load" translatable="false">allow_direct_game_load</string>
     <string name="pref_key_enable_immersive_mode" translatable="false">enable_immersive_mode</string>
 
+    <string name="pref_key_fast_forward_speed" translatable="false">fast_forward_speed</string>
+    <string name="pref_key_fast_forward_audio" translatable="false">fast_forward_audio</string>
+    <string name="pref_key_fast_forward_volume" translatable="false">fast_forward_volume</string>
+    <string name="pref_key_fast_forward_button" translatable="false">fast_forward_button</string>
+
     <string name="pref_key_save_sync_auto" translatable="false">save_sync_auto</string>
     <string name="pref_key_save_sync_enable" translatable="false">save_sync_enable</string>
     <string name="pref_key_save_sync_configure" translatable="false">save_sync_configure</string>
@@ -68,5 +73,31 @@
         <item>@string/viewport_alignment_names_top</item>
         <item>@string/viewport_alignment_names_center</item>
         <item>@string/viewport_alignment_names_bottom</item>
+    </string-array>
+
+    <string-array translatable="false" name="pref_key_fast_forward_speed_values">
+        <item>2</item>
+        <item>4</item>
+        <item>6</item>
+        <item>8</item>
+    </string-array>
+
+    <string-array translatable="false" name="pref_key_fast_forward_speed_display_names">
+        <item>x2</item>
+        <item>x4</item>
+        <item>x6</item>
+        <item>x8</item>
+    </string-array>
+
+    <string-array translatable="false" name="pref_key_fast_forward_audio_values">
+        <item>normal</item>
+        <item>mute</item>
+        <item>lower</item>
+    </string-array>
+
+    <string-array translatable="false" name="pref_key_fast_forward_audio_display_names">
+        <item>@string/fast_forward_audio_names_normal</item>
+        <item>@string/fast_forward_audio_names_mute</item>
+        <item>@string/fast_forward_audio_names_lower</item>
     </string-array>
 </resources>

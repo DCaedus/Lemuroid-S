@@ -56,6 +56,19 @@ class SettingsManager(private val context: Context, sharedPreferences: Lazy<Shar
             CacheCleaner.getDefaultCacheLimit().toString(),
         )
 
+    suspend fun fastForwardSpeed(): Int =
+        stringPreference(R.string.pref_key_fast_forward_speed, DEFAULT_FAST_FORWARD_SPEED)
+            .toIntOrNull() ?: DEFAULT_FAST_FORWARD_SPEED.toInt()
+
+    suspend fun fastForwardAudioMode() =
+        stringPreference(R.string.pref_key_fast_forward_audio, FAST_FORWARD_AUDIO_NORMAL)
+
+    /** Volume used while fast-forwarding in "lower" mode, from 0.0 to 1.0 (stored in steps of 10%). */
+    suspend fun fastForwardVolume() =
+        floatPreference(R.string.pref_key_fast_forward_volume, 10, DEFAULT_FAST_FORWARD_VOLUME_STEPS)
+
+    suspend fun showFastForwardButton() = booleanPreference(R.string.pref_key_fast_forward_button, true)
+
     suspend fun allowDirectGameLoad() = booleanPreference(R.string.pref_key_allow_direct_game_load, true)
 
     private suspend fun booleanPreference(
@@ -109,4 +122,12 @@ class SettingsManager(private val context: Context, sharedPreferences: Lazy<Shar
                 .asFlow()
                 .first()
         }
+
+    companion object {
+        const val DEFAULT_FAST_FORWARD_SPEED = "2"
+        const val DEFAULT_FAST_FORWARD_VOLUME_STEPS = 5
+        const val FAST_FORWARD_AUDIO_NORMAL = "normal"
+        const val FAST_FORWARD_AUDIO_MUTE = "mute"
+        const val FAST_FORWARD_AUDIO_LOWER = "lower"
+    }
 }

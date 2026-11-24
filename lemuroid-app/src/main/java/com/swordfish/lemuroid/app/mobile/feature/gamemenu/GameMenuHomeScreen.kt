@@ -10,6 +10,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavController
@@ -17,10 +18,14 @@ import com.alorma.compose.settings.storage.memory.rememberMemoryBooleanSettingSt
 import com.alorma.compose.settings.storage.memory.rememberMemoryIntSettingState
 import com.swordfish.lemuroid.R
 import com.swordfish.lemuroid.app.mobile.feature.gamemenu.tilt.TiltConfigurationMenuEntry
+import com.swordfish.lemuroid.app.mobile.feature.settings.SettingsManager
 import com.swordfish.lemuroid.app.shared.GameMenuContract
 import com.swordfish.lemuroid.app.utils.android.settings.LemuroidSettingsList
 import com.swordfish.lemuroid.app.utils.android.settings.LemuroidSettingsMenuLink
 import com.swordfish.lemuroid.app.utils.android.settings.LemuroidSettingsSwitch
+import com.swordfish.lemuroid.app.utils.android.settings.indexPreferenceState
+import com.swordfish.lemuroid.app.utils.android.stringListResource
+import com.swordfish.lemuroid.lib.preferences.SharedPreferencesHelper
 import kotlin.reflect.KFunction1
 
 @Composable
@@ -106,6 +111,35 @@ fun GameMenuHomeScreen(
                 state = rememberMemoryBooleanSettingState(gameMenuRequest.fastForwardEnabled),
                 onCheckedChange = {
                     onResult { putExtra(GameMenuContract.RESULT_ENABLE_FAST_FORWARD, it) }
+                },
+            )
+
+            // Picking a speed saves it as the default (same setting as in the main Settings)
+            // and turns fast-forward on at that speed.
+            val context = LocalContext.current
+            val speedKey = stringResource(id = R.string.pref_key_fast_forward_speed)
+            val speedValues = stringListResource(R.array.pref_key_fast_forward_speed_values)
+            LemuroidSettingsList(
+                title = { Text(text = stringResource(id = R.string.game_menu_fast_forward_speed)) },
+                items = stringListResource(R.array.pref_key_fast_forward_speed_display_names),
+                icon = {
+                    Icon(
+                        painterResource(R.drawable.ic_menu_fast_forward),
+                        contentDescription = stringResource(id = R.string.game_menu_fast_forward_speed),
+                    )
+                },
+                state =
+                    indexPreferenceState(
+                        speedKey,
+                        SettingsManager.DEFAULT_FAST_FORWARD_SPEED,
+                        speedValues,
+                    ),
+                onItemSelected = { index, _ ->
+                    // Save right away: the menu closes immediately after this.
+                    SharedPreferencesHelper.getSharedPreferences(context).edit()
+                        .putString(speedKey, speedValues[index])
+                        .apply()
+                    onResult { putExtra(GameMenuContract.RESULT_ENABLE_FAST_FORWARD, true) }
                 },
             )
         }
