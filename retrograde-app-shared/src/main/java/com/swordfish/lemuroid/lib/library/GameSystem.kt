@@ -882,6 +882,8 @@ data class GameSystem(
                                 hashMapOf(
                                     0 to arrayListOf(ControllerConfigs.FB_NEO_4, ControllerConfigs.FB_NEO_6),
                                 ),
+                            // FBNeo reads romset zips through the libretro VFS: loaded in place.
+                            supportsLibretroVFS = true,
                         ),
                     ),
                     uniqueExtensions = listOf(),
