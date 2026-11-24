@@ -61,6 +61,7 @@
     <string name="import_saves_confirm_message">Battery saves (.srm, .sav) and save states will be copied into Lemuroid-S from RetroArch\'s folder (or another folder you choose). Saves for games not in your library yet are imported automatically once you add them.
 
 Existing Lemuroid-S saves for the same games may be overwritten when the imported ones are newer. Replaced battery saves are backed up first.</string>
+    <string name="import_saves_started">Importing saves…</string>
     <string name="import_saves_from_retroarch">Import from RetroArch</string>
     <string name="import_saves_other_folder">Other folder</string>
     <string name="import_covers_title">Import RetroArch Covers</string>
@@ -223,6 +224,8 @@ Existing Lemuroid-S saves for the same games may be overwritten when the importe
 
     <string name="notification_channel_name">All notifications</string>
     <string name="library_index_notification_title">ROMs scanning in progress</string>
+    <string name="saves_import_notification_title">Importing saves</string>
+    <string name="saves_import_notification_message">Copying battery saves and save states into Lemuroid-S</string>
     <string name="library_index_notification_message">This can take up to a few minutes</string>
 
     <string name="save_sync_notification_title">Cloud save Sync in progress</string>

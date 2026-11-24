@@ -45,6 +45,18 @@ class NotificationsManager(private val applicationContext: Context) {
         return builder.build()
     }
 
+    /** Lemuroid-S: shown while "Import Saves from other Emulators" runs, like the ROMs scan. */
+    fun savesImportNotification(): Notification {
+        createDefaultNotificationChannel()
+        return NotificationCompat.Builder(applicationContext, DEFAULT_CHANNEL_ID)
+            .setSmallIcon(R.drawable.ic_lemuroid_tiny)
+            .setContentTitle(applicationContext.getString(R.string.saves_import_notification_title))
+            .setContentText(applicationContext.getString(R.string.saves_import_notification_message))
+            .setProgress(100, 0, true)
+            .setPriority(NotificationCompat.PRIORITY_LOW)
+            .build()
+    }
+
     fun libraryIndexingNotification(): Notification {
         createDefaultNotificationChannel()
 
@@ -146,5 +158,6 @@ class NotificationsManager(private val applicationContext: Context) {
         const val SAVE_SYNC_NOTIFICATION_ID = 2
         const val GAME_RUNNING_NOTIFICATION_ID = 3
         const val CORE_INSTALL_NOTIFICATION_ID = 4
+        const val SAVES_IMPORT_NOTIFICATION_ID = 5
     }
 }

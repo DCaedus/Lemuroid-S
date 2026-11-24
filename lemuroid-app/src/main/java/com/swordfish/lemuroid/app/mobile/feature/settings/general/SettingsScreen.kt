@@ -18,7 +18,6 @@ import com.swordfish.lemuroid.app.mobile.feature.main.navigateToRoute
 import com.swordfish.lemuroid.app.mobile.feature.settings.SettingsManager
 import com.swordfish.lemuroid.app.shared.covers.ArtworkType
 import com.swordfish.lemuroid.app.shared.library.LibraryIndexScheduler
-import com.swordfish.lemuroid.app.shared.saves.SavesImporter
 import com.swordfish.lemuroid.app.utils.android.settings.LemuroidCardSettingsGroup
 import com.swordfish.lemuroid.app.utils.android.settings.LemuroidSettingsList
 import com.swordfish.lemuroid.app.utils.android.settings.LemuroidSettingsMenuLink
@@ -62,7 +61,7 @@ fun SettingsScreen(
         GeneralSettings()
         FastForwardSettings()
         ArtworkSettings(navController = navController)
-        TestSettings(onImportSaves = viewModel::importSaves)
+        TestSettings()
         InputSettings(navController = navController)
         MiscSettings(
             indexingInProgress = indexingInProgress,
@@ -90,13 +89,6 @@ private fun MiscSettings(
                 onClick = { navController.navigateToRoute(MainRoute.SETTINGS_SAVE_SYNC) },
             )
         }
-        LemuroidSettingsMenuLink(
-            title = { Text(text = stringResource(id = R.string.settings_title_open_cores_selection)) },
-            subtitle = {
-                Text(text = stringResource(id = R.string.settings_description_open_cores_selection))
-            },
-            onClick = { navController.navigateToRoute(MainRoute.SETTINGS_CORES_SELECTION) },
-        )
         LemuroidSettingsMenuLink(
             title = { Text(text = stringResource(id = R.string.settings_title_display_bios_info)) },
             subtitle = {
@@ -171,7 +163,7 @@ private fun FastForwardSettings() {
 
 /** Lemuroid-S settings that are new and still being tested. */
 @Composable
-private fun TestSettings(onImportSaves: (Uri, (SavesImporter.Result?) -> Unit) -> Unit) {
+private fun TestSettings() {
     val context = LocalContext.current
     LemuroidCardSettingsGroup(
         title = { Text(text = stringResource(id = R.string.settings_category_test)) },
@@ -201,7 +193,6 @@ private fun TestSettings(onImportSaves: (Uri, (SavesImporter.Result?) -> Unit) -
         ImportSavesDialog(
             show = showImportConfirmation,
             onDismiss = { showImportConfirmation = false },
-            importSaves = onImportSaves,
         )
     }
 }

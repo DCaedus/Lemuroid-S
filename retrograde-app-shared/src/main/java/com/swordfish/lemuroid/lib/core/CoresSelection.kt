@@ -62,7 +62,10 @@ class CoresSelection(
     private fun getSelectedCoreConfigForSystem(system: GameSystem): Flow<SystemCoreConfig> {
         return getSelectedCoreNameForSystem(system)
             .map { coreName ->
-                system.systemCoreConfigs.first { it.coreID.coreName == coreName }
+                // Lemuroid-S uses one core per system; a previously chosen core that no longer
+                // exists (e.g. DeSmuME) falls back to the system's core.
+                system.systemCoreConfigs.firstOrNull { it.coreID.coreName == coreName }
+                    ?: system.systemCoreConfigs.first()
             }
     }
 
@@ -88,15 +91,7 @@ class CoresSelection(
         }.flowOn(Dispatchers.IO)
     }
 
-    // TODO Also get rid of this when desmume is gone
     private fun getDefaultCoreForSystem(system: GameSystem): String {
-        if (system.id == SystemID.NDS) {
-            return if (desmumeMigrationHandler.hasPendingDesmumeSaves()) {
-                CoreID.DESMUME.coreName
-            } else {
-                CoreID.MELONDS.coreName
-            }
-        }
         return system.systemCoreConfigs.first().coreID.coreName
     }
 

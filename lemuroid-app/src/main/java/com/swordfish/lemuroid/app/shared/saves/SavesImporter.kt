@@ -74,10 +74,10 @@ class SavesImporter(
      */
     suspend fun importFrom(treeUri: Uri): Result =
         withContext(Dispatchers.IO) {
-            val found = mutableMapOf<String, FoundFile>()
-            collectFiles(treeUri, DocumentsContract.getTreeDocumentId(treeUri), "", depth = 0, found)
+            val found = collectFromFolder(treeUri)
 
             val counters = importFound(found)
+            importUnmatchedBatterySaves(found, counters)
 
             var pending = 0
             for ((name, file) in found) {
@@ -111,9 +111,35 @@ class SavesImporter(
             )
         }
 
+    /**
+     * Battery saves are found by name ("Game (USA).srm"), so they can go straight into Lemuroid-S
+     * even when the game isn't in the library yet. (".sav" files are renamed to ".srm".)
+     */
+    private suspend fun importUnmatchedBatterySaves(
+        found: Map<String, FoundFile>,
+        counters: Counters,
+    ) {
+        for ((name, file) in found) {
+            if (name in counters.handled) continue
+            val lower = name.lowercase()
+            if (!lower.endsWith(".srm") && !lower.endsWith(".sav")) continue
+            val saveName = name.substringBeforeLast('.') + ".srm"
+            val bytes = readBytes(file)?.takeIf { it.isNotEmpty() } ?: continue
+            val imported = savesManager.importSaveRAMFile(saveName, bytes, file.lastModified)
+            if (imported) counters.saves++ else counters.skipped++
+            counters.handled.add(name)
+        }
+    }
+
     private suspend fun importFound(found: Map<String, FoundFile>): Counters {
         val counters = Counters()
-        val games = retrogradeDb.gameDao().selectByLastIndexedAtLessThan(Long.MAX_VALUE)
+        // Only games that have at least one matching file are checked (checking a game reads its
+        // current saves, which is slow; most games in a library usually have nothing to import).
+        val foundStems = found.keys.map { stemOf(it) }.toSet()
+        val games =
+            retrogradeDb.gameDao().selectByLastIndexedAtLessThan(Long.MAX_VALUE).filter { game ->
+                game.fileName in foundStems || game.fileName.substringBeforeLast(".") in foundStems
+            }
         for (game in games) {
             runCatching { importBatterySave(game, found, counters) }
                 .onFailure { Timber.w(it, "Could not import battery save for ${game.fileName}") }
@@ -302,6 +328,51 @@ class SavesImporter(
         return null
     }
 
+    /** "Game.gba.slot1.metadata" -> "Game.gba", "Game.state.auto" -> "Game", "Game.srm" -> "Game". */
+    private fun stemOf(name: String): String {
+        var stem = name.removeSuffix(".metadata").removeSuffix(".auto")
+        stem = stem.replace(STEM_SUFFIX, "")
+        return stem
+    }
+
+    /**
+     * Searches the picked folder. For RetroArch's folder only its "saves" and "states" folders are
+     * searched (RetroArch keeps thousands of other files, e.g. covers, that would make it slow).
+     */
+    private fun collectFromFolder(treeUri: Uri): Map<String, FoundFile> {
+        val found = mutableMapOf<String, FoundFile>()
+        val rootId = DocumentsContract.getTreeDocumentId(treeUri)
+        val saveFolders = listFolders(treeUri, rootId).filterKeys { it.lowercase() in RETROARCH_SAVE_FOLDERS }
+        if (saveFolders.isEmpty()) {
+            collectFiles(treeUri, rootId, "", depth = 0, found)
+        } else {
+            saveFolders.forEach { (name, id) -> collectFiles(treeUri, id, name, depth = 1, found) }
+        }
+        return found
+    }
+
+    private fun listFolders(
+        treeUri: Uri,
+        folderId: String,
+    ): Map<String, String> {
+        val childrenUri = DocumentsContract.buildChildDocumentsUriUsingTree(treeUri, folderId)
+        val projection =
+            arrayOf(
+                DocumentsContract.Document.COLUMN_DOCUMENT_ID,
+                DocumentsContract.Document.COLUMN_DISPLAY_NAME,
+                DocumentsContract.Document.COLUMN_MIME_TYPE,
+            )
+        val result = mutableMapOf<String, String>()
+        appContext.contentResolver.query(childrenUri, projection, null, null, null)?.use { cursor ->
+            while (cursor.moveToNext()) {
+                if (cursor.getString(2) == DocumentsContract.Document.MIME_TYPE_DIR) {
+                    result[cursor.getString(1)] = cursor.getString(0)
+                }
+            }
+        }
+        return result
+    }
+
     private fun isCurrentNewer(
         current: SaveInfo,
         file: FoundFile,
@@ -376,5 +447,7 @@ class SavesImporter(
         private val RASTATE_MAGIC = "RASTATE".toByteArray()
         private const val RASTATE_HEADER_SIZE = 8
         private val STATE_SUFFIX = Regex("""\.(state\d*|slot\d)$""")
+        private val STEM_SUFFIX = Regex("""\.(srm|sav|state\d*|slot\d)$""", RegexOption.IGNORE_CASE)
+        private val RETROARCH_SAVE_FOLDERS = setOf("saves", "states")
     }
 }

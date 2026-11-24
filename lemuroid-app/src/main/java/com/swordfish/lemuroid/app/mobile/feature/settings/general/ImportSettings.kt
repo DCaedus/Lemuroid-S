@@ -1,6 +1,5 @@
 package com.swordfish.lemuroid.app.mobile.feature.settings.general
 
-import android.content.Context
 import android.net.Uri
 import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
@@ -18,7 +17,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import com.swordfish.lemuroid.R
 import com.swordfish.lemuroid.app.shared.covers.RetroArchCoversImporter
-import com.swordfish.lemuroid.app.shared.saves.SavesImporter
+import com.swordfish.lemuroid.app.shared.saves.SavesImportWork
 import com.swordfish.lemuroid.app.shared.storage.rememberRetroArchFolderAccess
 import com.swordfish.lemuroid.app.utils.android.settings.LemuroidSettingsMenuLink
 import kotlinx.coroutines.DelicateCoroutinesApi
@@ -37,11 +36,15 @@ import kotlinx.coroutines.withContext
 fun ImportSavesDialog(
     show: Boolean,
     onDismiss: () -> Unit,
-    importSaves: (Uri, (SavesImporter.Result?) -> Unit) -> Unit,
+    onImportStarted: () -> Unit = { },
 ) {
     val context = LocalContext.current
     val runImport = { folder: Uri ->
-        importSaves(folder) { result -> showImportResult(context, result) }
+        // Runs in the background like the library scan (same "working" animation); the result
+        // is shown when it finishes.
+        SavesImportWork.start(context, folder)
+        Toast.makeText(context, R.string.import_saves_started, Toast.LENGTH_SHORT).show()
+        onImportStarted()
     }
     val retroArch = rememberRetroArchFolderAccess { runImport(it) }
     val otherFolder =
@@ -75,25 +78,6 @@ fun ImportSavesDialog(
             TextButton(onClick = onDismiss) { Text(text = stringResource(android.R.string.cancel)) }
         },
     )
-}
-
-private fun showImportResult(
-    context: Context,
-    result: SavesImporter.Result?,
-) {
-    val message =
-        if (result != null) {
-            context.getString(
-                R.string.import_saves_result,
-                result.imported,
-                result.importedStates,
-                result.skippedOlder,
-                result.pending,
-            )
-        } else {
-            context.getString(R.string.import_saves_failed)
-        }
-    Toast.makeText(context, message, Toast.LENGTH_LONG).show()
 }
 
 /** "Import RetroArch Covers": copies RetroArch's thumbnails into the Lemuroid-S folder. */

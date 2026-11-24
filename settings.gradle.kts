@@ -30,7 +30,6 @@ fun usePlayDynamicFeatures(): Boolean {
 
 if (usePlayDynamicFeatures()) {
     include(
-        ":lemuroid_core_desmume",
         ":lemuroid_core_dosbox_pure",
         ":lemuroid_core_fbneo",
         ":lemuroid_core_genesis_plus_gx",
@@ -47,7 +46,6 @@ if (usePlayDynamicFeatures()) {
         ":lemuroid_core_citra"
     )
 
-    project(":lemuroid_core_desmume").projectDir = File("lemuroid-cores/lemuroid_core_desmume")
     project(":lemuroid_core_melonds").projectDir = File("lemuroid-cores/lemuroid_core_melonds")
     project(":lemuroid_core_fbneo").projectDir = File("lemuroid-cores/lemuroid_core_fbneo")
     project(":lemuroid_core_genesis_plus_gx").projectDir = File("lemuroid-cores/lemuroid_core_genesis_plus_gx")

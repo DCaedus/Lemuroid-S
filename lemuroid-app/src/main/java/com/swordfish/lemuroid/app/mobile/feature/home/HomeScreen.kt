@@ -51,7 +51,6 @@ fun HomeScreen(
     viewModel: HomeViewModel,
     onGameClick: (Game) -> Unit,
     onGameLongClick: (Game) -> Unit,
-    onOpenCoreSelection: () -> Unit,
 ) {
     val context = LocalContext.current
     val applicationContext = context.applicationContext
@@ -84,7 +83,7 @@ fun HomeScreen(
     ImportSavesDialog(
         show = showImportConfirmation,
         onDismiss = { showImportConfirmation = false },
-        importSaves = viewModel::importSaves,
+        onImportStarted = { viewModel.dismissImportSavesCard() },
     )
 
     HomeScreen(
@@ -96,7 +95,6 @@ fun HomeScreen(
         { viewModel.dismissImportSavesCard() },
         onGameClick,
         onGameLongClick,
-        onOpenCoreSelection,
         {
             if (Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU) {
                 return@HomeScreen
@@ -120,7 +118,6 @@ private fun HomeScreen(
     onDismissImportSaves: () -> Unit,
     onGameClicked: (Game) -> Unit,
     onGameLongClick: (Game) -> Unit,
-    onOpenCoreSelection: () -> Unit,
     onEnableNotificationsClicked: () -> Unit,
     onEnableMicrophoneClicked: () -> Unit,
     onSetDirectoryClicked: () -> Unit,
@@ -166,14 +163,6 @@ private fun HomeScreen(
                 messageId = R.string.home_microphone_message,
                 actionId = R.string.home_microphone_action,
                 onAction = onEnableMicrophoneClicked,
-            )
-        }
-        AnimatedVisibility(state.showDesmumeDeprecatedCard) {
-            HomeNotification(
-                titleId = R.string.home_notification_desmume_deprecated_title,
-                messageId = R.string.home_notification_desmume_deprecated_message,
-                actionId = R.string.home_notification_desmume_deprecated_action,
-                onAction = onOpenCoreSelection,
             )
         }
         // Last setup card. Saves for games not in the library yet are imported once the games are added.

@@ -99,10 +99,6 @@ class TVSettingsFragment : LeanbackPreferenceFragmentCompat() {
             SharedPreferencesHelper.getSharedPreferencesDataStore(requireContext())
         setPreferencesFromResource(R.xml.tv_settings, rootKey)
 
-        getCoresSelectionScreen()?.let {
-            coresSelectionPreferences.addCoresSelectionPreferences(it)
-        }
-
         getBiosInfoPreferenceScreen()?.let {
             biosPreferences.addBiosPreferences(it)
         }
@@ -130,10 +126,6 @@ class TVSettingsFragment : LeanbackPreferenceFragmentCompat() {
 
     private fun getSaveSyncScreen(): PreferenceScreen? {
         return findPreference(resources.getString(R.string.pref_key_open_save_sync_settings))
-    }
-
-    private fun getCoresSelectionScreen(): PreferenceScreen? {
-        return findPreference(resources.getString(R.string.pref_key_open_cores_selection))
     }
 
     private fun getBiosInfoPreferenceScreen(): PreferenceScreen? {

@@ -3,7 +3,6 @@ package com.swordfish.lemuroid.app.mobile.feature.home
 import android.Manifest
 import android.content.Context
 import android.content.pm.PackageManager
-import android.net.Uri
 import android.os.Build
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModel
@@ -11,11 +10,9 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.swordfish.lemuroid.R
 import com.swordfish.lemuroid.app.shared.library.PendingOperationsMonitor
-import com.swordfish.lemuroid.app.shared.saves.SavesImporter
 import com.swordfish.lemuroid.app.shared.settings.StorageFrameworkPickerLauncher
 import com.swordfish.lemuroid.common.coroutines.combine
 import com.swordfish.lemuroid.lib.core.CoresSelection
-import com.swordfish.lemuroid.lib.library.CoreID
 import com.swordfish.lemuroid.lib.library.SystemID
 import com.swordfish.lemuroid.lib.library.db.RetrogradeDatabase
 import com.swordfish.lemuroid.lib.library.db.entity.Game
@@ -40,7 +37,6 @@ class HomeViewModel(
     private val appContext: Context,
     retrogradeDb: RetrogradeDatabase,
     private val coresSelection: CoresSelection,
-    private val savesImporter: SavesImporter,
 ) : ViewModel() {
     companion object {
         const val CAROUSEL_MAX_ITEMS = 10
@@ -51,10 +47,9 @@ class HomeViewModel(
         val appContext: Context,
         val retrogradeDb: RetrogradeDatabase,
         val coresSelection: CoresSelection,
-        val savesImporter: SavesImporter,
     ) : ViewModelProvider.Factory {
         override fun <T : ViewModel> create(modelClass: Class<T>): T {
-            return HomeViewModel(appContext, retrogradeDb, coresSelection, savesImporter) as T
+            return HomeViewModel(appContext, retrogradeDb, coresSelection) as T
         }
     }
 
@@ -101,17 +96,6 @@ class HomeViewModel(
     fun dismissImportSavesCard() {
         markPrompted(R.string.pref_key_home_import_saves_prompted)
         setupCards.value = setupCards.value.copy(showImportSaves = false)
-    }
-
-    fun importSaves(
-        folder: Uri,
-        onResult: (SavesImporter.Result?) -> Unit,
-    ) {
-        viewModelScope.launch {
-            val result = runCatching { savesImporter.importFrom(folder) }.getOrNull()
-            if (result != null) dismissImportSavesCard()
-            onResult(result)
-        }
     }
 
     data class UIState(
@@ -253,9 +237,6 @@ class HomeViewModel(
             }
     }
 
-    private fun desmumeWarningNotification(): Flow<Boolean> {
-        return coresSelection.getSelectedCores()
-            .map { cores -> cores.any { it.coreConfig.coreID == CoreID.DESMUME } }
-            .distinctUntilChanged()
-    }
+    // Lemuroid-S: DeSmuME was removed, so its "deprecated" warning never shows.
+    private fun desmumeWarningNotification(): Flow<Boolean> = flowOf(false)
 }

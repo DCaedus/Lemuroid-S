@@ -96,6 +96,33 @@ class SavesManager(
         }
     }
 
+    /**
+     * Stores an imported battery save by file name ("Game (USA).srm"), even if the game isn't in the
+     * library yet: Lemuroid-S finds saves by name. Keeps the existing save if it's newer.
+     * Returns false if it was kept.
+     */
+    suspend fun importSaveRAMFile(
+        fileName: String,
+        data: ByteArray,
+        lastModified: Long,
+    ): Boolean =
+        withContext(Dispatchers.IO) {
+            val saveFile = getSaveFile(fileName)
+            if (saveFile.exists() && saveFile.length() > 0 && saveFile.lastModified() >= lastModified) {
+                return@withContext false
+            }
+            if (saveFile.exists() && saveFile.length() > 0) {
+                val backupDirectory = File(directoriesManager.getSavesDirectory(), "import-backups").apply { mkdirs() }
+                saveFile.copyTo(
+                    File(backupDirectory, "${saveFile.name}.${System.currentTimeMillis()}"),
+                    overwrite = true,
+                )
+            }
+            saveFile.writeBytesAtomic(data)
+            saveFile.setLastModified(lastModified)
+            true
+        }
+
     /** RetroArch-compatible save file name for [game], e.g. "Game (USA).srm". */
     fun saveRAMFileName(game: Game) = getSaveRAMFileName(game)
 

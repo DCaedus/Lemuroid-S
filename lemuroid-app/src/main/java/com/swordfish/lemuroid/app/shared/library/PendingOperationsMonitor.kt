@@ -3,6 +3,7 @@ package com.swordfish.lemuroid.app.shared.library
 import android.content.Context
 import androidx.work.WorkInfo
 import androidx.work.WorkManager
+import com.swordfish.lemuroid.app.shared.saves.SavesImportWork
 import com.swordfish.lemuroid.app.shared.savesync.SaveSyncWork
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.Flow
@@ -16,6 +17,7 @@ class PendingOperationsMonitor(private val appContext: Context) {
         CORE_UPDATE(LibraryIndexScheduler.CORE_UPDATE_WORK_ID, false),
         SAVES_SYNC_PERIODIC(SaveSyncWork.UNIQUE_PERIODIC_WORK_ID, true),
         SAVES_SYNC_ONE_SHOT(SaveSyncWork.UNIQUE_WORK_ID, false),
+        SAVES_IMPORT(SavesImportWork.UNIQUE_WORK_ID, false),
     }
 
     fun anyOperationInProgress(): Flow<Boolean> {
@@ -27,7 +29,7 @@ class PendingOperationsMonitor(private val appContext: Context) {
     }
 
     fun anyLibraryOperationInProgress(): Flow<Boolean> {
-        return operationsInProgress(Operation.LIBRARY_INDEX, Operation.CORE_UPDATE)
+        return operationsInProgress(Operation.LIBRARY_INDEX, Operation.CORE_UPDATE, Operation.SAVES_IMPORT)
     }
 
     fun isDirectoryScanInProgress(): Flow<Boolean> {
