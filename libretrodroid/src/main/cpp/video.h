@@ -75,7 +75,7 @@ public:
     void updateRotation(float rotation);
     void updateShaderType(ShaderManager::Config shaderConfig);
 
-    void renderFrame();
+    void renderFrame(bool force = false);
 
     void onNewFrame(const void *data, unsigned width, unsigned height, size_t pitch);
 

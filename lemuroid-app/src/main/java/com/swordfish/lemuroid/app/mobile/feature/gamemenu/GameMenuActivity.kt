@@ -9,8 +9,9 @@ import androidx.activity.SystemBarStyle
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.animation.AnimatedContent
+import androidx.compose.animation.ExitTransition
+import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
-import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.WindowInsets
@@ -46,6 +47,7 @@ import com.swordfish.lemuroid.app.mobile.feature.gamemenu.coreoptions.GameMenuCo
 import com.swordfish.lemuroid.app.mobile.feature.gamemenu.coreoptions.GameMenuCoreOptionsViewModel
 import com.swordfish.lemuroid.app.mobile.feature.gamemenu.states.GameMenuStatesScreen
 import com.swordfish.lemuroid.app.mobile.feature.gamemenu.states.GameMenuStatesViewModel
+import com.swordfish.lemuroid.app.mobile.feature.main.SCREEN_FADE_MS
 import com.swordfish.lemuroid.app.mobile.shared.compose.ui.AppTheme
 import com.swordfish.lemuroid.app.shared.GameMenuContract
 import com.swordfish.lemuroid.app.shared.coreoptions.LemuroidCoreOption
@@ -178,8 +180,10 @@ class GameMenuActivity : RetrogradeComponentActivity() {
                             .fillMaxSize(),
                     navController = navController,
                     startDestination = GameMenuRoute.HOME.route,
-                    enterTransition = { fadeIn() },
-                    exitTransition = { fadeOut() },
+                    enterTransition = { fadeIn(tween(SCREEN_FADE_MS)) },
+                    exitTransition = { ExitTransition.None },
+                    popEnterTransition = { fadeIn(tween(SCREEN_FADE_MS)) },
+                    popExitTransition = { ExitTransition.None },
                 ) {
                     composable(GameMenuRoute.HOME) {
                         GameMenuHomeScreen(navController, gameMenuRequest, ::onResult)

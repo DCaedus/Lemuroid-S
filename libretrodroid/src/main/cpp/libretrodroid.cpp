@@ -648,6 +648,7 @@ void LibretroDroid::step() {
     const bool fastForwarding = frameSpeed > 1;
     const bool showNewPicture = !fastForwarding || (fastForwardStep++ % 2 == 0);
     const size_t totalRuns = frames * frameSpeed;
+    const uint32_t picturesBefore = newPictures.load();
     for (size_t i = 0; i < totalRuns; i++) {
         skipVideoForCurrentRun = fastForwarding && (!showNewPicture || i + 1 < totalRuns);
         Environment::getInstance().setVideoEnabled(!skipVideoForCurrentRun);
@@ -657,8 +658,11 @@ void LibretroDroid::step() {
     skipVideoForCurrentRun = false;
     Environment::getInstance().setVideoEnabled(true);
 
-    if (video && (!video->rendersInVideoCallback() || !showNewPicture)) {
-        video->renderFrame();
+    // While fast-forwarding, always put a picture on screen: if this step produced no new one,
+    // draw the last one again (see Video::renderFrame).
+    const bool gotNewPicture = newPictures.load() != picturesBefore;
+    if (video && (!video->rendersInVideoCallback() || !gotNewPicture)) {
+        video->renderFrame(fastForwarding && !gotNewPicture);
     }
 
     if (fpsSync) {

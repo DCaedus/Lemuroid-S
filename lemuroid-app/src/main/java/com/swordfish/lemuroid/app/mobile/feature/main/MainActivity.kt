@@ -8,6 +8,9 @@ import androidx.activity.SystemBarStyle
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
+import androidx.compose.animation.ExitTransition
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.fadeIn
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.AlertDialog
@@ -62,9 +65,9 @@ import com.swordfish.lemuroid.lib.android.RetrogradeComponentActivity
 import com.swordfish.lemuroid.lib.bios.BiosManager
 import com.swordfish.lemuroid.lib.core.CoresSelection
 import com.swordfish.lemuroid.lib.injection.PerActivity
-import com.swordfish.lemuroid.lib.library.covers.CustomCoverManager
 import com.swordfish.lemuroid.lib.library.MetaSystemID
 import com.swordfish.lemuroid.lib.library.SystemID
+import com.swordfish.lemuroid.lib.library.covers.CustomCoverManager
 import com.swordfish.lemuroid.lib.library.db.RetrogradeDatabase
 import com.swordfish.lemuroid.lib.library.db.entity.Game
 import com.swordfish.lemuroid.lib.preferences.SharedPreferencesHelper
@@ -191,6 +194,11 @@ class MainActivity : RetrogradeComponentActivity(), BusyActivity {
                     modifier = Modifier.fillMaxSize(),
                     navController = navController,
                     startDestination = MainRoute.HOME.route,
+                    // Quick fade in; the previous screen goes away at once so it can't be tapped by mistake.
+                    enterTransition = { fadeIn(tween(SCREEN_FADE_MS)) },
+                    exitTransition = { ExitTransition.None },
+                    popEnterTransition = { fadeIn(tween(SCREEN_FADE_MS)) },
+                    popExitTransition = { ExitTransition.None },
                 ) {
                     composable(MainRoute.HOME) {
                         HomeScreen(
@@ -424,3 +432,6 @@ class MainActivity : RetrogradeComponentActivity(), BusyActivity {
         }
     }
 }
+
+/** Length of the fade between app screens. */
+const val SCREEN_FADE_MS = 150

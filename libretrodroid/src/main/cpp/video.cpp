@@ -137,8 +137,10 @@ void Video::updateProgram() {
     renderer->setShaders(shaders);
 }
 
-void Video::renderFrame() {
-    if (skipDuplicateFrames && !isDirty) return;
+void Video::renderFrame(bool force) {
+    // [force]: draw the last picture again even if it didn't change (fast-forward steps without a new
+    // picture). Drawing nothing would show the screen's other buffer, an older picture (ghosting).
+    if (!force && skipDuplicateFrames && !isDirty) return;
     isDirty = false;
 
     glDisable(GL_DEPTH_TEST);
