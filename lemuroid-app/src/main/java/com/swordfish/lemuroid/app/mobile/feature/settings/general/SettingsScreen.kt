@@ -1,10 +1,16 @@
 package com.swordfish.lemuroid.app.mobile.feature.settings.general
 
+import android.content.Intent
 import android.net.Uri
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
@@ -26,6 +32,8 @@ import com.swordfish.lemuroid.app.utils.android.settings.booleanPreferenceState
 import com.swordfish.lemuroid.app.utils.android.settings.indexPreferenceState
 import com.swordfish.lemuroid.app.utils.android.settings.intPreferenceState
 import com.swordfish.lemuroid.app.utils.android.stringListResource
+import com.swordfish.lemuroid.lib.preferences.SharedPreferencesHelper
+import com.swordfish.lemuroid.lib.saves.ExternalSavesStorage
 
 @Composable
 fun SettingsScreen(
@@ -181,7 +189,55 @@ private fun TestSettings() {
             title = { Text(text = stringResource(id = R.string.settings_title_periodic_autosave)) },
             items = stringListResource(R.array.pref_key_periodic_autosave_display_names),
         )
+        SavesLocationSettings()
     }
+}
+
+/** Where in-game saves (.srm) are stored, besides the app's own copy. */
+@Composable
+private fun SavesLocationSettings() {
+    val context = LocalContext.current
+    val locationValues = stringListResource(R.array.pref_key_saves_location_values)
+    val location =
+        indexPreferenceState(
+            com.swordfish.lemuroid.lib.R.string.pref_key_saves_location,
+            ExternalSavesStorage.Location.APP_STORAGE.prefValue,
+            locationValues,
+        )
+
+    LemuroidSettingsList(
+        state = location,
+        title = { Text(text = stringResource(id = R.string.settings_title_saves_location)) },
+        items = stringListResource(R.array.pref_key_saves_location_display_names),
+    )
+
+    val isCustomFolder =
+        locationValues.getOrNull(location.value) == ExternalSavesStorage.Location.CUSTOM_FOLDER.prefValue
+    if (!isCustomFolder) return
+
+    val folderKey = stringResource(com.swordfish.lemuroid.lib.R.string.pref_key_saves_custom_folder)
+    val preferences = remember { SharedPreferencesHelper.getSharedPreferences(context) }
+    var folderUri by remember { mutableStateOf(preferences.getString(folderKey, null)) }
+
+    val folderPicker =
+        rememberLauncherForActivityResult(ActivityResultContracts.OpenDocumentTree()) { uri ->
+            if (uri == null) return@rememberLauncherForActivityResult
+            val readWrite = Intent.FLAG_GRANT_READ_URI_PERMISSION or Intent.FLAG_GRANT_WRITE_URI_PERMISSION
+            runCatching { context.contentResolver.takePersistableUriPermission(uri, readWrite) }
+            preferences.edit().putString(folderKey, uri.toString()).apply()
+            folderUri = uri.toString()
+        }
+
+    val folderName =
+        remember(folderUri) {
+            folderUri?.let { runCatching { DocumentFile.fromTreeUri(context, Uri.parse(it))?.name }.getOrNull() }
+        } ?: stringResource(R.string.none)
+
+    LemuroidSettingsMenuLink(
+        title = { Text(text = stringResource(id = R.string.settings_title_saves_folder)) },
+        subtitle = { Text(text = folderName) },
+        onClick = { folderPicker.launch(null) },
+    )
 }
 
 @Composable

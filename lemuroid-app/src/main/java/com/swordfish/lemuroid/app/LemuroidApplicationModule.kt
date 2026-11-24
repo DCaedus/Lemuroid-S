@@ -58,6 +58,7 @@ import com.swordfish.lemuroid.lib.library.db.dao.Migrations
 import com.swordfish.lemuroid.lib.library.metadata.GameMetadataProvider
 import com.swordfish.lemuroid.lib.migration.DesmumeMigrationHandler
 import com.swordfish.lemuroid.lib.preferences.SharedPreferencesHelper
+import com.swordfish.lemuroid.lib.saves.ExternalSavesStorage
 import com.swordfish.lemuroid.lib.saves.SavesCoherencyEngine
 import com.swordfish.lemuroid.lib.saves.SavesManager
 import com.swordfish.lemuroid.lib.saves.StatesManager
@@ -238,7 +239,10 @@ abstract class LemuroidApplicationModule {
         @Provides
         @PerApp
         @JvmStatic
-        fun savesManager(directoriesManager: DirectoriesManager) = SavesManager(directoriesManager)
+        fun savesManager(
+            context: Context,
+            directoriesManager: DirectoriesManager,
+        ) = SavesManager(directoriesManager, ExternalSavesStorage(context))
 
         @Provides
         @PerApp

@@ -42,6 +42,11 @@
     <string name="settings_title_periodic_autosave">Auto-save while playing</string>
     <string name="settings_description_periodic_autosave">Saves your game automatically at this interval while you play</string>
     <string name="periodic_autosave_names_off">Off</string>
+    <string name="settings_title_saves_location">Saves location</string>
+    <string name="settings_title_saves_folder">Saves folder</string>
+    <string name="saves_location_names_app">App storage (default)</string>
+    <string name="saves_location_names_roms">Next to the ROMs</string>
+    <string name="saves_location_names_custom">Custom folder</string>
     <string name="periodic_autosave_names_5">Every 5 minutes</string>
     <string name="periodic_autosave_names_10">Every 10 minutes</string>
     <string name="periodic_autosave_names_15">Every 15 minutes</string>

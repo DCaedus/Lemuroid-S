@@ -24,6 +24,8 @@ class StorageFrameworkPickerLauncher : RetrogradeActivity() {
             val intent =
                 Intent(Intent.ACTION_OPEN_DOCUMENT_TREE).apply {
                     this.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+                    // Write access lets Lemuroid-S store saves next to the ROMs, if chosen in Settings.
+                    this.addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION)
                     this.addFlags(Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION)
                     this.addFlags(Intent.FLAG_GRANT_PREFIX_URI_PERMISSION)
                     this.putExtra(Intent.EXTRA_LOCAL_ONLY, true)
@@ -71,17 +73,25 @@ class StorageFrameworkPickerLauncher : RetrogradeActivity() {
     }
 
     private fun updatePersistableUris(uri: Uri) {
+        // Keep the permission for the custom saves folder, if one was chosen.
+        val savesFolder =
+            SharedPreferencesHelper.getSharedPreferences(this)
+                .getString(getString(com.swordfish.lemuroid.lib.R.string.pref_key_saves_custom_folder), null)
+
         contentResolver.persistedUriPermissions
             .filter { it.isReadPermission }
             .filter { it.uri != uri }
+            .filter { it.uri.toString() != savesFolder }
             .forEach {
-                contentResolver.releasePersistableUriPermission(
-                    it.uri,
-                    Intent.FLAG_GRANT_READ_URI_PERMISSION,
-                )
+                val flags =
+                    Intent.FLAG_GRANT_READ_URI_PERMISSION or
+                        (if (it.isWritePermission) Intent.FLAG_GRANT_WRITE_URI_PERMISSION else 0)
+                contentResolver.releasePersistableUriPermission(it.uri, flags)
             }
 
-        contentResolver.takePersistableUriPermission(uri, Intent.FLAG_GRANT_READ_URI_PERMISSION)
+        val readWrite = Intent.FLAG_GRANT_READ_URI_PERMISSION or Intent.FLAG_GRANT_WRITE_URI_PERMISSION
+        runCatching { contentResolver.takePersistableUriPermission(uri, readWrite) }
+            .onFailure { contentResolver.takePersistableUriPermission(uri, Intent.FLAG_GRANT_READ_URI_PERMISSION) }
     }
 
     private fun startLibraryIndexWork() {

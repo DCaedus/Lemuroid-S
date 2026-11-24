@@ -10,7 +10,10 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import java.io.File
 
-class SavesManager(private val directoriesManager: DirectoriesManager) {
+class SavesManager(
+    private val directoriesManager: DirectoriesManager,
+    private val externalSavesStorage: ExternalSavesStorage,
+) {
     suspend fun getSaveRAM(
         game: Game,
         systemCoreConfig: SystemCoreConfig,
@@ -18,6 +21,11 @@ class SavesManager(private val directoriesManager: DirectoriesManager) {
         return withContext(Dispatchers.IO) {
             val result =
                 runCatchingWithRetry(FILE_ACCESS_RETRIES) {
+                    // A save in the location chosen in Settings (custom folder or next to the ROM) wins.
+                    externalSavesStorage.read(game, getSaveRAMFileName(game))?.let {
+                        return@runCatchingWithRetry it
+                    }
+
                     val saveFile = getSaveFile(getSaveRAMFileName(game))
                     if (saveFile.exists() && saveFile.length() > 0) {
                         saveFile.readBytes()
@@ -44,6 +52,9 @@ class SavesManager(private val directoriesManager: DirectoriesManager) {
                     val saveFile = getSaveFile(getSaveRAMFileName(game))
                     saveFile.writeBytesAtomic(data)
                 }
+            if (data.isNotEmpty()) {
+                externalSavesStorage.write(game, getSaveRAMFileName(game), data)
+            }
             result.getOrNull()
         }
     }
