@@ -4,7 +4,7 @@ object deps {
         const val targetSdkVersion  = 36
         const val compileSdkVersion = 36
         const val minSdkVersion     = 23
-        const val buildToolsVersion = "34.0.0"
+        const val buildToolsVersion = "36.0.0"
     }
 
     object versions {
@@ -171,7 +171,7 @@ object deps {
     }
 
     object plugins {
-        const val android = "com.android.tools.build:gradle:8.4.0"
+        const val android = "com.android.tools.build:gradle:8.10.1"
         const val navigationSafeArgs = "androidx.navigation:navigation-safe-args-gradle-plugin:${versions.navigation}"
         const val kotlinGradlePlugin = "org.jetbrains.kotlin:kotlin-gradle-plugin:${versions.kotlin}"
     }
