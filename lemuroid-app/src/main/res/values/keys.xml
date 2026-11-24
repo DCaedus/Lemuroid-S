@@ -31,6 +31,7 @@
     <string name="pref_key_home_import_saves_prompted" translatable="false">home_import_saves_prompted</string>
     <string name="pref_key_duplicate_folders_merged" translatable="false">duplicate_folders_merged_v1</string>
     <string name="pref_key_periodic_autosave_minutes" translatable="false">periodic_autosave_minutes</string>
+    <string name="pref_key_show_framerate" translatable="false">show_framerate</string>
     <string name="pref_key_artwork_type_system_prefix" translatable="false">artwork_type_system_</string>
 
     <string name="pref_key_save_sync_auto" translatable="false">save_sync_auto</string>

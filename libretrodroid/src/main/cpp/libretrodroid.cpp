@@ -469,6 +469,7 @@ void LibretroDroid::step() {
         skipVideoForCurrentRun = fastForwarding && (!showNewPicture || i + 1 < totalRuns);
         Environment::getInstance().setVideoEnabled(!skipVideoForCurrentRun);
         core->retro_run();
+        emulatedFrames++;
     }
     skipVideoForCurrentRun = false;
     Environment::getInstance().setVideoEnabled(true);
@@ -526,6 +527,11 @@ void LibretroDroid::setFrameSpeed(unsigned int speed) {
     updateAudioSampleRateMultiplier();
 }
 
+void LibretroDroid::getFrameCounters(uint32_t* emulated, uint32_t* pictures) {
+    *emulated = emulatedFrames.load();
+    *pictures = newPictures.load();
+}
+
 void LibretroDroid::setAudioVolume(float volume) {
     audioVolume = volume;
     if (audio) {
@@ -552,6 +558,10 @@ void LibretroDroid::handleVideoRefresh(
 ) {
     if (skipVideoForCurrentRun) {
         return;
+    }
+
+    if (data != nullptr) {
+        newPictures++;
     }
 
     if (video) {

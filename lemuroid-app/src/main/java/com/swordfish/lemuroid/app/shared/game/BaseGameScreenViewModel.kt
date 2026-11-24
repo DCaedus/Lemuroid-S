@@ -277,6 +277,11 @@ class BaseGameScreenViewModel(
             emit(system.fastForwardSupport && settingsManager.showFastForwardButton())
         }
 
+    fun isFramerateCounterEnabled(): Flow<Boolean> = flow { emit(settingsManager.showFramerate()) }
+
+    /** Total (frames run by the core, new pictures shown) since the game started. */
+    fun getFrameCounters(): LongArray? = retroGameView.retroGameView?.getFrameCounters()
+
     fun isFastForwardEnabled(): Boolean {
         return (retroGameView.retroGameView?.frameSpeed ?: 1) > 1
     }

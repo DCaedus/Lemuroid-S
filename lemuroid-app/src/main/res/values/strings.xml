@@ -77,6 +77,9 @@ Existing Lemuroid-S saves for the same games may be overwritten when the importe
     <string name="settings_description_import_saves">Copy battery saves and save states from RetroArch or a copy of Lemuroid\'s folder</string>
     <string name="import_saves_result">Imported %1$d battery saves and %2$d save states. %3$d skipped (Lemuroid-S\'s copy was newer). %4$d waiting for their games to be added to your library.</string>
     <string name="import_saves_failed">Could not import saves from this folder</string>
+    <string name="settings_title_show_framerate">Show framerate</string>
+    <string name="settings_description_show_framerate">Shows game speed and new pictures per second in a corner while playing</string>
+    <string name="framerate_overlay">Game %1$d fps · Screen %2$d fps</string>
     <string name="settings_title_periodic_autosave">Auto-save while playing</string>
     <string name="settings_description_periodic_autosave">Saves your game automatically at this interval while you play</string>
     <string name="periodic_autosave_names_off">Off</string>

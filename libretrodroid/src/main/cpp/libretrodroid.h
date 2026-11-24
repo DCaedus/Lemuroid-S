@@ -19,6 +19,7 @@
 #define LIBRETRODROID_LIBRETRODROID_H
 
 #include <functional>
+#include <atomic>
 #include <jni.h>
 
 #include <EGL/egl.h>
@@ -131,6 +132,7 @@ public:
 
     void setAudioEnabled(bool enabled);
     void setAudioVolume(float volume);
+    void getFrameCounters(uint32_t* emulated, uint32_t* pictures);
 
     void setShaderConfig(ShaderManager::Config shaderConfig);
 
@@ -163,6 +165,10 @@ private:
     float audioVolume = 1.0f;
     bool skipVideoForCurrentRun = false;
     unsigned int fastForwardStep = 0;
+
+    // Lemuroid-S framerate counter: frames the core ran, and new pictures it produced for the screen.
+    std::atomic<uint32_t> emulatedFrames { 0 };
+    std::atomic<uint32_t> newPictures { 0 };
     bool preferLowLatencyAudio = false;
     bool rumbleEnabled = false;
 

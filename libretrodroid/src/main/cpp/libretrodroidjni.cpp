@@ -564,6 +564,19 @@ JNIEXPORT void JNICALL Java_com_swordfish_libretrodroid_LibretroDroid_setFrameSp
     LibretroDroid::getInstance().setFrameSpeed(speed);
 }
 
+JNIEXPORT jlongArray JNICALL Java_com_swordfish_libretrodroid_LibretroDroid_getFrameCounters(
+    JNIEnv* env,
+    jclass obj
+) {
+    uint32_t emulated = 0;
+    uint32_t pictures = 0;
+    LibretroDroid::getInstance().getFrameCounters(&emulated, &pictures);
+    jlong values[2] = { static_cast<jlong>(emulated), static_cast<jlong>(pictures) };
+    jlongArray result = env->NewLongArray(2);
+    env->SetLongArrayRegion(result, 0, 2, values);
+    return result;
+}
+
 JNIEXPORT void JNICALL Java_com_swordfish_libretrodroid_LibretroDroid_setAudioVolume(
     JNIEnv* env,
     jclass obj,

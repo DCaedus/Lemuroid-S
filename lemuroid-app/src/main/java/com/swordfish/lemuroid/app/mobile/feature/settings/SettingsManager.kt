@@ -73,6 +73,8 @@ class SettingsManager(private val context: Context, sharedPreferences: Lazy<Shar
     suspend fun periodicAutoSaveMinutes(): Int =
         stringPreference(R.string.pref_key_periodic_autosave_minutes, "0").toIntOrNull() ?: 0
 
+    suspend fun showFramerate() = booleanPreference(R.string.pref_key_show_framerate, false)
+
     suspend fun allowDirectGameLoad() = booleanPreference(R.string.pref_key_allow_direct_game_load, true)
 
     private suspend fun booleanPreference(

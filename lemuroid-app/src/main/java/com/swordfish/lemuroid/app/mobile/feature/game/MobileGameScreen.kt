@@ -1,6 +1,8 @@
 package com.swordfish.lemuroid.app.mobile.feature.game
 
 import android.graphics.RectF
+import android.os.SystemClock
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxWithConstraints
@@ -23,6 +25,7 @@ import androidx.compose.material.icons.filled.RotateLeft
 import androidx.compose.material3.Card
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Slider
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
@@ -31,8 +34,10 @@ import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.derivedStateOf
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.rotate
@@ -64,6 +69,8 @@ import com.swordfish.touchinput.radial.ui.LemuroidButtonPressFeedback
 import gg.padkit.PadKit
 import gg.padkit.config.HapticFeedbackType
 import gg.padkit.inputstate.InputState
+import kotlinx.coroutines.delay
+import kotlin.math.roundToInt
 
 @Composable
 fun MobileGameScreen(viewModel: BaseGameScreenViewModel) {
@@ -210,6 +217,11 @@ fun MobileGameScreen(viewModel: BaseGameScreenViewModel) {
                     }
                 }
             }
+        }
+
+        val framerateCounterEnabled = remember { viewModel.isFramerateCounterEnabled() }.collectAsState(false)
+        if (framerateCounterEnabled.value) {
+            FramerateCounter(viewModel)
         }
 
         val isLoading =
@@ -367,5 +379,46 @@ private fun MenuEditTouchControlRow(
             contentDescription = label,
         )
         slider()
+    }
+}
+
+/**
+ * Lemuroid-S: small overlay with the game's speed (frames the core runs per second) and the new
+ * pictures shown per second. Updated once a second. Settings > New test settings > Show framerate.
+ */
+@Composable
+private fun FramerateCounter(viewModel: BaseGameScreenViewModel) {
+    var text by remember { mutableStateOf("") }
+    val format = stringResource(com.swordfish.lemuroid.R.string.framerate_overlay)
+
+    LaunchedEffect(Unit) {
+        var previous = viewModel.getFrameCounters()
+        var previousTime = SystemClock.elapsedRealtime()
+        while (true) {
+            delay(1000)
+            val current = viewModel.getFrameCounters()
+            val now = SystemClock.elapsedRealtime()
+            val seconds = (now - previousTime).coerceAtLeast(1) / 1000f
+            if (current != null && previous != null) {
+                val gameFps = ((current[0] - previous[0]) / seconds).roundToInt()
+                val screenFps = ((current[1] - previous[1]) / seconds).roundToInt()
+                text = String.format(format, gameFps, screenFps)
+            }
+            previous = current
+            previousTime = now
+        }
+    }
+
+    if (text.isEmpty()) return
+    Box(modifier = Modifier.fillMaxSize().windowInsetsPadding(WindowInsets.displayCutout).padding(8.dp)) {
+        Text(
+            text = text,
+            color = androidx.compose.ui.graphics.Color.White,
+            style = MaterialTheme.typography.labelSmall,
+            modifier =
+                Modifier
+                    .background(androidx.compose.ui.graphics.Color.Black.copy(alpha = 0.6f))
+                    .padding(horizontal = 6.dp, vertical = 2.dp),
+        )
     }
 }
