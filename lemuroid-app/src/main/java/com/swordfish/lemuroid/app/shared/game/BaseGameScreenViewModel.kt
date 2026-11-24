@@ -2,6 +2,7 @@ package com.swordfish.lemuroid.app.shared.game
 
 import android.content.Context
 import android.content.SharedPreferences
+import android.os.SystemClock
 import android.view.KeyEvent
 import android.view.MotionEvent
 import androidx.compose.foundation.layout.WindowInsets
@@ -38,10 +39,13 @@ import com.swordfish.touchinput.radial.sensors.TiltConfiguration
 import com.swordfish.touchinput.radial.settings.TouchControllerSettingsManager
 import gg.padkit.inputevents.InputEvent
 import gg.padkit.inputstate.InputState
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
 import timber.log.Timber
 
@@ -337,6 +341,64 @@ class BaseGameScreenViewModel(
 
     fun handleVirtualInputEvent(events: List<InputEvent>) {
         touchControls.handleVirtualInputEvent(events)
+    }
+
+    // Timed auto-save: counts only time spent playing (the timer pauses while the game is paused,
+    // e.g. when the menu is open or the app is in the background).
+    private var periodicAutoSaveJob: Job? = null
+    private var periodicAutoSaveRemainingMs: Long? = null
+
+    override fun onResume(owner: LifecycleOwner) {
+        super.onResume(owner)
+        startPeriodicAutoSave()
+    }
+
+    override fun onPause(owner: LifecycleOwner) {
+        super.onPause(owner)
+        periodicAutoSaveJob?.cancel()
+        periodicAutoSaveJob = null
+    }
+
+    private fun startPeriodicAutoSave() {
+        periodicAutoSaveJob?.cancel()
+        periodicAutoSaveJob =
+            viewModelScope.launch {
+                val intervalMinutes = settingsManager.periodicAutoSaveMinutes()
+                if (intervalMinutes <= 0) {
+                    periodicAutoSaveRemainingMs = null
+                    return@launch
+                }
+                val intervalMs = intervalMinutes * 60_000L
+
+                while (isActive) {
+                    val waitMs = (periodicAutoSaveRemainingMs ?: intervalMs).coerceAtMost(intervalMs)
+                    val startedAt = SystemClock.elapsedRealtime()
+                    try {
+                        delay(waitMs)
+                    } finally {
+                        val elapsed = SystemClock.elapsedRealtime() - startedAt
+                        periodicAutoSaveRemainingMs = (waitMs - elapsed).coerceAtLeast(0)
+                    }
+                    periodicAutoSaveRemainingMs = null
+                    performPeriodicAutoSave()
+                }
+            }
+    }
+
+    private suspend fun performPeriodicAutoSave() {
+        val isGameReady = retroGameView.getGameState().first() == GameViewModelRetroGameView.GameState.Ready
+        if (!isGameReady || loadingState.value) return
+
+        runCatching {
+            // Same data as when leaving the game: in-game save (SRAM), plus the
+            // "remember game state" save state when that setting is on.
+            val snapshot = saves.captureSaveSnapshot(true)
+            saves.writeSaveSnapshot(snapshot)
+        }.onFailure {
+            Timber.e(it, "Timed auto-save failed")
+        }.onSuccess {
+            Timber.i("Timed auto-save completed")
+        }
     }
 
     override fun onCreate(owner: LifecycleOwner) {

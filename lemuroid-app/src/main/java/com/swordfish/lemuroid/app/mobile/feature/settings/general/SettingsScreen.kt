@@ -58,6 +58,7 @@ fun SettingsScreen(
         GeneralSettings()
         FastForwardSettings()
         ArtworkSettings(navController = navController)
+        TestSettings()
         InputSettings(navController = navController)
         MiscSettings(
             indexingInProgress = indexingInProgress,
@@ -160,6 +161,25 @@ private fun FastForwardSettings() {
             state = booleanPreferenceState(R.string.pref_key_fast_forward_button, true),
             title = { Text(text = stringResource(id = R.string.settings_title_fast_forward_button)) },
             subtitle = { Text(text = stringResource(id = R.string.settings_description_fast_forward_button)) },
+        )
+    }
+}
+
+/** Lemuroid-S settings that are new and still being tested. */
+@Composable
+private fun TestSettings() {
+    LemuroidCardSettingsGroup(
+        title = { Text(text = stringResource(id = R.string.settings_category_test)) },
+    ) {
+        LemuroidSettingsList(
+            state =
+                indexPreferenceState(
+                    R.string.pref_key_periodic_autosave_minutes,
+                    "0",
+                    stringListResource(R.array.pref_key_periodic_autosave_values),
+                ),
+            title = { Text(text = stringResource(id = R.string.settings_title_periodic_autosave)) },
+            items = stringListResource(R.array.pref_key_periodic_autosave_display_names),
         )
     }
 }

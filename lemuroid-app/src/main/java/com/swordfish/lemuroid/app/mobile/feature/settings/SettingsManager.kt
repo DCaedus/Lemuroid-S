@@ -69,6 +69,10 @@ class SettingsManager(private val context: Context, sharedPreferences: Lazy<Shar
 
     suspend fun showFastForwardButton() = booleanPreference(R.string.pref_key_fast_forward_button, true)
 
+    /** Minutes between timed auto-saves while playing. 0 means off. */
+    suspend fun periodicAutoSaveMinutes(): Int =
+        stringPreference(R.string.pref_key_periodic_autosave_minutes, "0").toIntOrNull() ?: 0
+
     suspend fun allowDirectGameLoad() = booleanPreference(R.string.pref_key_allow_direct_game_load, true)
 
     private suspend fun booleanPreference(

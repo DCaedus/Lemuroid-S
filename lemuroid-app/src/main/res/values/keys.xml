@@ -27,6 +27,7 @@
     <string name="pref_key_fast_forward_button" translatable="false">fast_forward_button</string>
 
     <string name="pref_key_artwork_type" translatable="false">artwork_type</string>
+    <string name="pref_key_periodic_autosave_minutes" translatable="false">periodic_autosave_minutes</string>
     <string name="pref_key_artwork_type_system_prefix" translatable="false">artwork_type_system_</string>
 
     <string name="pref_key_save_sync_auto" translatable="false">save_sync_auto</string>
@@ -121,5 +122,25 @@
         <item>boxart</item>
         <item>snap</item>
         <item>title</item>
+    </string-array>
+
+    <string-array translatable="false" name="pref_key_periodic_autosave_values">
+        <item>0</item>
+        <item>5</item>
+        <item>10</item>
+        <item>15</item>
+        <item>20</item>
+        <item>25</item>
+        <item>30</item>
+    </string-array>
+
+    <string-array translatable="false" name="pref_key_periodic_autosave_display_names">
+        <item>@string/periodic_autosave_names_off</item>
+        <item>@string/periodic_autosave_names_5</item>
+        <item>@string/periodic_autosave_names_10</item>
+        <item>@string/periodic_autosave_names_15</item>
+        <item>@string/periodic_autosave_names_20</item>
+        <item>@string/periodic_autosave_names_25</item>
+        <item>@string/periodic_autosave_names_30</item>
     </string-array>
 </resources>
