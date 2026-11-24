@@ -30,8 +30,9 @@ import java.util.zip.ZipInputStream
  * games still find them by name.
  *
  * Conversion happens here rather than when a game opens: RetroArch states are unpacked (rzip,
- * RASTATE), ".sav" saves become ".srm", and other emulators' own state formats (e.g. Pizza Boy
- * ".stat"), screenshots and backups are skipped.
+ * RASTATE), ".sav" saves become ".srm", GBA saves with extra data appended (Pizza Boy) are trimmed
+ * to the 128 KB save, and other emulators' own state formats (Pizza Boy ".stat"), screenshots and
+ * backups are skipped.
  */
 class SavesImporter(
     private val appContext: Context,
@@ -89,7 +90,7 @@ class SavesImporter(
                     targets.getOrPut(file.isState to system) {
                         externalSavesStorage.importTargetFolder(file.isState, system)?.let { Target(it) }
                     } ?: continue
-                copy(file, target, counters)
+                copy(file, target, system, counters)
             }
             Result(counters.saves, counters.states, counters.skipped)
         }
@@ -207,6 +208,7 @@ class SavesImporter(
     private fun copy(
         file: SourceFile,
         target: Target,
+        system: String?,
         counters: Counters,
     ) {
         val targetName = if (file.isState) file.name else file.name.substringBeforeLast('.') + ".srm"
@@ -226,7 +228,9 @@ class SavesImporter(
                 when {
                     file.name.endsWith(".metadata") -> bytes
                     file.isState -> RetroArchStates.decode(bytes)
-                    isOtherEmulatorState(bytes) -> null
+                    // Pizza Boy appends extra data after GBA saves (the save itself is the first
+                    // 128 KB, the most a GBA game uses); keep just the save.
+                    system == GBA && bytes.size > GBA_MAX_SAVE_SIZE -> bytes.copyOf(GBA_MAX_SAVE_SIZE)
                     else -> bytes
                 }
             if (converted == null) {
@@ -236,16 +240,6 @@ class SavesImporter(
             target.folder.write(targetName, converted)
             if (file.isState) counters.states++ else counters.saves++
         }.onFailure { Timber.w(it, "Could not import ${file.name}") }
-    }
-
-    /**
-     * Pizza Boy save states renamed to .sav/.srm end with "BIOS" and "END" blocks; they aren't
-     * battery saves, so they're skipped rather than loaded as one.
-     */
-    private fun isOtherEmulatorState(bytes: ByteArray): Boolean {
-        if (bytes.size < 64) return false
-        val tail = bytes.copyOfRange(bytes.size - 64, bytes.size).toString(Charsets.ISO_8859_1)
-        return tail.contains("BIOS") && tail.contains("END")
     }
 
     /** Lemuroid-S keeps battery saves by name, so a newer one there is kept. */
@@ -260,6 +254,8 @@ class SavesImporter(
     companion object {
         private const val MAX_DEPTH = 2
         private const val MAX_ENTRIES = 5000
+        private const val GBA = "gba"
+        private const val GBA_MAX_SAVE_SIZE = 128 * 1024
 
         /** Folders holding saves inside an emulator's main folder (RetroArch, Lemuroid, Pizza Boy). */
         private val SAVE_FOLDER_NAMES = setOf("saves", "states", "save")
