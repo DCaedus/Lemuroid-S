@@ -1255,8 +1255,8 @@ data class GameSystem(
                             CoreID.A5200,
                             controllerConfigs =
                                 hashMapOf(
-                                    0 to arrayListOf(ControllerConfigs.ATARI7800),
-                                    1 to arrayListOf(ControllerConfigs.ATARI7800),
+                                    0 to arrayListOf(ControllerConfigs.SNES),
+                                    1 to arrayListOf(ControllerConfigs.SNES),
                                 ),
                         ),
                     ),
@@ -1465,7 +1465,7 @@ data class GameSystem(
                                         R.string.setting_citra_use_acc_mul,
                                     ),
                                 ),
-                            statesSupported = false,
+                            statesSupported = true,
                             supportsLibretroVFS = true,
                             supportedOnlyArchitectures = setOf("arm64-v8a"),
                         ),

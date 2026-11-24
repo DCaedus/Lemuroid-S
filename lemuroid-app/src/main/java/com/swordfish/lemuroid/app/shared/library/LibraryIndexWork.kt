@@ -5,6 +5,7 @@ import androidx.work.CoroutineWorker
 import androidx.work.ListenableWorker
 import androidx.work.WorkerParameters
 import com.swordfish.lemuroid.app.mobile.shared.NotificationsManager
+import com.swordfish.lemuroid.app.shared.settings.RomsFolder
 import com.swordfish.lemuroid.app.utils.android.createSyncForegroundInfo
 import com.swordfish.lemuroid.lib.injection.AndroidWorkerInjection
 import com.swordfish.lemuroid.lib.injection.WorkerKey
@@ -38,6 +39,7 @@ class LibraryIndexWork(context: Context, workerParams: WorkerParameters) :
         val result =
             withContext(Dispatchers.IO) {
                 kotlin.runCatching {
+                    RomsFolder.createMissingSystemFolders(applicationContext)
                     lemuroidLibrary.indexLibrary()
                 }
             }

@@ -171,10 +171,22 @@ class MainFolder(private val appContext: Context) {
             return systemId?.let { SYSTEM_FOLDERS[it] } ?: systemDbName
         }
 
-        /** Creates one subfolder per system, but only if [romsFolder] is empty (never touches existing files). */
-        fun createSystemFoldersIfEmpty(romsFolder: DocumentFolder) {
-            if (!romsFolder.isEmpty()) return
-            SYSTEM_FOLDERS.values.sorted().forEach { runCatching { romsFolder.subFolder(it) } }
+        /**
+         * Creates the system subfolders that are missing in [romsFolder] (never touches existing files),
+         * so systems added in new versions get their folder too. With [onlyIfOrganized], a folder that
+         * has files but no system folders yet (e.g. a user's own flat ROMs folder) is left alone.
+         */
+        fun createMissingSystemFolders(
+            romsFolder: DocumentFolder,
+            onlyIfOrganized: Boolean = false,
+        ) {
+            val existing = romsFolder.children()
+            val hasSystemFolders = existing.values.any { it.isDirectory && it.name in SYSTEM_FOLDERS.values }
+            if (onlyIfOrganized && existing.isNotEmpty() && !hasSystemFolders) return
+            SYSTEM_FOLDERS.values
+                .filter { it !in existing }
+                .sorted()
+                .forEach { runCatching { romsFolder.subFolder(it) } }
         }
 
         /** Display name of a folder, for both picked trees and subfolders inside them. */
