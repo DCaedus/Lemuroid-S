@@ -132,7 +132,7 @@ public:
 
     void setAudioEnabled(bool enabled);
     void setAudioVolume(float volume);
-    void getFrameCounters(uint32_t* emulated, uint32_t* pictures);
+    void getFrameCounters(uint32_t* emulated, uint32_t* pictures, double* fps);
 
     void setShaderConfig(ShaderManager::Config shaderConfig);
 
@@ -169,6 +169,8 @@ private:
     // Lemuroid-S framerate counter: frames the core ran, and new pictures it produced for the screen.
     std::atomic<uint32_t> emulatedFrames { 0 };
     std::atomic<uint32_t> newPictures { 0 };
+    // The core's normal framerate (e.g. 60.0988 for NES), used for the speed percentage.
+    std::atomic<double> targetFps { 0.0 };
     bool preferLowLatencyAudio = false;
     bool rumbleEnabled = false;
 

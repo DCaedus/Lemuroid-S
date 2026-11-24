@@ -400,9 +400,11 @@ private fun FramerateCounter(viewModel: BaseGameScreenViewModel) {
             val now = SystemClock.elapsedRealtime()
             val seconds = (now - previousTime).coerceAtLeast(1) / 1000f
             if (current != null && previous != null) {
-                val gameFps = ((current[0] - previous[0]) / seconds).roundToInt()
+                val gameFps = (current[0] - previous[0]) / seconds
                 val screenFps = ((current[1] - previous[1]) / seconds).roundToInt()
-                text = String.format(format, gameFps, screenFps)
+                val normalFps = current.getOrNull(2)?.let { it / 1000f } ?: 0f
+                val speedPercent = if (normalFps > 0f) (gameFps / normalFps * 100).roundToInt() else 0
+                text = String.format(format, gameFps.roundToInt(), speedPercent, screenFps)
             }
             previous = current
             previousTime = now

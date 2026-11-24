@@ -58,7 +58,10 @@ class GLRetroView(
         LibretroDroid.setAudioVolume(value)
     }
 
-    /** Lemuroid-S: total frames run by the core and new pictures shown, for the framerate counter. */
+    /**
+     * Lemuroid-S framerate counter: [total frames run by the core, total new pictures shown,
+     * the core's normal framerate in thousandths of a frame per second].
+     */
     fun getFrameCounters(): LongArray = LibretroDroid.getFrameCounters()
 
     var frameSpeed: Int by Delegates.observable(1) { _, _, value ->

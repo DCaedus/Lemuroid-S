@@ -570,10 +570,16 @@ JNIEXPORT jlongArray JNICALL Java_com_swordfish_libretrodroid_LibretroDroid_getF
 ) {
     uint32_t emulated = 0;
     uint32_t pictures = 0;
-    LibretroDroid::getInstance().getFrameCounters(&emulated, &pictures);
-    jlong values[2] = { static_cast<jlong>(emulated), static_cast<jlong>(pictures) };
-    jlongArray result = env->NewLongArray(2);
-    env->SetLongArrayRegion(result, 0, 2, values);
+    double fps = 0.0;
+    LibretroDroid::getInstance().getFrameCounters(&emulated, &pictures, &fps);
+    // Third value: the core's normal framerate in thousandths (60.0988 fps -> 60099).
+    jlong values[3] = {
+        static_cast<jlong>(emulated),
+        static_cast<jlong>(pictures),
+        static_cast<jlong>(fps * 1000.0 + 0.5),
+    };
+    jlongArray result = env->NewLongArray(3);
+    env->SetLongArrayRegion(result, 0, 3, values);
     return result;
 }
 

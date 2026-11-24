@@ -527,9 +527,10 @@ void LibretroDroid::setFrameSpeed(unsigned int speed) {
     updateAudioSampleRateMultiplier();
 }
 
-void LibretroDroid::getFrameCounters(uint32_t* emulated, uint32_t* pictures) {
+void LibretroDroid::getFrameCounters(uint32_t* emulated, uint32_t* pictures, double* fps) {
     *emulated = emulatedFrames.load();
     *pictures = newPictures.load();
+    *fps = targetFps.load();
 }
 
 void LibretroDroid::setAudioVolume(float volume) {
@@ -641,6 +642,7 @@ void LibretroDroid::afterGameLoad() {
     core->retro_get_system_av_info(&system_av_info);
 
     fpsSync = std::make_unique<FPSSync>(system_av_info.timing.fps, screenRefreshRate);
+    targetFps = system_av_info.timing.fps;
 
     double inputSampleRate = system_av_info.timing.sample_rate * fpsSync->getTimeStretchFactor();
 
