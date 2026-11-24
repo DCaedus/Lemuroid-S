@@ -106,6 +106,7 @@ class GLRetroView(
     @OnLifecycleEvent(Lifecycle.Event.ON_CREATE)
     fun onCreate(lifecycleOwner: LifecycleOwner) = catchExceptions {
         lifecycle = lifecycleOwner.lifecycle
+        LibretroDroid.initSaf(context.applicationContext)
         LibretroDroid.create(
             openGLESVersion,
             data.coreFilePath,
@@ -374,7 +375,7 @@ class GLRetroView(
     private fun loadGameFromVirtualFiles(virtualFiles: List<VirtualFile>) {
         val detachedVirtualFiles = virtualFiles
             .map { DetachedVirtualFile(it.virtualPath, it.fileDescriptor.detachFd()) }
-        LibretroDroid.loadGameFromVirtualFiles(detachedVirtualFiles, data.gameLinkDirectory, data.gameArchiveEntry)
+        LibretroDroid.loadGameFromVirtualFiles(detachedVirtualFiles, data.gameLinkDirectory, data.gameArchiveEntry, data.gameContentUri)
     }
 
     private fun loadGameFromBytes(gameFileBytes: ByteArray) {

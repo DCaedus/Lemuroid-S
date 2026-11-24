@@ -102,7 +102,7 @@ public:
 
     void loadGameFromPath(const std::string &gamePath);
     void loadGameFromBytes(const int8_t *data, size_t size);
-    void loadGameFromVirtualFiles(std::vector<VFSFile> virtualFiles, const std::string& linkDirectory, const std::string& archiveEntry);
+    void loadGameFromVirtualFiles(std::vector<VFSFile> virtualFiles, const std::string& linkDirectory, const std::string& archiveEntry, const std::string& contentUri);
 
     void onKeyEvent(unsigned int port, int action, int keyCode);
     void onMotionEvent(unsigned int port, unsigned int source, float xAxis, float yAxis);

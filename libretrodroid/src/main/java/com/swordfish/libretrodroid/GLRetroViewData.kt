@@ -26,6 +26,8 @@ class GLRetroViewData(context: Context) {
     var gameVirtualFiles: List<VirtualFile> = listOf()
     /** Lemuroid-S: whether the core may open the game files through the libretro VFS. */
     var gameSupportsVirtualFileSystem: Boolean = true
+    /** Lemuroid-S: the game's content:// URI inside a granted folder, so VFS cores can read next to it. */
+    var gameContentUri: String? = null
     /** Lemuroid-S: name of the ROM inside the zip, when the (only) game file is a zip holding it. */
     var gameArchiveEntry: String? = null
     /**

@@ -3,7 +3,7 @@ cmake_minimum_required(VERSION 3.13.2)
 # now build app's shared lib
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++17 -Wall")
 
-add_definitions("-DVFS_FRONTEND -DHAVE_STRL")
+add_definitions("-DVFS_FRONTEND -DHAVE_STRL -DHAVE_SAF")
 
 # Let's include oboe
 set (OBOE_DIR oboe)
@@ -79,6 +79,7 @@ add_library(libretrodroid SHARED
         errorcodes.cpp
         vfs/vfs.h
         vfs/vfs.cpp
+        vfs/saf/vfs_implementation_saf.c
         vfs/vfsfile.h
         vfs/vfsfile.cpp
         vfs/fdwrapper.h

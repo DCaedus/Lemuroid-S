@@ -27,6 +27,7 @@
 #include <optional>
 
 #include "libretrodroid.h"
+#include "vfs/vfs.h"
 #include "log.h"
 #include "core.h"
 #include "audio.h"
@@ -457,7 +458,8 @@ JNIEXPORT void JNICALL Java_com_swordfish_libretrodroid_LibretroDroid_loadGameFr
         jclass obj,
         jobject virtualFileList,
         jstring linkDirectory,
-        jstring archiveEntry
+        jstring archiveEntry,
+        jstring contentUri
 ) {
 
     try {
@@ -486,15 +488,25 @@ JNIEXPORT void JNICALL Java_com_swordfish_libretrodroid_LibretroDroid_loadGameFr
 
         JniString linkDirectoryPath(env, linkDirectory);
         std::string entryName = archiveEntry != nullptr ? JniString(env, archiveEntry).stdString() : "";
+        std::string gameUri = contentUri != nullptr ? JniString(env, contentUri).stdString() : "";
         LibretroDroid::getInstance().loadGameFromVirtualFiles(
             std::move(virtualFiles),
             linkDirectoryPath.stdString(),
-            entryName
+            entryName,
+            gameUri
         );
     } catch (std::exception &exception) {
         LOGE("Error in loadGameFromDescriptors: %s", exception.what());
         JavaUtils::throwRetroException(env, ERROR_LOAD_GAME);
     }
+}
+
+JNIEXPORT jboolean JNICALL Java_com_swordfish_libretrodroid_LibretroDroid_initSaf(
+    JNIEnv* env,
+    jclass obj,
+    jobject context
+) {
+    return VFS::initializeSaf(env, context) ? JNI_TRUE : JNI_FALSE;
 }
 
 JNIEXPORT void JNICALL Java_com_swordfish_libretrodroid_LibretroDroid_destroy(

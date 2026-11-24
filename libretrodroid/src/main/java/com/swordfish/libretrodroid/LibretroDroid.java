@@ -99,7 +99,10 @@ public class LibretroDroid {
 
     public static native void loadGameFromPath(String gameFilePath);
     public static native void loadGameFromBytes(byte[] gameFileBytes);
-    public static native void loadGameFromVirtualFiles(List<DetachedVirtualFile> virtualFiles, String linkDirectory, String archiveEntry);
+    public static native void loadGameFromVirtualFiles(List<DetachedVirtualFile> virtualFiles, String linkDirectory, String archiveEntry, String contentUri);
+
+    /** Lemuroid-S: enables saf:// paths for cores (RetroArch's SAF layer). */
+    public static native boolean initSaf(android.content.Context context);
     public static native void resume();
 
     public static native void onSurfaceCreated();

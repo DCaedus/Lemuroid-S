@@ -388,7 +388,8 @@ void LibretroDroid::loadGameFromBytes(const int8_t *data, size_t size) {
 void LibretroDroid::loadGameFromVirtualFiles(
     std::vector<VFSFile> virtualFiles,
     const std::string& linkDirectory,
-    const std::string& archiveEntry
+    const std::string& archiveEntry,
+    const std::string& contentUri
 ) {
     LOGD("Performing libretrodroid loadGameFromVirtualFiles");
     struct retro_system_info system_info {};
@@ -465,8 +466,11 @@ void LibretroDroid::loadGameFromVirtualFiles(
         game_info.data = file.data;
         game_info.size = file.size;
     } else if (useVFS) {
-        LOGI("Loading game through the virtual file system");
-        game_info.path = Utils::cloneToCString(virtualFiles[0].getFileName());
+        // Through Android's folder access (saf:// path) when possible: the core then also finds the
+        // files next to the game (.bin tracks, parent romsets...). Otherwise the handed-over files.
+        std::string safPath = contentUri.empty() ? "" : VFS::safPathForContentUri(contentUri);
+        LOGI("Loading game through the virtual file system%s", safPath.empty() ? "" : " (folder access)");
+        game_info.path = Utils::cloneToCString(safPath.empty() ? virtualFiles[0].getFileName() : safPath);
         VFS::getInstance().initialize(std::move(virtualFiles));
     } else {
         LOGI("Loading game through file links");

@@ -226,6 +226,7 @@ class GameViewModelRetroGameView(
                 }
             }
             gameSupportsVirtualFileSystem = systemCoreConfig.supportsLibretroVFS
+            gameContentUri = gameData.game.fileUri.takeIf { it.startsWith("content://") }
             gameLinkDirectory = File(appContext.cacheDir, "game-links").absolutePath
 
             systemDirectory = gameData.systemDirectory.absolutePath

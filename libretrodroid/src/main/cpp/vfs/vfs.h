@@ -30,6 +30,8 @@
 #include <optional>
 #include <mutex>
 #include <unordered_map>
+#include <unordered_set>
+#include <jni.h>
 
 namespace libretrodroid {
 
@@ -89,7 +91,21 @@ private:
         int fd;
         int64_t position;
         int64_t size;
+        bool writable = false;
     };
+    // Directories opened through Android's folder access (saf:// paths).
+    std::unordered_set<struct retro_vfs_dir_handle*> safDirectories;
+
+    struct retro_vfs_file_handle* safOpen(const char* path, unsigned mode, unsigned hints);
+    bool isSafDirectory(struct retro_vfs_dir_handle* dir);
+
+public:
+    /** Lemuroid-S: enables saf:// paths (RetroArch's SAF layer). [context] is an Android Context. */
+    static bool initializeSaf(JNIEnv* env, jobject context);
+    /** saf:// path for a content:// document URI inside a granted folder, or "" if it isn't one. */
+    static std::string safPathForContentUri(const std::string& contentUri);
+    static bool isSafPath(const char* path);
+private:
     std::mutex handlesLock;
     std::unordered_map<struct retro_vfs_file_handle*, VirtualHandle> virtualHandles;
 
