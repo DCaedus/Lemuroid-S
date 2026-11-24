@@ -5,7 +5,9 @@ import android.net.Uri
 import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -35,7 +37,7 @@ import com.swordfish.lemuroid.app.utils.android.settings.indexPreferenceState
 import com.swordfish.lemuroid.app.utils.android.settings.intPreferenceState
 import com.swordfish.lemuroid.app.utils.android.stringListResource
 import com.swordfish.lemuroid.lib.preferences.SharedPreferencesHelper
-import com.swordfish.lemuroid.lib.saves.ExternalSavesStorage
+import com.swordfish.lemuroid.lib.storage.MainFolder
 
 @Composable
 fun SettingsScreen(
@@ -61,7 +63,6 @@ fun SettingsScreen(
     LemuroidSettingsPage(modifier = modifier) {
         RomsSettings(
             state = state,
-            onChangeFolder = { viewModel.changeLocalStorageFolder() },
             indexingInProgress = indexingInProgress,
             scanInProgress = scanInProgress,
         )
@@ -185,7 +186,12 @@ private fun TestSettings(onImportSaves: (Uri, (SavesImporter.Result?) -> Unit) -
             onImportSaves(uri) { result ->
                 val message =
                     if (result != null) {
-                        context.getString(R.string.import_saves_result, result.imported, result.skippedOlder)
+                        context.getString(
+                            R.string.import_saves_result,
+                            result.imported,
+                            result.importedStates,
+                            result.skippedOlder,
+                        )
                     } else {
                         context.getString(R.string.import_saves_failed)
                     }
@@ -206,60 +212,33 @@ private fun TestSettings(onImportSaves: (Uri, (SavesImporter.Result?) -> Unit) -
             title = { Text(text = stringResource(id = R.string.settings_title_periodic_autosave)) },
             items = stringListResource(R.array.pref_key_periodic_autosave_display_names),
         )
-        SavesLocationSettings()
+        var showImportConfirmation by remember { mutableStateOf(false) }
         LemuroidSettingsMenuLink(
             title = { Text(text = stringResource(id = R.string.settings_title_import_saves)) },
             subtitle = { Text(text = stringResource(id = R.string.settings_description_import_saves)) },
-            onClick = { importFolderPicker.launch(null) },
+            onClick = { showImportConfirmation = true },
         )
-    }
-}
-
-/** Where in-game saves (.srm) are stored, besides the app's own copy. */
-@Composable
-internal fun SavesLocationSettings() {
-    val context = LocalContext.current
-    val locationValues = stringListResource(R.array.pref_key_saves_location_values)
-    val location =
-        indexPreferenceState(
-            com.swordfish.lemuroid.lib.R.string.pref_key_saves_location,
-            ExternalSavesStorage.Location.APP_STORAGE.prefValue,
-            locationValues,
-        )
-
-    LemuroidSettingsList(
-        state = location,
-        title = { Text(text = stringResource(id = R.string.settings_title_saves_location)) },
-        items = stringListResource(R.array.pref_key_saves_location_display_names),
-    )
-
-    val isCustomFolder =
-        locationValues.getOrNull(location.value) == ExternalSavesStorage.Location.CUSTOM_FOLDER.prefValue
-    if (!isCustomFolder) return
-
-    val folderKey = stringResource(com.swordfish.lemuroid.lib.R.string.pref_key_saves_custom_folder)
-    val preferences = remember { SharedPreferencesHelper.getSharedPreferences(context) }
-    var folderUri by remember { mutableStateOf(preferences.getString(folderKey, null)) }
-
-    val folderPicker =
-        rememberLauncherForActivityResult(ActivityResultContracts.OpenDocumentTree()) { uri ->
-            if (uri == null) return@rememberLauncherForActivityResult
-            val readWrite = Intent.FLAG_GRANT_READ_URI_PERMISSION or Intent.FLAG_GRANT_WRITE_URI_PERMISSION
-            runCatching { context.contentResolver.takePersistableUriPermission(uri, readWrite) }
-            preferences.edit().putString(folderKey, uri.toString()).apply()
-            folderUri = uri.toString()
+        if (showImportConfirmation) {
+            AlertDialog(
+                onDismissRequest = { showImportConfirmation = false },
+                title = { Text(text = stringResource(R.string.import_saves_confirm_title)) },
+                text = { Text(text = stringResource(R.string.import_saves_confirm_message)) },
+                confirmButton = {
+                    TextButton(
+                        onClick = {
+                            showImportConfirmation = false
+                            importFolderPicker.launch(null)
+                        },
+                    ) { Text(text = stringResource(R.string.import_saves_confirm_action)) }
+                },
+                dismissButton = {
+                    TextButton(onClick = { showImportConfirmation = false }) {
+                        Text(text = stringResource(android.R.string.cancel))
+                    }
+                },
+            )
         }
-
-    val folderName =
-        remember(folderUri) {
-            folderUri?.let { runCatching { DocumentFile.fromTreeUri(context, Uri.parse(it))?.name }.getOrNull() }
-        } ?: stringResource(R.string.none)
-
-    LemuroidSettingsMenuLink(
-        title = { Text(text = stringResource(id = R.string.settings_title_saves_folder)) },
-        subtitle = { Text(text = folderName) },
-        onClick = { folderPicker.launch(null) },
-    )
+    }
 }
 
 @Composable
@@ -412,29 +391,22 @@ private fun GeneralSettings() {
 @Composable
 private fun RomsSettings(
     state: SettingsViewModel.State,
-    onChangeFolder: () -> Unit,
     indexingInProgress: Boolean,
     scanInProgress: Boolean,
 ) {
     val context = LocalContext.current
 
     val currentDirectory = state.currentDirectory
-    val emptyDirectory = stringResource(R.string.none)
 
     val currentDirectoryName =
         remember(state.currentDirectory) {
-            runCatching {
-                DocumentFile.fromTreeUri(context, Uri.parse(currentDirectory))?.name
-            }.getOrNull() ?: emptyDirectory
+            runCatching { MainFolder.displayName(context, Uri.parse(currentDirectory)) }.getOrNull()
         }
 
-    LemuroidCardSettingsGroup(title = { Text(text = stringResource(id = R.string.roms)) }) {
-        LemuroidSettingsMenuLink(
-            title = { Text(text = stringResource(id = R.string.directory)) },
-            subtitle = { Text(text = currentDirectoryName) },
-            onClick = { onChangeFolder() },
-            enabled = !indexingInProgress,
-        )
+    LemuroidCardSettingsGroup(title = { Text(text = stringResource(id = R.string.settings_category_storage)) }) {
+        MainFolderSetting()
+        RomsFolderSettings(enabled = !indexingInProgress, currentCustomFolderName = currentDirectoryName)
+        SavesFolderSettings()
         if (scanInProgress) {
             LemuroidSettingsMenuLink(
                 title = { Text(text = stringResource(id = R.string.stop)) },

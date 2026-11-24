@@ -235,15 +235,23 @@ abstract class LemuroidApplicationModule {
         @Provides
         @PerApp
         @JvmStatic
-        fun statesManager(directoriesManager: DirectoriesManager) = StatesManager(directoriesManager)
+        fun externalSavesStorage(context: Context) = ExternalSavesStorage(context)
+
+        @Provides
+        @PerApp
+        @JvmStatic
+        fun statesManager(
+            directoriesManager: DirectoriesManager,
+            externalSavesStorage: ExternalSavesStorage,
+        ) = StatesManager(directoriesManager, externalSavesStorage)
 
         @Provides
         @PerApp
         @JvmStatic
         fun savesManager(
-            context: Context,
             directoriesManager: DirectoriesManager,
-        ) = SavesManager(directoriesManager, ExternalSavesStorage(context))
+            externalSavesStorage: ExternalSavesStorage,
+        ) = SavesManager(directoriesManager, externalSavesStorage)
 
         @Provides
         @PerApp
@@ -252,7 +260,9 @@ abstract class LemuroidApplicationModule {
             context: Context,
             retrogradeDb: RetrogradeDatabase,
             savesManager: SavesManager,
-        ) = SavesImporter(context, retrogradeDb, savesManager)
+            statesManager: StatesManager,
+            coresSelection: CoresSelection,
+        ) = SavesImporter(context, retrogradeDb, savesManager, statesManager, coresSelection)
 
         @Provides
         @PerApp

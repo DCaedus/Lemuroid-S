@@ -6,6 +6,8 @@ import android.provider.DocumentsContract
 import com.swordfish.lemuroid.R
 import com.swordfish.lemuroid.common.kotlin.writeBytesAtomic
 import com.swordfish.lemuroid.lib.preferences.SharedPreferencesHelper
+import com.swordfish.lemuroid.lib.storage.DocumentFolder
+import com.swordfish.lemuroid.lib.storage.MainFolder
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import okhttp3.OkHttpClient
@@ -18,7 +20,8 @@ import java.util.concurrent.ConcurrentHashMap
 /**
  * Finds game artwork, in this order (like RetroArch):
  *  1. RetroArch's thumbnails folder, if the user picked it in Settings (read only)
- *  2. Lemuroid-S's own thumbnails folder (permanent storage, same layout as RetroArch)
+ *  2. Lemuroid-S's thumbnails folder: Lemuroid-S/thumbnails in phone storage once the Lemuroid-S
+ *     folder is chosen, otherwise the app's private storage
  *  3. Download from libretro (server, then GitHub backup) and save it into folder 2
  *
  * Both folders use RetroArch's layout: thumbnails/<console>/Named_Boxarts|Named_Snaps|Named_Titles/<game>.png
@@ -31,6 +34,14 @@ class CoverStore(private val appContext: Context) {
     /** Artwork that couldn't be found or downloaded in this session, so it isn't retried on every scroll. */
     private val missing = Collections.newSetFromMap(ConcurrentHashMap<CoverTarget, Boolean>())
 
+    private val mainFolder = MainFolder(appContext)
+
+    /** Lemuroid-S/thumbnails folder listings, cached per "<console>/<artwork folder>". */
+    private val mainFolderListings = ConcurrentHashMap<String, MainFolderListing>()
+    private var mainFolderListingsRoot: String? = null
+
+    private class MainFolderListing(val folder: DocumentFolder?, val files: MutableMap<String, Uri>)
+
     /** RetroArch folder listings, cached per "<console>/<artwork folder>": file name -> document uri. */
     private val retroArchListings = ConcurrentHashMap<String, Map<String, Uri>>()
     private var retroArchListingsRoot: String? = null
@@ -41,6 +52,7 @@ class CoverStore(private val appContext: Context) {
     suspend fun resolve(target: CoverTarget): Resolved? =
         withContext(Dispatchers.IO) {
             findInRetroArchFolder(target)?.let { return@withContext Resolved(it, false) }
+            findInMainFolder(target)?.let { return@withContext Resolved(it, false) }
             findInLocalFolder(target)?.let { return@withContext Resolved(it, false) }
             if (target in missing) return@withContext null
 
@@ -62,7 +74,43 @@ class CoverStore(private val appContext: Context) {
             .firstOrNull { it.exists() && it.length() > 0 }
     }
 
-    private fun download(target: CoverTarget): File? {
+    private fun mainFolderListing(target: CoverTarget): MainFolderListing? {
+        val root = mainFolder.getRoot() ?: return null
+        val rootValue = root.uri.toString()
+        if (rootValue != mainFolderListingsRoot) {
+            mainFolderListings.clear()
+            mainFolderListingsRoot = rootValue
+        }
+        val key = "${target.systemFolder}/${target.artworkType.libretroFolder}"
+        return mainFolderListings.getOrPut(key) {
+            val folder =
+                runCatching {
+                    mainFolder.folder(MainFolder.THUMBNAILS, target.systemFolder, target.artworkType.libretroFolder)
+                }.getOrNull()
+            val files = runCatching { folder?.children()?.mapValues { it.value.uri } }.getOrNull() ?: emptyMap()
+            MainFolderListing(folder, ConcurrentHashMap(files))
+        }
+    }
+
+    private fun findInMainFolder(target: CoverTarget): Uri? {
+        val listing = mainFolderListing(target) ?: return null
+        return target.names.firstNotNullOfOrNull { listing.files["$it.png"] }
+    }
+
+    private fun saveToMainFolder(
+        target: CoverTarget,
+        bytes: ByteArray,
+    ): Uri? {
+        val listing = mainFolderListing(target) ?: return null
+        val folder = listing.folder ?: return null
+        val fileName = "${target.exactName}.png"
+        return runCatching { folder.write(fileName, bytes, null) }
+            .onSuccess { listing.files[fileName] = it }
+            .onFailure { Timber.w(it, "Could not store artwork $fileName in the Lemuroid-S folder") }
+            .getOrNull()
+    }
+
+    private fun download(target: CoverTarget): Any? {
         for (url in CoverUrls.candidates(target)) {
             val bytes =
                 runCatching {
@@ -73,6 +121,8 @@ class CoverStore(private val appContext: Context) {
 
             if (bytes != null && bytes.isNotEmpty()) {
                 // Saved under the exact game name, as RetroArch would, even if a fallback name matched.
+                saveToMainFolder(target, bytes)?.let { return it }
+
                 val file = localFile(target, target.exactName)
                 return runCatching {
                     file.parentFile?.mkdirs()

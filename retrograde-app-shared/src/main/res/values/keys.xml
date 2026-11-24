@@ -6,5 +6,8 @@
     <string name="pref_key_extenral_folder" translatable="false">external_folder</string>
     <string name="pref_key_saves_location" translatable="false">saves_location</string>
     <string name="pref_key_saves_custom_folder" translatable="false">saves_custom_folder</string>
+    <string name="pref_key_main_folder" translatable="false">main_folder</string>
+    <string name="pref_key_main_folder_tree" translatable="false">main_folder_tree</string>
+    <string name="pref_key_roms_location" translatable="false">roms_location</string>
     <string name="pref_key_legacy_external_folder" translatable="false">legacy_external_folder</string>
 </resources>

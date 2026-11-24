@@ -5,73 +5,56 @@ import android.content.Context
 import android.net.Uri
 import android.os.Build
 import android.provider.DocumentsContract
-import com.swordfish.lemuroid.common.kotlin.writeBytesAtomic
 import com.swordfish.lemuroid.lib.R
 import com.swordfish.lemuroid.lib.library.db.entity.Game
 import com.swordfish.lemuroid.lib.preferences.SharedPreferencesHelper
+import com.swordfish.lemuroid.lib.storage.DocumentFolder
+import com.swordfish.lemuroid.lib.storage.MainFolder
 import timber.log.Timber
 import java.io.File
 
 /**
- * Optional second location for in-game saves (.srm), like RetroArch's "write saves to content
- * directory" and custom save directory options.
+ * Where in-game (battery) saves and save states are kept in phone storage ("Select SAVES folder"),
+ * like RetroArch's save directories:
+ *  - Lemuroid-S folder (default): Lemuroid-S/saves/<rom>.srm and Lemuroid-S/states/<core>/...
+ *  - ROMs folder: next to each game's ROM
  *
- * Lemuroid keeps its own copy in app storage as before; when a location is chosen, saves are also
- * written there, and on load the copy found there is preferred. This way nothing is lost if the
- * folder becomes unavailable (SD card removed, permission revoked).
+ * Lemuroid-S also keeps a working copy in its private app storage: emulator cores and the rest of
+ * the app read from there, and nothing is lost if the folder becomes unavailable. Files in the
+ * folder above are preferred when they are newer.
  */
 class ExternalSavesStorage(private val appContext: Context) {
     enum class Location(val prefValue: String) {
-        APP_STORAGE("app"),
-        NEXT_TO_ROMS("roms"),
-        CUSTOM_FOLDER("custom"),
+        MAIN_FOLDER("main"),
+        ROMS_FOLDER("roms"),
     }
+
+    val mainFolder = MainFolder(appContext)
 
     private val contentResolver: ContentResolver get() = appContext.contentResolver
 
     fun getLocation(): Location {
         val value = preferences().getString(appContext.getString(R.string.pref_key_saves_location), null)
-        return Location.values().firstOrNull { it.prefValue == value } ?: Location.APP_STORAGE
+        return Location.values().firstOrNull { it.prefValue == value } ?: Location.MAIN_FOLDER
     }
 
-    /** Returns the save from the chosen location, or null if there is none (or no location is chosen). */
-    fun read(
-        game: Game,
-        fileName: String,
-    ): ByteArray? {
-        val folder = resolveFolder(game) ?: return null
-        return runCatching { folder.read(fileName) }
-            .onFailure { Timber.w(it, "Could not read external save $fileName") }
-            .getOrNull()
-            ?.takeIf { it.isNotEmpty() }
-    }
-
-    /** Writes the save to the chosen location. Failures are logged: the app storage copy still exists. */
-    fun write(
-        game: Game,
-        fileName: String,
-        data: ByteArray,
-    ) {
-        val folder = resolveFolder(game) ?: return
-        runCatching { folder.write(fileName, data) }
-            .onFailure { Timber.w(it, "Could not write external save $fileName") }
-    }
-
-    private fun resolveFolder(game: Game): SaveFolder? {
+    /** Folder for [game]'s battery save, or null if saves are only kept in app storage. */
+    fun savesFolder(game: Game): SaveFolder? {
         return when (getLocation()) {
-            Location.APP_STORAGE -> null
-            Location.NEXT_TO_ROMS -> romFolder(game)
-            Location.CUSTOM_FOLDER -> customFolder()
+            Location.MAIN_FOLDER -> mainFolder.folder(MainFolder.SAVES)?.let { SaveFolder.Document(it) }
+            Location.ROMS_FOLDER -> romFolder(game)
         }
     }
 
-    private fun customFolder(): SaveFolder? {
-        val treeUri =
-            preferences().getString(appContext.getString(R.string.pref_key_saves_custom_folder), null)
-                ?.let { Uri.parse(it) }
-                ?: return null
-        val rootId = DocumentsContract.getTreeDocumentId(treeUri)
-        return SaveFolder.Document(contentResolver, DocumentsContract.buildDocumentUriUsingTree(treeUri, rootId))
+    /** Folder for [game]'s save states with core [coreName], or null if only kept in app storage. */
+    fun statesFolder(
+        game: Game,
+        coreName: String,
+    ): SaveFolder? {
+        return when (getLocation()) {
+            Location.MAIN_FOLDER -> mainFolder.folder(MainFolder.STATES, coreName)?.let { SaveFolder.Document(it) }
+            Location.ROMS_FOLDER -> romFolder(game)
+        }
     }
 
     private fun romFolder(game: Game): SaveFolder? {
@@ -82,7 +65,8 @@ class ExternalSavesStorage(private val appContext: Context) {
         if (romUri.scheme != ContentResolver.SCHEME_CONTENT) return null
 
         val parentId = findParentDocumentId(romUri) ?: return null
-        return SaveFolder.Document(contentResolver, DocumentsContract.buildDocumentUriUsingTree(romUri, parentId))
+        val folderUri = DocumentsContract.buildDocumentUriUsingTree(romUri, parentId)
+        return SaveFolder.Document(DocumentFolder(contentResolver, folderUri))
     }
 
     private fun findParentDocumentId(documentUri: Uri): String? {
@@ -98,8 +82,14 @@ class ExternalSavesStorage(private val appContext: Context) {
 
     private fun preferences() = SharedPreferencesHelper.getSharedPreferences(appContext)
 
-    private sealed interface SaveFolder {
-        fun read(fileName: String): ByteArray?
+    /** A save file found in the chosen folder. */
+    data class ExternalFile(val data: ByteArray, val lastModified: Long)
+
+    sealed interface SaveFolder {
+        /** File name -> last modified time, for the files in this folder. */
+        fun lastModifiedTimes(): Map<String, Long>
+
+        fun read(fileName: String): ExternalFile?
 
         fun write(
             fileName: String,
@@ -107,61 +97,52 @@ class ExternalSavesStorage(private val appContext: Context) {
         )
 
         class Local(private val directory: File) : SaveFolder {
-            override fun read(fileName: String): ByteArray? {
+            override fun lastModifiedTimes(): Map<String, Long> {
+                return directory.listFiles()?.associate { it.name to it.lastModified() } ?: emptyMap()
+            }
+
+            override fun read(fileName: String): ExternalFile? {
                 val file = File(directory, fileName)
-                return if (file.exists()) file.readBytes() else null
+                return if (file.exists()) ExternalFile(file.readBytes(), file.lastModified()) else null
             }
 
             override fun write(
                 fileName: String,
                 data: ByteArray,
             ) {
-                File(directory, fileName).writeBytesAtomic(data)
+                File(directory, fileName).writeBytes(data)
             }
         }
 
-        class Document(
-            private val contentResolver: ContentResolver,
-            private val directoryUri: Uri,
-        ) : SaveFolder {
-            override fun read(fileName: String): ByteArray? {
-                val fileUri = findChild(fileName) ?: return null
-                return contentResolver.openInputStream(fileUri)?.use { it.readBytes() }
+        class Document(private val folder: DocumentFolder) : SaveFolder {
+            override fun lastModifiedTimes(): Map<String, Long> {
+                return folder.children().mapValues { it.value.lastModified }
+            }
+
+            override fun read(fileName: String): ExternalFile? {
+                val child = folder.children()[fileName] ?: return null
+                val data = folder.read(child) ?: return null
+                return ExternalFile(data, child.lastModified)
             }
 
             override fun write(
                 fileName: String,
                 data: ByteArray,
             ) {
-                val fileUri =
-                    findChild(fileName)
-                        ?: DocumentsContract.createDocument(contentResolver, directoryUri, MIME_TYPE, fileName)
-                        ?: throw IllegalStateException("Could not create $fileName")
-                contentResolver.openOutputStream(fileUri, "wt")?.use { it.write(data) }
-                    ?: throw IllegalStateException("Could not open $fileName")
-            }
-
-            private fun findChild(fileName: String): Uri? {
-                val directoryId = DocumentsContract.getDocumentId(directoryUri)
-                val childrenUri = DocumentsContract.buildChildDocumentsUriUsingTree(directoryUri, directoryId)
-                val projection =
-                    arrayOf(
-                        DocumentsContract.Document.COLUMN_DOCUMENT_ID,
-                        DocumentsContract.Document.COLUMN_DISPLAY_NAME,
-                    )
-                contentResolver.query(childrenUri, projection, null, null, null)?.use { cursor ->
-                    while (cursor.moveToNext()) {
-                        if (cursor.getString(1) == fileName) {
-                            return DocumentsContract.buildDocumentUriUsingTree(directoryUri, cursor.getString(0))
-                        }
-                    }
-                }
-                return null
+                folder.write(fileName, data)
             }
         }
     }
 
     companion object {
-        private const val MIME_TYPE = "application/octet-stream"
+        /** Logs and swallows errors: the app storage copy always exists. */
+        inline fun <T> safely(
+            what: String,
+            block: () -> T,
+        ): T? {
+            return runCatching(block)
+                .onFailure { Timber.w(it, "External saves: $what failed") }
+                .getOrNull()
+        }
     }
 }

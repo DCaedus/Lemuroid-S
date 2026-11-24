@@ -54,7 +54,14 @@ class StorageAccessFrameworkProvider(private val context: Context) : StorageProv
     private fun traverseDirectoryEntries(rootUri: Uri): Flow<List<BaseStorageFile>> =
         flow {
             val directoryDocumentIds = mutableListOf<String>()
-            DocumentsContract.getTreeDocumentId(rootUri)?.let { directoryDocumentIds.add(it) }
+            // The ROMs folder can be a picked folder or a subfolder inside one (e.g. Lemuroid-S/roms).
+            val rootDocumentId =
+                if (DocumentsContract.isDocumentUri(context, rootUri)) {
+                    DocumentsContract.getDocumentId(rootUri)
+                } else {
+                    DocumentsContract.getTreeDocumentId(rootUri)
+                }
+            rootDocumentId?.let { directoryDocumentIds.add(it) }
 
             while (directoryDocumentIds.isNotEmpty()) {
                 val currentDirectoryDocumentId = directoryDocumentIds.removeAt(0)

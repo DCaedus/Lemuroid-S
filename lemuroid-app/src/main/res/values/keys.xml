@@ -128,15 +128,23 @@
     </string-array>
 
     <string-array translatable="false" name="pref_key_saves_location_values">
-        <item>app</item>
+        <item>main</item>
         <item>roms</item>
-        <item>custom</item>
     </string-array>
 
     <string-array translatable="false" name="pref_key_saves_location_display_names">
-        <item>@string/saves_location_names_app</item>
-        <item>@string/saves_location_names_roms</item>
-        <item>@string/saves_location_names_custom</item>
+        <item>@string/folder_option_main</item>
+        <item>@string/folder_option_roms</item>
+    </string-array>
+
+    <string-array translatable="false" name="pref_key_roms_location_values">
+        <item>main</item>
+        <item>custom</item>
+    </string-array>
+
+    <string-array translatable="false" name="pref_key_roms_location_display_names">
+        <item>@string/folder_option_main</item>
+        <item>@string/folder_option_custom</item>
     </string-array>
 
     <string-array translatable="false" name="pref_key_periodic_autosave_values">

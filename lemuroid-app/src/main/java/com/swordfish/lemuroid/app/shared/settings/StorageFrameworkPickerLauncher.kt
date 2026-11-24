@@ -11,8 +11,12 @@ import com.swordfish.lemuroid.app.utils.android.displayErrorDialog
 import com.swordfish.lemuroid.lib.android.RetrogradeActivity
 import com.swordfish.lemuroid.lib.preferences.SharedPreferencesHelper
 import com.swordfish.lemuroid.lib.storage.DirectoriesManager
+import kotlinx.coroutines.DelicateCoroutinesApi
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+@OptIn(DelicateCoroutinesApi::class)
 class StorageFrameworkPickerLauncher : RetrogradeActivity() {
     @Inject
     lateinit var directoriesManager: DirectoriesManager
@@ -67,20 +71,26 @@ class StorageFrameworkPickerLauncher : RetrogradeActivity() {
                 }
             }
 
-            startLibraryIndexWork()
+            val pickedUri = resultData?.data
+            if (pickedUri != null) {
+                // Creates one folder per system if the chosen folder is empty, then scans.
+                GlobalScope.launch {
+                    RomsFolder.onCustomFolderPicked(applicationContext, pickedUri)
+                    startLibraryIndexWork()
+                }
+            } else {
+                startLibraryIndexWork()
+            }
         }
         finish()
     }
 
     private fun updatePersistableUris(uri: Uri) {
-        // Keep the permissions for the custom saves folder and RetroArch thumbnails folder, if chosen.
+        // Keep the permissions for the Lemuroid-S folder and RetroArch thumbnails folder, if chosen.
         val preferences = SharedPreferencesHelper.getSharedPreferences(this)
         val keptFolders =
             setOfNotNull(
-                preferences.getString(
-                    getString(com.swordfish.lemuroid.lib.R.string.pref_key_saves_custom_folder),
-                    null,
-                ),
+                preferences.getString(getString(com.swordfish.lemuroid.lib.R.string.pref_key_main_folder_tree), null),
                 preferences.getString(getString(R.string.pref_key_artwork_retroarch_folder), null),
             )
 

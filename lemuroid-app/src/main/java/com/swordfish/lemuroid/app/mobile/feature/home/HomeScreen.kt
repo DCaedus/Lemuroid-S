@@ -36,7 +36,9 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.Lifecycle
 import com.swordfish.lemuroid.R
-import com.swordfish.lemuroid.app.mobile.feature.settings.general.SavesLocationSettings
+import com.swordfish.lemuroid.app.mobile.feature.settings.general.RomsFolderSettings
+import com.swordfish.lemuroid.app.mobile.feature.settings.general.SavesFolderSettings
+import com.swordfish.lemuroid.app.mobile.feature.settings.general.rememberMainFolderPicker
 import com.swordfish.lemuroid.app.mobile.shared.compose.ui.LemuroidGameCard
 import com.swordfish.lemuroid.app.utils.android.ComposableLifecycle
 import com.swordfish.lemuroid.common.displayDetailsSettingsScreen
@@ -75,13 +77,21 @@ fun HomeScreen(
     val setupCards = viewModel.getSetupCards().collectAsState(HomeViewModel.SetupCards())
 
     var showSavesLocationDialog by remember { mutableStateOf(false) }
+    var showRomsFolderDialog by remember { mutableStateOf(false) }
+    var showImportConfirmation by remember { mutableStateOf(false) }
+    val mainFolderPicker = rememberMainFolderPicker { viewModel.updatePermissions(applicationContext) }
     val importFolderPicker =
         rememberLauncherForActivityResult(ActivityResultContracts.OpenDocumentTree()) { uri ->
             if (uri == null) return@rememberLauncherForActivityResult
             viewModel.importSaves(uri) { result ->
                 val message =
                     if (result != null) {
-                        context.getString(R.string.import_saves_result, result.imported, result.skippedOlder)
+                        context.getString(
+                            R.string.import_saves_result,
+                            result.imported,
+                            result.importedStates,
+                            result.skippedOlder,
+                        )
                     } else {
                         context.getString(R.string.import_saves_failed)
                     }
@@ -90,10 +100,39 @@ fun HomeScreen(
         }
 
     if (showSavesLocationDialog) {
-        SavesLocationDialog(
+        SettingsDialog(
+            titleId = R.string.select_saves_folder,
             onDone = {
                 showSavesLocationDialog = false
                 viewModel.dismissSavesLocationCard()
+            },
+        ) { SavesFolderSettings() }
+    }
+
+    if (showRomsFolderDialog) {
+        SettingsDialog(
+            titleId = R.string.select_roms_folder,
+            onDone = { showRomsFolderDialog = false },
+        ) { RomsFolderSettings() }
+    }
+
+    if (showImportConfirmation) {
+        AlertDialog(
+            onDismissRequest = { showImportConfirmation = false },
+            title = { Text(text = stringResource(R.string.import_saves_confirm_title)) },
+            text = { Text(text = stringResource(R.string.import_saves_confirm_message)) },
+            confirmButton = {
+                TextButton(
+                    onClick = {
+                        showImportConfirmation = false
+                        importFolderPicker.launch(null)
+                    },
+                ) { Text(text = stringResource(R.string.import_saves_confirm_action)) }
+            },
+            dismissButton = {
+                TextButton(onClick = { showImportConfirmation = false }) {
+                    Text(text = stringResource(android.R.string.cancel))
+                }
             },
         )
     }
@@ -102,8 +141,9 @@ fun HomeScreen(
         modifier,
         state.value,
         setupCards.value,
+        mainFolderPicker,
         { showSavesLocationDialog = true },
-        { importFolderPicker.launch(null) },
+        { showImportConfirmation = true },
         { viewModel.dismissImportSavesCard() },
         onGameClick,
         onGameLongClick,
@@ -116,7 +156,7 @@ fun HomeScreen(
             permissionsLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
         },
         { permissionsLauncher.launch(Manifest.permission.RECORD_AUDIO) },
-        { viewModel.changeLocalStorageFolder(context) },
+        { showRomsFolderDialog = true },
     ) // TODO COMPOSE We need to understand what's going to happen here.
 }
 
@@ -125,6 +165,7 @@ private fun HomeScreen(
     modifier: Modifier = Modifier,
     state: HomeViewModel.UIState,
     setupCards: HomeViewModel.SetupCards,
+    onChooseMainFolder: () -> Unit,
     onChooseSavesLocation: () -> Unit,
     onImportSaves: () -> Unit,
     onDismissImportSaves: () -> Unit,
@@ -142,6 +183,14 @@ private fun HomeScreen(
                 .padding(top = 16.dp, bottom = 16.dp),
         verticalArrangement = Arrangement.spacedBy(16.dp),
     ) {
+        AnimatedVisibility(setupCards.showMainFolder) {
+            HomeNotification(
+                titleId = R.string.main_folder_card_title,
+                messageId = R.string.main_folder_card_message,
+                actionId = R.string.main_folder_card_action,
+                onAction = onChooseMainFolder,
+            )
+        }
         AnimatedVisibility(state.showNoNotificationPermissionCard) {
             HomeNotification(
                 titleId = R.string.home_notification_title,
@@ -161,9 +210,9 @@ private fun HomeScreen(
         }
         AnimatedVisibility(setupCards.showSavesLocation) {
             HomeNotification(
-                titleId = R.string.home_saves_location_title,
-                messageId = R.string.home_saves_location_message,
-                actionId = R.string.home_saves_location_action,
+                titleId = R.string.select_saves_folder,
+                messageId = R.string.home_saves_folder_message,
+                actionId = R.string.home_choose,
                 onAction = onChooseSavesLocation,
             )
         }
@@ -307,13 +356,17 @@ private fun HomeNotification(
     }
 }
 
-/** Lets the user pick the saves location from the home screen, with the same controls as Settings. */
+/** A small window with folder settings, opened from the home-screen setup cards. */
 @Composable
-private fun SavesLocationDialog(onDone: () -> Unit) {
+private fun SettingsDialog(
+    titleId: Int,
+    onDone: () -> Unit,
+    content: @Composable () -> Unit,
+) {
     AlertDialog(
         onDismissRequest = onDone,
-        title = { Text(text = stringResource(R.string.home_saves_location_title)) },
-        text = { Column { SavesLocationSettings() } },
+        title = { Text(text = stringResource(titleId)) },
+        text = { Column { content() } },
         confirmButton = {
             TextButton(onClick = onDone) { Text(text = stringResource(R.string.done)) }
         },

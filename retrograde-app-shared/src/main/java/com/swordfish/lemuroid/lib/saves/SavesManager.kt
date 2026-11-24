@@ -21,12 +21,9 @@ class SavesManager(
         return withContext(Dispatchers.IO) {
             val result =
                 runCatchingWithRetry(FILE_ACCESS_RETRIES) {
-                    // A save in the location chosen in Settings (custom folder or next to the ROM) wins.
-                    externalSavesStorage.read(game, getSaveRAMFileName(game))?.let {
-                        return@runCatchingWithRetry it
-                    }
-
                     val saveFile = getSaveFile(getSaveRAMFileName(game))
+                    syncFromExternal(game, saveFile)
+
                     if (saveFile.exists() && saveFile.length() > 0) {
                         saveFile.readBytes()
                     } else {
@@ -53,7 +50,9 @@ class SavesManager(
                     saveFile.writeBytesAtomic(data)
                 }
             if (data.isNotEmpty()) {
-                externalSavesStorage.write(game, getSaveRAMFileName(game), data)
+                ExternalSavesStorage.safely("write save") {
+                    externalSavesStorage.savesFolder(game)?.write(getSaveRAMFileName(game), data)
+                }
             }
             result.getOrNull()
         }
@@ -62,8 +61,28 @@ class SavesManager(
     suspend fun getSaveRAMInfo(game: Game): SaveInfo {
         return withContext(Dispatchers.IO) {
             val saveFile = getSaveFile(getSaveRAMFileName(game))
+            syncFromExternal(game, saveFile)
             val fileExists = saveFile.exists() && saveFile.length() > 0
             SaveInfo(fileExists, saveFile.lastModified())
+        }
+    }
+
+    /**
+     * If the SAVES folder (Lemuroid-S folder or ROMs folder) has a newer copy of the save, e.g. after
+     * reinstalling or copying saves in by hand, bring it into app storage first.
+     */
+    private fun syncFromExternal(
+        game: Game,
+        saveFile: File,
+    ) {
+        ExternalSavesStorage.safely("read save") {
+            val external = externalSavesStorage.savesFolder(game)?.read(saveFile.name) ?: return@safely
+            if (external.data.isEmpty()) return@safely
+            val internalTime = if (saveFile.exists()) saveFile.lastModified() else Long.MIN_VALUE / 2
+            val internalIsCurrent = internalTime + SYNC_TOLERANCE_MS >= external.lastModified
+            if (internalIsCurrent) return@safely
+            saveFile.writeBytesAtomic(external.data)
+            saveFile.setLastModified(external.lastModified)
         }
     }
 
@@ -92,5 +111,6 @@ class SavesManager(
 
     companion object {
         private const val FILE_ACCESS_RETRIES = 3
+        const val SYNC_TOLERANCE_MS = 10_000L
     }
 }

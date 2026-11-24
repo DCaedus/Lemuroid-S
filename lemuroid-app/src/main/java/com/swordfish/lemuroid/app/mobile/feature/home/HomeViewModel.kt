@@ -20,6 +20,7 @@ import com.swordfish.lemuroid.lib.library.SystemID
 import com.swordfish.lemuroid.lib.library.db.RetrogradeDatabase
 import com.swordfish.lemuroid.lib.library.db.entity.Game
 import com.swordfish.lemuroid.lib.preferences.SharedPreferencesHelper
+import com.swordfish.lemuroid.lib.storage.MainFolder
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
@@ -59,6 +60,7 @@ class HomeViewModel(
 
     /** Lemuroid-S setup cards shown on the home screen until handled or dismissed. */
     data class SetupCards(
+        val showMainFolder: Boolean = false,
         val showSavesLocation: Boolean = false,
         val showImportSaves: Boolean = false,
     )
@@ -74,6 +76,7 @@ class HomeViewModel(
     private val setupCards =
         MutableStateFlow(
             SetupCards(
+                showMainFolder = !MainFolder(appContext).isSet(),
                 showSavesLocation = !wasPrompted(R.string.pref_key_home_saves_location_prompted),
                 showImportSaves = !wasPrompted(R.string.pref_key_home_import_saves_prompted),
             ),
@@ -126,6 +129,7 @@ class HomeViewModel(
     }
 
     fun updatePermissions(context: Context) {
+        setupCards.value = setupCards.value.copy(showMainFolder = !MainFolder(context).isSet())
         notificationsPermissionEnabledState.value = isNotificationsPermissionGranted(context)
         microphonePermissionEnabledState.value = isMicrophonePermissionGranted(context)
     }
