@@ -9,3 +9,8 @@ ktlint_function_naming_ignore_when_annotated_with=Composable
 
 [lemuroid-app/src/main/java/com/swordfish/lemuroid/app/shared/game/ShaderChooser.kt]
 max_line_length = off
+
+# Bundled LibretroDroid keeps its upstream code style.
+[libretrodroid/**.{kt,kts}]
+ktlint = disabled
+ktlint_standard = disabled

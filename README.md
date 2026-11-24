@@ -7,8 +7,8 @@
 > Lemuroid-S uses its own app ID (`com.dcaedus.lemuroids`), so it can be installed alongside the official Lemuroid.
 > Some features are modeled on [RetroArch](https://github.com/libretro/RetroArch).
 >
-> Lemuroid-S uses a modified version of [LibretroDroid](https://github.com/Swordfish90/LibretroDroid) by Swordfish90
-> (GPL-3.0), with added audio volume control for fast-forward.
+> Lemuroid-S bundles a modified copy of [LibretroDroid](https://github.com/Swordfish90/LibretroDroid) by Swordfish90
+> (GPL-3.0) in the `libretrodroid` folder, with added audio volume control for fast-forward.
 
 The text below is from the original Lemuroid README.
 
