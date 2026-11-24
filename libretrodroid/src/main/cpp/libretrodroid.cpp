@@ -23,6 +23,10 @@
 #include <utility>
 #include <vector>
 #include <unordered_set>
+#include <dirent.h>
+#include <fcntl.h>
+#include <sys/stat.h>
+#include <unistd.h>
 
 #include "libretrodroid.h"
 #include "utils/libretrodroidexception.h"
@@ -44,6 +48,7 @@
 #include "utils/rect.h"
 #include "errorcodes.h"
 #include "vfs/vfs.h"
+#include "utils/zipreader.h"
 
 namespace libretrodroid {
 
@@ -367,7 +372,20 @@ void LibretroDroid::loadGameFromBytes(const int8_t *data, size_t size) {
     afterGameLoad();
 }
 
-void LibretroDroid::loadGameFromVirtualFiles(std::vector<VFSFile> virtualFiles) {
+/**
+ * Lemuroid-S: the single way games are loaded. The app opens every game file through Android's
+ * folder access (Storage Access Framework) and hands over file descriptors; nothing is copied:
+ *  - cores that take the game's contents (most cartridge systems) get them read from the descriptor;
+ *  - cores that open files themselves through the libretro VFS get virtual paths;
+ *  - cores that need a real file path get one: a named link to the open descriptor
+ *    (<linkDirectory>/<real name> -> /proc/self/fd/N), so they see the original file name.
+ *    If a link can't be opened, the file is copied there instead.
+ */
+void LibretroDroid::loadGameFromVirtualFiles(
+    std::vector<VFSFile> virtualFiles,
+    const std::string& linkDirectory,
+    const std::string& archiveEntry
+) {
     LOGD("Performing libretrodroid loadGameFromVirtualFiles");
     struct retro_system_info system_info {};
     core->retro_get_system_info(&system_info);
@@ -377,26 +395,74 @@ void LibretroDroid::loadGameFromVirtualFiles(std::vector<VFSFile> virtualFiles) 
         throw std::runtime_error("Calling loadGameFromVirtualFiles without any file.");
     }
 
-    std::string firstFilePath = virtualFiles[0].getFileName();
-    int firstFileFD = virtualFiles[0].getFD();
+    // Links and unzipped files from the previous game are no longer needed.
+    clearLinkDirectory(linkDirectory);
 
-    bool loadUsingVFS = system_info.need_fullpath || virtualFiles.size() > 1;
+    bool singleFile = virtualFiles.size() == 1;
+
+    // A ROM inside a zip (the zip is the only file; [archiveEntry] is the ROM's name in it).
+    if (!archiveEntry.empty() && singleFile && !Utils::hasExtension(system_info.valid_extensions, "zip")) {
+        std::string romName = archiveEntry.substr(archiveEntry.find_last_of('/') + 1);
+        std::string virtualDirectory = virtualFiles[0].getFileName();
+        virtualDirectory = virtualDirectory.substr(0, virtualDirectory.find_last_of('/') + 1);
+
+        struct retro_game_info game_info {};
+        game_info.meta = nullptr;
+        if (!system_info.need_fullpath) {
+            LOGI("Loading zipped game from memory");
+            struct Utils::ReadResult file = ZipReader::readEntry(virtualFiles[0].getFD(), archiveEntry);
+            game_info.path = Utils::cloneToCString(virtualDirectory + romName);
+            game_info.data = file.data;
+            game_info.size = file.size;
+        } else {
+            // The core needs a real file and can't read zips: unpack it next to the links (deleted
+            // when the next game starts).
+            LOGI("Unpacking zipped game for a core that needs a file");
+            mkdir(linkDirectory.c_str(), 0700);
+            std::string path = linkDirectory + "/" + romName;
+            if (!ZipReader::extractEntry(virtualFiles[0].getFD(), archiveEntry, path)) {
+                throw std::runtime_error("Cannot unpack game");
+            }
+            game_info.path = Utils::cloneToCString(path);
+            game_info.data = nullptr;
+            game_info.size = 0;
+        }
+
+        bool result = core->retro_load_game(&game_info);
+        if (!result) {
+            LOGE("Cannot load game. Leaving.");
+            throw std::runtime_error("Cannot load game");
+        }
+        afterGameLoad();
+        return;
+    }
+    bool readContents = !system_info.need_fullpath && singleFile;
+    bool useVFS = !readContents && Environment::getInstance().isVirtualFileSystemEnabled();
 
     struct retro_game_info game_info {};
-    game_info.path = Utils::cloneToCString(firstFilePath);
     game_info.meta = nullptr;
+    game_info.data = nullptr;
+    game_info.size = 0;
 
-    if (loadUsingVFS) {
-        VFS::getInstance().initialize(std::move(virtualFiles));
-    }
-
-    if (loadUsingVFS) {
-        game_info.data = nullptr;
-        game_info.size = 0;
-    } else {
-        struct Utils::ReadResult file = Utils::readFileAsBytes(firstFileFD);
+    if (readContents) {
+        LOGI("Loading game from memory");
+        game_info.path = Utils::cloneToCString(virtualFiles[0].getFileName());
+        struct Utils::ReadResult file = Utils::readFileDescriptorContents(virtualFiles[0].getFD());
         game_info.data = file.data;
         game_info.size = file.size;
+    } else if (useVFS) {
+        LOGI("Loading game through the virtual file system");
+        game_info.path = Utils::cloneToCString(virtualFiles[0].getFileName());
+        VFS::getInstance().initialize(std::move(virtualFiles));
+    } else {
+        LOGI("Loading game through file links");
+        game_info.path = Utils::cloneToCString(linkGameFiles(virtualFiles, linkDirectory));
+        if (!system_info.need_fullpath) {
+            struct Utils::ReadResult file = Utils::readFileDescriptorContents(virtualFiles[0].getFD());
+            game_info.data = file.data;
+            game_info.size = file.size;
+        }
+        linkedGameFiles = std::move(virtualFiles);
     }
 
     bool result = core->retro_load_game(&game_info);
@@ -406,6 +472,47 @@ void LibretroDroid::loadGameFromVirtualFiles(std::vector<VFSFile> virtualFiles) 
     }
 
     afterGameLoad();
+}
+
+void LibretroDroid::clearLinkDirectory(const std::string& linkDirectory) {
+    if (DIR* dir = opendir(linkDirectory.c_str())) {
+        while (struct dirent* entry = readdir(dir)) {
+            std::string name = entry->d_name;
+            if (name == "." || name == "..") continue;
+            unlink((linkDirectory + "/" + name).c_str());
+        }
+        closedir(dir);
+    }
+}
+
+std::string LibretroDroid::linkGameFiles(std::vector<VFSFile>& files, const std::string& linkDirectory) {
+    mkdir(linkDirectory.c_str(), 0700);
+
+    std::string firstPath;
+    for (auto& file : files) {
+        const std::string& virtualPath = file.getFileName();
+        std::string name = virtualPath.substr(virtualPath.find_last_of('/') + 1);
+        std::string linkPath = linkDirectory + "/" + name;
+        std::string target = "/proc/self/fd/" + std::to_string(file.getFD());
+
+        bool linked = symlink(target.c_str(), linkPath.c_str()) == 0;
+        if (linked) {
+            int test = open(linkPath.c_str(), O_RDONLY);
+            linked = test >= 0;
+            if (test >= 0) close(test);
+        }
+
+        if (!linked) {
+            LOGW("Cannot link %s, copying it instead", name.c_str());
+            unlink(linkPath.c_str());
+            if (!Utils::copyFileDescriptorToPath(file.getFD(), linkPath)) {
+                throw std::runtime_error("Cannot prepare game file " + name);
+            }
+        }
+
+        if (firstPath.empty()) firstPath = linkPath;
+    }
+    return firstPath;
 }
 
 void LibretroDroid::destroy() {
@@ -418,6 +525,7 @@ void LibretroDroid::destroy() {
     }
 
     core->retro_unload_game();
+    linkedGameFiles.clear();
     core->retro_deinit();
 
     video = nullptr;

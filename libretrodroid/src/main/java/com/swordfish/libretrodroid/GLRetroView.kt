@@ -115,7 +115,7 @@ class GLRetroView(
             buildShader(data.shader),
             getDefaultRefreshRate(),
             data.preferLowLatencyAudio,
-            data.gameVirtualFiles.isNotEmpty(),
+            data.gameVirtualFiles.isNotEmpty() && data.gameSupportsVirtualFileSystem,
             data.enableMicrophone,
             data.skipDuplicateFrames,
             data.immersiveMode,
@@ -374,7 +374,7 @@ class GLRetroView(
     private fun loadGameFromVirtualFiles(virtualFiles: List<VirtualFile>) {
         val detachedVirtualFiles = virtualFiles
             .map { DetachedVirtualFile(it.virtualPath, it.fileDescriptor.detachFd()) }
-        LibretroDroid.loadGameFromVirtualFiles(detachedVirtualFiles)
+        LibretroDroid.loadGameFromVirtualFiles(detachedVirtualFiles, data.gameLinkDirectory, data.gameArchiveEntry)
     }
 
     private fun loadGameFromBytes(gameFileBytes: ByteArray) {

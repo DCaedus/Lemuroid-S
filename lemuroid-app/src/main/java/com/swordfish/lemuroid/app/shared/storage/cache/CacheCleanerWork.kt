@@ -39,16 +39,7 @@ class CacheCleanerWork(
     }
 
     private suspend fun performCleaning() {
-        if (inputData.getBoolean(CLEAN_EVERYTHING, false)) {
-            cleanAll(applicationContext)
-        } else {
-            cleanLRU(applicationContext)
-        }
-    }
-
-    private suspend fun cleanLRU(context: Context) {
-        val size = settingsManager.cacheSizeBytes().toLong()
-        CacheCleaner.clean(context, size)
+        cleanAll(applicationContext)
     }
 
     private suspend fun cleanAll(context: Context) {
@@ -59,18 +50,6 @@ class CacheCleanerWork(
         private val UNIQUE_WORK_ID: String = CacheCleanerWork::class.java.simpleName
 
         private const val CLEAN_EVERYTHING: String = "CLEAN_EVERYTHING"
-
-        fun enqueueCleanCacheLRU(applicationContext: Context) {
-            WorkManager.getInstance(applicationContext).enqueueUniqueWork(
-                UNIQUE_WORK_ID,
-                ExistingWorkPolicy.APPEND,
-                OneTimeWorkRequestBuilder<CacheCleanerWork>().build(),
-            )
-        }
-
-        fun cancelCleanCacheLRU(applicationContext: Context) {
-            WorkManager.getInstance(applicationContext).cancelUniqueWork(UNIQUE_WORK_ID)
-        }
 
         fun enqueueCleanCacheAll(applicationContext: Context) {
             val inputData: Data = workDataOf(CLEAN_EVERYTHING to true)

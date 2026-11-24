@@ -102,7 +102,7 @@ public:
 
     void loadGameFromPath(const std::string &gamePath);
     void loadGameFromBytes(const int8_t *data, size_t size);
-    void loadGameFromVirtualFiles(std::vector<VFSFile> virtualFiles);
+    void loadGameFromVirtualFiles(std::vector<VFSFile> virtualFiles, const std::string& linkDirectory, const std::string& archiveEntry);
 
     void onKeyEvent(unsigned int port, int action, int keyCode);
     void onMotionEvent(unsigned int port, unsigned int source, float xAxis, float yAxis);
@@ -150,6 +150,8 @@ private:
     void updateAudioSampleRateMultiplier();
     float findDefaultAspectRatio(const retro_system_av_info &system_av_info);
     void afterGameLoad();
+    std::string linkGameFiles(std::vector<VFSFile>& files, const std::string& linkDirectory);
+    static void clearLinkDirectory(const std::string& linkDirectory);
 
 protected:
     static void callback_hw_video_refresh(const void *data, unsigned width, unsigned height, size_t pitch);
@@ -197,6 +199,10 @@ private:
     std::unique_ptr<FPSSync> fpsSync;
     std::unique_ptr<Input> input;
     std::unique_ptr<Rumble> rumble;
+
+    // Lemuroid-S: game files handed to a core through named links (see loadGameFromVirtualFiles).
+    // They stay open for the whole game session.
+    std::vector<VFSFile> linkedGameFiles;
 };
 
 } //namespace libretrodroid

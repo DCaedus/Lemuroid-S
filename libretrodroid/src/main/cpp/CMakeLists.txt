@@ -67,6 +67,7 @@ add_library(libretrodroid SHARED
         utils/javautils.h
         utils/javautils.cpp
         utils/utils.cpp
+        utils/zipreader.cpp
         utils/utils.h
         utils/jnistring.h
         utils/jnistring.cpp
@@ -99,4 +100,5 @@ target_link_libraries(libretrodroid
                       EGL
                       oboe
                       GLESv3
+                      z
 )

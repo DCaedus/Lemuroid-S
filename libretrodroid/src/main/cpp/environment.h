@@ -53,6 +53,7 @@ public:
     static bool callback_environment(unsigned cmd, void *data);
 
     void setEnableVirtualFileSystem(bool value);
+    bool isVirtualFileSystemEnabled() const { return useVirtualFileSystem; }
     void setEnableMicrophone(bool value);
     void setVideoEnabled(bool value);
 

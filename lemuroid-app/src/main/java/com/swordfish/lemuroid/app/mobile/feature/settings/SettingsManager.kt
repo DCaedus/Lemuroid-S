@@ -6,7 +6,6 @@ import com.fredporciuncula.flow.preferences.FlowSharedPreferences
 import com.swordfish.lemuroid.R
 import com.swordfish.lemuroid.app.shared.settings.HDModeQuality
 import com.swordfish.lemuroid.common.math.Fraction
-import com.swordfish.lemuroid.lib.storage.cache.CacheCleaner
 import dagger.Lazy
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.first
@@ -50,12 +49,6 @@ class SettingsManager(private val context: Context, sharedPreferences: Lazy<Shar
 
     suspend fun enableImmersiveMode() = booleanPreference(R.string.pref_key_enable_immersive_mode, false)
 
-    suspend fun cacheSizeBytes() =
-        stringPreference(
-            R.string.pref_key_max_cache_size,
-            CacheCleaner.getDefaultCacheLimit().toString(),
-        )
-
     suspend fun fastForwardSpeed(): Int =
         stringPreference(R.string.pref_key_fast_forward_speed, DEFAULT_FAST_FORWARD_SPEED)
             .toIntOrNull() ?: DEFAULT_FAST_FORWARD_SPEED.toInt()
@@ -74,8 +67,6 @@ class SettingsManager(private val context: Context, sharedPreferences: Lazy<Shar
         stringPreference(R.string.pref_key_periodic_autosave_minutes, "0").toIntOrNull() ?: 0
 
     suspend fun showFramerate() = booleanPreference(R.string.pref_key_show_framerate, false)
-
-    suspend fun allowDirectGameLoad() = booleanPreference(R.string.pref_key_allow_direct_game_load, true)
 
     private suspend fun booleanPreference(
         keyId: Int,

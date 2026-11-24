@@ -104,7 +104,6 @@ class TVSettingsFragment : LeanbackPreferenceFragmentCompat() {
         }
 
         getAdvancedSettingsPreferenceScreen()?.let {
-            AdvancedSettingsPreferences.updateCachePreferences(it)
         }
 
         getSaveSyncScreen()?.let {

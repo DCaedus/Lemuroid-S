@@ -24,6 +24,12 @@ class GLRetroViewData(context: Context) {
     var gameFilePath: String? = null
     var gameFileBytes: ByteArray? = null
     var gameVirtualFiles: List<VirtualFile> = listOf()
+    /** Lemuroid-S: whether the core may open the game files through the libretro VFS. */
+    var gameSupportsVirtualFileSystem: Boolean = true
+    /** Lemuroid-S: name of the ROM inside the zip, when the (only) game file is a zip holding it. */
+    var gameArchiveEntry: String? = null
+    /** Lemuroid-S: where named links to the game files go, for cores that need a real file path. */
+    var gameLinkDirectory: String = context.cacheDir.absolutePath + "/game-links"
     var systemDirectory: String = context.filesDir.absolutePath
     var savesDirectory: String = context.filesDir.absolutePath
     var variables: Array<Variable> = arrayOf()

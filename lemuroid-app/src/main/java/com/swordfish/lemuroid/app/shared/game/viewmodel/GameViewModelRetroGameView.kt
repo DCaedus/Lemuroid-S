@@ -44,6 +44,7 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.launch
 import timber.log.Timber
+import java.io.File
 import kotlin.time.Duration.Companion.seconds
 
 @OptIn(FlowPreview::class)
@@ -96,7 +97,6 @@ class GameViewModelRetroGameView(
         val alignment = settingsManager.viewportAlignment()
         val lowLatencyAudio = settingsManager.lowLatencyAudio()
         val enableRumble = settingsManager.enableRumble()
-        val directLoad = settingsManager.allowDirectGameLoad()
         val enableImmersiveMode = settingsManager.enableImmersiveMode()
 
         val hasMicrophonePermission =
@@ -113,7 +113,6 @@ class GameViewModelRetroGameView(
                 game,
                 requestLoadSave && autoSaveEnabled,
                 systemCoreConfig,
-                directLoad,
             )
 
         loadingStatesFlow
@@ -221,14 +220,13 @@ class GameViewModelRetroGameView(
             coreFilePath = gameData.coreLibrary
 
             when (val gameFiles = gameData.gameFiles) {
-                is RomFiles.Standard -> {
-                    gameFilePath = gameFiles.files.first().absolutePath
-                }
-
                 is RomFiles.Virtual -> {
                     gameVirtualFiles = gameFiles.files.map { VirtualFile(it.filePath, it.fd) }
+                    gameArchiveEntry = gameFiles.archiveEntry
                 }
             }
+            gameSupportsVirtualFileSystem = systemCoreConfig.supportsLibretroVFS
+            gameLinkDirectory = File(appContext.cacheDir, "game-links").absolutePath
 
             systemDirectory = gameData.systemDirectory.absolutePath
             savesDirectory = gameData.savesDirectory.absolutePath

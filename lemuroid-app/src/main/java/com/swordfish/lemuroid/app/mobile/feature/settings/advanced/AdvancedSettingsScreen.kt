@@ -6,7 +6,6 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
@@ -16,13 +15,11 @@ import androidx.navigation.NavHostController
 import com.swordfish.lemuroid.R
 import com.swordfish.lemuroid.app.mobile.feature.main.MainRoute
 import com.swordfish.lemuroid.app.utils.android.settings.LemuroidCardSettingsGroup
-import com.swordfish.lemuroid.app.utils.android.settings.LemuroidSettingsList
 import com.swordfish.lemuroid.app.utils.android.settings.LemuroidSettingsMenuLink
 import com.swordfish.lemuroid.app.utils.android.settings.LemuroidSettingsPage
 import com.swordfish.lemuroid.app.utils.android.settings.LemuroidSettingsSlider
 import com.swordfish.lemuroid.app.utils.android.settings.LemuroidSettingsSwitch
 import com.swordfish.lemuroid.app.utils.android.settings.booleanPreferenceState
-import com.swordfish.lemuroid.app.utils.android.settings.indexPreferenceState
 import com.swordfish.lemuroid.app.utils.android.settings.intPreferenceState
 
 @Composable
@@ -31,20 +28,11 @@ fun AdvancedSettingsScreen(
     viewModel: AdvancedSettingsViewModel,
     navController: NavHostController,
 ) {
-    val uiState =
-        viewModel.uiState
-            .collectAsState()
-            .value
-
     LemuroidSettingsPage(
         modifier = modifier.fillMaxSize(),
     ) {
-        if (uiState?.cache == null) {
-            return@LemuroidSettingsPage
-        }
-
         InputSettings()
-        GeneralSettings(uiState.cache, viewModel, navController)
+        GeneralSettings(viewModel, navController)
     }
 }
 
@@ -81,7 +69,6 @@ private fun InputSettings() {
 
 @Composable
 private fun GeneralSettings(
-    cacheState: AdvancedSettingsViewModel.CacheState,
     viewModel: AdvancedSettingsViewModel,
     navController: NavController,
 ) {
@@ -94,21 +81,6 @@ private fun GeneralSettings(
             state = booleanPreferenceState(R.string.pref_key_low_latency_audio, false),
             title = { Text(text = stringResource(id = R.string.settings_title_low_latency_audio)) },
             subtitle = { Text(text = stringResource(id = R.string.settings_description_low_latency_audio)) },
-        )
-        LemuroidSettingsList(
-            title = { Text(text = stringResource(R.string.settings_title_maximum_cache_usage)) },
-            items = cacheState.displayNames,
-            state =
-                indexPreferenceState(
-                    R.string.pref_key_max_cache_size,
-                    cacheState.default,
-                    cacheState.values,
-                ),
-        )
-        LemuroidSettingsSwitch(
-            state = booleanPreferenceState(R.string.pref_key_allow_direct_game_load, true),
-            title = { Text(text = stringResource(id = R.string.settings_title_direct_game_load)) },
-            subtitle = { Text(text = stringResource(id = R.string.settings_description_direct_game_load)) },
         )
         LemuroidSettingsMenuLink(
             title = { Text(text = stringResource(id = R.string.settings_title_reset_settings)) },

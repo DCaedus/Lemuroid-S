@@ -29,6 +29,12 @@ public:
 
     static ReadResult readFileAsBytes(const std::string &filePath);
     static ReadResult readFileAsBytes(const int fileDescriptor);
+    // Lemuroid-S: reads a whole file through a descriptor without closing it or moving its offset.
+    static ReadResult readFileDescriptorContents(const int fileDescriptor);
+    // Lemuroid-S: copies a file descriptor's contents to a new file at [path].
+    static bool copyFileDescriptorToPath(const int fileDescriptor, const std::string& path);
+    // Lemuroid-S: true if a libretro extension list ("md|bin|zip") contains [extension].
+    static bool hasExtension(const char* extensions, const std::string& extension);
 
     static const char* cloneToCString(const std::string &input);
 

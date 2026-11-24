@@ -7,7 +7,6 @@ import com.swordfish.lemuroid.R
 import com.swordfish.lemuroid.app.shared.game.BaseGameActivity
 import com.swordfish.lemuroid.app.shared.gamecrash.GameCrashActivity
 import com.swordfish.lemuroid.app.shared.savesync.SaveSyncWork
-import com.swordfish.lemuroid.app.shared.storage.cache.CacheCleanerWork
 import com.swordfish.lemuroid.ext.feature.review.ReviewManager
 import com.swordfish.lemuroid.lib.library.db.RetrogradeDatabase
 import com.swordfish.lemuroid.lib.library.db.entity.Game
@@ -48,13 +47,11 @@ class GameLaunchTaskHandler(
     private fun cancelBackgroundWork(context: Context) {
         SaveSyncWork.cancelAutoWork(context)
         SaveSyncWork.cancelManualWork(context)
-        CacheCleanerWork.cancelCleanCacheLRU(context)
     }
 
     private fun rescheduleBackgroundWork(context: Context) {
         // Let's slightly delay the sync. Maybe the user wants to play another game.
         SaveSyncWork.enqueueAutoWork(context, 5)
-        CacheCleanerWork.enqueueCleanCacheLRU(context)
     }
 
     private fun handleUnsuccessfulGameFinish(

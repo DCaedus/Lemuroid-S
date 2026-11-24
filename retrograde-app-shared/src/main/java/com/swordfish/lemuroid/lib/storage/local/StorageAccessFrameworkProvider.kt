@@ -5,9 +5,7 @@ import android.net.Uri
 import android.provider.DocumentsContract
 import androidx.documentfile.provider.DocumentFile
 import androidx.leanback.preference.LeanbackPreferenceFragment
-import com.swordfish.lemuroid.common.kotlin.extractEntryToFile
 import com.swordfish.lemuroid.common.kotlin.isZipped
-import com.swordfish.lemuroid.common.kotlin.writeToFile
 import com.swordfish.lemuroid.lib.R
 import com.swordfish.lemuroid.lib.library.db.entity.DataFile
 import com.swordfish.lemuroid.lib.library.db.entity.Game
@@ -20,9 +18,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.flow.flow
 import timber.log.Timber
-import java.io.File
 import java.io.InputStream
-import java.util.zip.ZipInputStream
 
 class StorageAccessFrameworkProvider(private val context: Context) : StorageProvider {
     override val id: String = "access_framework"
@@ -132,48 +128,27 @@ class StorageAccessFrameworkProvider(private val context: Context) : StorageProv
         return resultFiles to resultDirectories
     }
 
+    /**
+     * Opens the game's files in place through the folder access Android granted. Nothing is copied:
+     * a ROM inside a zip is passed as the zip plus the ROM's name, and LibretroDroid unzips it in memory.
+     */
     override fun getGameRomFiles(
         game: Game,
         dataFiles: List<DataFile>,
-        allowVirtualFiles: Boolean,
     ): RomFiles {
         val originalDocumentUri = Uri.parse(game.fileUri)
         val originalDocument = DocumentFile.fromSingleUri(context, originalDocumentUri)!!
 
         val isZipped = originalDocument.isZipped() && originalDocument.name != game.fileName
-
-        return when {
-            isZipped && dataFiles.isEmpty() -> getGameRomFilesZipped(game, originalDocument)
-            allowVirtualFiles -> getGameRomFilesVirtual(game, dataFiles)
-            else -> getGameRomFilesStandard(game, dataFiles, originalDocument)
+        if (isZipped && dataFiles.isEmpty()) {
+            val zipEntry =
+                RomFiles.Virtual.Entry(
+                    "${RomFiles.VIRTUAL_FILE_PATH}/${originalDocument.name ?: "game.zip"}",
+                    context.contentResolver.openFileDescriptor(originalDocumentUri, "r")!!,
+                )
+            return RomFiles.Virtual(listOf(zipEntry), archiveEntry = game.fileName)
         }
-    }
-
-    private fun getGameRomFilesStandard(
-        game: Game,
-        dataFiles: List<DataFile>,
-        originalDocument: DocumentFile,
-    ): RomFiles {
-        val gameEntry = getGameRomStandard(game, originalDocument)
-        val dataEntries = dataFiles.map { getDataFileStandard(game, it) }
-        return RomFiles.Standard(listOf(gameEntry) + dataEntries)
-    }
-
-    private fun getGameRomFilesZipped(
-        game: Game,
-        originalDocument: DocumentFile,
-    ): RomFiles {
-        val cacheFile = GameCacheUtils.getCacheFileForGame(SAF_CACHE_SUBFOLDER, context, game)
-        if (cacheFile.exists()) {
-            return RomFiles.Standard(listOf(cacheFile))
-        }
-
-        val stream =
-            ZipInputStream(
-                context.contentResolver.openInputStream(originalDocument.uri),
-            )
-        stream.extractEntryToFile(game.fileName, cacheFile)
-        return RomFiles.Standard(listOf(cacheFile))
+        return getGameRomFilesVirtual(game, dataFiles)
     }
 
     private fun getGameRomFilesVirtual(
@@ -187,60 +162,19 @@ class StorageAccessFrameworkProvider(private val context: Context) : StorageProv
 
     private fun getDataFileVirtual(dataFile: DataFile): RomFiles.Virtual.Entry {
         return RomFiles.Virtual.Entry(
-            "$VIRTUAL_FILE_PATH/${dataFile.fileName}",
+            "${RomFiles.VIRTUAL_FILE_PATH}/${dataFile.fileName}",
             context.contentResolver.openFileDescriptor(Uri.parse(dataFile.fileUri), "r")!!,
         )
     }
 
-    private fun getDataFileStandard(
-        game: Game,
-        dataFile: DataFile,
-    ): File {
-        val cacheFile =
-            GameCacheUtils.getDataFileForGame(
-                SAF_CACHE_SUBFOLDER,
-                context,
-                game,
-                dataFile,
-            )
-
-        if (cacheFile.exists()) {
-            return cacheFile
-        }
-
-        val stream = context.contentResolver.openInputStream(Uri.parse(dataFile.fileUri))!!
-        stream.writeToFile(cacheFile)
-        return cacheFile
-    }
-
     private fun getGameRomVirtual(game: Game): RomFiles.Virtual.Entry {
         return RomFiles.Virtual.Entry(
-            "$VIRTUAL_FILE_PATH/${game.fileName}",
+            "${RomFiles.VIRTUAL_FILE_PATH}/${game.fileName}",
             context.contentResolver.openFileDescriptor(Uri.parse(game.fileUri), "r")!!,
         )
     }
 
-    private fun getGameRomStandard(
-        game: Game,
-        originalDocument: DocumentFile,
-    ): File {
-        val cacheFile = GameCacheUtils.getCacheFileForGame(SAF_CACHE_SUBFOLDER, context, game)
-
-        if (cacheFile.exists()) {
-            return cacheFile
-        }
-
-        val stream = context.contentResolver.openInputStream(originalDocument.uri)!!
-        stream.writeToFile(cacheFile)
-        return cacheFile
-    }
-
     override fun getInputStream(uri: Uri): InputStream? {
         return context.contentResolver.openInputStream(uri)
-    }
-
-    companion object {
-        const val SAF_CACHE_SUBFOLDER = "storage-framework-games"
-        const val VIRTUAL_FILE_PATH = "/virtual/file/path"
     }
 }

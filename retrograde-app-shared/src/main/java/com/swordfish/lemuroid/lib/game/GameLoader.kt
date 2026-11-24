@@ -66,7 +66,6 @@ class GameLoader(
         game: Game,
         loadSave: Boolean,
         systemCoreConfig: SystemCoreConfig,
-        directLoad: Boolean,
     ): Flow<LoadingState> =
         flow {
             try {
@@ -92,9 +91,8 @@ class GameLoader(
 
                 val gameFiles =
                     runCatching {
-                        val useVFS = systemCoreConfig.supportsLibretroVFS && directLoad
                         val dataFiles = retrogradeDatabase.dataFileDao().selectDataFilesForGame(game.id)
-                        lemuroidLibrary.getGameFiles(game, dataFiles, useVFS)
+                        lemuroidLibrary.getGameFiles(game, dataFiles)
                     }.getOrElse { throw it }
 
                 val saveRAM =

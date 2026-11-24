@@ -46,6 +46,5 @@ interface StorageProvider {
     fun getGameRomFiles(
         game: Game,
         dataFiles: List<DataFile>,
-        allowVirtualFiles: Boolean,
     ): RomFiles
 }

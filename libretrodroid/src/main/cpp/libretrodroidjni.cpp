@@ -455,7 +455,9 @@ JNIEXPORT void JNICALL Java_com_swordfish_libretrodroid_LibretroDroid_loadGameFr
 JNIEXPORT void JNICALL Java_com_swordfish_libretrodroid_LibretroDroid_loadGameFromVirtualFiles(
         JNIEnv* env,
         jclass obj,
-        jobject virtualFileList
+        jobject virtualFileList,
+        jstring linkDirectory,
+        jstring archiveEntry
 ) {
 
     try {
@@ -482,7 +484,13 @@ JNIEXPORT void JNICALL Java_com_swordfish_libretrodroid_LibretroDroid_loadGameFr
             virtualFiles.emplace_back(VFSFile(virtualFileName.stdString(), fileDescriptor));
         });
 
-        LibretroDroid::getInstance().loadGameFromVirtualFiles(std::move(virtualFiles));
+        JniString linkDirectoryPath(env, linkDirectory);
+        std::string entryName = archiveEntry != nullptr ? JniString(env, archiveEntry).stdString() : "";
+        LibretroDroid::getInstance().loadGameFromVirtualFiles(
+            std::move(virtualFiles),
+            linkDirectoryPath.stdString(),
+            entryName
+        );
     } catch (std::exception &exception) {
         LOGE("Error in loadGameFromDescriptors: %s", exception.what());
         JavaUtils::throwRetroException(env, ERROR_LOAD_GAME);

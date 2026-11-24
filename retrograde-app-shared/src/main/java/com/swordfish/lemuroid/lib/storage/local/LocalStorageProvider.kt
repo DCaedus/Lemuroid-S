@@ -21,9 +21,9 @@ package com.swordfish.lemuroid.lib.storage.local
 
 import android.content.Context
 import android.net.Uri
+import android.os.ParcelFileDescriptor
 import androidx.core.net.toUri
 import androidx.leanback.preference.LeanbackPreferenceFragment
-import com.swordfish.lemuroid.common.kotlin.extractEntryToFile
 import com.swordfish.lemuroid.common.kotlin.isZipped
 import com.swordfish.lemuroid.lib.R
 import com.swordfish.lemuroid.lib.library.db.entity.DataFile
@@ -38,7 +38,6 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import java.io.File
 import java.io.InputStream
-import java.util.zip.ZipInputStream
 
 class LocalStorageProvider(
     private val context: Context,
@@ -93,39 +92,26 @@ class LocalStorageProvider(
         return File(dataFilePath)
     }
 
-    private fun getGameRom(game: Game): File {
-        val gamePath = Uri.parse(game.fileUri).path
-        val originalFile = File(gamePath)
-        if (!originalFile.isZipped() || originalFile.name == game.fileName) {
-            return originalFile
-        }
-
-        val cacheFile = GameCacheUtils.getCacheFileForGame(LOCAL_STORAGE_CACHE_SUBFOLDER, context, game)
-        if (cacheFile.exists()) {
-            return cacheFile
-        }
-
-        if (originalFile.isZipped()) {
-            val stream = ZipInputStream(originalFile.inputStream())
-            stream.extractEntryToFile(game.fileName, cacheFile)
-        }
-
-        return cacheFile
-    }
-
     override fun getGameRomFiles(
         game: Game,
         dataFiles: List<DataFile>,
-        allowVirtualFiles: Boolean,
     ): RomFiles {
-        return RomFiles.Standard(listOf(getGameRom(game)) + dataFiles.map { getDataFile(it) })
+        val gameFile = File(Uri.parse(game.fileUri).path!!)
+        // A ROM inside a zip: pass the zip and the ROM's name; LibretroDroid unzips it in memory.
+        val archiveEntry = game.fileName.takeIf { gameFile.isZipped() && gameFile.name != it }
+        val files = listOf(gameFile) + dataFiles.map { getDataFile(it) }
+        return RomFiles.Virtual(
+            files.map { file ->
+                RomFiles.Virtual.Entry(
+                    "${RomFiles.VIRTUAL_FILE_PATH}/${file.name}",
+                    ParcelFileDescriptor.open(file, ParcelFileDescriptor.MODE_READ_ONLY),
+                )
+            },
+            archiveEntry,
+        )
     }
 
     override fun getInputStream(uri: Uri): InputStream {
         return File(uri.path).inputStream()
-    }
-
-    companion object {
-        const val LOCAL_STORAGE_CACHE_SUBFOLDER = "local-storage-games"
     }
 }
