@@ -139,7 +139,9 @@ class StorageAccessFrameworkProvider(private val context: Context) : StorageProv
         val originalDocumentUri = Uri.parse(game.fileUri)
         val originalDocument = DocumentFile.fromSingleUri(context, originalDocumentUri)!!
 
-        val isZipped = originalDocument.isZipped() && originalDocument.name != game.fileName
+        // Some providers don't report zips as application/zip: check the name too.
+        val looksZipped = originalDocument.isZipped() || originalDocument.name?.endsWith(".zip", true) == true
+        val isZipped = looksZipped && originalDocument.name != game.fileName
         if (isZipped && dataFiles.isEmpty()) {
             val zipEntry =
                 RomFiles.Virtual.Entry(

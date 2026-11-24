@@ -206,6 +206,10 @@ Utils::ReadResult ZipReader::readEntry(int fd, const std::string& entryName) {
     return Utils::ReadResult { size, bytes };
 }
 
+uint64_t ZipReader::entrySize(int fd, const std::string& entryName) {
+    return findEntry(fd, entryName).size;
+}
+
 bool ZipReader::extractEntryToDescriptor(int fd, const std::string& entryName, int outputFd) {
     Entry entry = findEntry(fd, entryName);
     unpack(fd, entry, [&](const uint8_t* data, size_t count) {

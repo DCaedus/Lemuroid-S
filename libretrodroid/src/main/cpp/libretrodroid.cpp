@@ -425,7 +425,7 @@ void LibretroDroid::loadGameFromVirtualFiles(
             mkdir(linkDirectory.c_str(), 0700);
             std::string path = linkDirectory + "/" + romName;
             if (!unpackToMemoryFile(virtualFiles[0].getFD(), archiveEntry, romName, path)) {
-                LOGW("In-memory files unavailable, unpacking %s to a temporary file", romName.c_str());
+                LOGW("Unpacking %s to a temporary file", romName.c_str());
                 unlink(path.c_str());
                 if (!ZipReader::extractEntry(virtualFiles[0].getFD(), archiveEntry, path)) {
                     throw std::runtime_error("Cannot unpack game");
@@ -482,6 +482,8 @@ void LibretroDroid::loadGameFromVirtualFiles(
     afterGameLoad();
 }
 
+static constexpr uint64_t MAX_MEMORY_FILE_SIZE = 64ull * 1024 * 1024;
+
 bool LibretroDroid::unpackToMemoryFile(
     int zipFd,
     const std::string& entryName,
@@ -489,6 +491,8 @@ bool LibretroDroid::unpackToMemoryFile(
     const std::string& linkPath
 ) {
 #ifdef __NR_memfd_create
+    // Big files (e.g. zipped disc images) would take too much memory on weak phones.
+    if (ZipReader::entrySize(zipFd, entryName) > MAX_MEMORY_FILE_SIZE) return false;
     int memoryFd = static_cast<int>(syscall(__NR_memfd_create, romName.c_str(), MFD_CLOEXEC));
     if (memoryFd < 0) return false;
     try {

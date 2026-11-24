@@ -10,6 +10,7 @@
 #ifndef LIBRETRODROID_ZIPREADER_H
 #define LIBRETRODROID_ZIPREADER_H
 
+#include <cstdint>
 #include <string>
 #include "utils.h"
 
@@ -22,6 +23,9 @@ public:
 
     /** Unpacks [entryName] from the zip open at [fd] into a new file at [path]. */
     static bool extractEntry(int fd, const std::string& entryName, const std::string& path);
+
+    /** Unpacked size of [entryName] in the zip open at [fd]. */
+    static uint64_t entrySize(int fd, const std::string& entryName);
 
     /** Unpacks [entryName] from the zip open at [fd], writing it to the open file [outputFd]. */
     static bool extractEntryToDescriptor(int fd, const std::string& entryName, int outputFd);

@@ -76,7 +76,7 @@ fun ZipInputStream.extractEntryToFile(
     }
 }
 
-fun File.isZipped() = extension == "zip"
+fun File.isZipped() = extension.equals("zip", ignoreCase = true)
 
 fun DocumentFile.isZipped() = type == "application/zip"
 
