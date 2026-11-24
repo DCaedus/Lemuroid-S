@@ -14,6 +14,7 @@ import com.swordfish.lemuroid.R
 import com.swordfish.lemuroid.app.mobile.feature.main.MainRoute
 import com.swordfish.lemuroid.app.mobile.feature.main.navigateToRoute
 import com.swordfish.lemuroid.app.mobile.feature.settings.SettingsManager
+import com.swordfish.lemuroid.app.shared.covers.ArtworkType
 import com.swordfish.lemuroid.app.shared.library.LibraryIndexScheduler
 import com.swordfish.lemuroid.app.utils.android.settings.LemuroidCardSettingsGroup
 import com.swordfish.lemuroid.app.utils.android.settings.LemuroidSettingsList
@@ -56,6 +57,7 @@ fun SettingsScreen(
         )
         GeneralSettings()
         FastForwardSettings()
+        ArtworkSettings(navController = navController)
         InputSettings(navController = navController)
         MiscSettings(
             indexingInProgress = indexingInProgress,
@@ -158,6 +160,29 @@ private fun FastForwardSettings() {
             state = booleanPreferenceState(R.string.pref_key_fast_forward_button, true),
             title = { Text(text = stringResource(id = R.string.settings_title_fast_forward_button)) },
             subtitle = { Text(text = stringResource(id = R.string.settings_description_fast_forward_button)) },
+        )
+    }
+}
+
+@Composable
+private fun ArtworkSettings(navController: NavController) {
+    LemuroidCardSettingsGroup(
+        title = { Text(text = stringResource(id = R.string.settings_category_artwork)) },
+    ) {
+        LemuroidSettingsList(
+            state =
+                indexPreferenceState(
+                    R.string.pref_key_artwork_type,
+                    ArtworkType.DEFAULT.prefValue,
+                    stringListResource(R.array.pref_key_artwork_type_values),
+                ),
+            title = { Text(text = stringResource(id = R.string.settings_title_artwork_type)) },
+            items = stringListResource(R.array.pref_key_artwork_type_display_names),
+        )
+        LemuroidSettingsMenuLink(
+            title = { Text(text = stringResource(id = R.string.settings_title_artwork_per_system)) },
+            subtitle = { Text(text = stringResource(id = R.string.settings_description_artwork_per_system)) },
+            onClick = { navController.navigateToRoute(MainRoute.SETTINGS_ARTWORK) },
         )
     }
 }

@@ -53,6 +53,21 @@
     </PreferenceCategory>
 
     <PreferenceCategory
+        android:title="@string/settings_category_artwork"
+        app:iconSpaceReserved="false">
+
+        <ListPreference
+            android:key="@string/pref_key_artwork_type"
+            android:title="@string/settings_title_artwork_type"
+            app:iconSpaceReserved="false"
+            app:useSimpleSummaryProvider="true"
+            android:entries="@array/pref_key_artwork_type_display_names"
+            app:entryValues="@array/pref_key_artwork_type_values"
+            android:defaultValue="boxart"/>
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
         android:title="@string/settings_category_fast_forward"
         app:iconSpaceReserved="false">
 

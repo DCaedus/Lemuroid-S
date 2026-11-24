@@ -26,6 +26,9 @@
     <string name="pref_key_fast_forward_volume" translatable="false">fast_forward_volume</string>
     <string name="pref_key_fast_forward_button" translatable="false">fast_forward_button</string>
 
+    <string name="pref_key_artwork_type" translatable="false">artwork_type</string>
+    <string name="pref_key_artwork_type_system_prefix" translatable="false">artwork_type_system_</string>
+
     <string name="pref_key_save_sync_auto" translatable="false">save_sync_auto</string>
     <string name="pref_key_save_sync_enable" translatable="false">save_sync_enable</string>
     <string name="pref_key_save_sync_configure" translatable="false">save_sync_configure</string>
@@ -99,5 +102,24 @@
         <item>@string/fast_forward_audio_names_normal</item>
         <item>@string/fast_forward_audio_names_mute</item>
         <item>@string/fast_forward_audio_names_lower</item>
+    </string-array>
+
+    <string-array translatable="false" name="pref_key_artwork_type_values">
+        <item>boxart</item>
+        <item>snap</item>
+        <item>title</item>
+    </string-array>
+
+    <string-array translatable="false" name="pref_key_artwork_type_display_names">
+        <item>@string/artwork_type_names_boxart</item>
+        <item>@string/artwork_type_names_snap</item>
+        <item>@string/artwork_type_names_title</item>
+    </string-array>
+
+    <string-array translatable="false" name="pref_key_artwork_type_system_values">
+        <item>default</item>
+        <item>boxart</item>
+        <item>snap</item>
+        <item>title</item>
     </string-array>
 </resources>

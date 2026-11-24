@@ -14,6 +14,7 @@ import androidx.tvprovider.media.tv.ChannelLogoUtils
 import androidx.tvprovider.media.tv.PreviewProgram
 import androidx.tvprovider.media.tv.TvContractCompat
 import com.swordfish.lemuroid.R
+import com.swordfish.lemuroid.app.shared.covers.CoverUrls
 import com.swordfish.lemuroid.app.shared.covers.CoverUtils
 import com.swordfish.lemuroid.app.shared.deeplink.DeepLink
 import com.swordfish.lemuroid.lib.library.db.RetrogradeDatabase
@@ -136,18 +137,19 @@ class ChannelHandler(
     }
 
     private suspend fun getChannelEntry(game: Game): ChannelEntry {
-        val hasThumbnail =
-            game.coverFrontUrl
-                ?.let { thumbnailsApi.thumbnailExists(it).isSuccessful }
-                ?: false
-        return ChannelEntry(game, hasThumbnail)
+        val artworkUrl =
+            game.customCoverUri
+                ?: CoverUrls.candidates(appContext, game).firstOrNull { url ->
+                    runCatching { thumbnailsApi.thumbnailExists(url).isSuccessful }.getOrDefault(false)
+                }
+        return ChannelEntry(game, artworkUrl)
     }
 
     @SuppressLint("RestrictedApi")
     private fun getGameProgram(
         channelId: Long,
         game: Game,
-        thumbnailExists: Boolean,
+        artworkUrl: String?,
     ): PreviewProgram {
         val intent = DeepLink.launchIntentForGame(appContext, game)
 
@@ -161,9 +163,8 @@ class ChannelHandler(
                 .setType(TvContractCompat.PreviewPrograms.TYPE_GAME)
                 .setPosterArtAspectRatio(TvContractCompat.PreviewProgramColumns.ASPECT_RATIO_1_1)
 
-        val coverUrl = game.displayCoverUrl()
-        if (coverUrl != null && (game.customCoverUri != null || thumbnailExists)) {
-            preview.setPosterArtUri(Uri.parse(coverUrl))
+        if (artworkUrl != null) {
+            preview.setPosterArtUri(Uri.parse(artworkUrl))
         } else {
             preview.setPosterArtUri(Uri.parse(CoverUtils.getFallbackRemoteUrl(game)))
         }
@@ -194,7 +195,7 @@ class ChannelHandler(
         return null
     }
 
-    private data class ChannelEntry(val game: Game, val hasThumbnail: Boolean)
+    private data class ChannelEntry(val game: Game, val artworkUrl: String?)
 
     interface ThumbnailsApi {
         @HEAD

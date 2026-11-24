@@ -37,6 +37,14 @@
     <string name="fast_forward_audio_names_mute">Mute</string>
     <string name="fast_forward_audio_names_lower">Lower volume</string>
     <string name="game_menu_fast_forward_speed">Fast-forward speed</string>
+    <string name="settings_category_artwork">Artwork</string>
+    <string name="settings_title_artwork_type">Artwork type</string>
+    <string name="settings_title_artwork_per_system">Artwork per console</string>
+    <string name="settings_description_artwork_per_system">Choose a different artwork type for specific consoles</string>
+    <string name="artwork_type_names_boxart">Game cover</string>
+    <string name="artwork_type_names_snap">In-game screenshot</string>
+    <string name="artwork_type_names_title">Title screen</string>
+    <string name="artwork_type_names_default">Default (%1$s)</string>
     <string name="settings_title_enable_autosave">Autosave state</string>
     <string name="settings_description_enable_autosave">Save state when exiting via game menu</string>
     <string name="settings_title_enable_touch_feedback">Vibrate on touch</string>

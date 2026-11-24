@@ -73,6 +73,12 @@ enum class MainRoute(
         parent = SETTINGS,
         showBottomNavigation = false,
     ),
+    SETTINGS_ARTWORK(
+        route = "settings/artwork",
+        titleId = R.string.settings_title_artwork_per_system,
+        parent = SETTINGS,
+        showBottomNavigation = false,
+    ),
     SETTINGS_BIOS(
         route = "settings/bios",
         titleId = R.string.settings_title_display_bios_info,

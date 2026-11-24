@@ -21,15 +21,29 @@ object CoverUtils {
     ) {
         if (imageView == null) return
 
-        imageView.load(game.displayCoverUrl(), imageView.context.imageLoader) {
+        imageView.load(coverData(imageView.context, game), imageView.context.imageLoader) {
             val fallbackDrawable = getFallbackDrawable(game)
             fallback(fallbackDrawable)
             error(fallbackDrawable)
         }
     }
 
+    /**
+     * What to load for a game's artwork: the user's custom cover if set, otherwise a [CoverRequest]
+     * with the libretro thumbnail URLs to try, using the artwork type chosen in Settings.
+     */
+    fun coverData(
+        context: Context,
+        game: Game,
+    ): Any? {
+        game.customCoverUri?.let { return it }
+        val urls = CoverUrls.candidates(context, game)
+        return if (urls.isEmpty()) null else CoverRequest(urls)
+    }
+
     fun buildImageLoader(applicationContext: Context): ImageLoader {
         return ImageLoader.Builder(applicationContext)
+            .components { add(CoverFallbackInterceptor) }
             .diskCache(
                 DiskCache.Builder()
                     .directory(applicationContext.cacheDir.resolve("image_cache"))

@@ -9,6 +9,7 @@ import android.graphics.BitmapFactory
 import android.graphics.drawable.Icon
 import android.net.Uri
 import android.os.Build
+import com.swordfish.lemuroid.app.shared.covers.CoverUrls
 import com.swordfish.lemuroid.app.shared.covers.CoverUtils
 import com.swordfish.lemuroid.app.shared.deeplink.DeepLink
 import com.swordfish.lemuroid.common.bitmap.cropToSquare
@@ -58,12 +59,24 @@ class ShortcutsGenerator(
                         val inputStream = appContext.contentResolver.openInputStream(uri)
                         BitmapFactory.decodeStream(inputStream).cropToSquare()
                     } else {
-                        val response = thumbnailsApi.downloadThumbnail(game.coverFrontUrl!!)
-                        BitmapFactory.decodeStream(response.body()).cropToSquare()
+                        downloadArtwork(game).cropToSquare()
                     }
                 }
             result.getOrElse { retrieveFallbackBitmap(game) }
         }
+
+    /** Tries each artwork URL in order, like the library screens do. */
+    private suspend fun downloadArtwork(game: Game): Bitmap {
+        for (url in CoverUrls.candidates(appContext, game)) {
+            val bitmap =
+                runCatching {
+                    val response = thumbnailsApi.downloadThumbnail(url)
+                    if (response.isSuccessful) BitmapFactory.decodeStream(response.body()) else null
+                }.getOrNull()
+            if (bitmap != null) return bitmap
+        }
+        throw IllegalStateException("No artwork found for ${game.title}")
+    }
 
     private fun retrieveFallbackBitmap(game: Game): Bitmap {
         val desiredIconSize = getDesiredIconSize()

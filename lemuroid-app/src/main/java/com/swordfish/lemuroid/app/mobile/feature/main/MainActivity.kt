@@ -36,6 +36,7 @@ import com.swordfish.lemuroid.app.mobile.feature.search.SearchScreen
 import com.swordfish.lemuroid.app.mobile.feature.search.SearchViewModel
 import com.swordfish.lemuroid.app.mobile.feature.settings.advanced.AdvancedSettingsScreen
 import com.swordfish.lemuroid.app.mobile.feature.settings.advanced.AdvancedSettingsViewModel
+import com.swordfish.lemuroid.app.mobile.feature.settings.artwork.ArtworkSettingsScreen
 import com.swordfish.lemuroid.app.mobile.feature.settings.bios.BiosScreen
 import com.swordfish.lemuroid.app.mobile.feature.settings.bios.BiosSettingsViewModel
 import com.swordfish.lemuroid.app.mobile.feature.settings.coreselection.CoresSelectionScreen
@@ -295,6 +296,9 @@ class MainActivity : RetrogradeComponentActivity(), BusyActivity {
                                 ),
                             navController = navController,
                         )
+                    }
+                    composable(MainRoute.SETTINGS_ARTWORK) {
+                        ArtworkSettingsScreen(modifier = Modifier.padding(padding))
                     }
                     composable(MainRoute.SETTINGS_BIOS) {
                         BiosScreen(
