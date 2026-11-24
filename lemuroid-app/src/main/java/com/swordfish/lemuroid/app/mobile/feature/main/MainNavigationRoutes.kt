@@ -26,7 +26,9 @@ fun NavGraphBuilder.composable(
     route: MainRoute,
     content: @Composable AnimatedContentScope.(NavBackStackEntry) -> Unit,
 ) {
-    this.composable(route = route.route, arguments = route.arguments, content = content)
+    this.composable(route = route.route, arguments = route.arguments) { entry ->
+        ScreenTransitionContent { content(entry) }
+    }
 }
 
 fun NavController.navigateToRoute(route: MainRoute) {

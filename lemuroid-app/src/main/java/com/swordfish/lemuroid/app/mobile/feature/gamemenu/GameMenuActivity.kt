@@ -9,7 +9,7 @@ import androidx.activity.SystemBarStyle
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.animation.AnimatedContent
-import androidx.compose.animation.ExitTransition
+import androidx.compose.animation.fadeOut
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.foundation.layout.BoxWithConstraints
@@ -181,9 +181,9 @@ class GameMenuActivity : RetrogradeComponentActivity() {
                     navController = navController,
                     startDestination = GameMenuRoute.HOME.route,
                     enterTransition = { fadeIn(tween(SCREEN_FADE_MS)) },
-                    exitTransition = { ExitTransition.None },
+                    exitTransition = { fadeOut(tween(SCREEN_FADE_MS)) },
                     popEnterTransition = { fadeIn(tween(SCREEN_FADE_MS)) },
-                    popExitTransition = { ExitTransition.None },
+                    popExitTransition = { fadeOut(tween(SCREEN_FADE_MS)) },
                 ) {
                     composable(GameMenuRoute.HOME) {
                         GameMenuHomeScreen(navController, gameMenuRequest, ::onResult)

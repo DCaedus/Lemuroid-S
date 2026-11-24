@@ -7,12 +7,15 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import com.swordfish.lemuroid.R
+import com.swordfish.lemuroid.app.mobile.feature.main.ScreenTransitionContent
 
 fun NavGraphBuilder.composable(
     route: GameMenuRoute,
     content: @Composable AnimatedContentScope.(NavBackStackEntry) -> Unit,
 ) {
-    this.composable(route = route.route, content = content)
+    this.composable(route = route.route) { entry ->
+        ScreenTransitionContent { content(entry) }
+    }
 }
 
 fun NavController.navigateToRoute(route: GameMenuRoute) {

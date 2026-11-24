@@ -8,7 +8,7 @@ import androidx.activity.SystemBarStyle
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
-import androidx.compose.animation.ExitTransition
+import androidx.compose.animation.fadeOut
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.foundation.layout.fillMaxSize
@@ -194,11 +194,11 @@ class MainActivity : RetrogradeComponentActivity(), BusyActivity {
                     modifier = Modifier.fillMaxSize(),
                     navController = navController,
                     startDestination = MainRoute.HOME.route,
-                    // Quick fade in; the previous screen goes away at once so it can't be tapped by mistake.
+                    // Quick crossfade; the screen being left ignores touches (see ScreenTransitionContent).
                     enterTransition = { fadeIn(tween(SCREEN_FADE_MS)) },
-                    exitTransition = { ExitTransition.None },
+                    exitTransition = { fadeOut(tween(SCREEN_FADE_MS)) },
                     popEnterTransition = { fadeIn(tween(SCREEN_FADE_MS)) },
-                    popExitTransition = { ExitTransition.None },
+                    popExitTransition = { fadeOut(tween(SCREEN_FADE_MS)) },
                 ) {
                     composable(MainRoute.HOME) {
                         HomeScreen(
@@ -432,6 +432,3 @@ class MainActivity : RetrogradeComponentActivity(), BusyActivity {
         }
     }
 }
-
-/** Length of the fade between app screens. */
-const val SCREEN_FADE_MS = 250
