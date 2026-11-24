@@ -4,8 +4,14 @@ import android.net.Uri
 import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
@@ -13,8 +19,10 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.dp
 import com.swordfish.lemuroid.R
 import com.swordfish.lemuroid.app.shared.covers.RetroArchCoversImporter
 import com.swordfish.lemuroid.app.shared.saves.SavesImportWork
@@ -27,10 +35,11 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 /**
- * "Import saves?" confirmation for Import Saves from RetroArch. Uses RetroArch's folder
- * (confirmed once in the folder picker, then remembered).
- * Always keep this in the composition; [show] controls the dialog (the folder pickers must stay
- * registered while they are open).
+ * Import Saves: a list of sources. Always keep this in the composition; [show] controls the dialog
+ * (the pickers must stay registered while they are open).
+ *  - RetroArch: its folder (confirmed once in the folder picker, then remembered)
+ *  - Pizza Boy / any ZIP: a ZIP of saves, e.g. Pizza Boy's "export saves"
+ *  - Lemuroid / any folder: e.g. a copy of Lemuroid's files folder, or another emulator's saves folder
  */
 @Composable
 fun ImportSavesDialog(
@@ -39,45 +48,70 @@ fun ImportSavesDialog(
     onImportStarted: () -> Unit = { },
 ) {
     val context = LocalContext.current
-    val runImport = { folder: Uri ->
-        // Runs in the background like the library scan (same "working" animation); the result
-        // is shown when it finishes.
-        SavesImportWork.start(context, folder)
+    val runImport = { source: Uri ->
+        // Runs in the background like the library scan (same "working" animation and a
+        // notification); the result is shown when it finishes.
+        SavesImportWork.start(context, source)
         Toast.makeText(context, R.string.import_saves_started, Toast.LENGTH_SHORT).show()
         onImportStarted()
     }
     val retroArch = rememberRetroArchFolderAccess { runImport(it) }
-    // Other emulators (e.g. Pizza Boy): pick their saves folder; only battery saves are imported.
-    val otherEmulator =
+    val zipFile =
+        rememberLauncherForActivityResult(ActivityResultContracts.OpenDocument()) { uri ->
+            if (uri != null) runImport(uri)
+        }
+    val folder =
         rememberLauncherForActivityResult(ActivityResultContracts.OpenDocumentTree()) { uri ->
             if (uri != null) runImport(uri)
         }
+
     if (!show) return
+
+    val choose = { action: () -> Unit ->
+        onDismiss()
+        action()
+    }
 
     AlertDialog(
         onDismissRequest = onDismiss,
         title = { Text(text = stringResource(R.string.import_saves_confirm_title)) },
-        text = { Text(text = stringResource(R.string.import_saves_confirm_message)) },
-        confirmButton = {
-            Row {
-                TextButton(
-                    onClick = {
-                        onDismiss()
-                        otherEmulator.launch(null)
-                    },
-                ) { Text(text = stringResource(R.string.import_saves_other_emulator)) }
-                TextButton(
-                    onClick = {
-                        onDismiss()
-                        retroArch()
-                    },
-                ) { Text(text = stringResource(R.string.import_saves_from_retroarch)) }
+        text = {
+            Column(modifier = Modifier.verticalScroll(rememberScrollState())) {
+                Text(text = stringResource(R.string.import_saves_confirm_message))
+                ImportSource(R.string.import_source_retroarch, R.string.import_source_retroarch_description) {
+                    choose { retroArch() }
+                }
+                ImportSource(R.string.import_source_zip, R.string.import_source_zip_description) {
+                    choose { zipFile.launch(arrayOf("application/zip", "application/x-zip-compressed")) }
+                }
+                ImportSource(R.string.import_source_folder, R.string.import_source_folder_description) {
+                    choose { folder.launch(null) }
+                }
             }
         },
+        confirmButton = {},
         dismissButton = {
             TextButton(onClick = onDismiss) { Text(text = stringResource(android.R.string.cancel)) }
         },
     )
+}
+
+@Composable
+private fun ImportSource(
+    titleId: Int,
+    descriptionId: Int,
+    onClick: () -> Unit,
+) {
+    Column(
+        modifier =
+            Modifier
+                .fillMaxWidth()
+                .clickable(onClick = onClick)
+                .padding(vertical = 12.dp),
+    ) {
+        Text(text = stringResource(titleId), style = MaterialTheme.typography.titleSmall)
+        Text(text = stringResource(descriptionId), style = MaterialTheme.typography.bodySmall)
+    }
 }
 
 /** "Import RetroArch Covers": copies RetroArch's thumbnails into the Lemuroid-S folder. */
