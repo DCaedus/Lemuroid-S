@@ -2,7 +2,6 @@ package com.swordfish.lemuroid.app.mobile.feature.home
 
 import android.Manifest
 import android.os.Build
-import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.animation.AnimatedVisibility
@@ -17,7 +16,6 @@ import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
@@ -28,6 +26,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -36,12 +35,15 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.Lifecycle
 import com.swordfish.lemuroid.R
-import com.swordfish.lemuroid.app.mobile.feature.settings.general.RomsFolderSettings
+import com.swordfish.lemuroid.app.mobile.feature.settings.general.ImportSavesDialog
 import com.swordfish.lemuroid.app.mobile.feature.settings.general.rememberMainFolderPicker
+import com.swordfish.lemuroid.app.mobile.feature.settings.general.useMainRomsFolder
 import com.swordfish.lemuroid.app.mobile.shared.compose.ui.LemuroidGameCard
+import com.swordfish.lemuroid.app.shared.settings.StorageFrameworkPickerLauncher
 import com.swordfish.lemuroid.app.utils.android.ComposableLifecycle
 import com.swordfish.lemuroid.common.displayDetailsSettingsScreen
 import com.swordfish.lemuroid.lib.library.db.entity.Game
+import kotlinx.coroutines.launch
 
 @Composable
 fun HomeScreen(
@@ -75,56 +77,15 @@ fun HomeScreen(
     val state = viewModel.getViewStates().collectAsState(HomeViewModel.UIState())
     val setupCards = viewModel.getSetupCards().collectAsState(HomeViewModel.SetupCards())
 
-    var showRomsFolderDialog by remember { mutableStateOf(false) }
+    val scope = rememberCoroutineScope()
     var showImportConfirmation by remember { mutableStateOf(false) }
     val onMainFolderChosen = { viewModel.onMainFolderChosen() }
     val mainFolderPicker = rememberMainFolderPicker(onMainFolderChosen)
-    val importFolderPicker =
-        rememberLauncherForActivityResult(ActivityResultContracts.OpenDocumentTree()) { uri ->
-            if (uri == null) return@rememberLauncherForActivityResult
-            viewModel.importSaves(uri) { result ->
-                val message =
-                    if (result != null) {
-                        context.getString(
-                            R.string.import_saves_result,
-                            result.imported,
-                            result.importedStates,
-                            result.skippedOlder,
-                        )
-                    } else {
-                        context.getString(R.string.import_saves_failed)
-                    }
-                Toast.makeText(context, message, Toast.LENGTH_LONG).show()
-            }
-        }
-
-    if (showRomsFolderDialog) {
-        SettingsDialog(
-            titleId = R.string.select_roms_folder,
-            onDone = { showRomsFolderDialog = false },
-        ) { RomsFolderSettings(onMainFolderChosen = onMainFolderChosen) }
-    }
-
-    if (showImportConfirmation) {
-        AlertDialog(
-            onDismissRequest = { showImportConfirmation = false },
-            title = { Text(text = stringResource(R.string.import_saves_confirm_title)) },
-            text = { Text(text = stringResource(R.string.import_saves_confirm_message)) },
-            confirmButton = {
-                TextButton(
-                    onClick = {
-                        showImportConfirmation = false
-                        importFolderPicker.launch(null)
-                    },
-                ) { Text(text = stringResource(R.string.import_saves_confirm_action)) }
-            },
-            dismissButton = {
-                TextButton(onClick = { showImportConfirmation = false }) {
-                    Text(text = stringResource(android.R.string.cancel))
-                }
-            },
-        )
-    }
+    ImportSavesDialog(
+        show = showImportConfirmation,
+        onDismiss = { showImportConfirmation = false },
+        importSaves = viewModel::importSaves,
+    )
 
     HomeScreen(
         modifier,
@@ -144,7 +105,8 @@ fun HomeScreen(
             permissionsLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
         },
         { permissionsLauncher.launch(Manifest.permission.RECORD_AUDIO) },
-        { showRomsFolderDialog = true },
+        { scope.launch { useMainRomsFolder(context) } },
+        { StorageFrameworkPickerLauncher.pickFolder(context) },
     ) // TODO COMPOSE We need to understand what's going to happen here.
 }
 
@@ -162,6 +124,7 @@ private fun HomeScreen(
     onEnableNotificationsClicked: () -> Unit,
     onEnableMicrophoneClicked: () -> Unit,
     onSetDirectoryClicked: () -> Unit,
+    onSetCustomDirectoryClicked: () -> Unit,
 ) {
     Column(
         modifier =
@@ -190,20 +153,11 @@ private fun HomeScreen(
             HomeNotification(
                 titleId = R.string.home_empty_title,
                 messageId = R.string.home_empty_message,
-                actionId = R.string.home_empty_action,
+                actionId = R.string.home_roms_main_action,
                 onAction = onSetDirectoryClicked,
+                secondaryActionId = R.string.folder_option_custom,
+                onSecondaryAction = onSetCustomDirectoryClicked,
                 enabled = !state.indexInProgress,
-            )
-        }
-        // Import only makes sense once there are games to match the saves to.
-        AnimatedVisibility(setupCards.showImportSaves && !state.showNoGamesCard && !state.indexInProgress) {
-            HomeNotification(
-                titleId = R.string.home_import_saves_title,
-                messageId = R.string.home_import_saves_message,
-                actionId = R.string.home_import_saves_action,
-                onAction = onImportSaves,
-                secondaryActionId = R.string.home_card_not_now,
-                onSecondaryAction = onDismissImportSaves,
             )
         }
         AnimatedVisibility(state.showNoMicrophonePermissionCard) {
@@ -220,6 +174,17 @@ private fun HomeScreen(
                 messageId = R.string.home_notification_desmume_deprecated_message,
                 actionId = R.string.home_notification_desmume_deprecated_action,
                 onAction = onOpenCoreSelection,
+            )
+        }
+        // Last setup card. Saves for games not in the library yet are imported once the games are added.
+        AnimatedVisibility(setupCards.showImportSaves) {
+            HomeNotification(
+                titleId = R.string.home_import_saves_title,
+                messageId = R.string.home_import_saves_message,
+                actionId = R.string.home_import_saves_action,
+                onAction = onImportSaves,
+                secondaryActionId = R.string.home_card_not_now,
+                onSecondaryAction = onDismissImportSaves,
             )
         }
         HomeRow(
@@ -333,21 +298,4 @@ private fun HomeNotification(
             }
         }
     }
-}
-
-/** A small window with folder settings, opened from the home-screen setup cards. */
-@Composable
-private fun SettingsDialog(
-    titleId: Int,
-    onDone: () -> Unit,
-    content: @Composable () -> Unit,
-) {
-    AlertDialog(
-        onDismissRequest = onDone,
-        title = { Text(text = stringResource(titleId)) },
-        text = { Column { content() } },
-        confirmButton = {
-            TextButton(onClick = onDone) { Text(text = stringResource(R.string.done)) }
-        },
-    )
 }

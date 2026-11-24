@@ -82,6 +82,18 @@ class HomeViewModel(
 
     fun getSetupCards(): Flow<SetupCards> = setupCards
 
+    init {
+        // One-time cleanup of duplicate folders ("gba (1)") made by earlier test builds.
+        viewModelScope.launch(Dispatchers.IO) {
+            val key = appContext.getString(R.string.pref_key_duplicate_folders_merged)
+            if (setupPreferences.getBoolean(key, false)) return@launch
+            val mainFolder = MainFolder(appContext)
+            if (!mainFolder.isSet()) return@launch
+            runCatching { mainFolder.mergeDuplicateFolders() }
+            setupPreferences.edit().putBoolean(key, true).apply()
+        }
+    }
+
     fun onMainFolderChosen() {
         setupCards.value = setupCards.value.copy(showMainFolder = false)
     }

@@ -51,18 +51,42 @@ class DocumentFolder(
 
     fun isEmpty(): Boolean = children().isEmpty()
 
-    /** Returns the subfolder [name], creating it if needed (and allowed). */
+    /**
+     * Returns the subfolder [name], creating it if needed (and allowed). Lookups and creation are
+     * serialized and remembered, so parallel callers (e.g. many covers downloading at once) never
+     * create the same folder twice (Android would name the copies "name (1)").
+     */
     fun subFolder(
         name: String,
         create: Boolean = true,
     ): DocumentFolder? {
-        val existing = children()[name]
-        if (existing != null) return if (existing.isDirectory) DocumentFolder(contentResolver, existing.uri) else null
-        if (!create) return null
-        val created =
-            DocumentsContract.createDocument(contentResolver, uri, DocumentsContract.Document.MIME_TYPE_DIR, name)
-                ?: return null
-        return DocumentFolder(contentResolver, created)
+        val key = "$uri/$name"
+        knownFolders[key]?.let { return DocumentFolder(contentResolver, it) }
+
+        synchronized(folderLock) {
+            knownFolders[key]?.let { return DocumentFolder(contentResolver, it) }
+            val existing = children()[name]
+            val folderUri =
+                when {
+                    existing != null && existing.isDirectory -> existing.uri
+                    existing != null -> return null
+                    !create -> return null
+                    else ->
+                        DocumentsContract.createDocument(
+                            contentResolver,
+                            uri,
+                            DocumentsContract.Document.MIME_TYPE_DIR,
+                            name,
+                        ) ?: return null
+                }
+            knownFolders[key] = folderUri
+            return DocumentFolder(contentResolver, folderUri)
+        }
+    }
+
+    fun delete(child: Child): Boolean {
+        knownFolders.keys.removeAll { it.startsWith(child.uri.toString()) || it.endsWith("/${child.name}") }
+        return runCatching { DocumentsContract.deleteDocument(contentResolver, child.uri) }.getOrDefault(false)
     }
 
     /** Follows [path] (e.g. "states", "mgba"), creating missing folders if [create] is true. */
@@ -97,5 +121,11 @@ class DocumentFolder(
 
     companion object {
         const val MIME_TYPE_BINARY = "application/octet-stream"
+
+        private val folderLock = Any()
+        private val knownFolders = java.util.concurrent.ConcurrentHashMap<String, Uri>()
+
+        /** Forget remembered folders, e.g. after the Lemuroid-S folder is chosen again. */
+        fun clearKnownFolders() = knownFolders.clear()
     }
 }

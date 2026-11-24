@@ -91,7 +91,7 @@ class StorageFrameworkPickerLauncher : RetrogradeActivity() {
         val keptFolders =
             setOfNotNull(
                 preferences.getString(getString(com.swordfish.lemuroid.lib.R.string.pref_key_main_folder_tree), null),
-                preferences.getString(getString(R.string.pref_key_artwork_retroarch_folder), null),
+                preferences.getString(getString(R.string.pref_key_retroarch_folder), null),
             )
 
         contentResolver.persistedUriPermissions

@@ -82,12 +82,14 @@ fun MainFolderSetting() {
     )
 }
 
-/** "Select ROMS folder": Lemuroid-S/roms or a custom folder. */
+/**
+ * "Select ROMS folder": Lemuroid-S/roms or a custom folder. One entry: the selected option shows
+ * where ROMs are, and choosing "Custom folder" (again) opens the folder picker.
+ */
 @Composable
 fun RomsFolderSettings(
     enabled: Boolean = true,
     currentCustomFolderName: String? = null,
-    onMainFolderChosen: () -> Unit = { },
 ) {
     val context = LocalContext.current
     val scope = rememberCoroutineScope()
@@ -104,64 +106,40 @@ fun RomsFolderSettings(
             values,
         )
 
-    val useMainFolder = {
-        scope.launch {
-            if (!RomsFolder.useMainFolder(context)) {
-                Toast.makeText(context, R.string.main_folder_required, Toast.LENGTH_LONG).show()
-            }
-        }
-    }
-    val mainFolderPicker =
-        rememberMainFolderPicker {
-            onMainFolderChosen()
-            useMainFolder()
-        }
+    val isCustom = values.getOrNull(location.value) == RomsFolder.LOCATION_CUSTOM
+    val items =
+        listOf(
+            stringResource(R.string.roms_option_main),
+            currentCustomFolderName
+                ?.takeIf { isCustom }
+                ?.let { stringResource(R.string.roms_option_custom_named, it) }
+                ?: stringResource(R.string.folder_option_custom),
+        )
 
     LemuroidSettingsList(
         enabled = enabled,
         state = location,
         title = { Text(text = stringResource(R.string.select_roms_folder)) },
-        items = stringListResource(R.array.pref_key_roms_location_display_names),
+        items = items,
         onItemSelected = { index, _ ->
             when (values[index]) {
-                RomsFolder.LOCATION_MAIN -> if (MainFolder(context).isSet()) useMainFolder() else mainFolderPicker()
+                RomsFolder.LOCATION_MAIN -> scope.launch { useMainRomsFolder(context) }
                 RomsFolder.LOCATION_CUSTOM -> StorageFrameworkPickerLauncher.pickFolder(context)
-            }
-        },
-    )
-
-    val isCustom = values.getOrNull(location.value) == RomsFolder.LOCATION_CUSTOM
-    LemuroidSettingsMenuLink(
-        enabled = enabled,
-        title = {
-            Text(text = stringResource(if (isCustom) R.string.custom_roms_folder else R.string.folder_option_main))
-        },
-        subtitle = {
-            Text(
-                text =
-                    if (isCustom) {
-                        currentCustomFolderName ?: stringResource(R.string.none)
-                    } else {
-                        stringResource(R.string.roms_folder_main_path)
-                    },
-            )
-        },
-        onClick = {
-            if (isCustom) {
-                StorageFrameworkPickerLauncher.pickFolder(context)
-            } else if (MainFolder(context).isSet()) {
-                useMainFolder()
-            } else {
-                mainFolderPicker()
             }
         },
     )
 }
 
+/** Uses Lemuroid-S/roms, or tells the user the Lemuroid-S folder has to be chosen first. */
+suspend fun useMainRomsFolder(context: Context) {
+    if (!RomsFolder.useMainFolder(context)) {
+        Toast.makeText(context, R.string.main_folder_required, Toast.LENGTH_LONG).show()
+    }
+}
+
 /** "Select SAVES folder": where battery saves and save states go (Lemuroid-S folder or ROMs folder). */
 @Composable
-fun SavesFolderSettings(onMainFolderChosen: () -> Unit = { }) {
-    val context = LocalContext.current
+fun SavesFolderSettings() {
     val values = stringListResource(R.array.pref_key_saves_location_values)
     val location =
         indexPreferenceState(
@@ -169,31 +147,10 @@ fun SavesFolderSettings(onMainFolderChosen: () -> Unit = { }) {
             ExternalSavesStorage.Location.MAIN_FOLDER.prefValue,
             values,
         )
-    val isMain = values.getOrNull(location.value) == ExternalSavesStorage.Location.MAIN_FOLDER.prefValue
-    var mainFolderSet by remember { mutableStateOf(MainFolder(context).isSet()) }
-    val mainFolderPicker =
-        rememberMainFolderPicker {
-            mainFolderSet = true
-            onMainFolderChosen()
-        }
 
     LemuroidSettingsList(
         state = location,
         title = { Text(text = stringResource(R.string.select_saves_folder)) },
         items = stringListResource(R.array.pref_key_saves_location_display_names),
-    )
-    LemuroidSettingsMenuLink(
-        title = {
-            Text(
-                text = stringResource(if (isMain) R.string.saves_folder_main_path else R.string.saves_folder_roms_path),
-            )
-        },
-        subtitle =
-            if (isMain && !mainFolderSet) {
-                { Text(text = stringResource(R.string.main_folder_required)) }
-            } else {
-                null
-            },
-        onClick = { if (isMain && !mainFolderSet) mainFolderPicker() },
     )
 }

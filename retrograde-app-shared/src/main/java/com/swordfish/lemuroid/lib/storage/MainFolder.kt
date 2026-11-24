@@ -51,11 +51,60 @@ class MainFolder(private val appContext: Context) {
                 runCatching { picked.subFolder(FOLDER_NAME) }.getOrNull()
             } ?: return false
 
+        DocumentFolder.clearKnownFolders()
         preferences().edit()
             .putString(appContext.getString(R.string.pref_key_main_folder), root.uri.toString())
             .putString(appContext.getString(R.string.pref_key_main_folder_tree), treeUri.toString())
             .apply()
         return true
+    }
+
+    /**
+     * Older test builds could create duplicate folders like "gba (1)". Moves their files into the
+     * original folder and removes the duplicate. Only for folders Lemuroid-S manages (thumbnails,
+     * saves, states), never ROMs.
+     */
+    fun mergeDuplicateFolders() {
+        val root = getRoot() ?: return
+        for (name in listOf(THUMBNAILS, SAVES, STATES)) {
+            val folder = runCatching { root.subFolder(name, create = false) }.getOrNull() ?: continue
+            runCatching { mergeDuplicates(folder, depth = 0) }
+        }
+    }
+
+    private fun mergeDuplicates(
+        folder: DocumentFolder,
+        depth: Int,
+    ) {
+        val children = folder.children()
+        for (duplicate in children.values.filter { it.isDirectory }) {
+            val baseName = DUPLICATE_NAME.matchEntire(duplicate.name)?.groupValues?.get(1) ?: continue
+            val original = children[baseName]?.takeIf { it.isDirectory } ?: continue
+            copyMissing(
+                DocumentFolder(appContext.contentResolver, duplicate.uri),
+                DocumentFolder(appContext.contentResolver, original.uri),
+            )
+            folder.delete(duplicate)
+        }
+        if (depth >= MAX_MERGE_DEPTH) return
+        folder.children().values
+            .filter { it.isDirectory }
+            .forEach { mergeDuplicates(DocumentFolder(appContext.contentResolver, it.uri), depth + 1) }
+    }
+
+    private fun copyMissing(
+        from: DocumentFolder,
+        to: DocumentFolder,
+    ) {
+        val existing = to.children()
+        for (child in from.children().values) {
+            if (child.isDirectory) {
+                val target = to.subFolder(child.name) ?: continue
+                copyMissing(DocumentFolder(appContext.contentResolver, child.uri), target)
+            } else if (child.name !in existing) {
+                from.read(child)?.let { to.write(child.name, it, null) }
+            }
+        }
     }
 
     fun folder(
@@ -68,6 +117,8 @@ class MainFolder(private val appContext: Context) {
 
     companion object {
         const val FOLDER_NAME = "Lemuroid-S"
+        private val DUPLICATE_NAME = Regex("""^(.+) \(\d+\)$""")
+        private const val MAX_MERGE_DEPTH = 2
         const val ROMS = "roms"
         const val BIOS = "bios"
         const val SAVES = "saves"

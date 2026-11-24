@@ -18,6 +18,7 @@ import kotlinx.serialization.json.Json
 import timber.log.Timber
 import java.io.ByteArrayInputStream
 import java.io.ByteArrayOutputStream
+import java.io.File
 import java.nio.ByteBuffer
 import java.nio.ByteOrder
 import java.util.zip.GZIPInputStream
@@ -47,6 +48,8 @@ class SavesImporter(
         val importedStates: Int,
         val skippedOlder: Int,
         val unsupportedStates: Int,
+        /** Files kept aside because their game isn't in the library yet; imported after the next scan. */
+        val pending: Int = 0,
     )
 
     private data class FoundFile(val uri: Uri, val lastModified: Long, val parentName: String)
@@ -56,23 +59,69 @@ class SavesImporter(
         var states = 0
         var skipped = 0
         var unsupported = 0
+
+        /** Found file names that were imported or deliberately skipped (Lemuroid-S's copy was newer). */
+        val handled = mutableSetOf<String>()
     }
 
+    /** Folder (in app storage) for saves whose game isn't in the library yet. */
+    private val pendingDirectory: File get() = File(appContext.filesDir, "import-pending").apply { mkdirs() }
+
+    /**
+     * Imports from a picked folder. Saves for games already in the library are imported right away;
+     * the others are kept aside and imported automatically after the next library scan, so importing
+     * works even before any ROMs are added.
+     */
     suspend fun importFrom(treeUri: Uri): Result =
         withContext(Dispatchers.IO) {
             val found = mutableMapOf<String, FoundFile>()
             collectFiles(treeUri, DocumentsContract.getTreeDocumentId(treeUri), "", depth = 0, found)
 
-            val counters = Counters()
-            val games = retrogradeDb.gameDao().selectByLastIndexedAtLessThan(Long.MAX_VALUE)
-            for (game in games) {
-                runCatching { importBatterySave(game, found, counters) }
-                    .onFailure { Timber.w(it, "Could not import battery save for ${game.fileName}") }
-                runCatching { importStates(game, found, counters) }
-                    .onFailure { Timber.w(it, "Could not import states for ${game.fileName}") }
+            val counters = importFound(found)
+
+            var pending = 0
+            for ((name, file) in found) {
+                if (name in counters.handled) continue
+                val bytes = readBytes(file) ?: continue
+                runCatching {
+                    val target = File(pendingDirectory, name)
+                    target.writeBytes(bytes)
+                    target.setLastModified(file.lastModified)
+                }.onSuccess { pending++ }
             }
-            Result(counters.saves, counters.states, counters.skipped, counters.unsupported)
+            Result(counters.saves, counters.states, counters.skipped, counters.unsupported, pending)
         }
+
+    /** Imports kept-aside saves whose games are now in the library. Called after library scans. */
+    suspend fun importPending(): Result =
+        withContext(Dispatchers.IO) {
+            val files = pendingDirectory.listFiles()?.filter { it.isFile } ?: emptyList()
+            if (files.isEmpty()) return@withContext Result(0, 0, 0, 0)
+
+            val found = files.associate { it.name to FoundFile(Uri.fromFile(it), it.lastModified(), "") }
+            val counters = importFound(found)
+            files.filter { it.name in counters.handled }.forEach { it.delete() }
+            Timber.i("Imported pending saves: ${counters.saves} saves, ${counters.states} states")
+            Result(
+                counters.saves,
+                counters.states,
+                counters.skipped,
+                counters.unsupported,
+                files.size - counters.handled.size,
+            )
+        }
+
+    private suspend fun importFound(found: Map<String, FoundFile>): Counters {
+        val counters = Counters()
+        val games = retrogradeDb.gameDao().selectByLastIndexedAtLessThan(Long.MAX_VALUE)
+        for (game in games) {
+            runCatching { importBatterySave(game, found, counters) }
+                .onFailure { Timber.w(it, "Could not import battery save for ${game.fileName}") }
+            runCatching { importStates(game, found, counters) }
+                .onFailure { Timber.w(it, "Could not import states for ${game.fileName}") }
+        }
+        return counters
+    }
 
     private suspend fun importBatterySave(
         game: Game,
@@ -81,7 +130,10 @@ class SavesImporter(
     ) {
         // ".srm" (RetroArch, Lemuroid) first, then ".sav" (used by some standalone emulators).
         val saveName = savesManager.saveRAMFileName(game)
-        val file = found[saveName] ?: found[saveName.removeSuffix(".srm") + ".sav"] ?: return
+        val savName = saveName.removeSuffix(".srm") + ".sav"
+        val foundName = listOf(saveName, savName).firstOrNull { it in found } ?: return
+        val file = found.getValue(foundName)
+        counters.handled.add(foundName)
         if (isCurrentNewer(savesManager.getSaveRAMInfo(game), file)) {
             counters.skipped++
             return
@@ -125,6 +177,8 @@ class SavesImporter(
         for ((slot, fileName, isLemuroidFormat) in candidates) {
             if (slot in handledSlots) continue
             val file = found[fileName] ?: continue
+            counters.handled.add(fileName)
+            counters.handled.add("$fileName.metadata")
 
             val current = if (slot == null) autoInfo else slotsInfo[slot]
             if (isCurrentNewer(current, file)) {

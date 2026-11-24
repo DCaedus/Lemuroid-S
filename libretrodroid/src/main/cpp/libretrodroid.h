@@ -162,6 +162,7 @@ private:
     bool audioEnabled = true;
     float audioVolume = 1.0f;
     bool skipVideoForCurrentRun = false;
+    unsigned int fastForwardStep = 0;
     bool preferLowLatencyAudio = false;
     bool rumbleEnabled = false;
 

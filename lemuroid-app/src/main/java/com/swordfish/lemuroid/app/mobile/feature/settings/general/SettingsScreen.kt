@@ -1,13 +1,7 @@
 package com.swordfish.lemuroid.app.mobile.feature.settings.general
 
-import android.content.Intent
 import android.net.Uri
-import android.widget.Toast
-import androidx.activity.compose.rememberLauncherForActivityResult
-import androidx.activity.result.contract.ActivityResultContracts
-import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -17,7 +11,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
-import androidx.documentfile.provider.DocumentFile
 import androidx.navigation.NavController
 import com.swordfish.lemuroid.R
 import com.swordfish.lemuroid.app.mobile.feature.main.MainRoute
@@ -36,7 +29,6 @@ import com.swordfish.lemuroid.app.utils.android.settings.booleanPreferenceState
 import com.swordfish.lemuroid.app.utils.android.settings.indexPreferenceState
 import com.swordfish.lemuroid.app.utils.android.settings.intPreferenceState
 import com.swordfish.lemuroid.app.utils.android.stringListResource
-import com.swordfish.lemuroid.lib.preferences.SharedPreferencesHelper
 import com.swordfish.lemuroid.lib.storage.MainFolder
 
 @Composable
@@ -181,25 +173,6 @@ private fun FastForwardSettings() {
 @Composable
 private fun TestSettings(onImportSaves: (Uri, (SavesImporter.Result?) -> Unit) -> Unit) {
     val context = LocalContext.current
-    val importFolderPicker =
-        rememberLauncherForActivityResult(ActivityResultContracts.OpenDocumentTree()) { uri ->
-            if (uri == null) return@rememberLauncherForActivityResult
-            onImportSaves(uri) { result ->
-                val message =
-                    if (result != null) {
-                        context.getString(
-                            R.string.import_saves_result,
-                            result.imported,
-                            result.importedStates,
-                            result.skippedOlder,
-                        )
-                    } else {
-                        context.getString(R.string.import_saves_failed)
-                    }
-                Toast.makeText(context, message, Toast.LENGTH_LONG).show()
-            }
-        }
-
     LemuroidCardSettingsGroup(
         title = { Text(text = stringResource(id = R.string.settings_category_test)) },
     ) {
@@ -220,26 +193,11 @@ private fun TestSettings(onImportSaves: (Uri, (SavesImporter.Result?) -> Unit) -
             subtitle = { Text(text = stringResource(id = R.string.settings_description_import_saves)) },
             onClick = { showImportConfirmation = true },
         )
-        if (showImportConfirmation) {
-            AlertDialog(
-                onDismissRequest = { showImportConfirmation = false },
-                title = { Text(text = stringResource(R.string.import_saves_confirm_title)) },
-                text = { Text(text = stringResource(R.string.import_saves_confirm_message)) },
-                confirmButton = {
-                    TextButton(
-                        onClick = {
-                            showImportConfirmation = false
-                            importFolderPicker.launch(null)
-                        },
-                    ) { Text(text = stringResource(R.string.import_saves_confirm_action)) }
-                },
-                dismissButton = {
-                    TextButton(onClick = { showImportConfirmation = false }) {
-                        Text(text = stringResource(android.R.string.cancel))
-                    }
-                },
-            )
-        }
+        ImportSavesDialog(
+            show = showImportConfirmation,
+            onDismiss = { showImportConfirmation = false },
+            importSaves = onImportSaves,
+        )
     }
 }
 
@@ -254,7 +212,7 @@ private fun ArtworkSettings(navController: NavController) {
             subtitle = { Text(text = stringResource(id = R.string.settings_description_artwork_per_system)) },
             onClick = { navController.navigateToRoute(MainRoute.SETTINGS_ARTWORK) },
         )
-        RetroArchThumbnailsFolderSetting()
+        ImportRetroArchCoversSetting()
     }
 }
 
@@ -269,38 +227,6 @@ internal fun ArtworkTypeSetting() {
             ),
         title = { Text(text = stringResource(id = R.string.settings_title_artwork_type)) },
         items = stringListResource(R.array.pref_key_artwork_type_display_names),
-    )
-}
-
-/** Optional: RetroArch's "thumbnails" folder, checked before Lemuroid-S's own artwork folder. */
-@Composable
-internal fun RetroArchThumbnailsFolderSetting() {
-    val context = LocalContext.current
-    val folderKey = stringResource(R.string.pref_key_artwork_retroarch_folder)
-    val preferences = remember { SharedPreferencesHelper.getSharedPreferences(context) }
-    var folderUri by remember { mutableStateOf(preferences.getString(folderKey, null)) }
-
-    val folderPicker =
-        rememberLauncherForActivityResult(ActivityResultContracts.OpenDocumentTree()) { uri ->
-            if (uri == null) return@rememberLauncherForActivityResult
-            runCatching {
-                context.contentResolver.takePersistableUriPermission(uri, Intent.FLAG_GRANT_READ_URI_PERMISSION)
-            }
-            preferences.edit().putString(folderKey, uri.toString()).apply()
-            folderUri = uri.toString()
-        }
-
-    val folderName =
-        remember(folderUri) {
-            folderUri?.let { runCatching { DocumentFile.fromTreeUri(context, Uri.parse(it))?.name }.getOrNull() }
-        }
-
-    LemuroidSettingsMenuLink(
-        title = { Text(text = stringResource(id = R.string.settings_title_artwork_retroarch_folder)) },
-        subtitle = {
-            Text(text = folderName ?: stringResource(id = R.string.settings_description_artwork_retroarch_folder))
-        },
-        onClick = { folderPicker.launch(null) },
     )
 }
 
