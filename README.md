@@ -1,11 +1,13 @@
-# Lemuroid
+# Lemuroid-S
 
-[<img src="https://fdroid.gitlab.io/artwork/badge/get-it-on.png"
-     alt="Get it on F-Droid"
-     height="80">](https://f-droid.org/packages/com.swordfish.lemuroid/)
-[<img src="https://play.google.com/intl/en_us/badges/images/generic/en-play-badge.png"
-     alt="Get it on Google Play"
-     height="80">](https://play.google.com/store/apps/details?id=com.swordfish.lemuroid)
+> **Unofficial fork** of [Lemuroid](https://github.com/Swordfish90/Lemuroid) by [Swordfish90](https://github.com/Swordfish90).
+> Lemuroid-S is not affiliated with or endorsed by the original project. All credit for Lemuroid goes to its author and contributors.
+> Like the original, this fork is licensed under GPL-3.0.
+>
+> Lemuroid-S uses its own app ID (`com.dcaedus.lemuroids`), so it can be installed alongside the official Lemuroid.
+> Some features are modeled on [RetroArch](https://github.com/libretro/RetroArch).
+
+The text below is from the original Lemuroid README.
 
 ## Description
 
