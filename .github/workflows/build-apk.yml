@@ -1,0 +1,39 @@
+# Lemuroid-S: builds a test APK only when started by hand
+# (GitHub > Actions > "Build test APK" > "Run workflow").
+name: Build test APK
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    name: Build APK
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      # Only the libraries the engine needs; the large prebuilt cores repo is not required.
+      - name: Fetch LibretroDroid dependencies
+        run: |
+          git submodule update --init --depth 1 \
+            libretrodroid/src/main/cpp/oboe \
+            libretrodroid/src/main/cpp/libretro/libretro-common
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+          cache: gradle
+
+      - name: Build APK
+        run: |
+          chmod +x gradlew
+          ./gradlew assembleFreeDynamicDebug
+
+      - name: Upload APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: lemuroid-s-test-apk
+          path: lemuroid-app/build/outputs/apk/freeDynamic/debug/*.apk
