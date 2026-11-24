@@ -135,7 +135,9 @@ class LemuroidLibrary(
     ) = flow<Unit> {
         val entries = batch.map { fetchEntriesFromDatabase(it) }
 
-        val existingEntries = entries.filterIsInstance<ScanEntry.GameFile>()
+        val existingEntries =
+            entries.filterIsInstance<ScanEntry.GameFile>()
+                .map { reassignArcadeGame(it, gameMetadata) }
         handleExistingEntries(existingEntries, startedAtMs)
 
         val newEntries =
@@ -143,6 +145,34 @@ class LemuroidLibrary(
                 .map { buildEntryFromMetadata(it.file, provider, gameMetadata, startedAtMs) }
 
         handleNewEntries(newEntries, startedAtMs, provider)
+    }
+
+    /**
+     * Lemuroid-S: on every scan, arcade games currently using MAME 2003-Plus are checked again, so
+     * they move to FBNeo (the preferred arcade core) when FBNeo supports them. Matching only uses
+     * the file name and folder, so the files themselves aren't read.
+     */
+    private suspend fun reassignArcadeGame(
+        entry: ScanEntry.GameFile,
+        gameMetadata: GameMetadataProvider,
+    ): ScanEntry.GameFile {
+        val game = entry.game
+        if (game.systemId != SystemID.MAME2003PLUS.dbname) return entry
+
+        val file = entry.file.primaryFile
+        val storageFile = StorageFile(name = file.name, size = file.size, uri = file.uri, path = file.path)
+        val metadata = runCatching { gameMetadata.retrieveMetadata(storageFile) }.getOrNull() ?: return entry
+        if (metadata.system != SystemID.FBNEO.dbname) return entry
+
+        Timber.i("Moving ${game.fileName} from MAME 2003-Plus to FBNeo")
+        val updatedGame =
+            game.copy(
+                systemId = metadata.system,
+                title = metadata.name ?: game.title,
+                developer = metadata.developer ?: game.developer,
+                coverFrontUrl = metadata.thumbnail,
+            )
+        return entry.copy(game = updatedGame)
     }
 
     private fun fetchEntriesFromDatabase(storageFile: GroupedStorageFiles): ScanEntry {

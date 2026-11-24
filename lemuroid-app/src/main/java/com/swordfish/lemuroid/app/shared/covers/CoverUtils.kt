@@ -59,12 +59,6 @@ object CoverUtils {
 
     fun getFallbackDrawable(game: Game) = TextDrawable(computeTitle(game), computeColor(game))
 
-    fun getFallbackRemoteUrl(game: Game): String {
-        val color = Integer.toHexString(computeColor(game)).substring(2)
-        val title = computeTitle(game)
-        return "https://fakeimg.pl/512x512/$color/fff/?font=bebas&text=$title"
-    }
-
     private fun computeTitle(game: Game): String {
         val sanitizedName =
             game.displayName()

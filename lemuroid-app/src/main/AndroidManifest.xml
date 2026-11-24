@@ -150,6 +150,12 @@
         <receiver android:name=".app.shared.library.LibraryIndexBroadcastReceiver" />
         <receiver android:name=".app.shared.library.CoreUpdateBroadcastReceiver" />
 
+        <!-- Lemuroid-S: placeholder posters for the Android TV home screen (read-only). -->
+        <provider
+            android:name=".app.tv.channel.PlaceholderPosterProvider"
+            android:authorities="${applicationId}.placeholders"
+            android:exported="true" />
+
         <provider
             android:name="androidx.startup.InitializationProvider"
             android:authorities="${applicationId}.androidx-startup"

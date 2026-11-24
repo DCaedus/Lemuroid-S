@@ -24,6 +24,7 @@ import kotlinx.coroutines.flow.onCompletion
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.takeWhile
 import retrofit2.Retrofit
+import java.io.File
 import kotlin.time.Duration.Companion.seconds
 
 class CoreUpdaterImpl(
@@ -36,8 +37,12 @@ class CoreUpdaterImpl(
         context: Context,
         coreIDs: List<CoreID>,
     ) {
+        // Lemuroid-S: cores shipped inside the app (see lemuroid-included-cores) need no download.
+        val includedLibraries = File(context.applicationInfo.nativeLibraryDir).list()?.toSet() ?: emptySet()
+        val coresToDownload = coreIDs.filter { it.libretroFileName !in includedLibraries }
+
         val installManager = SplitInstallManagerFactory.create(context)
-        val installSession = installCores(installManager, coreIDs, context)
+        val installSession = installCores(installManager, coresToDownload, context)
 
         try {
             cancelPendingInstalls(installManager, installSession)
