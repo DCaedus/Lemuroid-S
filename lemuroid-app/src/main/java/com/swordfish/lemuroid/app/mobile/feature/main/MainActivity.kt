@@ -434,4 +434,4 @@ class MainActivity : RetrogradeComponentActivity(), BusyActivity {
 }
 
 /** Length of the fade between app screens. */
-const val SCREEN_FADE_MS = 150
+const val SCREEN_FADE_MS = 250
