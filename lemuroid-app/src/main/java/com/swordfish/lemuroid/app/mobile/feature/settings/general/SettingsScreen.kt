@@ -329,7 +329,6 @@ private fun RomsSettings(
 
     LemuroidCardSettingsGroup(title = { Text(text = stringResource(id = R.string.settings_category_storage)) }) {
         RomsFolderSettings(enabled = !indexingInProgress, currentCustomFolderName = currentDirectoryName)
-        SavesFolderSettings()
         if (scanInProgress) {
             LemuroidSettingsMenuLink(
                 title = { Text(text = stringResource(id = R.string.stop)) },

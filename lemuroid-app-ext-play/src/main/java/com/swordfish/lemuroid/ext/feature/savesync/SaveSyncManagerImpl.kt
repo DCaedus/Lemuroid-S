@@ -81,12 +81,19 @@ class SaveSyncManagerImpl(
     private fun performSaveSyncForCores(cores: Set<CoreID>) {
         val drive = DriveFactory(appContext).create() ?: return
 
-        // Saves and states live in the Lemuroid-S folder (saves/<system>, states/<system>). When
-        // saves are kept next to the ROMs instead, they are spread over the ROMs folder and not synced.
-        val savesTree = mainFolderTree(MainFolder.SAVES)
-        if (savesTree != null) {
-            syncLocalAndRemoteFolder(drive, getOrCreateAppDataFolder("saves"), savesTree, null)
+        // Battery saves and states live in the Lemuroid-S folder (saves/<system>, states/<system>).
+        mainFolderTree(MainFolder.SAVES)?.let {
+            syncLocalAndRemoteFolder(drive, getOrCreateAppDataFolder("saves"), it, null)
         }
+
+        // Saves that cores write themselves (PSP SAVEDATA, 3DS, DOS...) stay in app storage, as cores
+        // can only write to real folders.
+        syncLocalAndRemoteFolder(
+            drive,
+            getOrCreateAppDataFolder("core-saves"),
+            LocalTree.Files(directoriesManager.getSavesDirectory()),
+            null,
+        )
 
         if (cores.isNotEmpty()) {
             mainFolderTree(MainFolder.STATES)?.let {
@@ -117,9 +124,8 @@ class SaveSyncManagerImpl(
         return android.text.format.Formatter.formatShortFileSize(appContext, size)
     }
 
-    /** The Lemuroid-S saves or states folder, if saves are kept there and it can be reached. */
+    /** The Lemuroid-S saves or states folder, if it can be reached. */
     private fun mainFolderTree(name: String): LocalTree? {
-        if (externalSavesStorage.getLocation() != ExternalSavesStorage.Location.MAIN_FOLDER) return null
         return externalSavesStorage.mainFolder.folder(name)?.let { LocalTree.Documents(it) }
     }
 

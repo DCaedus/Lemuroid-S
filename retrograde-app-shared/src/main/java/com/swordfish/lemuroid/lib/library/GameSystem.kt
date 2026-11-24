@@ -1304,6 +1304,7 @@ data class GameSystem(
                                     0 to arrayListOf(ControllerConfigs.FB_NEO_4),
                                     1 to arrayListOf(ControllerConfigs.FB_NEO_4),
                                 ),
+                            supportsLibretroVFS = true,
                         ),
                     ),
                     uniqueExtensions = listOf(),

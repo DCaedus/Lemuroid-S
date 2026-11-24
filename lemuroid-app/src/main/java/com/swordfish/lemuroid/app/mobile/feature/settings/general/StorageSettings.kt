@@ -24,7 +24,6 @@ import com.swordfish.lemuroid.app.utils.android.settings.LemuroidSettingsList
 import com.swordfish.lemuroid.app.utils.android.settings.LemuroidSettingsMenuLink
 import com.swordfish.lemuroid.app.utils.android.settings.indexPreferenceState
 import com.swordfish.lemuroid.app.utils.android.stringListResource
-import com.swordfish.lemuroid.lib.saves.ExternalSavesStorage
 import com.swordfish.lemuroid.lib.storage.MainFolder
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -139,22 +138,4 @@ suspend fun useMainRomsFolder(context: Context) {
     if (!RomsFolder.useMainFolder(context)) {
         Toast.makeText(context, R.string.main_folder_required, Toast.LENGTH_LONG).show()
     }
-}
-
-/** "Select SAVES folder": where battery saves and save states go (Lemuroid-S folder or ROMs folder). */
-@Composable
-fun SavesFolderSettings() {
-    val values = stringListResource(R.array.pref_key_saves_location_values)
-    val location =
-        indexPreferenceState(
-            com.swordfish.lemuroid.lib.R.string.pref_key_saves_location,
-            ExternalSavesStorage.Location.MAIN_FOLDER.prefValue,
-            values,
-        )
-
-    LemuroidSettingsList(
-        state = location,
-        title = { Text(text = stringResource(R.string.select_saves_folder)) },
-        items = stringListResource(R.array.pref_key_saves_location_display_names),
-    )
 }

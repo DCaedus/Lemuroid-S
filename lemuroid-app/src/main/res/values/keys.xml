@@ -134,16 +134,6 @@
         <item>title</item>
     </string-array>
 
-    <string-array translatable="false" name="pref_key_saves_location_values">
-        <item>main</item>
-        <item>roms</item>
-    </string-array>
-
-    <string-array translatable="false" name="pref_key_saves_location_display_names">
-        <item>@string/saves_option_main</item>
-        <item>@string/saves_option_roms</item>
-    </string-array>
-
     <string-array translatable="false" name="pref_key_roms_location_values">
         <item>main</item>
         <item>custom</item>
