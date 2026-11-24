@@ -22,6 +22,9 @@ public:
 
     /** Unpacks [entryName] from the zip open at [fd] into a new file at [path]. */
     static bool extractEntry(int fd, const std::string& entryName, const std::string& path);
+
+    /** Unpacks [entryName] from the zip open at [fd], writing it to the open file [outputFd]. */
+    static bool extractEntryToDescriptor(int fd, const std::string& entryName, int outputFd);
 };
 
 }

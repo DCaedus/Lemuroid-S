@@ -206,20 +206,25 @@ Utils::ReadResult ZipReader::readEntry(int fd, const std::string& entryName) {
     return Utils::ReadResult { size, bytes };
 }
 
-bool ZipReader::extractEntry(int fd, const std::string& entryName, const std::string& path) {
+bool ZipReader::extractEntryToDescriptor(int fd, const std::string& entryName, int outputFd) {
     Entry entry = findEntry(fd, entryName);
+    unpack(fd, entry, [&](const uint8_t* data, size_t count) {
+        size_t done = 0;
+        while (done < count) {
+            ssize_t w = write(outputFd, data + done, count - done);
+            if (w <= 0) return false;
+            done += static_cast<size_t>(w);
+        }
+        return true;
+    });
+    return true;
+}
+
+bool ZipReader::extractEntry(int fd, const std::string& entryName, const std::string& path) {
     int output = open(path.c_str(), O_WRONLY | O_CREAT | O_TRUNC, 0600);
     if (output < 0) return false;
     try {
-        unpack(fd, entry, [&](const uint8_t* data, size_t count) {
-            size_t done = 0;
-            while (done < count) {
-                ssize_t w = write(output, data + done, count - done);
-                if (w <= 0) return false;
-                done += static_cast<size_t>(w);
-            }
-            return true;
-        });
+        extractEntryToDescriptor(fd, entryName, output);
     } catch (...) {
         close(output);
         unlink(path.c_str());

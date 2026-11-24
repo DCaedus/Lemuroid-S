@@ -152,6 +152,7 @@ private:
     void afterGameLoad();
     std::string linkGameFiles(std::vector<VFSFile>& files, const std::string& linkDirectory);
     static void clearLinkDirectory(const std::string& linkDirectory);
+    bool unpackToMemoryFile(int zipFd, const std::string& entryName, const std::string& romName, const std::string& linkPath);
 
 protected:
     static void callback_hw_video_refresh(const void *data, unsigned width, unsigned height, size_t pitch);

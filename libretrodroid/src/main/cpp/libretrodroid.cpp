@@ -27,6 +27,8 @@
 #include <fcntl.h>
 #include <sys/stat.h>
 #include <unistd.h>
+#include <sys/syscall.h>
+#include <linux/memfd.h>
 
 #include "libretrodroid.h"
 #include "utils/libretrodroidexception.h"
@@ -415,13 +417,19 @@ void LibretroDroid::loadGameFromVirtualFiles(
             game_info.data = file.data;
             game_info.size = file.size;
         } else {
-            // The core needs a real file and can't read zips: unpack it next to the links (deleted
-            // when the next game starts).
+            // The core needs a real file and can't read zips (Genesis Plus GX, PicoDrive): unpack it
+            // into an in-memory file (nothing written to storage) and give the core a named link to
+            // it. Only if the system has no in-memory files, unpack to a temporary file instead
+            // (deleted when the next game starts).
             LOGI("Unpacking zipped game for a core that needs a file");
             mkdir(linkDirectory.c_str(), 0700);
             std::string path = linkDirectory + "/" + romName;
-            if (!ZipReader::extractEntry(virtualFiles[0].getFD(), archiveEntry, path)) {
-                throw std::runtime_error("Cannot unpack game");
+            if (!unpackToMemoryFile(virtualFiles[0].getFD(), archiveEntry, romName, path)) {
+                LOGW("In-memory files unavailable, unpacking %s to a temporary file", romName.c_str());
+                unlink(path.c_str());
+                if (!ZipReader::extractEntry(virtualFiles[0].getFD(), archiveEntry, path)) {
+                    throw std::runtime_error("Cannot unpack game");
+                }
             }
             game_info.path = Utils::cloneToCString(path);
             game_info.data = nullptr;
@@ -472,6 +480,40 @@ void LibretroDroid::loadGameFromVirtualFiles(
     }
 
     afterGameLoad();
+}
+
+bool LibretroDroid::unpackToMemoryFile(
+    int zipFd,
+    const std::string& entryName,
+    const std::string& romName,
+    const std::string& linkPath
+) {
+#ifdef __NR_memfd_create
+    int memoryFd = static_cast<int>(syscall(__NR_memfd_create, romName.c_str(), MFD_CLOEXEC));
+    if (memoryFd < 0) return false;
+    try {
+        ZipReader::extractEntryToDescriptor(zipFd, entryName, memoryFd);
+    } catch (...) {
+        close(memoryFd);
+        throw;
+    }
+    std::string target = "/proc/self/fd/" + std::to_string(memoryFd);
+    bool linked = symlink(target.c_str(), linkPath.c_str()) == 0;
+    if (linked) {
+        int test = open(linkPath.c_str(), O_RDONLY);
+        linked = test >= 0;
+        if (test >= 0) close(test);
+    }
+    if (!linked) {
+        close(memoryFd);
+        return false;
+    }
+    // Kept open (and so alive) for the whole game session.
+    linkedGameFiles.emplace_back(VFSFile(linkPath, memoryFd));
+    return true;
+#else
+    return false;
+#endif
 }
 
 void LibretroDroid::clearLinkDirectory(const std::string& linkDirectory) {
