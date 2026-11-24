@@ -184,6 +184,24 @@ class BiosManager(private val directoriesManager: DirectoriesManager) {
                     "945F9DC9",
                     "nds_firmware.bin",
                 ),
+                // Arcade BIOS sets: FBNeo also looks in system/fbneo/, which works however the game
+                // itself is loaded. Matched by name (zip checksums depend on how the set was packed).
+                Bios(
+                    "fbneo/neogeo.zip",
+                    "",
+                    "Neo Geo (FBNeo)",
+                    SystemID.FBNEO,
+                    null,
+                    "neogeo.zip",
+                ),
+                Bios(
+                    "fbneo/pgm.zip",
+                    "",
+                    "PGM (FBNeo)",
+                    SystemID.FBNEO,
+                    null,
+                    "pgm.zip",
+                ),
                 Bios(
                     "5200.rom",
                     "281F20EA4320404EC820FB7EC0693B38",
