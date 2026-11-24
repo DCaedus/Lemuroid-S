@@ -16,6 +16,15 @@ class LibretroDBMetadataProvider(private val ovgdbManager: LibretroDBManager) :
     GameMetadataProvider {
     companion object {
         private val THUMB_REPLACE = Regex("[&*/:`<>?\\\\|]")
+
+        /** Arcade systems in order of preference: FBNeo first, MAME 2003-Plus as fallback. */
+        private val ARCADE_SYSTEMS = listOf(SystemID.FBNEO.dbname, SystemID.MAME2003PLUS.dbname)
+
+        /**
+         * Folder names that mark arcade ROMs (ES-DE names plus Lemuroid's). Arcade ROMs are short
+         * names like "sf2.zip", so they're only matched inside one of these folders.
+         */
+        private val ARCADE_FOLDERS = setOf("arcade", "fbneo", "mame", "mame2003plus", "mame2003-plus", "fba")
     }
 
     private val sortedSystemIds: List<String> by lazy {
@@ -33,6 +42,7 @@ class LibretroDBMetadataProvider(private val ovgdbManager: LibretroDBManager) :
             runCatching {
                 findByCRC(storageFile, db)
                     ?: findBySerial(storageFile, db)
+                    ?: findArcadeGame(db, storageFile)
                     ?: findByFilename(db, storageFile)
                     ?: findByPathAndFilename(db, storageFile)
                     ?: findByUniqueExtension(storageFile)
@@ -57,6 +67,25 @@ class LibretroDBMetadataProvider(private val ovgdbManager: LibretroDBManager) :
             system = rom.system,
             developer = rom.developer,
         )
+    }
+
+    /**
+     * Lemuroid-S: arcade ROMs in an arcade folder use FBNeo when FBNeo supports them, and
+     * MAME 2003-Plus only for games FBNeo doesn't have.
+     */
+    private suspend fun findArcadeGame(
+        db: LibretroDatabase,
+        file: StorageFile,
+    ): GameMetadata? {
+        if (file.extension.lowercase(Locale.US) != "zip" || !isInArcadeFolder(file.path)) return null
+        val matches = db.gameDao().findByFileNameInSystems(file.name, ARCADE_SYSTEMS)
+        val preferred = ARCADE_SYSTEMS.firstNotNullOfOrNull { system -> matches.firstOrNull { it.system == system } }
+        return preferred?.let { convertToGameMetadata(it) }
+    }
+
+    private fun isInArcadeFolder(path: String?): Boolean {
+        val segments = path?.lowercase(Locale.US)?.split('/', ':') ?: return false
+        return segments.dropLast(1).any { it in ARCADE_FOLDERS }
     }
 
     private suspend fun findByFilename(
