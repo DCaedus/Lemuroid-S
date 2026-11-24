@@ -39,6 +39,17 @@
     <string name="game_menu_fast_forward_speed">Fast-forward speed</string>
     <string name="settings_category_artwork">Artwork</string>
     <string name="settings_category_test">New test settings</string>
+    <string name="setup_title">Welcome to Lemuroid-S</string>
+    <string name="setup_message">Let\'s set things up. You can change all of this later in Settings.</string>
+    <string name="setup_category_games">Games</string>
+    <string name="setup_rom_folder">ROMs folder</string>
+    <string name="setup_rom_folder_not_set">Not set. Choose the folder with your games</string>
+    <string name="setup_category_saves">Saves</string>
+    <string name="setup_category_notifications">Notifications</string>
+    <string name="setup_notifications_title">Allow notifications</string>
+    <string name="setup_notifications_message">Shows progress while your library is scanned and cores download</string>
+    <string name="setup_done">Done</string>
+    <string name="setup_skip">Skip for now</string>
     <string name="settings_title_periodic_autosave">Auto-save while playing</string>
     <string name="settings_description_periodic_autosave">Saves your game automatically at this interval while you play</string>
     <string name="periodic_autosave_names_off">Off</string>

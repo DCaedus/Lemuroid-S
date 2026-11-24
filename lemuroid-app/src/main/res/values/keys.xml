@@ -27,6 +27,7 @@
     <string name="pref_key_fast_forward_button" translatable="false">fast_forward_button</string>
 
     <string name="pref_key_artwork_type" translatable="false">artwork_type</string>
+    <string name="pref_key_setup_completed" translatable="false">setup_completed</string>
     <string name="pref_key_artwork_retroarch_folder" translatable="false">artwork_retroarch_folder</string>
     <string name="pref_key_periodic_autosave_minutes" translatable="false">periodic_autosave_minutes</string>
     <string name="pref_key_artwork_type_system_prefix" translatable="false">artwork_type_system_</string>

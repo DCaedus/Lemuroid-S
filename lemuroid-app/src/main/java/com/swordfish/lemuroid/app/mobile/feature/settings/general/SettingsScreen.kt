@@ -195,7 +195,7 @@ private fun TestSettings() {
 
 /** Where in-game saves (.srm) are stored, besides the app's own copy. */
 @Composable
-private fun SavesLocationSettings() {
+internal fun SavesLocationSettings() {
     val context = LocalContext.current
     val locationValues = stringListResource(R.array.pref_key_saves_location_values)
     val location =
@@ -245,16 +245,7 @@ private fun ArtworkSettings(navController: NavController) {
     LemuroidCardSettingsGroup(
         title = { Text(text = stringResource(id = R.string.settings_category_artwork)) },
     ) {
-        LemuroidSettingsList(
-            state =
-                indexPreferenceState(
-                    R.string.pref_key_artwork_type,
-                    ArtworkType.DEFAULT.prefValue,
-                    stringListResource(R.array.pref_key_artwork_type_values),
-                ),
-            title = { Text(text = stringResource(id = R.string.settings_title_artwork_type)) },
-            items = stringListResource(R.array.pref_key_artwork_type_display_names),
-        )
+        ArtworkTypeSetting()
         LemuroidSettingsMenuLink(
             title = { Text(text = stringResource(id = R.string.settings_title_artwork_per_system)) },
             subtitle = { Text(text = stringResource(id = R.string.settings_description_artwork_per_system)) },
@@ -264,9 +255,23 @@ private fun ArtworkSettings(navController: NavController) {
     }
 }
 
+@Composable
+internal fun ArtworkTypeSetting() {
+    LemuroidSettingsList(
+        state =
+            indexPreferenceState(
+                R.string.pref_key_artwork_type,
+                ArtworkType.DEFAULT.prefValue,
+                stringListResource(R.array.pref_key_artwork_type_values),
+            ),
+        title = { Text(text = stringResource(id = R.string.settings_title_artwork_type)) },
+        items = stringListResource(R.array.pref_key_artwork_type_display_names),
+    )
+}
+
 /** Optional: RetroArch's "thumbnails" folder, checked before Lemuroid-S's own artwork folder. */
 @Composable
-private fun RetroArchThumbnailsFolderSetting() {
+internal fun RetroArchThumbnailsFolderSetting() {
     val context = LocalContext.current
     val folderKey = stringResource(R.string.pref_key_artwork_retroarch_folder)
     val preferences = remember { SharedPreferencesHelper.getSharedPreferences(context) }
