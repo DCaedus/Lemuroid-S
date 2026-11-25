@@ -14,23 +14,23 @@ object deps {
         const val okHttp          = "4.9.1"
         const val retrofit        = "2.9.0"
         const val work            = "2.9.0"
-        const val navigation      = "2.5.2"
-        const val lifecycle       = "2.6.1"
+        const val navigation      = "2.9.7"
+        const val lifecycle       = "2.10.0"
         const val leanback        = "1.1.0-rc01"
         const val googleApiClient = "1.32.1"
         const val paging          = "3.2.1"
         const val room            = "2.6.1"
         const val serialization   = "1.2.2"
         const val fragment        = "1.5.1"
-        const val activity        = "1.7.2"
+        const val activity        = "1.13.0"
         const val libretrodroid   = "0.14.0"
-        const val composeBom      = "2024.02.02"
+        const val composeBom      = "2026.06.01"
         const val kotlinExtension = "1.4.6"
         const val padkit          = "1.0.0-beta1"
 
         // Make sure this is compatible with current bom versions:
         // https://developer.android.com/jetpack/compose/bom/bom-mapping
-        const val accompanist     = "0.34.0"
+        const val accompanist     = "0.37.3"
     }
 
     object libs {
@@ -92,6 +92,7 @@ object deps {
                 const val composeBom = "androidx.compose:compose-bom:${versions.composeBom}"
                 const val material3 = "androidx.compose.material3:material3"
                 const val extendedIcons = "androidx.compose.material:material-icons-extended"
+                const val coreIcons = "androidx.compose.material:material-icons-core"
                 const val tooling = "androidx.compose.ui:ui-tooling"
                 const val toolingPreview = "androidx.compose.ui:ui-tooling-preview"
                 const val geometry = "androidx.compose.ui:ui-geometry"
