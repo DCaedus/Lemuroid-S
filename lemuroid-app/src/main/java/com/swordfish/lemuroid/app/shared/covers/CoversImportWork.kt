@@ -46,6 +46,13 @@ class CoversImportWork(context: Context, workerParams: WorkerParameters) :
             } else {
                 applicationContext.getString(R.string.import_covers_failed)
             }
+        NotificationsManager(applicationContext).showResult(
+            NotificationsManager.COVERS_IMPORT_RESULT_NOTIFICATION_ID,
+            applicationContext.getString(
+                if (copied != null) R.string.covers_import_result_title else R.string.covers_import_failed_title,
+            ),
+            message,
+        )
         Handler(Looper.getMainLooper()).post {
             Toast.makeText(applicationContext, message, Toast.LENGTH_LONG).show()
         }

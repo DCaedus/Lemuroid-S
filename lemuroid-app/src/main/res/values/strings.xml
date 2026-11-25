@@ -232,6 +232,12 @@
     <string name="library_index_notification_title">ROMs scanning in progress</string>
     <string name="saves_import_notification_title">Importing saves</string>
     <string name="saves_import_notification_message">Copying battery saves and save states into Lemuroid-S</string>
+    <string name="library_result_title">Library scan finished</string>
+    <string name="library_result_message">%1$d games in your library (%2$d new).</string>
+    <string name="saves_import_result_title">Saves imported</string>
+    <string name="saves_import_failed_title">Saves import failed</string>
+    <string name="covers_import_result_title">Covers imported</string>
+    <string name="covers_import_failed_title">Covers import failed</string>
     <string name="covers_import_notification_title">Importing game covers</string>
     <string name="covers_import_notification_message">Copying covers into the Lemuroid-S folder</string>
     <string name="library_index_notification_message">This can take up to a few minutes</string>
@@ -314,6 +320,8 @@
     <string name="shader_filter_names_scale2x">Scale2x (EPX)</string>
     <string name="shader_filter_names_xbr">xBR</string>
     <string name="shader_filter_names_sabr">SABR</string>
+    <string name="shader_filter_names_mmpx">MMPX</string>
+    <string name="shader_filter_names_zfast_crt">CRT (zfast)</string>
 
     <string name="viewport_alignment_names_top">Top</string>
     <string name="viewport_alignment_names_center">Center</string>

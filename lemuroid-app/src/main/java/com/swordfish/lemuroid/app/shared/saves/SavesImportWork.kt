@@ -56,6 +56,13 @@ class SavesImportWork(context: Context, workerParams: WorkerParameters) :
             } else {
                 applicationContext.getString(R.string.import_saves_failed)
             }
+        NotificationsManager(applicationContext).showResult(
+            NotificationsManager.SAVES_IMPORT_RESULT_NOTIFICATION_ID,
+            applicationContext.getString(
+                if (result != null) R.string.saves_import_result_title else R.string.saves_import_failed_title,
+            ),
+            message,
+        )
         Handler(Looper.getMainLooper()).post {
             Toast.makeText(applicationContext, message, Toast.LENGTH_LONG).show()
         }

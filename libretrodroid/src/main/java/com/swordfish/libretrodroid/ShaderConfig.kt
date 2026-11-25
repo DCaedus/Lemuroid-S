@@ -28,6 +28,8 @@ sealed interface ShaderConfig {
     object Scale2x : ShaderConfig
     object XBR : ShaderConfig
     object SABR : ShaderConfig
+    object MMPX : ShaderConfig
+    object ZfastCRT : ShaderConfig
 
     data class CUT(
         val useDynamicBlend: Boolean = true,

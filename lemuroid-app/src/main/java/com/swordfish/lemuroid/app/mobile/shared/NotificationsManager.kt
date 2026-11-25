@@ -1,13 +1,16 @@
 package com.swordfish.lemuroid.app.mobile.shared
 
+import android.Manifest
 import android.app.Notification
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.os.Build
 import androidx.core.app.NotificationCompat
+import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.ContextCompat
 import com.swordfish.lemuroid.R
 import com.swordfish.lemuroid.app.shared.library.CoreUpdateBroadcastReceiver
@@ -66,6 +69,39 @@ class NotificationsManager(private val applicationContext: Context) {
             .setProgress(100, 0, true)
             .setPriority(NotificationCompat.PRIORITY_LOW)
             .build()
+    }
+
+    /**
+     * Lemuroid-S: a notification left after a scan or import finishes, with its results. Tapping it
+     * opens the app; it can be swiped away.
+     */
+    fun showResult(
+        id: Int,
+        title: String,
+        message: String,
+    ) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU &&
+            ContextCompat.checkSelfPermission(applicationContext, Manifest.permission.POST_NOTIFICATIONS) !=
+            PackageManager.PERMISSION_GRANTED
+        ) {
+            return
+        }
+        createDefaultNotificationChannel()
+        val openApp =
+            applicationContext.packageManager.getLaunchIntentForPackage(applicationContext.packageName)?.let {
+                PendingIntent.getActivity(applicationContext, id, it, PendingIntent.FLAG_IMMUTABLE)
+            }
+        val notification =
+            NotificationCompat.Builder(applicationContext, DEFAULT_CHANNEL_ID)
+                .setSmallIcon(R.drawable.ic_lemuroid_tiny)
+                .setContentTitle(title)
+                .setContentText(message)
+                .setStyle(NotificationCompat.BigTextStyle().bigText(message))
+                .setContentIntent(openApp)
+                .setAutoCancel(true)
+                .setPriority(NotificationCompat.PRIORITY_LOW)
+                .build()
+        NotificationManagerCompat.from(applicationContext).notify(id, notification)
     }
 
     fun libraryIndexingNotification(): Notification {
@@ -171,5 +207,8 @@ class NotificationsManager(private val applicationContext: Context) {
         const val CORE_INSTALL_NOTIFICATION_ID = 4
         const val SAVES_IMPORT_NOTIFICATION_ID = 5
         const val COVERS_IMPORT_NOTIFICATION_ID = 6
+        const val LIBRARY_RESULT_NOTIFICATION_ID = 7
+        const val SAVES_IMPORT_RESULT_NOTIFICATION_ID = 8
+        const val COVERS_IMPORT_RESULT_NOTIFICATION_ID = 9
     }
 }

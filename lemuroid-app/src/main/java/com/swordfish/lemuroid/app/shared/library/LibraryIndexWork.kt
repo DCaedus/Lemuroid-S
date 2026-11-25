@@ -4,12 +4,14 @@ import android.content.Context
 import androidx.work.CoroutineWorker
 import androidx.work.ListenableWorker
 import androidx.work.WorkerParameters
+import com.swordfish.lemuroid.R
 import com.swordfish.lemuroid.app.mobile.shared.NotificationsManager
 import com.swordfish.lemuroid.app.shared.settings.RomsFolder
 import com.swordfish.lemuroid.app.utils.android.createSyncForegroundInfo
 import com.swordfish.lemuroid.lib.injection.AndroidWorkerInjection
 import com.swordfish.lemuroid.lib.injection.WorkerKey
 import com.swordfish.lemuroid.lib.library.LemuroidLibrary
+import com.swordfish.lemuroid.lib.library.db.RetrogradeDatabase
 import dagger.Binds
 import dagger.android.AndroidInjector
 import dagger.multibindings.IntoMap
@@ -22,6 +24,9 @@ class LibraryIndexWork(context: Context, workerParams: WorkerParameters) :
     CoroutineWorker(context, workerParams) {
     @Inject
     lateinit var lemuroidLibrary: LemuroidLibrary
+
+    @Inject
+    lateinit var retrogradeDatabase: RetrogradeDatabase
 
     override suspend fun doWork(): Result {
         AndroidWorkerInjection.inject(this)
@@ -36,6 +41,7 @@ class LibraryIndexWork(context: Context, workerParams: WorkerParameters) :
 
         setForegroundAsync(foregroundInfo)
 
+        val gamesBefore = runCatching { retrogradeDatabase.gameDao().count() }.getOrDefault(0)
         val result =
             withContext(Dispatchers.IO) {
                 kotlin.runCatching {
@@ -43,6 +49,18 @@ class LibraryIndexWork(context: Context, workerParams: WorkerParameters) :
                     lemuroidLibrary.indexLibrary()
                 }
             }
+        if (result.isSuccess) {
+            val gamesAfter = runCatching { retrogradeDatabase.gameDao().count() }.getOrDefault(0)
+            notificationsManager.showResult(
+                NotificationsManager.LIBRARY_RESULT_NOTIFICATION_ID,
+                applicationContext.getString(R.string.library_result_title),
+                applicationContext.getString(
+                    R.string.library_result_message,
+                    gamesAfter,
+                    maxOf(gamesAfter - gamesBefore, 0),
+                ),
+            )
+        }
 
         result.exceptionOrNull()?.let {
             Timber.e("Library indexing work terminated with an exception:", it)

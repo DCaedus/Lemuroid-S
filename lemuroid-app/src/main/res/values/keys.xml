@@ -64,6 +64,8 @@
         <item>scale2x</item>
         <item>xbr</item>
         <item>sabr</item>
+        <item>mmpx</item>
+        <item>zfast_crt</item>
     </string-array>
 
     <string-array translatable="false" name="pref_key_shader_filter_display_names">
@@ -75,6 +77,8 @@
         <item>@string/shader_filter_names_scale2x</item>
         <item>@string/shader_filter_names_xbr</item>
         <item>@string/shader_filter_names_sabr</item>
+        <item>@string/shader_filter_names_mmpx</item>
+        <item>@string/shader_filter_names_zfast_crt</item>
     </string-array>
 
     <string-array translatable="false" name="pref_key_viewport_alignment_values">

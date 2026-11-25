@@ -1528,6 +1528,159 @@ const std::string ShaderManager::cut3UpscalePass2Fragment =
     "}";
 
 // Lemuroid-S: light pixel-art upscalers (single pass, run on the GPU).
+const std::string ShaderManager::mmpxFragment = R"GLSL(
+// MMPX by Morgan McGuire and Mara Gagiu (MIT license),
+// https://casual-effects.com/research/McGuire2021PixelArt/ ; GLSL version by hunterk (libretro glsl-shaders).
+// Lemuroid-S: adapted to LibretroDroid's uniforms (texture, textureSize, coords), single pass, nearest sampling.
+#ifdef GL_FRAGMENT_PRECISION_HIGH
+#define HIGHP highp
+precision highp float;
+#else
+#define HIGHP mediump
+precision mediump float;
+#endif
+uniform lowp sampler2D texture;
+uniform HIGHP vec2 textureSize;
+varying HIGHP vec2 coords;
+float luma(vec3 col){
+   return dot(col, vec3(0.2126, 0.7152, 0.0722));
+}
+bool same(vec3 B, vec3 A0){
+   return all(equal(B, A0));
+}
+bool notsame(vec3 B, vec3 A0){
+   return any(notEqual(B, A0));
+}
+bool all_eq2(vec3 B, vec3 A0, vec3 A1) {
+    return (same(B,A0) && same(B,A1));
+}
+bool all_eq3(vec3 B, vec3 A0, vec3 A1, vec3 A2) {
+    return (same(B,A0) && same(B,A1) && same(B,A2));
+}
+bool all_eq4(vec3 B, vec3 A0, vec3 A1, vec3 A2, vec3 A3) {
+    return (same(B,A0) && same(B,A1) && same(B,A2) && same(B,A3));
+}
+bool any_eq3(vec3 B, vec3 A0, vec3 A1, vec3 A2) {
+   return (same(B,A0) || same(B,A1) || same(B,A2));
+}
+bool none_eq2(vec3 B, vec3 A0, vec3 A1) {
+   return (notsame(B,A0) && notsame(B,A1));
+}
+bool none_eq4(vec3 B, vec3 A0, vec3 A1, vec3 A2, vec3 A3) {
+   return (notsame(B,A0) && notsame(B,A1) && notsame(B,A2) && notsame(B,A3));
+}
+#define src(c,d) texture2D(texture, coords + vec2(c,d) / textureSize).rgb
+void main()
+{
+   float srcX = 0.;
+   float srcY = 0.;
+   vec3 E = src(srcX+0.,srcY+0.);
+   vec3 A = src(srcX-1.,srcY-1.);
+   vec3 B = src(srcX+0.,srcY-1.);
+   vec3 C = src(srcX+1.,srcY-1.);
+   vec3 D = src(srcX-1.,srcY+0.);
+   vec3 F = src(srcX+1.,srcY+0.);
+   vec3 G = src(srcX-1.,srcY+1.);
+   vec3 H = src(srcX+0.,srcY+1.);
+   vec3 I = src(srcX+1.,srcY+1.);
+   vec3 J = E;
+   vec3 K = E;
+   vec3 L = E;
+   vec3 M = E;
+   gl_FragColor = vec4(E, 1.0);
+ if(same(E,A) && same(E,B) && same(E,C) && same(E,D) && same(E,F) && same(E,G) && same(E,H) && same(E,I)) return;
+   vec3 P  = src(srcX+0.,srcY-2.);
+   vec3 Q  = src(srcX-2.,srcY+0.);
+   vec3 R  = src(srcX+2.,srcY+0.);
+   vec3 S  = src(srcX+0.,srcY+2.);
+   float Bl = luma(B);
+   float Dl = luma(D);
+   float El = luma(E);
+   float Fl = luma(F);
+   float Hl = luma(H);
+   if (((same(D,B) && notsame(D,H) && notsame(D,F))) && ((El>=Dl) || same(E,A)) && any_eq3(E,A,C,G) && ((El<Dl) || notsame(A,D) || notsame(E,P) || notsame(E,Q))) J=D;
+   if (((same(B,F) && notsame(B,D) && notsame(B,H))) && ((El>=Bl) || same(E,C)) && any_eq3(E,A,C,I) && ((El<Bl) || notsame(C,B) || notsame(E,P) || notsame(E,R))) K=B;
+   if (((same(H,D) && notsame(H,F) && notsame(H,B))) && ((El>=Hl) || same(E,G)) && any_eq3(E,A,G,I) && ((El<Hl) || notsame(G,H) || notsame(E,S) || notsame(E,Q))) L=H;
+   if (((same(F,H) && notsame(F,B) && notsame(F,D))) && ((El>=Fl) || same(E,I)) && any_eq3(E,C,G,I) && ((El<Fl) || notsame(I,H) || notsame(E,R) || notsame(E,S))) M=F;
+   if ((notsame(E,F) && all_eq4(E,C,I,D,Q) && all_eq2(F,B,H)) && notsame(F,src(srcX+3.,srcY))) K=M=F;
+   if ((notsame(E,D) && all_eq4(E,A,G,F,R) && all_eq2(D,B,H)) && notsame(D,src(srcX-3.,srcY))) J=L=D;
+   if ((notsame(E,H) && all_eq4(E,G,I,B,P) && all_eq2(H,D,F)) && notsame(H,src(srcX,srcY+3.))) L=M=H;
+   if ((notsame(E,B) && all_eq4(E,A,C,H,S) && all_eq2(B,D,F)) && notsame(B,src(srcX,srcY-3.))) J=K=B;
+   if ((Bl<El) && all_eq4(E,G,H,I,S) && none_eq4(E,A,D,C,F)) J=K=B;
+   if ((Hl<El) && all_eq4(E,A,B,C,P) && none_eq4(E,D,G,I,F)) L=M=H;
+   if ((Fl<El) && all_eq4(E,A,D,G,Q) && none_eq4(E,B,C,I,H)) K=M=F;
+   if ((Dl<El) && all_eq4(E,C,F,I,R) && none_eq4(E,B,A,G,H)) J=L=D;
+   if (notsame(H,B)) {
+      if (notsame(H,A) && notsame(H,E) && notsame(H,C)) {
+         if (all_eq3(H,G,F,R) && none_eq2(H,D,src(srcX+2.,srcY-1.))) L=M;
+         if (all_eq3(H,I,D,Q) && none_eq2(H,F,src(srcX-2.,srcY-1.))) M=L;
+      }
+      if (notsame(B,I) && notsame(B,G) && notsame(B,E)) {
+         if (all_eq3(B,A,F,R) && none_eq2(B,D,src(srcX+2.,srcY+1.))) J=K;
+         if (all_eq3(B,C,D,Q) && none_eq2(B,F,src(srcX-2.,srcY+1.))) K=J;
+      }
+   }
+   if (notsame(F,D)) {
+      if (notsame(D,I) && notsame(D,E) && notsame(D,C)) {
+         if (all_eq3(D,A,H,S) && none_eq2(D,B,src(srcX+1.,srcY+2.))) J=L;
+         if (all_eq3(D,G,B,P) && none_eq2(D,H,src(srcX+1.,srcY-2.))) L=J;
+      }
+      if (notsame(F,E) && notsame(F,A) && notsame(F,G)) {
+         if (all_eq3(F,C,H,S) && none_eq2(F,B,src(srcX-1.,srcY+2.))) K=M;
+         if (all_eq3(F,I,B,P) && none_eq2(F,H,src(srcX-1.,srcY-2.))) M=K;
+      }
+   }
+   vec2 a = fract(coords * textureSize);
+   gl_FragColor.rgb = (a.x < 0.5) ? (a.y < 0.5 ? J : L) : (a.y < 0.5 ? K : M);
+}
+)GLSL";
+
+const std::string ShaderManager::zfastCrtFragment = R"GLSL(
+// zfast_crt_standard: a simple, fast CRT shader. Copyright (C) 2017 Greg Hogan (SoltanGris42).
+// GNU GPL v2 or later. From libretro glsl-shaders (crt/shaders/zfast_crt.glsl).
+// Lemuroid-S: adapted to LibretroDroid's uniforms; the output pixel count comes from screenDensity.
+#ifdef GL_FRAGMENT_PRECISION_HIGH
+#define HIGHP highp
+precision highp float;
+#else
+#define HIGHP mediump
+precision mediump float;
+#endif
+uniform lowp sampler2D texture;
+uniform HIGHP vec2 textureSize;
+uniform mediump float screenDensity;
+varying HIGHP vec2 coords;
+
+#define BLURSCALEX 0.45
+#define LOWLUMSCAN 5.0
+#define HILUMSCAN 10.0
+#define BRIGHTBOOST 1.25
+#define MASK_DARK 0.25
+#define MASK_FADE 0.8
+
+void main() {
+  HIGHP vec2 invDims = 1.0 / textureSize;
+  HIGHP vec2 p = coords * textureSize;
+  HIGHP vec2 i = floor(p) + 0.50;
+  HIGHP vec2 f = p - i;
+  p = (i + 4.0 * f * f * f) * invDims;
+  p.x = mix(p.x, coords.x, BLURSCALEX);
+  HIGHP float Y = f.y * f.y;
+  HIGHP float YY = Y * Y;
+
+  // Aperture-grille style mask, one darker column out of every three screen pixels.
+  HIGHP float whichmask = floor(coords.x * textureSize.x * screenDensity) * -0.3333;
+  HIGHP float mask = 1.0 + float(fract(whichmask) < 0.3333) * -MASK_DARK;
+
+  lowp vec3 colour = texture2D(texture, p).rgb;
+  HIGHP float scanLineWeight = (BRIGHTBOOST - LOWLUMSCAN * (Y - 2.05 * YY));
+  HIGHP float scanLineWeightB = 1.0 - HILUMSCAN * (YY - 2.8 * YY * Y);
+  HIGHP float maskFade = 0.3333 * MASK_FADE;
+
+  gl_FragColor = vec4(colour * mix(scanLineWeight * mask, scanLineWeightB, dot(colour, vec3(maskFade))), 1.0);
+}
+)GLSL";
+
 const std::string ShaderManager::scale2xFragment = R"GLSL(
 #ifdef GL_FRAGMENT_PRECISION_HIGH
 #define HIGHP highp
@@ -1741,6 +1894,14 @@ ShaderManager::Chain ShaderManager::getShader(const ShaderManager::Config& confi
 
     case Type::SHADER_SABR: {
         return { { { defaultShaderVertex, "#define SABR 1\n" + xbrFragment, false, 1.0 } }, false };
+    }
+
+    case Type::SHADER_MMPX: {
+        return { { { defaultShaderVertex, mmpxFragment, false, 1.0 } }, false };
+    }
+
+    case Type::SHADER_ZFAST_CRT: {
+        return { { { defaultShaderVertex, zfastCrtFragment, true, 1.0 } }, true };
     }
 
     case Type::SHADER_UPSCALE_CUT: {
