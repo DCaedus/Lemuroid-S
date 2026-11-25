@@ -44,7 +44,7 @@
     <string name="main_folder_setting_title">Lemuroid-S folder</string>
     <string name="main_folder_card_title">Create Lemuroid-S folder</string>
     <string name="main_folder_card_message">Main Lemuroid-S folder stores your roms (optional), saves and covers.</string>
-    <string name="main_folder_card_action">Choose</string>
+    <string name="main_folder_card_action">Create folder</string>
     <string name="main_folder_dialog_message">Because of Android filesystem limitations the main Lemuroid-S folder must be created manually.\n\nCreate a folder named Lemuroid-S or choose where you want to create it, then tap Use this folder.</string>
     <string name="main_folder_dialog_ok">Okay</string>
     <string name="main_folder_failed">This folder can\'t be used. Please create or choose another one.</string>
