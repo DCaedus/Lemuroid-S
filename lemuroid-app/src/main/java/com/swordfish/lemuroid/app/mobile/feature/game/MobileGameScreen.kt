@@ -383,8 +383,8 @@ private fun MenuEditTouchControlRow(
 }
 
 /**
- * Lemuroid-S: small overlay with the game's speed (frames the core runs per second) and the new
- * pictures shown per second. Updated once a second. Settings > New test settings > Show framerate.
+ * Lemuroid-S: small overlay with the game's speed (frames the core runs per second). Updated once
+ * a second. Settings > New test settings > Show framerate.
  */
 @Composable
 private fun FramerateCounter(viewModel: BaseGameScreenViewModel) {
@@ -401,10 +401,9 @@ private fun FramerateCounter(viewModel: BaseGameScreenViewModel) {
             val seconds = (now - previousTime).coerceAtLeast(1) / 1000f
             if (current != null && previous != null) {
                 val gameFps = (current[0] - previous[0]) / seconds
-                val screenFps = ((current[1] - previous[1]) / seconds).roundToInt()
                 val normalFps = current.getOrNull(2)?.let { it / 1000f } ?: 0f
                 val speedPercent = if (normalFps > 0f) (gameFps / normalFps * 100).roundToInt() else 0
-                text = String.format(format, gameFps.roundToInt(), speedPercent, screenFps)
+                text = String.format(format, gameFps.roundToInt(), speedPercent)
             }
             previous = current
             previousTime = now

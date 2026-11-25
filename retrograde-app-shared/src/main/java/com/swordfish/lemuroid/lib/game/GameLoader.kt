@@ -89,7 +89,6 @@ class GameLoader(
                     throw GameLoaderException(GameLoaderError.MissingBiosFiles(missingBiosFiles))
                 }
 
-                val startedAt = System.currentTimeMillis()
                 val gameFiles =
                     runCatching {
                         val dataFiles = retrogradeDatabase.dataFileDao().selectDataFilesForGame(game.id)
@@ -102,7 +101,6 @@ class GameLoader(
                         desmumeMigrationHandler.resolveSaveData(game, systemCoreConfig.coreID, data)
                     }.getOrElse { throw GameLoaderException(GameLoaderError.Saves) }
                 val saveRAMData = saveRAM.data
-                val filesReadyAt = System.currentTimeMillis()
 
                 val quickSaveData =
                     runCatching {
@@ -119,11 +117,6 @@ class GameLoader(
                             null
                         }
                     }.getOrElse { throw GameLoaderException(GameLoaderError.Saves) }
-
-                Timber.i(
-                    "Load timing: game files + save ${filesReadyAt - startedAt} ms, " +
-                        "resume state ${System.currentTimeMillis() - filesReadyAt} ms",
-                )
 
                 val coreVariables =
                     coreVariablesManager.getOptionsForCore(system.id, systemCoreConfig)

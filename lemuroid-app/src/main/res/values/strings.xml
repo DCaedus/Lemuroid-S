@@ -86,7 +86,7 @@
     <string name="import_saves_failed">No saves found there, or the Lemuroid-S folder isn\'t set up.</string>
     <string name="settings_title_show_framerate">Show framerate</string>
     <string name="settings_description_show_framerate">Shows game fps, game speed (%) and new pictures per second in a corner while playing</string>
-    <string name="framerate_overlay">Game %1$d fps (%2$d%%) · Screen %3$d fps</string>
+    <string name="framerate_overlay">%1$d fps (%2$d%%)</string>
     <string name="settings_title_periodic_autosave">Auto-save while playing</string>
     <string name="settings_description_periodic_autosave">Saves your game automatically at this interval while you play</string>
     <string name="periodic_autosave_names_off">Off</string>
