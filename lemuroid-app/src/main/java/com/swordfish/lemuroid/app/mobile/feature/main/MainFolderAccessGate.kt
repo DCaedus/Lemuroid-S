@@ -70,7 +70,7 @@ fun MainFolderAccessGate(content: @Composable () -> Unit) {
     }
 
     val picker =
-        rememberMainFolderPicker {
+        rememberMainFolderPicker(explainFirst = false) {
             scope.launch {
                 // A moved or recreated folder has new addresses: point the ROMs folder at it again.
                 if (RomsFolder.isMainLocation(context)) RomsFolder.useMainFolder(context)

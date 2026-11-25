@@ -6,7 +6,9 @@ import android.net.Uri
 import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -38,7 +40,10 @@ private val STORAGE_ROOT: Uri = Uri.parse("content://com.android.externalstorage
  * one-time step. [onChosen] runs once it's set (callers then move existing files into it).
  */
 @Composable
-fun rememberMainFolderPicker(onChosen: () -> Unit = { }): () -> Unit {
+fun rememberMainFolderPicker(
+    explainFirst: Boolean = true,
+    onChosen: () -> Unit = { },
+): () -> Unit {
     val context = LocalContext.current
     val scope = rememberCoroutineScope()
     val launcher =
@@ -53,7 +58,28 @@ fun rememberMainFolderPicker(onChosen: () -> Unit = { }): () -> Unit {
                 onChosen()
             }
         }
-    return { launcher.launch(STORAGE_ROOT) }
+    // Android's picker can't create the folder for us: explain that first, then open the picker.
+    var showExplanation by remember { mutableStateOf(false) }
+    if (showExplanation) {
+        AlertDialog(
+            onDismissRequest = { showExplanation = false },
+            title = { Text(text = stringResource(R.string.main_folder_card_title)) },
+            text = { Text(text = stringResource(R.string.main_folder_dialog_message)) },
+            confirmButton = {
+                TextButton(
+                    onClick = {
+                        showExplanation = false
+                        launcher.launch(STORAGE_ROOT)
+                    },
+                ) {
+                    Text(text = stringResource(R.string.main_folder_dialog_ok))
+                }
+            },
+        )
+    }
+    return {
+        if (explainFirst) showExplanation = true else launcher.launch(STORAGE_ROOT)
+    }
 }
 
 private fun useMainFolder(

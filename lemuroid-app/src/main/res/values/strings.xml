@@ -42,9 +42,11 @@
     <string name="settings_category_storage">Storage</string>
     <string name="main_folder_not_set">Not set. Choose where the Lemuroid-S folder goes</string>
     <string name="main_folder_setting_title">Lemuroid-S folder</string>
-    <string name="main_folder_card_title">Choose the Lemuroid-S folder</string>
-    <string name="main_folder_card_message">Lemuroid-S keeps your ROMs, saves, save states and covers in a Lemuroid-S folder in your phone storage, like RetroArch.\nTap Choose, create a folder named Lemuroid-S, then tap Use this folder.</string>
+    <string name="main_folder_card_title">Create Lemuroid-S folder</string>
+    <string name="main_folder_card_message">Main Lemuroid-S folder stores your roms (optional), saves and covers.</string>
     <string name="main_folder_card_action">Choose</string>
+    <string name="main_folder_dialog_message">Because of Android filesystem limitations the main Lemuroid-S folder must be created manually.\n\nCreate a folder named Lemuroid-S or choose where you want to create it, then tap Use this folder.</string>
+    <string name="main_folder_dialog_ok">Okay</string>
     <string name="main_folder_failed">This folder can\'t be used. Please create or choose another one.</string>
     <string name="main_folder_required">Choose the Lemuroid-S folder first</string>
     <string name="main_folder_lost_title">Can\'t reach the Lemuroid-S folder</string>
@@ -74,7 +76,7 @@
     <string name="import_covers_result">Imported %1$d covers from RetroArch.</string>
     <string name="import_covers_failed">Could not find RetroArch\'s thumbnails folder, or the Lemuroid-S folder isn\'t set up.</string>
     <string name="home_import_saves_title">Import Saves</string>
-    <string name="home_import_saves_message">Copy your battery saves and save states from RetroArch, Pizza Boy, Lemuroid or another emulator into Lemuroid-S. Works even before your games are added.</string>
+    <string name="home_import_saves_message">Import your saves from other emulators or folders.</string>
     <string name="home_import_saves_action">Import Saves</string>
     <string name="home_card_not_now">Not now</string>
     <string name="done">Done</string>
@@ -189,7 +191,7 @@
     <string name="home_microphone_action">Enable</string>
 
     <string name="home_empty_title">Select ROMS folder</string>
-    <string name="home_empty_message">Keep your ROMs in Lemuroid-S/roms (one folder per system is created for you), or choose your own folder. Scanning might take a few minutes.</string>
+    <string name="home_empty_message">Use the default Lemuroid-S folder or select your own roms folder.</string>
     <string name="home_roms_main_action">Lemuroid-S folder</string>
     <string name="home_empty_action">Select</string>
 
@@ -230,6 +232,8 @@
     <string name="library_index_notification_title">ROMs scanning in progress</string>
     <string name="saves_import_notification_title">Importing saves</string>
     <string name="saves_import_notification_message">Copying battery saves and save states into Lemuroid-S</string>
+    <string name="covers_import_notification_title">Importing game covers</string>
+    <string name="covers_import_notification_message">Copying covers into the Lemuroid-S folder</string>
     <string name="library_index_notification_message">This can take up to a few minutes</string>
 
     <string name="save_sync_notification_title">Cloud save Sync in progress</string>

@@ -35,7 +35,7 @@ object CoverUtils {
         game: Game,
     ): Any? {
         game.customCoverUri?.let { return it }
-        return CoverUrls.target(context, game)?.let { CoverRequest(it) }
+        return CoverUrls.target(context, game)?.let { CoverRequest(it, CoverStore.version.value) }
     }
 
     fun buildImageLoader(applicationContext: Context): ImageLoader {

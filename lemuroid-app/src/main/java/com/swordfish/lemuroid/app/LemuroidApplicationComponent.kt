@@ -19,6 +19,7 @@
 
 package com.swordfish.lemuroid.app
 
+import com.swordfish.lemuroid.app.shared.covers.CoversImportWork
 import com.swordfish.lemuroid.app.shared.library.CoreUpdateWork
 import com.swordfish.lemuroid.app.shared.library.LibraryIndexWork
 import com.swordfish.lemuroid.app.shared.saves.SavesImportWork
@@ -40,6 +41,7 @@ import dagger.android.support.AndroidSupportInjectionModule
         LemuroidApplicationModule::class,
         LibraryIndexWork.Module::class,
         SavesImportWork.Module::class,
+        CoversImportWork.Module::class,
         SavesMoveWork.Module::class,
         SaveSyncWork.Module::class,
         ChannelUpdateWork.Module::class,

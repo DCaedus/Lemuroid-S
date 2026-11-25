@@ -29,11 +29,12 @@ class SettingsManager(private val context: Context, sharedPreferences: Lazy<Shar
             context.resources.getStringArray(R.array.pref_key_shader_filter_values).first(),
         )
 
-    suspend fun hdMode() = booleanPreference(R.string.pref_key_hd_mode, false)
+    suspend fun hdMode() = booleanPreference(R.string.pref_key_hd_mode, DEFAULT_HD_MODE)
 
     suspend fun viewportAlignment() = stringPreference(R.string.pref_key_viewport_alignment, "center")
 
-    suspend fun hdModeQuality() = HDModeQuality.parse(intPreference(R.string.pref_key_hd_mode_quality, 1))
+    suspend fun hdModeQuality() =
+        HDModeQuality.parse(intPreference(R.string.pref_key_hd_mode_quality, DEFAULT_HD_MODE_QUALITY))
 
     suspend fun tiltSensitivity() = floatPreference(R.string.pref_key_tilt_sensitivity_index, 10, 6)
 
@@ -54,7 +55,7 @@ class SettingsManager(private val context: Context, sharedPreferences: Lazy<Shar
             .toIntOrNull() ?: DEFAULT_FAST_FORWARD_SPEED.toInt()
 
     suspend fun fastForwardAudioMode() =
-        stringPreference(R.string.pref_key_fast_forward_audio, FAST_FORWARD_AUDIO_NORMAL)
+        stringPreference(R.string.pref_key_fast_forward_audio, DEFAULT_FAST_FORWARD_AUDIO)
 
     /** Volume used while fast-forwarding in "lower" mode, from 0.0 to 1.0 (stored in steps of 10%). */
     suspend fun fastForwardVolume() =
@@ -121,8 +122,11 @@ class SettingsManager(private val context: Context, sharedPreferences: Lazy<Shar
         }
 
     companion object {
-        const val DEFAULT_FAST_FORWARD_SPEED = "2"
-        const val DEFAULT_FAST_FORWARD_VOLUME_STEPS = 5
+        const val DEFAULT_FAST_FORWARD_SPEED = "4"
+        const val DEFAULT_FAST_FORWARD_VOLUME_STEPS = 2
+        const val DEFAULT_FAST_FORWARD_AUDIO = "lower"
+        const val DEFAULT_HD_MODE = true
+        const val DEFAULT_HD_MODE_QUALITY = 0
         const val FAST_FORWARD_AUDIO_NORMAL = "normal"
         const val FAST_FORWARD_AUDIO_MUTE = "mute"
         const val FAST_FORWARD_AUDIO_LOWER = "lower"

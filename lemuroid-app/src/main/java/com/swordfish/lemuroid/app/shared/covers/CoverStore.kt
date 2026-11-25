@@ -70,6 +70,8 @@ class CoverStore(private val appContext: Context) {
     fun forgetMainFolderListings() {
         mainFolderListings.clear()
         missing.clear()
+        // Shown game artwork asks again (see CoverRequest.version).
+        versionState.value = versionState.value + 1
     }
 
     private fun mainFolderListing(target: CoverTarget): MainFolderListing? {
@@ -133,6 +135,11 @@ class CoverStore(private val appContext: Context) {
     }
 
     companion object {
+        private val versionState = kotlinx.coroutines.flow.MutableStateFlow(0)
+
+        /** Goes up whenever covers are added in bulk; game images reload when it changes. */
+        val version: kotlinx.coroutines.flow.StateFlow<Int> = versionState
+
         @Volatile
         private var instance: CoverStore? = null
 

@@ -27,7 +27,7 @@
             android:summary="@string/settings_description_hd_mode"
             app:iconSpaceReserved="false"
             app:disableDependentsState="true"
-            android:defaultValue="false"/>
+            android:defaultValue="true"/>
 
         <SeekBarPreference
             android:key="@string/pref_key_hd_mode_quality"
@@ -38,7 +38,7 @@
             app:seekBarIncrement="1"
             app:showSeekBarValue="false"
             app:iconSpaceReserved="false"
-            android:defaultValue="2"/>
+            android:defaultValue="0"/>
 
         <ListPreference
             android:key="@string/pref_key_shader_filter"
@@ -78,7 +78,7 @@
             app:useSimpleSummaryProvider="true"
             android:entries="@array/pref_key_fast_forward_speed_display_names"
             app:entryValues="@array/pref_key_fast_forward_speed_values"
-            android:defaultValue="2"/>
+            android:defaultValue="4"/>
 
         <ListPreference
             android:key="@string/pref_key_fast_forward_audio"
@@ -87,7 +87,7 @@
             app:useSimpleSummaryProvider="true"
             android:entries="@array/pref_key_fast_forward_audio_display_names"
             app:entryValues="@array/pref_key_fast_forward_audio_values"
-            android:defaultValue="normal"/>
+            android:defaultValue="lower"/>
 
         <SeekBarPreference
             android:key="@string/pref_key_fast_forward_volume"
@@ -97,7 +97,7 @@
             app:seekBarIncrement="1"
             app:showSeekBarValue="true"
             app:iconSpaceReserved="false"
-            android:defaultValue="5"/>
+            android:defaultValue="2"/>
 
     </PreferenceCategory>
 

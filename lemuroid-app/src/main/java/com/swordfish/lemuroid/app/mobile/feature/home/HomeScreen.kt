@@ -79,7 +79,7 @@ fun HomeScreen(
     val scope = rememberCoroutineScope()
     var showImportConfirmation by remember { mutableStateOf(false) }
     val onMainFolderChosen = { viewModel.onMainFolderChosen() }
-    val mainFolderPicker = rememberMainFolderPicker(onMainFolderChosen)
+    val mainFolderPicker = rememberMainFolderPicker(onChosen = onMainFolderChosen)
     ImportSavesDialog(
         show = showImportConfirmation,
         onDismiss = { showImportConfirmation = false },
@@ -103,7 +103,12 @@ fun HomeScreen(
             permissionsLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
         },
         { permissionsLauncher.launch(Manifest.permission.RECORD_AUDIO) },
-        { scope.launch { useMainRomsFolder(context) } },
+        {
+            scope.launch {
+                useMainRomsFolder(context)
+                viewModel.onRomsFolderChosen()
+            }
+        },
         { StorageFrameworkPickerLauncher.pickFolder(context) },
     ) // TODO COMPOSE We need to understand what's going to happen here.
 }
@@ -138,15 +143,8 @@ private fun HomeScreen(
                 onAction = onChooseMainFolder,
             )
         }
-        AnimatedVisibility(state.showNoNotificationPermissionCard) {
-            HomeNotification(
-                titleId = R.string.home_notification_title,
-                messageId = R.string.home_notification_message,
-                actionId = R.string.home_notification_action,
-                onAction = onEnableNotificationsClicked,
-            )
-        }
-        AnimatedVisibility(state.showNoGamesCard) {
+        // Setup cards, in order: Lemuroid-S folder, ROMs folder, notifications, import saves.
+        AnimatedVisibility(state.showNoGamesCard && setupCards.showRomsFolder) {
             HomeNotification(
                 titleId = R.string.home_empty_title,
                 messageId = R.string.home_empty_message,
@@ -157,15 +155,14 @@ private fun HomeScreen(
                 enabled = !state.indexInProgress,
             )
         }
-        AnimatedVisibility(state.showNoMicrophonePermissionCard) {
+        AnimatedVisibility(state.showNoNotificationPermissionCard) {
             HomeNotification(
-                titleId = R.string.home_microphone_title,
-                messageId = R.string.home_microphone_message,
-                actionId = R.string.home_microphone_action,
-                onAction = onEnableMicrophoneClicked,
+                titleId = R.string.home_notification_title,
+                messageId = R.string.home_notification_message,
+                actionId = R.string.home_notification_action,
+                onAction = onEnableNotificationsClicked,
             )
         }
-        // Last setup card. Saves for games not in the library yet are imported once the games are added.
         AnimatedVisibility(setupCards.showImportSaves) {
             HomeNotification(
                 titleId = R.string.home_import_saves_title,
@@ -174,6 +171,14 @@ private fun HomeScreen(
                 onAction = onImportSaves,
                 secondaryActionId = R.string.home_card_not_now,
                 onSecondaryAction = onDismissImportSaves,
+            )
+        }
+        AnimatedVisibility(state.showNoMicrophonePermissionCard) {
+            HomeNotification(
+                titleId = R.string.home_microphone_title,
+                messageId = R.string.home_microphone_message,
+                actionId = R.string.home_microphone_action,
+                onAction = onEnableMicrophoneClicked,
             )
         }
         HomeRow(

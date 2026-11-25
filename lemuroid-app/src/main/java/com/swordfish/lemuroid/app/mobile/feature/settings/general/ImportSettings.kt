@@ -15,8 +15,8 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
@@ -24,15 +24,12 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.swordfish.lemuroid.R
-import com.swordfish.lemuroid.app.shared.covers.RetroArchCoversImporter
+import com.swordfish.lemuroid.app.shared.covers.CoversImportWork
+import com.swordfish.lemuroid.app.shared.library.PendingOperationsMonitor
 import com.swordfish.lemuroid.app.shared.saves.SavesImportWork
 import com.swordfish.lemuroid.app.shared.storage.rememberRetroArchFolderAccess
 import com.swordfish.lemuroid.app.utils.android.settings.LemuroidSettingsMenuLink
-import kotlinx.coroutines.DelicateCoroutinesApi
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 /**
  * Import Saves: a list of sources. Always keep this in the composition; [show] controls the dialog
@@ -114,31 +111,17 @@ private fun ImportSource(
     }
 }
 
-/** "Import RetroArch Covers": copies RetroArch's thumbnails into the Lemuroid-S folder. */
-@OptIn(DelicateCoroutinesApi::class)
+/** "Import RetroArch Covers": copies RetroArch's thumbnails into the Lemuroid-S folder (in the background). */
 @Composable
 fun ImportRetroArchCoversSetting() {
     val context = LocalContext.current
-    var importing by remember { mutableStateOf(false) }
+    val importing by
+        remember { PendingOperationsMonitor(context.applicationContext).isCoversImportInProgress() }
+            .collectAsState(false)
 
     val access =
         rememberRetroArchFolderAccess { folder ->
-            importing = true
-            val appContext = context.applicationContext
-            // Can take a while for big collections; keep going even if the user leaves Settings.
-            GlobalScope.launch {
-                val copied = runCatching { RetroArchCoversImporter(appContext).importFrom(folder) }.getOrNull()
-                withContext(Dispatchers.Main) {
-                    importing = false
-                    val message =
-                        if (copied != null) {
-                            appContext.getString(R.string.import_covers_result, copied)
-                        } else {
-                            appContext.getString(R.string.import_covers_failed)
-                        }
-                    Toast.makeText(appContext, message, Toast.LENGTH_LONG).show()
-                }
-            }
+            CoversImportWork.start(context, folder)
         }
 
     LemuroidSettingsMenuLink(

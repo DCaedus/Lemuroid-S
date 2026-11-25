@@ -113,7 +113,7 @@ private fun FastForwardSettings() {
     val audioMode =
         indexPreferenceState(
             R.string.pref_key_fast_forward_audio,
-            SettingsManager.FAST_FORWARD_AUDIO_NORMAL,
+            SettingsManager.DEFAULT_FAST_FORWARD_AUDIO,
             audioModeValues,
         )
     val volume =
@@ -183,7 +183,6 @@ private fun TestSettings() {
             title = { Text(text = stringResource(id = R.string.settings_title_show_framerate)) },
             subtitle = { Text(text = stringResource(id = R.string.settings_description_show_framerate)) },
         )
-        MainFolderSetting()
         var showImportConfirmation by remember { mutableStateOf(false) }
         LemuroidSettingsMenuLink(
             title = { Text(text = stringResource(id = R.string.settings_title_import_saves)) },
@@ -255,7 +254,7 @@ private fun InputSettings(navController: NavController) {
 
 @Composable
 private fun GeneralSettings() {
-    val hdMode = booleanPreferenceState(R.string.pref_key_hd_mode, false)
+    val hdMode = booleanPreferenceState(R.string.pref_key_hd_mode, SettingsManager.DEFAULT_HD_MODE)
     val immersiveMode = booleanPreferenceState(R.string.pref_key_enable_immersive_mode, false)
 
     LemuroidCardSettingsGroup(
@@ -281,7 +280,7 @@ private fun GeneralSettings() {
             state =
                 intPreferenceState(
                     key = stringResource(id = R.string.pref_key_hd_mode_quality),
-                    default = 2,
+                    default = SettingsManager.DEFAULT_HD_MODE_QUALITY,
                 ),
             steps = 1,
             valueRange = 0f..2f,

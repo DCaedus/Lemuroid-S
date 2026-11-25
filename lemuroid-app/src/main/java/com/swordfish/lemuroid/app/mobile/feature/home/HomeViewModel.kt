@@ -56,8 +56,16 @@ class HomeViewModel(
     /** Lemuroid-S setup cards shown on the home screen until handled or dismissed. */
     data class SetupCards(
         val showMainFolder: Boolean = false,
+        val showRomsFolder: Boolean = false,
         val showImportSaves: Boolean = false,
     )
+
+    /** True once a ROMs folder (Lemuroid-S/roms or a custom one) has been chosen. */
+    private fun isRomsFolderSet(context: Context): Boolean {
+        @Suppress("DEPRECATION")
+        return SharedPreferencesHelper.getLegacySharedPreferences(context)
+            .getString(context.getString(com.swordfish.lemuroid.lib.R.string.pref_key_extenral_folder), null) != null
+    }
 
     private val setupPreferences = SharedPreferencesHelper.getSharedPreferences(appContext)
 
@@ -71,6 +79,7 @@ class HomeViewModel(
         MutableStateFlow(
             SetupCards(
                 showMainFolder = !MainFolder(appContext).isSet(),
+                showRomsFolder = !isRomsFolderSet(appContext),
                 showImportSaves = !wasPrompted(R.string.pref_key_home_import_saves_prompted),
             ),
         )
@@ -91,6 +100,10 @@ class HomeViewModel(
 
     fun onMainFolderChosen() {
         setupCards.value = setupCards.value.copy(showMainFolder = false)
+    }
+
+    fun onRomsFolderChosen() {
+        setupCards.value = setupCards.value.copy(showRomsFolder = !isRomsFolderSet(appContext))
     }
 
     fun dismissImportSavesCard() {
@@ -122,7 +135,11 @@ class HomeViewModel(
     }
 
     fun updatePermissions(context: Context) {
-        setupCards.value = setupCards.value.copy(showMainFolder = !MainFolder(context).isSet())
+        setupCards.value =
+            setupCards.value.copy(
+                showMainFolder = !MainFolder(context).isSet(),
+                showRomsFolder = !isRomsFolderSet(context),
+            )
         notificationsPermissionEnabledState.value = isNotificationsPermissionGranted(context)
         microphonePermissionEnabledState.value = isMicrophonePermissionGranted(context)
     }
