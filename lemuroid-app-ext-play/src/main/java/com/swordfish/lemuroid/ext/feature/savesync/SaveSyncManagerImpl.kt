@@ -2,7 +2,6 @@ package com.swordfish.lemuroid.ext.feature.savesync
 
 import android.app.Activity
 import android.content.Context
-import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.api.client.http.ByteArrayContent
 import com.google.api.client.util.DateTime
 import com.google.api.services.drive.Drive
@@ -43,7 +42,7 @@ class SaveSyncManagerImpl(
 
     override fun isSupported(): Boolean = true
 
-    override fun isConfigured(): Boolean = GoogleSignIn.getLastSignedInAccount(appContext) != null
+    override fun isConfigured(): Boolean = DriveAuth.isConnected(appContext)
 
     override fun getLastSyncInfo(): String {
         val dateString =
@@ -56,8 +55,8 @@ class SaveSyncManagerImpl(
     }
 
     override fun getConfigInfo(): String {
-        val email = GoogleSignIn.getLastSignedInAccount(appContext)?.email
-        return if (email != null) {
+        val email = DriveAuth.accountEmail(appContext)
+        return if (!email.isNullOrEmpty()) {
             appContext.getString(R.string.gdrive_connected_summary, email)
         } else {
             appContext.getString(R.string.gdrive_connected_none_summary)

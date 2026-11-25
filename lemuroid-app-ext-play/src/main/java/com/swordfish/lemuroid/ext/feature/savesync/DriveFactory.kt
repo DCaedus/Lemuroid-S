@@ -19,32 +19,30 @@
 
 package com.swordfish.lemuroid.ext.feature.savesync
 
-import android.annotation.SuppressLint
 import android.content.Context
-import com.google.android.gms.auth.api.signin.GoogleSignIn
-import com.google.android.gms.common.api.Scope
-import com.google.api.client.googleapis.extensions.android.gms.auth.GoogleAccountCredential
 import com.google.api.client.googleapis.javanet.GoogleNetHttpTransport
+import com.google.api.client.http.HttpRequestInitializer
 import com.google.api.client.json.gson.GsonFactory
 import com.google.api.services.drive.Drive
-import com.google.api.services.drive.DriveScopes
 
-// RestrictedApi warning is a known issue:
-// https://developers.google.com/android/guides/releases#march_20_2018_-_version_1200
-@SuppressLint("RestrictedApi")
 class DriveFactory(private val context: Context) {
+    /** A Drive client for the connected account, or null if Drive access isn't granted. Blocks. */
     fun create(): Drive? {
-        val googleAccount = GoogleSignIn.getLastSignedInAccount(context) ?: return null
-
-        val scopeNames = listOf(Scope(DriveScopes.DRIVE_APPDATA).toString())
-
-        val credential = GoogleAccountCredential.usingOAuth2(context, scopeNames)
-        credential.selectedAccount = googleAccount.account
+        val token = DriveAuth.accessToken(context) ?: return null
 
         val httpTransport = GoogleNetHttpTransport.newTrustedTransport()
         val jsonFactory = GsonFactory.getDefaultInstance()
+        val authorization =
+            HttpRequestInitializer { request ->
+                request.headers.authorization = "Bearer $token"
+                request.setUnsuccessfulResponseHandler { _, response, _ ->
+                    // An expired or revoked token: drop it so the next sync gets a fresh one.
+                    if (response.statusCode == 401) DriveAuth.clearToken(context, token)
+                    false
+                }
+            }
 
-        return Drive.Builder(httpTransport, jsonFactory, credential)
+        return Drive.Builder(httpTransport, jsonFactory, authorization)
             .setApplicationName("com.dcaedus.lemuroids")
             .build()
     }
