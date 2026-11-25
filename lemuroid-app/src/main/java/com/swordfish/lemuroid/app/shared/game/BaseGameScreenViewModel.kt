@@ -43,6 +43,7 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.isActive
@@ -282,6 +283,11 @@ class BaseGameScreenViewModel(
     /** Total (frames run by the core, new pictures shown) since the game started. */
     fun getFrameCounters(): LongArray? = retroGameView.retroGameView?.getFrameCounters()
 
+    private val fastForwardActiveState = MutableStateFlow(false)
+
+    /** Whether fast-forward is on, for the on-screen button's look. */
+    val fastForwardActive: StateFlow<Boolean> = fastForwardActiveState
+
     fun isFastForwardEnabled(): Boolean {
         return (retroGameView.retroGameView?.frameSpeed ?: 1) > 1
     }
@@ -312,6 +318,7 @@ class BaseGameScreenViewModel(
                 frameSpeed = speed
                 audioVolume = volume
             }
+            fastForwardActiveState.value = enabled
         }
     }
 

@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import com.swordfish.touchinput.controller.R
+import com.swordfish.touchinput.radial.LocalFastForwardActive
 import com.swordfish.touchinput.radial.LocalFastForwardButtonEnabled
 import com.swordfish.touchinput.radial.controls.LemuroidControlAnalog
 import com.swordfish.touchinput.radial.controls.LemuroidControlButton
@@ -117,6 +118,7 @@ fun SecondaryButtonMenuPlaceholder(settings: TouchControllerSettingsManager.Sett
             modifier = position,
             id = Id.Key(ComposeTouchLayouts.KEYCODE_FAST_FORWARD),
             icon = R.drawable.button_fast_forward,
+            active = LocalFastForwardActive.current,
         )
     } else {
         Box(modifier = position)

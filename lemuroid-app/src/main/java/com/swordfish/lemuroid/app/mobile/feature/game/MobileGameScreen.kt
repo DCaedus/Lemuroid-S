@@ -60,6 +60,7 @@ import com.swordfish.lemuroid.app.shared.settings.HapticFeedbackMode
 import com.swordfish.lemuroid.lib.controller.ControllerConfig
 import com.swordfish.touchinput.controller.R
 import com.swordfish.touchinput.radial.LemuroidPadTheme
+import com.swordfish.touchinput.radial.LocalFastForwardActive
 import com.swordfish.touchinput.radial.LocalFastForwardButtonEnabled
 import com.swordfish.touchinput.radial.LocalLemuroidPadTheme
 import com.swordfish.touchinput.radial.sensors.TiltConfiguration
@@ -95,6 +96,7 @@ fun MobileGameScreen(viewModel: BaseGameScreenViewModel) {
                 .collectAsState(null)
 
         val fastForwardButtonVisible = remember { viewModel.isFastForwardButtonVisible() }.collectAsState(false)
+        val fastForwardActive = viewModel.fastForwardActive.collectAsState()
 
         val touchControllerSettings = touchControllerSettingsState.value
         val currentControllerConfig = controllerConfigState.value
@@ -183,6 +185,7 @@ fun MobileGameScreen(viewModel: BaseGameScreenViewModel) {
                     CompositionLocalProvider(
                         LocalLemuroidPadTheme provides LemuroidPadTheme(),
                         LocalFastForwardButtonEnabled provides fastForwardButtonVisible.value,
+                        LocalFastForwardActive provides fastForwardActive.value,
                     ) {
                         if (!isLandscape) {
                             PadContainer(

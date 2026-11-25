@@ -39,10 +39,7 @@ object CoverUtils {
     }
 
     fun buildImageLoader(applicationContext: Context): ImageLoader {
-        // Artwork is stored permanently by CoverStore, so the temporary disk cache isn't used anymore.
-        // Remove the one older test builds created.
-        Thread { runCatching { applicationContext.cacheDir.resolve("image_cache").deleteRecursively() } }.start()
-
+        // Artwork is stored permanently by CoverStore, so no disk cache is used.
         return ImageLoader.Builder(applicationContext)
             .components { add(CoverFallbackInterceptor(CoverStore.get(applicationContext))) }
             .memoryCache {

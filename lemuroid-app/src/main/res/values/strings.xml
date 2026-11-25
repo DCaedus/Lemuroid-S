@@ -113,6 +113,9 @@
     <string name="settings_title_hd_mode">HD mode</string>
     <string name="settings_description_hd_mode">Apply post-processing upscaling filter</string>
     <string name="settings_description_hd_quality">Adjust the quality of HD mode</string>
+    <string name="settings_hd_quality_low">Low</string>
+    <string name="settings_hd_quality_mid">Mid</string>
+    <string name="settings_hd_quality_high">High</string>
 
     <string name="settings_title_viewport_alignment">Viewport alignment</string>
 

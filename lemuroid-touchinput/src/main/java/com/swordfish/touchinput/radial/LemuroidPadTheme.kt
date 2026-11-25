@@ -67,6 +67,9 @@ class LemuroidPadTheme {
 /** Whether to show the on-screen fast-forward button (in the spot mirroring the menu button). */
 val LocalFastForwardButtonEnabled = compositionLocalOf { false }
 
+/** Whether fast-forward is on: the fast-forward button then keeps its pressed (dark) look. */
+val LocalFastForwardActive = compositionLocalOf { false }
+
 val LocalLemuroidPadTheme =
     compositionLocalOf<LemuroidPadTheme> {
         error("LemuroidPadTheme is missing")

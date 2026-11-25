@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentHeight
@@ -15,6 +16,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedCard
 import androidx.compose.material3.ProvideTextStyle
 import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -135,6 +137,7 @@ fun LemuroidSettingsSlider(
     valueRange: ClosedFloatingPointRange<Float>,
     title: @Composable () -> Unit,
     subtitle: @Composable () -> Unit = { },
+    valueLabels: List<String> = emptyList(),
 ) {
     val defaultColors = ListItemDefaults.colors()
     val disabledColors =
@@ -144,18 +147,31 @@ fun LemuroidSettingsSlider(
             trailingIconColor = defaultColors.disabledTrailingIconColor,
             supportingColor = defaultColors.supportingTextColor.copy(alpha = 0.3f),
         )
+    val colors = if (enabled) defaultColors else disabledColors
 
-    SettingsSlider(
-        modifier = modifier,
-        steps = steps,
-        value = state.value.toFloat(),
-        onValueChange = { state.value = it.roundToInt() },
-        valueRange = valueRange,
-        title = title,
-        subtitle = subtitle,
-        enabled = enabled,
-        colors = if (enabled) defaultColors else disabledColors,
-    )
+    Column(modifier = modifier) {
+        SettingsSlider(
+            steps = steps,
+            value = state.value.toFloat(),
+            onValueChange = { state.value = it.roundToInt() },
+            valueRange = valueRange,
+            title = title,
+            subtitle = subtitle,
+            enabled = enabled,
+            colors = colors,
+        )
+        // Lemuroid-S: optional labels under the slider, spread from the first to the last step.
+        if (valueLabels.isNotEmpty()) {
+            Row(
+                modifier = Modifier.fillMaxWidth().padding(start = 16.dp, end = 24.dp, bottom = 8.dp),
+                horizontalArrangement = Arrangement.SpaceBetween,
+            ) {
+                valueLabels.forEach {
+                    Text(text = it, style = MaterialTheme.typography.labelSmall, color = colors.supportingTextColor)
+                }
+            }
+        }
+    }
 }
 
 @Composable
