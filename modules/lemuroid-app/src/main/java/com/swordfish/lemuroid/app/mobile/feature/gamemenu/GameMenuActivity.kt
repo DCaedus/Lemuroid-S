@@ -9,9 +9,9 @@ import androidx.activity.SystemBarStyle
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.animation.AnimatedContent
-import androidx.compose.animation.fadeOut
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.WindowInsets
@@ -52,6 +52,7 @@ import com.swordfish.lemuroid.app.mobile.shared.compose.ui.AppTheme
 import com.swordfish.lemuroid.app.shared.GameMenuContract
 import com.swordfish.lemuroid.app.shared.coreoptions.LemuroidCoreOption
 import com.swordfish.lemuroid.app.shared.input.InputDeviceManager
+import com.swordfish.lemuroid.app.shared.settings.OrientationSettings
 import com.swordfish.lemuroid.common.kotlin.serializable
 import com.swordfish.lemuroid.lib.android.RetrogradeComponentActivity
 import com.swordfish.lemuroid.lib.library.SystemCoreConfig
@@ -63,6 +64,13 @@ import java.security.InvalidParameterException
 import javax.inject.Inject
 
 class GameMenuActivity : RetrogradeComponentActivity() {
+    private var menuOrientationListener: android.content.SharedPreferences.OnSharedPreferenceChangeListener? = null
+
+    override fun onDestroy() {
+        menuOrientationListener?.let { OrientationSettings.stopFollowing(this, it) }
+        super.onDestroy()
+    }
+
     @Inject
     lateinit var inputDeviceManager: InputDeviceManager
 
@@ -88,6 +96,7 @@ class GameMenuActivity : RetrogradeComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        menuOrientationListener = OrientationSettings.followMenuOrientation(this)
 
         enableEdgeToEdge(
             SystemBarStyle.dark(Color.TRANSPARENT),

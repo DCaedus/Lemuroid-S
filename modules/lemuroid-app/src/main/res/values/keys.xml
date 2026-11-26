@@ -28,6 +28,7 @@
     <string name="pref_key_fast_forward_button_system_prefix" translatable="false">fast_forward_button_system_</string>
     <string name="pref_key_start_screen" translatable="false">start_screen</string>
     <string name="pref_key_game_orientation" translatable="false">game_orientation</string>
+    <string name="pref_key_menus_portrait" translatable="false">menus_portrait</string>
     <string name="pref_key_wallpaper_colors" translatable="false">wallpaper_colors</string>
     <string name="pref_key_pure_black" translatable="false">pure_black</string>
 
@@ -137,14 +138,16 @@
     </string-array>
 
     <string-array translatable="false" name="pref_key_game_orientation_values">
-        <item>auto</item>
+        <item>system</item>
         <item>portrait</item>
         <item>landscape</item>
+        <item>reverse_landscape</item>
     </string-array>
     <string-array translatable="false" name="pref_key_game_orientation_display_names">
         <item>@string/game_orientation_auto</item>
         <item>@string/game_orientation_portrait</item>
         <item>@string/game_orientation_landscape</item>
+        <item>@string/game_orientation_reverse_landscape</item>
     </string-array>
     <string-array translatable="false" name="pref_key_start_screen_values">
         <item>home</item>

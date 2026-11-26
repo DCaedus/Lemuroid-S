@@ -19,6 +19,7 @@ import com.swordfish.lemuroid.app.mobile.feature.main.navigateToRoute
 import com.swordfish.lemuroid.app.mobile.feature.settings.SettingsManager
 import com.swordfish.lemuroid.app.shared.covers.ArtworkType
 import com.swordfish.lemuroid.app.shared.library.LibraryIndexScheduler
+import com.swordfish.lemuroid.app.shared.settings.OrientationSettings
 import com.swordfish.lemuroid.app.utils.android.settings.LemuroidCardSettingsGroup
 import com.swordfish.lemuroid.app.utils.android.settings.LemuroidSettingsList
 import com.swordfish.lemuroid.app.utils.android.settings.LemuroidSettingsMenuLink
@@ -291,6 +292,11 @@ private fun InterfaceSettings() {
             title = { Text(text = stringResource(id = R.string.settings_title_pure_black)) },
             subtitle = { Text(text = stringResource(id = R.string.settings_description_pure_black)) },
         )
+        LemuroidSettingsSwitch(
+            state = booleanPreferenceState(R.string.pref_key_menus_portrait, false),
+            title = { Text(text = stringResource(id = R.string.settings_title_menus_portrait)) },
+            subtitle = { Text(text = stringResource(id = R.string.settings_description_menus_portrait)) },
+        )
     }
 }
 
@@ -345,6 +351,16 @@ private fun DisplaySettings() {
                 ),
             title = { Text(text = stringResource(id = R.string.settings_title_viewport_alignment)) },
             items = stringListResource(R.array.pref_key_viewport_alignment_display_names),
+        )
+        LemuroidSettingsList(
+            state =
+                indexPreferenceState(
+                    R.string.pref_key_game_orientation,
+                    OrientationSettings.SYSTEM,
+                    stringListResource(R.array.pref_key_game_orientation_values),
+                ),
+            title = { Text(text = stringResource(id = R.string.settings_title_game_orientation)) },
+            items = stringListResource(R.array.pref_key_game_orientation_display_names),
         )
         LemuroidSettingsSwitch(
             state = booleanPreferenceState(R.string.pref_key_enable_immersive_mode, false),
