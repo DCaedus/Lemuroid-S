@@ -38,7 +38,8 @@ fun PadKitScope.DesmumeLeft(
             SecondaryButtonSelect(position = 2)
             SecondaryButtonMenuPlaceholder(settings)
             LemuroidControlButton(
-                modifier = Modifier.radialPosition(-120f),
+                // Lemuroid-S: -120 holds the fast-forward button, -150 the turbo button.
+                modifier = Modifier.radialPosition(-90f),
                 id = Id.Key(KeyEvent.KEYCODE_BUTTON_THUMBL),
                 icon = R.drawable.button_mic,
             )
