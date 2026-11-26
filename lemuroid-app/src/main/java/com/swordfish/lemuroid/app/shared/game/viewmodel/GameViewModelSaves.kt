@@ -3,6 +3,7 @@ package com.swordfish.lemuroid.app.shared.game.viewmodel
 import android.content.Context
 import com.swordfish.lemuroid.R
 import com.swordfish.lemuroid.app.mobile.feature.settings.SettingsManager
+import com.swordfish.lemuroid.app.shared.gamemenu.GameMenuHelper
 import com.swordfish.lemuroid.common.graphics.GraphicsUtils
 import com.swordfish.lemuroid.common.graphics.takeScreenshot
 import com.swordfish.lemuroid.lib.library.GameSystem
@@ -40,6 +41,8 @@ class GameViewModelSaves(
     )
 
     suspend fun saveSlot(index: Int) {
+        // The Autosave slot is written only by the autosaves, never by hand.
+        if (index == GameMenuHelper.AUTOSAVE_SLOT) return
         getCurrentSaveState()?.let {
             statesManager.setSlotSave(game, it, systemCoreConfig.coreID, index)
             runCatching {
@@ -50,7 +53,13 @@ class GameViewModelSaves(
 
     suspend fun loadSlot(index: Int) {
         try {
-            statesManager.getSlotSave(game, systemCoreConfig.coreID, index)?.let {
+            val state =
+                if (index == GameMenuHelper.AUTOSAVE_SLOT) {
+                    statesManager.getAutoSave(game, systemCoreConfig.coreID)
+                } else {
+                    statesManager.getSlotSave(game, systemCoreConfig.coreID, index)
+                }
+            state?.let {
                 val loaded =
                     withContext(Dispatchers.IO) {
                         loadSaveState(it)
@@ -70,10 +79,23 @@ class GameViewModelSaves(
         }
     }
 
-    suspend fun captureSaveSnapshot(useEmulationThread: Boolean): SaveSnapshot? {
+    /**
+     * Captures the in-game save (SRAM) and, when [includeAutoSave] is true, a state for the Autosave
+     * slot. By default the state is included when "Autosave on exit" is on; timed autosaves pass
+     * true so they fill the Autosave slot whatever that setting is.
+     */
+    suspend fun captureSaveSnapshot(
+        useEmulationThread: Boolean,
+        includeAutoSave: Boolean? = null,
+    ): SaveSnapshot? {
         val retroGameView = retroGameView.retroGameView ?: return null
         val sramState = retroGameView.serializeSRAM(useEmulationThread)
-        val autoSaveState = if (isAutoSaveEnabled()) getCurrentSaveState(useEmulationThread) else null
+        val withState = systemCoreConfig.statesSupported && (includeAutoSave ?: isAutoSaveEnabled())
+        val autoSaveState = if (withState) getCurrentSaveState(useEmulationThread) else null
+        if (autoSaveState != null && useEmulationThread) {
+            // Preview for the Autosave slot in the Load menu (not possible while in the background).
+            runCatching { takeScreenshotPreview(GameMenuHelper.AUTOSAVE_SLOT) }
+        }
         return SaveSnapshot(sramState, autoSaveState)
     }
 

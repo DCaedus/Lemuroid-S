@@ -402,9 +402,9 @@ class BaseGameScreenViewModel(
         if (!isGameReady || loadingState.value) return
 
         runCatching {
-            // Same data as when leaving the game: in-game save (SRAM), plus the
-            // "remember game state" save state when that setting is on.
-            val snapshot = saves.captureSaveSnapshot(true)
+            // In-game save (SRAM) plus a state in the Autosave slot, whether or not
+            // "Autosave on exit" is on (the slot is shared; the newest autosave wins).
+            val snapshot = saves.captureSaveSnapshot(true, includeAutoSave = true)
             saves.writeSaveSnapshot(snapshot)
         }.onFailure {
             Timber.e(it, "Timed auto-save failed")

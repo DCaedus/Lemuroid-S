@@ -37,6 +37,7 @@ class GameMenuStatesViewModel(
     }
 
     data class StateEntry(
+        val slot: Int,
         val title: String,
         val description: String,
         val enabled: Boolean,
@@ -47,7 +48,35 @@ class GameMenuStatesViewModel(
 
     val uiStates =
         flow {
-            val slotsInfo = statesManager.getSavedSlotsInfo(gameMenuRequest.game, gameMenuRequest.coreConfig.coreID)
+            val context = application.applicationContext
+            val game = gameMenuRequest.game
+            val coreID = gameMenuRequest.coreConfig.coreID
+            val slotsInfo = statesManager.getSavedSlotsInfo(game, coreID)
+
+            // The Autosave slot comes first: load-only, so it's greyed out in the Save menu
+            // (disableMissingEntries is true for the Load menu).
+            val autoSaveInfo = statesManager.getAutoSaveInfo(game, coreID)
+            val autoSaveEntry =
+                StateEntry(
+                    slot = GameMenuHelper.AUTOSAVE_SLOT,
+                    title = context.getString(R.string.game_menu_state_autosave),
+                    description =
+                        if (disableMissingEntries) {
+                            GameMenuHelper.getSaveStateDescription(autoSaveInfo)
+                        } else {
+                            GameMenuHelper.getAutoSaveSaveMenuDescription(context, autoSaveInfo)
+                        },
+                    enabled = disableMissingEntries && autoSaveInfo.exists,
+                    preview =
+                        GameMenuHelper.getSaveStateBitmap(
+                            context,
+                            statesPreviewManager,
+                            autoSaveInfo,
+                            game,
+                            coreID,
+                            GameMenuHelper.AUTOSAVE_SLOT,
+                        ),
+                )
 
             val entries =
                 slotsInfo.mapIndexed { index, slotInfo ->
@@ -68,9 +97,9 @@ class GameMenuStatesViewModel(
                             index,
                         )
 
-                    StateEntry(title, description, isEnabled, preview)
+                    StateEntry(index, title, description, isEnabled, preview)
                 }
 
-            emit(State(entries))
+            emit(State(listOf(autoSaveEntry) + entries))
         }
 }

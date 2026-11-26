@@ -130,6 +130,44 @@ object GameMenuHelper {
         )
     }
 
+    /** The Autosave slot: filled by "Autosave on exit" and timed autosaves, load-only. */
+    fun addAutoSavePreferences(
+        saveScreen: PreferenceScreen?,
+        loadScreen: PreferenceScreen?,
+        saveStateInfo: SaveInfo,
+        bitmap: Bitmap?,
+    ) {
+        val context = (saveScreen ?: loadScreen)?.context ?: return
+        val title = context.getString(R.string.game_menu_state_autosave)
+        saveScreen?.addPreference(
+            Preference(context).apply {
+                key = "pref_game_save_auto"
+                this.title = title
+                summary = getAutoSaveSaveMenuDescription(context, saveStateInfo)
+                isEnabled = false
+                icon = BitmapDrawable(context.resources, bitmap)
+            },
+        )
+        loadScreen?.addPreference(
+            Preference(context).apply {
+                key = "pref_game_load_auto"
+                this.title = title
+                summary = getSaveStateDescription(saveStateInfo)
+                isEnabled = saveStateInfo.exists
+                icon = BitmapDrawable(context.resources, bitmap)
+            },
+        )
+    }
+
+    /** Subtitle of the (disabled) Autosave entry in the Save menu. */
+    fun getAutoSaveSaveMenuDescription(
+        context: Context,
+        saveInfo: SaveInfo,
+    ): String {
+        val automatic = context.getString(R.string.game_menu_state_autosave_automatic)
+        return if (saveInfo.exists) "$automatic · ${getSaveStateDescription(saveInfo)}" else automatic
+    }
+
     fun onPreferenceTreeClicked(
         activity: Activity?,
         preference: Preference?,
@@ -139,6 +177,7 @@ object GameMenuHelper {
             "pref_game_save_1" -> handleSaveAction(activity, 1)
             "pref_game_save_2" -> handleSaveAction(activity, 2)
             "pref_game_save_3" -> handleSaveAction(activity, 3)
+            "pref_game_load_auto" -> handleLoadAction(activity, AUTOSAVE_SLOT)
             "pref_game_load_0" -> handleLoadAction(activity, 0)
             "pref_game_load_1" -> handleLoadAction(activity, 1)
             "pref_game_load_2" -> handleLoadAction(activity, 2)
@@ -242,6 +281,9 @@ object GameMenuHelper {
         val imageSize = GraphicsUtils.convertDpToPixel(96f, context).roundToInt()
         return statesPreviewManager.getPreviewForSlot(game, coreID, index, imageSize)
     }
+
+    /** Slot index used for the Autosave slot in the Save/Load menus (regular slots are 0-3). */
+    const val AUTOSAVE_SLOT = -1
 
     const val FAST_FORWARD = "pref_game_fast_forward"
     const val MUTE = "pref_game_mute"

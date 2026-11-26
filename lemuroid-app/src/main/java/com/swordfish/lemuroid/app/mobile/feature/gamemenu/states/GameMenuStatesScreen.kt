@@ -22,7 +22,7 @@ fun GameMenuStatesScreen(
     val state = viewModel.uiStates.collectAsState(initial = GameMenuStatesViewModel.State())
 
     Column(modifier = Modifier.verticalScroll(rememberScrollState())) {
-        state.value.entries.forEachIndexed { index, entry ->
+        state.value.entries.forEach { entry ->
             LemuroidSettingsMenuLink(
                 title = { Text(text = entry.title) },
                 subtitle = { Text(text = entry.description) },
@@ -37,7 +37,7 @@ fun GameMenuStatesScreen(
                         )
                     }
                 },
-                onClick = { onStateClicked(index) },
+                onClick = { onStateClicked(entry.slot) },
             )
         }
     }
