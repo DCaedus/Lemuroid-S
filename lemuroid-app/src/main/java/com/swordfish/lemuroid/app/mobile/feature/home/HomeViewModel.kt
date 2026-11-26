@@ -53,6 +53,7 @@ class HomeViewModel(
     data class UIState(
         val favoritesGames: List<Game> = emptyList(),
         val recentGames: List<Game> = emptyList(),
+        val frequentGames: List<Game> = emptyList(),
         val discoveryGames: List<Game> = emptyList(),
         val indexInProgress: Boolean = true,
         val showNoNotificationPermissionCard: Boolean = false,
@@ -105,23 +106,24 @@ class HomeViewModel(
     private fun buildViewState(
         favoritesGames: List<Game>,
         recentGames: List<Game>,
+        frequentGames: List<Game>,
         discoveryGames: List<Game>,
         indexInProgress: Boolean,
         notificationsPermissionEnabled: Boolean,
         showMicrophoneCard: Boolean,
-        showDesmumeWarning: Boolean,
     ): UIState {
         val noGames = recentGames.isEmpty() && favoritesGames.isEmpty() && discoveryGames.isEmpty()
 
         return UIState(
             favoritesGames = favoritesGames,
             recentGames = recentGames,
+            frequentGames = frequentGames,
             discoveryGames = discoveryGames,
             indexInProgress = indexInProgress,
             showNoNotificationPermissionCard = !notificationsPermissionEnabled,
             showNoMicrophonePermissionCard = showMicrophoneCard,
             showNoGamesCard = noGames,
-            showDesmumeDeprecatedCard = showDesmumeWarning,
+            showDesmumeDeprecatedCard = false,
         )
     }
 
@@ -131,11 +133,11 @@ class HomeViewModel(
                 combine(
                     favoritesGames(retrogradeDb),
                     recentGames(retrogradeDb),
+                    retrogradeDb.gameDao().selectFirstMostPlayed(CAROUSEL_MAX_ITEMS),
                     discoveryGames(retrogradeDb),
                     indexingInProgress(appContext),
                     notificationsPermissionEnabledState,
                     microphoneNotification(retrogradeDb),
-                    desmumeWarningNotification(),
                     ::buildViewState,
                 )
 
@@ -187,7 +189,4 @@ class HomeViewModel(
                     .distinctUntilChanged()
             }
     }
-
-    // Lemuroid-S: DeSmuME was removed, so its "deprecated" warning never shows.
-    private fun desmumeWarningNotification(): Flow<Boolean> = flowOf(false)
 }

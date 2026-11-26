@@ -68,6 +68,22 @@ interface GameDao {
     @Query("SELECT * FROM games WHERE isFavorite = 1 ORDER BY lastPlayedAt DESC LIMIT :limit")
     fun selectFirstFavorites(limit: Int): Flow<List<Game>>
 
+    /** Lemuroid-S: games with the most play time ("Frequently played"), favorites excluded like Recent. */
+    @Query("SELECT * FROM games WHERE playTimeMillis > 0 AND isFavorite = 0 ORDER BY playTimeMillis DESC LIMIT :limit")
+    fun selectFirstMostPlayed(limit: Int): Flow<List<Game>>
+
+    /** Records a finished session: last played now, plus its duration to the total play time. */
+    @Query(
+        """
+        UPDATE games SET lastPlayedAt = :playedAt, playTimeMillis = playTimeMillis + :durationMillis WHERE id = :id
+        """,
+    )
+    suspend fun recordSession(
+        id: Int,
+        playedAt: Long,
+        durationMillis: Long,
+    )
+
     @Query("SELECT * FROM games WHERE lastPlayedAt IS NULL LIMIT :limit")
     fun selectFirstNotPlayed(limit: Int): Flow<List<Game>>
 

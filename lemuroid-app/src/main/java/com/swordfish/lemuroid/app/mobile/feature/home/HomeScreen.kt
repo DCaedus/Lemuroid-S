@@ -108,6 +108,12 @@ private fun HomeScreen(
             onGameLongClick,
         )
         HomeRow(
+            stringResource(id = R.string.home_frequently_played),
+            state.frequentGames,
+            onGameClicked,
+            onGameLongClick,
+        )
+        HomeRow(
             stringResource(id = R.string.favorites),
             state.favoritesGames,
             onGameClicked,
