@@ -51,8 +51,8 @@ import com.swordfish.lemuroid.lib.core.CoresSelection
 import com.swordfish.lemuroid.lib.game.GameLoader
 import com.swordfish.lemuroid.lib.injection.PerActivity
 import com.swordfish.lemuroid.lib.injection.PerApp
-import com.swordfish.lemuroid.lib.library.covers.CustomCoverManager
 import com.swordfish.lemuroid.lib.library.LemuroidLibrary
+import com.swordfish.lemuroid.lib.library.covers.CustomCoverManager
 import com.swordfish.lemuroid.lib.library.db.RetrogradeDatabase
 import com.swordfish.lemuroid.lib.library.db.dao.GameSearchDao
 import com.swordfish.lemuroid.lib.library.db.dao.Migrations
@@ -128,7 +128,6 @@ abstract class LemuroidApplicationModule {
 
     @Module
     companion object {
-
         @Provides
         @PerApp
         @JvmStatic
@@ -331,9 +330,7 @@ abstract class LemuroidApplicationModule {
         @Provides
         @PerApp
         @JvmStatic
-        fun coresSelection(
-            sharedPreferences: Lazy<SharedPreferences>,
-        ) = CoresSelection(sharedPreferences)
+        fun coresSelection(sharedPreferences: Lazy<SharedPreferences>) = CoresSelection(sharedPreferences)
 
         @Provides
         @PerApp

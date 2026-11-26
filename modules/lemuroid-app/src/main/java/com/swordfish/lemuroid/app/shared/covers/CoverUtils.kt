@@ -66,7 +66,7 @@ object CoverUtils {
             .take(3)
             .joinToString("")
             .ifBlank { game.displayName().first().toString() }
-            .capitalize()
+            .replaceFirstChar { it.uppercaseChar() }
     }
 
     private fun computeColor(game: Game): Int {

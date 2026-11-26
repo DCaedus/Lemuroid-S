@@ -98,7 +98,8 @@ class SavesImporter(
     // region Sources
 
     private fun isZip(uri: Uri): Boolean {
-        if (DocumentsContract.isTreeUri(uri)) return false
+        // A picked folder (tree), not a file. isTreeUri needs Android 7, so check the path on Android 6.
+        if (uri.pathSegments.firstOrNull() == "tree") return false
         val type = appContext.contentResolver.getType(uri)
         return type == "application/zip" || type == "application/x-zip-compressed" ||
             uri.lastPathSegment?.endsWith(".zip", ignoreCase = true) == true

@@ -63,7 +63,10 @@ class GameInteractor(
         return shortcutsGenerator.supportShortcuts()
     }
 
-    fun onSetCustomName(game: Game, customName: String) {
+    fun onSetCustomName(
+        game: Game,
+        customName: String,
+    ) {
         GlobalScope.safeLaunch {
             retrogradeDb.gameDao().updateCustomName(game.id, customName)
         }
@@ -80,7 +83,10 @@ class GameInteractor(
      * the local file URI in the database.  This ensures the cover survives
      * app restarts regardless of where the user picked the file from.
      */
-    fun onSetCustomCoverUri(game: Game, sourceUri: String) {
+    fun onSetCustomCoverUri(
+        game: Game,
+        sourceUri: String,
+    ) {
         GlobalScope.safeLaunch {
             val localUri = customCoverManager.importCover(game.id, Uri.parse(sourceUri))
             retrogradeDb.gameDao().updateCustomCoverUri(game.id, localUri)

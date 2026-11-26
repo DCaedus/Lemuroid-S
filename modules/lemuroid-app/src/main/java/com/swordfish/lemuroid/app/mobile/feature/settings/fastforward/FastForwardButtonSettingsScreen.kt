@@ -6,6 +6,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalResources
 import androidx.compose.ui.res.stringResource
 import com.swordfish.lemuroid.R
 import com.swordfish.lemuroid.app.mobile.feature.settings.SettingsManager
@@ -21,6 +22,7 @@ import com.swordfish.lemuroid.lib.library.GameSystem
 @Composable
 fun FastForwardButtonSettingsScreen(modifier: Modifier = Modifier) {
     val context = LocalContext.current
+    val resources = LocalResources.current
 
     val globalEnabled = booleanPreferenceState(R.string.pref_key_fast_forward_button, true)
     val showName = stringResource(R.string.fast_forward_button_names_show)
@@ -31,8 +33,8 @@ fun FastForwardButtonSettingsScreen(modifier: Modifier = Modifier) {
     val names = listOf(stringResource(R.string.artwork_type_names_default, globalName), showName, hideName)
 
     val systems =
-        remember {
-            GameSystem.all().sortedBy { context.getString(it.titleResId) }
+        remember(resources) {
+            GameSystem.all().sortedBy { resources.getString(it.titleResId) }
         }
     val notSupported = stringResource(R.string.fast_forward_button_not_supported)
 

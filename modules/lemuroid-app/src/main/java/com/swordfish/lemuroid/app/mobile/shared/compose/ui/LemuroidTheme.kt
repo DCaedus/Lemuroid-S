@@ -16,6 +16,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import com.swordfish.lemuroid.R
 import com.swordfish.lemuroid.lib.preferences.SharedPreferencesHelper
 
@@ -101,8 +102,8 @@ fun AppTheme(
     content: @Composable () -> Unit,
 ) {
     val context = LocalContext.current
-    val wallpaperColors by rememberBooleanPreference(context.getString(R.string.pref_key_wallpaper_colors), true)
-    val pureBlack by rememberBooleanPreference(context.getString(R.string.pref_key_pure_black), false)
+    val wallpaperColors by rememberBooleanPreference(stringResource(R.string.pref_key_wallpaper_colors), true)
+    val pureBlack by rememberBooleanPreference(stringResource(R.string.pref_key_pure_black), false)
 
     val dynamicColor = wallpaperColors && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S
     val baseColors =

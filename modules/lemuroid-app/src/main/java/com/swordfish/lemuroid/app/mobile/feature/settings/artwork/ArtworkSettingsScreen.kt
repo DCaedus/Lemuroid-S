@@ -6,6 +6,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalResources
 import androidx.compose.ui.res.stringResource
 import com.swordfish.lemuroid.R
 import com.swordfish.lemuroid.app.shared.covers.ArtworkType
@@ -21,6 +22,7 @@ import com.swordfish.lemuroid.lib.library.GameSystem
 @Composable
 fun ArtworkSettingsScreen(modifier: Modifier = Modifier) {
     val context = LocalContext.current
+    val resources = LocalResources.current
 
     val globalValues = stringListResource(R.array.pref_key_artwork_type_values)
     val globalNames = stringListResource(R.array.pref_key_artwork_type_display_names)
@@ -36,8 +38,8 @@ fun ArtworkSettingsScreen(modifier: Modifier = Modifier) {
     val systemNames = listOf(stringResource(R.string.artwork_type_names_default, globalName)) + globalNames
 
     val systems =
-        remember {
-            GameSystem.all().sortedBy { context.getString(it.titleResId) }
+        remember(resources) {
+            GameSystem.all().sortedBy { resources.getString(it.titleResId) }
         }
 
     LemuroidSettingsPage(modifier = modifier.fillMaxSize()) {
