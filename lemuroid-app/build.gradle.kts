@@ -11,7 +11,7 @@ plugins {
 android {
     defaultConfig {
         versionCode = 252
-        versionName = "1.17.0" // Always remember to update Cores Tag!
+        versionName = "1.17.0"
         applicationId = "com.dcaedus.lemuroids"
     }
     flavorDimensions += listOf("opensource", "cores")
@@ -33,12 +33,8 @@ android {
             dimension = "opensource"
         }
 
-        // Include cores in the final apk
-        create("bundle") {
-            dimension = "cores"
-        }
-
-        // Download cores on demand (from GooglePlay or GitHub)
+        // Lemuroid-S: cores ship in the app (5) or download on demand (Google Play modules or the "cores"
+        // branch on GitHub). Lemuroid's "bundle" flavor (all cores in the APK) was removed.
         create("dynamic") {
             dimension = "cores"
         }
@@ -110,7 +106,6 @@ dependencies {
     "baselineProfile"(project(":baselineprofile"))
     implementation(deps.libs.androidx.profileInstaller)
 
-    "bundleImplementation"(project(":bundled-cores"))
     // Lemuroid-S: the most popular cores ship with the app; the rest download on demand.
     "dynamicImplementation"(project(":lemuroid-included-cores"))
 

@@ -1,7 +1,3 @@
-[submodule "lemuroid-cores"]
-	path = lemuroid-cores
-	url = https://github.com/Swordfish90/LemuroidCores
-	branch = master
 [submodule "libretrodroid/src/main/cpp/oboe"]
 	path = libretrodroid/src/main/cpp/oboe
 	url = https://github.com/google/oboe
