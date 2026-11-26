@@ -5,14 +5,13 @@ import android.os.Handler
 import android.os.Looper
 import android.widget.Toast
 import androidx.work.CoroutineWorker
-import androidx.work.ListenableWorker
 import androidx.work.WorkerParameters
 import com.swordfish.lemuroid.R
 import com.swordfish.lemuroid.app.mobile.shared.NotificationsManager
 import com.swordfish.lemuroid.app.shared.settings.RomsFolder
 import com.swordfish.lemuroid.app.utils.android.createSyncForegroundInfo
 import com.swordfish.lemuroid.lib.injection.AndroidWorkerInjection
-import com.swordfish.lemuroid.lib.injection.WorkerKey
+import dagger.multibindings.ClassKey
 import com.swordfish.lemuroid.lib.library.LemuroidLibrary
 import com.swordfish.lemuroid.lib.library.db.RetrogradeDatabase
 import dagger.Binds
@@ -92,8 +91,8 @@ class LibraryIndexWork(context: Context, workerParams: WorkerParameters) :
     abstract class Module {
         @Binds
         @IntoMap
-        @WorkerKey(LibraryIndexWork::class)
-        abstract fun bindMyWorkerFactory(builder: Subcomponent.Builder): AndroidInjector.Factory<out ListenableWorker>
+        @ClassKey(LibraryIndexWork::class)
+        abstract fun bindMyWorkerFactory(builder: Subcomponent.Builder): AndroidInjector.Factory<*>
     }
 
     @dagger.Subcomponent

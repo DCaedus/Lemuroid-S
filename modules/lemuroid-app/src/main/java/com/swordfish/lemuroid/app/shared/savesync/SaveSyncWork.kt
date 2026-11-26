@@ -6,7 +6,6 @@ import androidx.work.CoroutineWorker
 import androidx.work.Data
 import androidx.work.ExistingPeriodicWorkPolicy
 import androidx.work.ExistingWorkPolicy
-import androidx.work.ListenableWorker
 import androidx.work.NetworkType
 import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.PeriodicWorkRequestBuilder
@@ -17,7 +16,7 @@ import com.swordfish.lemuroid.app.mobile.feature.settings.SettingsManager
 import com.swordfish.lemuroid.app.mobile.shared.NotificationsManager
 import com.swordfish.lemuroid.app.utils.android.createSyncForegroundInfo
 import com.swordfish.lemuroid.lib.injection.AndroidWorkerInjection
-import com.swordfish.lemuroid.lib.injection.WorkerKey
+import dagger.multibindings.ClassKey
 import com.swordfish.lemuroid.lib.library.findByName
 import com.swordfish.lemuroid.lib.savesync.SaveSyncManager
 import dagger.Binds
@@ -141,8 +140,8 @@ class SaveSyncWork(context: Context, workerParams: WorkerParameters) :
     abstract class Module {
         @Binds
         @IntoMap
-        @WorkerKey(SaveSyncWork::class)
-        abstract fun bindMyWorkerFactory(builder: Subcomponent.Builder): AndroidInjector.Factory<out ListenableWorker>
+        @ClassKey(SaveSyncWork::class)
+        abstract fun bindMyWorkerFactory(builder: Subcomponent.Builder): AndroidInjector.Factory<*>
     }
 
     @dagger.Subcomponent

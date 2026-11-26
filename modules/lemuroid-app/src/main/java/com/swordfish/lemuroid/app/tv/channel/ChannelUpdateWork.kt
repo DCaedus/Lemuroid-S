@@ -3,12 +3,11 @@ package com.swordfish.lemuroid.app.tv.channel
 import android.content.Context
 import androidx.work.CoroutineWorker
 import androidx.work.ExistingWorkPolicy
-import androidx.work.ListenableWorker
 import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkManager
 import androidx.work.WorkerParameters
 import com.swordfish.lemuroid.lib.injection.AndroidWorkerInjection
-import com.swordfish.lemuroid.lib.injection.WorkerKey
+import dagger.multibindings.ClassKey
 import dagger.Binds
 import dagger.android.AndroidInjector
 import dagger.multibindings.IntoMap
@@ -52,8 +51,8 @@ class ChannelUpdateWork(context: Context, workerParams: WorkerParameters) :
     abstract class Module {
         @Binds
         @IntoMap
-        @WorkerKey(ChannelUpdateWork::class)
-        abstract fun bindMyWorkerFactory(builder: Subcomponent.Builder): AndroidInjector.Factory<out ListenableWorker>
+        @ClassKey(ChannelUpdateWork::class)
+        abstract fun bindMyWorkerFactory(builder: Subcomponent.Builder): AndroidInjector.Factory<*>
     }
 
     @dagger.Subcomponent

@@ -3,12 +3,11 @@ package com.swordfish.lemuroid.app.shared.saves
 import android.content.Context
 import androidx.work.CoroutineWorker
 import androidx.work.ExistingWorkPolicy
-import androidx.work.ListenableWorker
 import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkManager
 import androidx.work.WorkerParameters
 import com.swordfish.lemuroid.lib.injection.AndroidWorkerInjection
-import com.swordfish.lemuroid.lib.injection.WorkerKey
+import dagger.multibindings.ClassKey
 import com.swordfish.lemuroid.lib.saves.SavesFallbackMover
 import dagger.Binds
 import dagger.android.AndroidInjector
@@ -48,8 +47,8 @@ class SavesMoveWork(context: Context, workerParams: WorkerParameters) :
     abstract class Module {
         @Binds
         @IntoMap
-        @WorkerKey(SavesMoveWork::class)
-        abstract fun bindMyWorkerFactory(builder: Subcomponent.Builder): AndroidInjector.Factory<out ListenableWorker>
+        @ClassKey(SavesMoveWork::class)
+        abstract fun bindMyWorkerFactory(builder: Subcomponent.Builder): AndroidInjector.Factory<*>
     }
 
     @dagger.Subcomponent

@@ -4,14 +4,13 @@ import android.content.Context
 import androidx.work.CoroutineWorker
 import androidx.work.Data
 import androidx.work.ExistingWorkPolicy
-import androidx.work.ListenableWorker
 import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkManager
 import androidx.work.WorkerParameters
 import androidx.work.workDataOf
 import com.swordfish.lemuroid.app.mobile.feature.settings.SettingsManager
 import com.swordfish.lemuroid.lib.injection.AndroidWorkerInjection
-import com.swordfish.lemuroid.lib.injection.WorkerKey
+import dagger.multibindings.ClassKey
 import com.swordfish.lemuroid.lib.storage.cache.CacheCleaner
 import dagger.Binds
 import dagger.android.AndroidInjector
@@ -68,8 +67,8 @@ class CacheCleanerWork(
     abstract class Module {
         @Binds
         @IntoMap
-        @WorkerKey(CacheCleanerWork::class)
-        abstract fun bindMyWorkerFactory(builder: Subcomponent.Builder): AndroidInjector.Factory<out ListenableWorker>
+        @ClassKey(CacheCleanerWork::class)
+        abstract fun bindMyWorkerFactory(builder: Subcomponent.Builder): AndroidInjector.Factory<*>
     }
 
     @dagger.Subcomponent
