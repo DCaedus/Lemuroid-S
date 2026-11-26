@@ -55,3 +55,7 @@ android {
 ksp {
     arg("room.schemaLocation", "$projectDir/schemas")
 }
+
+dependencies {
+    testImplementation("junit:junit:4.13.2")
+}

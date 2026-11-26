@@ -212,7 +212,7 @@ class SavesImporter(
         system: String?,
         counters: Counters,
     ) {
-        val targetName = if (file.isState) file.name else file.name.substringBeforeLast('.') + ".srm"
+        val targetName = if (file.isState) retroArchStateName(file.name) else file.name.substringBeforeLast('.') + ".srm"
         val targetTime = target.existing[targetName]
         if (targetTime != null && targetTime >= file.lastModified) {
             counters.skipped++
@@ -228,7 +228,8 @@ class SavesImporter(
             val converted =
                 when {
                     file.name.endsWith(".metadata") -> bytes
-                    file.isState -> RetroArchStates.decode(bytes)
+                    // Stored like Lemuroid-S's own states: RetroArch's rzip format.
+                    file.isState -> RetroArchStates.decode(bytes)?.let { RetroArchStates.encodeRzip(it) }
                     // Pizza Boy appends extra data after GBA saves (the save itself is the first
                     // 128 KB, the most a GBA game uses); keep just the save.
                     system == GBA && bytes.size > GBA_MAX_SAVE_SIZE -> bytes.copyOf(GBA_MAX_SAVE_SIZE)
@@ -241,6 +242,22 @@ class SavesImporter(
             target.folder.write(targetName, converted)
             if (file.isState) counters.states++ else counters.saves++
         }.onFailure { Timber.w(it, "Could not import ${file.name}") }
+    }
+
+    /**
+     * Lemuroid-S names states like RetroArch ("Game.state.auto", "Game.state1"...). Lemuroid's own
+     * names ("Game.gba.state" for the resume point, "Game.gba.slot1"...) are renamed to match.
+     */
+    private fun retroArchStateName(name: String): String {
+        LEMUROID_SLOT.matchEntire(name)?.let { m ->
+            return "${m.groupValues[1]}.state${m.groupValues[3]}${m.groupValues[4]}"
+        }
+        LEMUROID_AUTO.matchEntire(name)?.let { m ->
+            if (GameSystem.findByUniqueFileExtension(m.groupValues[2].lowercase()) != null) {
+                return "${m.groupValues[1]}.state.auto${m.groupValues[3]}"
+            }
+        }
+        return name
     }
 
     /** Lemuroid-S keeps battery saves by name, so a newer one there is kept. */
@@ -257,6 +274,8 @@ class SavesImporter(
         private const val MAX_ENTRIES = 5000
         private const val GBA = "gba"
         private const val GBA_MAX_SAVE_SIZE = 128 * 1024
+        private val LEMUROID_SLOT = Regex("""^(.+)\.([A-Za-z0-9]+)\.slot(\d)(\.metadata)?$""")
+        private val LEMUROID_AUTO = Regex("""^(.+)\.([A-Za-z0-9]+)\.state(\.metadata)?$""")
 
         /** Folders holding saves inside an emulator's main folder (RetroArch, Lemuroid, Pizza Boy). */
         private val SAVE_FOLDER_NAMES = setOf("saves", "states", "save")

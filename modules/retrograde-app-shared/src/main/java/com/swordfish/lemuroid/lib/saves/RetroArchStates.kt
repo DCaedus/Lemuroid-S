@@ -5,6 +5,7 @@ import java.io.ByteArrayInputStream
 import java.io.ByteArrayOutputStream
 import java.nio.ByteBuffer
 import java.nio.ByteOrder
+import java.util.zip.Deflater
 import java.util.zip.GZIPInputStream
 import java.util.zip.Inflater
 
@@ -17,6 +18,43 @@ object RetroArchStates {
     private const val RASTATE_HEADER_SIZE = 8
     private val RZIP_MAGIC = "#RZIPv".toByteArray()
     private val RASTATE_MAGIC = "RASTATE".toByteArray()
+
+    private const val RZIP_CHUNK_SIZE = 128 * 1024
+
+    /**
+     * Lemuroid-S: compresses [state] in RetroArch's rzip format, so the file stays small and
+     * RetroArch can load it too: "#RZIPv" + version 1 + "#", chunk size (uint32), total size (uint64),
+     * then chunks of [compressed size (uint32) + zlib data].
+     */
+    fun encodeRzip(state: ByteArray): ByteArray {
+        val output = ByteArrayOutputStream(state.size / 2 + RZIP_HEADER_SIZE)
+        val header = ByteBuffer.allocate(RZIP_HEADER_SIZE).order(ByteOrder.LITTLE_ENDIAN)
+        header.put(RZIP_MAGIC).put(1.toByte()).put('#'.code.toByte())
+        header.putInt(RZIP_CHUNK_SIZE).putLong(state.size.toLong())
+        output.write(header.array())
+
+        val deflater = Deflater()
+        val buffer = ByteArray(RZIP_CHUNK_SIZE + RZIP_CHUNK_SIZE / 10 + 64)
+        val sizeBytes = ByteBuffer.allocate(4).order(ByteOrder.LITTLE_ENDIAN)
+        var offset = 0
+        while (offset < state.size) {
+            val length = minOf(RZIP_CHUNK_SIZE, state.size - offset)
+            deflater.reset()
+            deflater.setInput(state, offset, length)
+            deflater.finish()
+            val chunk = ByteArrayOutputStream()
+            while (!deflater.finished()) {
+                val count = deflater.deflate(buffer)
+                chunk.write(buffer, 0, count)
+            }
+            sizeBytes.clear()
+            output.write(sizeBytes.putInt(chunk.size()).array())
+            chunk.writeTo(output)
+            offset += length
+        }
+        deflater.end()
+        return output.toByteArray()
+    }
 
     fun decode(bytes: ByteArray): ByteArray? {
         val unpacked =

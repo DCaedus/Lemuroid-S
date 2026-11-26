@@ -1,10 +1,8 @@
 package com.swordfish.lemuroid.lib.saves
 
-import com.swordfish.lemuroid.common.kotlin.gzipped
 import com.swordfish.lemuroid.common.kotlin.readBytesUncompressedAtomic
 import com.swordfish.lemuroid.common.kotlin.readTextAtomic
 import com.swordfish.lemuroid.common.kotlin.runCatchingWithRetry
-import com.swordfish.lemuroid.common.kotlin.uncompressedIfGzipped
 import com.swordfish.lemuroid.common.kotlin.writeBytesCompressedAtomic
 import com.swordfish.lemuroid.common.kotlin.writeTextAtomic
 import com.swordfish.lemuroid.lib.library.CoreID
@@ -97,8 +95,7 @@ class StatesManager(
         val folder = ExternalSavesStorage.safely("open states") { storage.statesFolder(game, coreName) } ?: return null
         ExternalSavesStorage.safely("move states") { moveFallbackStates(game, coreName, folder) }
         ExternalSavesStorage.safely("convert states") {
-            convertImportedRetroArchStates(game, coreName, folder, folder)
-            storage.importedStatesFolder()?.let { convertImportedRetroArchStates(game, coreName, it, folder) }
+            storage.importedStatesFolder()?.let { copyImportedRetroArchStates(game, it, folder) }
         }
         return folder
     }
@@ -133,7 +130,12 @@ class StatesManager(
             folder?.let {
                 ExternalSavesStorage.safely("read state") {
                     val state = it.read(fileName)?.data?.takeIf { data -> data.isNotEmpty() } ?: return@safely null
-                    SaveState(state.uncompressedIfGzipped(), decodeMetadata(it.read(metadataName(fileName))?.data))
+                    val raw = RetroArchStates.decode(state) ?: return@safely null
+                    // A state from RetroArch has no metadata file: assume it fits the current core.
+                    val metadata =
+                        it.read(metadataName(fileName))?.data?.let { data -> decodeMetadata(data) }
+                            ?: SaveState.Metadata(0, statesVersion(game, coreName), coreName)
+                    SaveState(raw, metadata)
                 }
             }
         if (fromFolder != null) return fromFolder
@@ -176,14 +178,14 @@ class StatesManager(
         }
     }
 
-    /** Writes a state (GZIP-compressed, as Lemuroid always stored them) and its metadata. */
+    /** Writes a state (compressed in RetroArch's rzip format, so RetroArch can load it) and its metadata. */
     private fun writeToFolder(
         folder: ExternalSavesStorage.SaveFolder,
         fileName: String,
         state: ByteArray,
         metadata: SaveState.Metadata,
     ) {
-        folder.write(fileName, state.gzipped())
+        folder.write(fileName, RetroArchStates.encodeRzip(state))
         folder.write(metadataName(fileName), encodeMetadata(metadata).toByteArray())
     }
 
@@ -233,39 +235,25 @@ class StatesManager(
     }
 
     /**
-     * States imported from RetroArch keep RetroArch's names ("Game.state.auto", "Game.state",
-     * "Game.state1"...) and format. When [game] is opened they become Lemuroid-S states in
-     * [target]: the resume point and save slots 1-4. A RetroArch state is converted again only if
-     * it is newer than the Lemuroid-S state.
+     * States imported from RetroArch already have the names Lemuroid-S uses ("Game.state.auto",
+     * "Game.state1"...). Imported ones waiting in [source] are copied into [target] unless the
+     * Lemuroid-S state is as new. They're read as they are (RetroArch's formats are understood).
      */
-    private fun convertImportedRetroArchStates(
+    private fun copyImportedRetroArchStates(
         game: Game,
-        coreName: String,
         source: ExternalSavesStorage.SaveFolder,
         target: ExternalSavesStorage.SaveFolder,
     ) {
-        val romName = game.fileName.substringBeforeLast(".")
-        val retroArchNames =
-            mapOf("$romName.state.auto" to getAutoSaveFileName(game)) +
-                (0 until MAX_STATES).associate { slot ->
-                    val suffix = if (slot == 0) "" else "$slot"
-                    "$romName.state$suffix" to getSlotSaveFileName(game, slot)
-                }
-
+        val names = listOf(getAutoSaveFileName(game)) + (0 until MAX_STATES).map { getSlotSaveFileName(game, it) }
         val sourceTimes = source.lastModifiedTimes()
-        if (retroArchNames.keys.none { it in sourceTimes }) return
+        if (names.none { it in sourceTimes }) return
         val targetTimes = target.lastModifiedTimes()
-        for ((retroArchName, lemuroidName) in retroArchNames) {
-            // The auto save is named "<rom file>.state", which can equal a RetroArch slot name.
-            if (retroArchName == lemuroidName) continue
-            val sourceTime = sourceTimes[retroArchName] ?: continue
-            val targetTime = targetTimes[lemuroidName]
+        for (name in names) {
+            val sourceTime = sourceTimes[name] ?: continue
+            val targetTime = targetTimes[name]
             if (targetTime != null && isCurrent(targetTime, sourceTime)) continue
-
-            val external = source.read(retroArchName) ?: continue
-            val state = RetroArchStates.decode(external.data) ?: continue
-            val metadata = SaveState.Metadata(0, statesVersion(game, coreName), coreName)
-            writeToFolder(target, lemuroidName, state, metadata)
+            val external = source.read(name) ?: continue
+            target.write(name, external.data)
         }
     }
 
@@ -283,12 +271,16 @@ class StatesManager(
         return system.systemCoreConfigs.firstOrNull { it.coreID.coreName == coreName }?.statesVersion ?: 0
     }
 
-    private fun getAutoSaveFileName(game: Game) = "${game.fileName}.state"
+    // Lemuroid-S: RetroArch's state names, so states can be shared with RetroArch:
+    // the Autosave slot is RetroArch's auto state, slots 1-4 are its slots 1-4.
+    private fun romName(game: Game) = game.fileName.substringBeforeLast(".")
+
+    private fun getAutoSaveFileName(game: Game) = "${romName(game)}.state.auto"
 
     private fun getSlotSaveFileName(
         game: Game,
         index: Int,
-    ) = "${game.fileName}.slot${index + 1}"
+    ) = "${romName(game)}.state${index + 1}"
 
     companion object {
         const val MAX_STATES = 4
