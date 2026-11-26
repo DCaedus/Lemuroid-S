@@ -108,10 +108,8 @@
     <string name="import_covers_failed">Could not find RetroArch\'s thumbnails folder, or the Lemuroid-S folder isn\'t set up.</string>
     <string name="first_launch_setup_title">Welcome to Lemuroid-S</string>
     <string name="first_launch_setup_message">Set up a few things before you start. You can open this again from Settings > Advanced.</string>
-    <string name="first_launch_setup_done">Done</string>
     <string name="first_launch_setup_step_done">Done</string>
-    <string name="first_launch_setup_all_done">All set. Tap Done to start playing.</string>
-    <string name="first_launch_setup_needs_folder">Create the Lemuroid-S folder to continue.</string>
+    <string name="first_launch_setup_not_now">Not now</string>
     <string name="settings_title_first_launch_setup">First-launch setup</string>
     <string name="settings_description_first_launch_setup">Open the setup cards again: Lemuroid-S folder, ROMs folder, notifications and Import Saves</string>
     <string name="home_import_saves_title">Import Saves</string>

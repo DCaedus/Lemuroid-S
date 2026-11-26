@@ -17,6 +17,10 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.windowInsetsPadding
+import androidx.compose.foundation.layout.safeDrawing
+import androidx.compose.foundation.layout.only
+import androidx.compose.foundation.layout.WindowInsetsSides
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
@@ -254,7 +258,17 @@ class GameMenuActivity : RetrogradeComponentActivity() {
                         .width(panelWidth)
                         .clip(MaterialTheme.shapes.large),
             ) {
-                Column(modifier = Modifier.fillMaxSize()) {
+                // Lemuroid-S: keep the menu clear of the status bar, navigation bar and display cutout.
+                Column(
+                    modifier =
+                        Modifier
+                            .fillMaxSize()
+                            .windowInsetsPadding(
+                                WindowInsets.safeDrawing.only(
+                                    WindowInsetsSides.Top + WindowInsetsSides.Bottom + WindowInsetsSides.End,
+                                ),
+                            ),
+                ) {
                     content()
                 }
             }

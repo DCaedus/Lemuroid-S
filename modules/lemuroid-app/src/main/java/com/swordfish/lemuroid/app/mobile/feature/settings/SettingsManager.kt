@@ -85,7 +85,7 @@ class SettingsManager(private val context: Context, sharedPreferences: Lazy<Shar
 
     /** Minutes between timed auto-saves while playing. 0 means off. */
     suspend fun periodicAutoSaveMinutes(): Int =
-        stringPreference(R.string.pref_key_periodic_autosave_minutes, "0").toIntOrNull() ?: 0
+        stringPreference(R.string.pref_key_periodic_autosave_minutes, "30").toIntOrNull() ?: 0
 
     suspend fun showFramerate() = booleanPreference(R.string.pref_key_show_framerate, false)
 

@@ -209,7 +209,7 @@ private fun SavesSettings(
             state =
                 indexPreferenceState(
                     R.string.pref_key_periodic_autosave_minutes,
-                    "0",
+                    "30",
                     stringListResource(R.array.pref_key_periodic_autosave_values),
                 ),
             title = { Text(text = stringResource(id = R.string.settings_title_periodic_autosave)) },
@@ -335,7 +335,7 @@ private fun InterfaceSettings() {
             )
         }
         LemuroidSettingsSwitch(
-            state = booleanPreferenceState(R.string.pref_key_menus_portrait, false),
+            state = booleanPreferenceState(R.string.pref_key_menus_portrait, true),
             title = { Text(text = stringResource(id = R.string.settings_title_menus_portrait)) },
             subtitle = { Text(text = stringResource(id = R.string.settings_description_menus_portrait)) },
         )

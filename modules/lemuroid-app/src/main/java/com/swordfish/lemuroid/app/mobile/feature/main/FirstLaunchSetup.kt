@@ -27,7 +27,6 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.CheckCircle
-import androidx.compose.material3.Button
 import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -36,6 +35,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -60,6 +60,7 @@ import com.swordfish.lemuroid.app.utils.android.ComposableLifecycle
 import com.swordfish.lemuroid.common.displayDetailsSettingsScreen
 import com.swordfish.lemuroid.lib.preferences.SharedPreferencesHelper
 import com.swordfish.lemuroid.lib.storage.MainFolder
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
@@ -133,6 +134,8 @@ private fun FirstLaunchSetupScreen(onDone: () -> Unit) {
     val scope = rememberCoroutineScope()
     var status by remember { mutableStateOf(readStatus(context)) }
     var importStarted by remember { mutableStateOf(false) }
+    var importSkipped by remember { mutableStateOf(false) }
+    var notificationsSkipped by remember { mutableStateOf(false) }
     var showImportDialog by remember { mutableStateOf(false) }
     val refresh = { status = readStatus(context) }
 
@@ -205,45 +208,33 @@ private fun FirstLaunchSetupScreen(onDone: () -> Unit) {
                     titleId = R.string.home_notification_title,
                     messageId = R.string.home_notification_message,
                     actionId = R.string.home_notification_action,
-                    done = status.notifications,
+                    done = status.notifications || notificationsSkipped,
                     enabled = !status.notifications,
                     onAction = { permissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS) },
+                    secondaryActionId = R.string.first_launch_setup_not_now,
+                    onSecondaryAction = { notificationsSkipped = true },
                 )
             }
             SetupCard(
                 titleId = R.string.home_import_saves_title,
                 messageId = R.string.home_import_saves_message,
                 actionId = R.string.home_import_saves_action,
-                done = importStarted,
+                done = importStarted || importSkipped,
                 enabled = status.mainFolder,
                 onAction = { showImportDialog = true },
+                secondaryActionId = R.string.first_launch_setup_not_now,
+                onSecondaryAction = { importSkipped = true },
             )
+        }
+    }
 
-            val allDone = status.mainFolder && status.romsFolder && status.notifications && importStarted
-            AnimatedVisibility(visible = allDone, enter = fadeIn(), exit = fadeOut()) {
-                Text(
-                    modifier = Modifier.padding(horizontal = 16.dp),
-                    text = stringResource(R.string.first_launch_setup_all_done),
-                    style = MaterialTheme.typography.bodyMedium,
-                )
-            }
-
-            Column(
-                modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp),
-                horizontalAlignment = Alignment.End,
-                verticalArrangement = Arrangement.spacedBy(8.dp),
-            ) {
-                if (!status.mainFolder) {
-                    Text(
-                        text = stringResource(R.string.first_launch_setup_needs_folder),
-                        style = MaterialTheme.typography.bodySmall,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant,
-                    )
-                }
-                Button(onClick = onDone, enabled = status.mainFolder) {
-                    Text(text = stringResource(R.string.first_launch_setup_done))
-                }
-            }
+    // Lemuroid-S: no Done button, setup closes by itself once every card is done or dismissed.
+    val allDone = status.mainFolder && status.romsFolder && (status.notifications || notificationsSkipped) &&
+        (importStarted || importSkipped)
+    LaunchedEffect(allDone) {
+        if (allDone) {
+            delay(CARD_FADE_MS.toLong())
+            onDone()
         }
     }
 }
@@ -261,7 +252,9 @@ private fun SetupCard(
     onSecondaryAction: () -> Unit = { },
 ) {
     // Lemuroid-S: a card goes away once its step is done.
-    AnimatedVisibility(visible = !done, enter = fadeIn() + expandVertically(), exit = fadeOut() + shrinkVertically()) {
+    AnimatedVisibility(visible = !done, enter = fadeIn() + expandVertically(),
+        exit = fadeOut(tween(CARD_FADE_MS)) + shrinkVertically(tween(CARD_FADE_MS)),
+    ) {
         SetupCardContent(titleId, messageId, actionId, done, enabled, onAction, secondaryActionId, onSecondaryAction)
     }
 }
@@ -316,3 +309,5 @@ private fun SetupCardContent(
         }
     }
 }
+
+private const val CARD_FADE_MS = 400

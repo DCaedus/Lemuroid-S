@@ -31,7 +31,7 @@ object OrientationSettings {
 
     /** Orientation for the app's menus: portrait if "Menus always in portrait" is on. */
     fun menuOrientation(context: Context): Int =
-        if (preferences(context).getBoolean(context.getString(R.string.pref_key_menus_portrait), false)) {
+        if (preferences(context).getBoolean(context.getString(R.string.pref_key_menus_portrait), true)) {
             ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
         } else {
             ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED
