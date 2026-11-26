@@ -56,11 +56,20 @@ android {
             storeFile = file("$rootDir/debug.keystore")
         }
 
+        // Lemuroid-S: the release key is never stored in git. Its location and passwords come from
+        // environment variables (CI secrets) or ~/.gradle/gradle.properties:
+        // LEMUROIDS_KEYSTORE, LEMUROIDS_KEYSTORE_PASSWORD, LEMUROIDS_KEY_ALIAS, LEMUROIDS_KEY_PASSWORD.
+        // Without them, release builds are signed with the debug key (fine for local testing only).
+        val releaseKeystore = releaseSigning("LEMUROIDS_KEYSTORE")
         maybeCreate("release").apply {
-            storeFile = file("$rootDir/release.jks")
-            keyAlias = "lemuroid"
-            storePassword = "lemuroid"
-            keyPassword = "lemuroid"
+            if (releaseKeystore != null) {
+                storeFile = file(releaseKeystore)
+                storePassword = releaseSigning("LEMUROIDS_KEYSTORE_PASSWORD")
+                keyAlias = releaseSigning("LEMUROIDS_KEY_ALIAS")
+                keyPassword = releaseSigning("LEMUROIDS_KEY_PASSWORD")
+            } else {
+                initWith(getByName("debug"))
+            }
         }
     }
 
@@ -181,6 +190,8 @@ dependencies {
     kapt(deps.libs.dagger.android.processor)
     kapt(deps.libs.dagger.compiler)
 }
+
+fun releaseSigning(name: String): String? = System.getenv(name) ?: findProperty(name) as String?
 
 fun usePlayDynamicFeatures(): Boolean {
     val task = gradle.startParameter.taskRequests.toString()
