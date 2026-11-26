@@ -22,23 +22,57 @@ No ads, no tracking, no "All files access".
 
 ## From Lemuroid
 
-- Simple, clean interface for phones and Android TV
-- Automatic ROM scanning and indexing
-- Customizable touch controls, gamepad support and local multiplayer
-- Save states with quick save/load
-- HD mode and LCD/CRT display simulation
-- Google Drive save sync (Google Play version)
+- Android TV support
+- Automatically save and restore game states.
+- ROMs scanning and indexing
+- Optimized touch controls
+- Quick save/load
+- Support for Zipped ROMs
+- Display simulation (LCD/CRT)
+- Gamepad support
+- Local multiplayer
+- Tilt input
+- Customizable touch controls (size and position)
+- Cloud save sync
+- HD mode
 
 ## Supported systems
 
-- **Nintendo:** NES, SNES, Nintendo 64, Game Boy, Game Boy Color, Game Boy Advance, Nintendo DS, Nintendo 3DS (64-bit ARM),
-  Virtual Boy, Pokémon Mini
-- **Sega:** Master System, Game Gear, Genesis / Mega Drive, Sega CD, 32X, SG-1000, Dreamcast
-- **Sony:** PlayStation, PlayStation Portable
-- **SNK:** Neo Geo CD, Neo Geo Pocket, Neo Geo Pocket Color
-- **Atari:** 2600, 5200, 7800, Lynx
-- **Arcade:** FinalBurn Neo, MAME 2003-Plus
-- **Others:** PC Engine / TurboGrafx-16, WonderSwan, WonderSwan Color, ColecoVision, Intellivision, Vectrex, DOS
+- Atari 2600 (A26) ([stella](https://docs.libretro.com/library/stella/))
+- Atari 5200 (A52) ([a5200](https://docs.libretro.com/library/atari5200/))
+- Atari 7800 (A78) ([prosystem](https://docs.libretro.com/library/prosystem/))
+- Atari Lynx (Lynx) ([handy](https://docs.libretro.com/library/handy/))
+- Nintendo (NES) ([fceumm](https://docs.libretro.com/library/fceumm/))
+- Super Nintendo (SNES) ([snes9x](https://docs.libretro.com/library/snes9x/))
+- Game Boy (GB) ([gambatte](https://docs.libretro.com/library/gambatte/))
+- Game Boy Color (GBC) ([gambatte](https://docs.libretro.com/library/gambatte/))
+- Game Boy Advance (GBA) ([mgba](https://docs.libretro.com/library/mgba/))
+- Nintendo 64 (N64) ([mupen64plus](https://docs.libretro.com/library/mupen64plus/))
+- Nintendo DS (NDS) ([melonDS DS](https://github.com/JesseTG/melonds-ds))
+- Nintendo 3DS (3DS) ([azahar](https://github.com/azahar-emu/azahar)) (64-bit ARM devices)
+- Virtual Boy (VB) ([beetle_vb](https://docs.libretro.com/library/beetle_vb/))
+- Pokémon Mini (PM) ([pokemini](https://docs.libretro.com/library/pokemini/))
+- Sega Genesis (aka Megadrive) ([genesis_plus_gx](https://docs.libretro.com/library/genesis_plus_gx/))
+- Sega CD (aka Mega CD) ([genesis_plus_gx](https://docs.libretro.com/library/genesis_plus_gx/))
+- Sega Master System (SMS) ([genesis_plus_gx](https://docs.libretro.com/library/genesis_plus_gx/))
+- Sega Game Gear (GG) ([genesis_plus_gx](https://docs.libretro.com/library/genesis_plus_gx/))
+- Sega SG-1000 (SG-1000) ([genesis_plus_gx](https://docs.libretro.com/library/genesis_plus_gx/))
+- Sega 32X (32X) ([picodrive](https://docs.libretro.com/library/picodrive/))
+- Sega Dreamcast (DC) ([flycast](https://docs.libretro.com/library/flycast/))
+- PlayStation (PSX) ([PCSX-ReARMed](https://docs.libretro.com/library/pcsx_rearmed/))
+- PlayStation Portable (PSP) ([ppsspp](https://docs.libretro.com/library/ppsspp/))
+- FinalBurn Neo (Arcade) ([fbneo](https://github.com/libretro/FBNeo/))
+- MAME 2003-Plus (Arcade) ([mame2003_plus](https://docs.libretro.com/library/mame2003_plus/))
+- Neo Geo CD (NGCD) ([neocd](https://docs.libretro.com/library/neocd/))
+- Neo Geo Pocket (NGP) ([mednafen_ngp](https://docs.libretro.com/library/beetle_neopop/))
+- Neo Geo Pocket Color (NGC) ([mednafen_ngp](https://docs.libretro.com/library/beetle_neopop/))
+- NEC PC Engine (PCE) ([beetle_pce_fast](https://docs.libretro.com/library/beetle_pce_fast/))
+- WonderSwan (WS) ([beetle_cygne](https://docs.libretro.com/library/beetle_cygne/))
+- WonderSwan Color (WSC) ([beetle_cygne](https://docs.libretro.com/library/beetle_cygne/))
+- ColecoVision (CV) ([gearcoleco](https://github.com/drhelius/Gearcoleco))
+- Intellivision (INTV) ([freeintv](https://docs.libretro.com/library/freeintv/))
+- Vectrex (VEC) ([vecx](https://docs.libretro.com/library/vecx/))
+- DOS ([dosbox_pure](https://github.com/schellingb/dosbox-pure))
 
 Lemuroid-S doesn't include any games: use your own legally obtained game files.
 
