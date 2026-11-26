@@ -1,29 +1,18 @@
 plugins {
     id("com.android.library")
     id("kotlin-android")
-    id("kotlin-kapt")
     id("kotlinx-serialization")
     id("kotlin-parcelize")
     id("org.jetbrains.kotlin.plugin.compose")
 }
 
 android {
-    kotlinOptions {
-        jvmTarget = "17"
-        freeCompilerArgs +=
-            listOf(
-                "-Xcontext-receivers",
-            )
-    }
     namespace = "com.swordfish.touchinput.controller"
 
     buildFeatures {
         compose = true
     }
 
-    composeOptions {
-        kotlinCompilerExtensionVersion = deps.versions.kotlinExtension
-    }
 }
 
 dependencies {
@@ -49,5 +38,9 @@ dependencies {
 
     implementation(kotlin(deps.libs.kotlin.stdlib))
 
-    kapt(deps.libs.androidx.lifecycle.processor)
+}
+
+// Lemuroid-S: padkit's layouts use Kotlin context receivers.
+tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile>().configureEach {
+    compilerOptions.freeCompilerArgs.add("-Xcontext-receivers")
 }

@@ -1,7 +1,7 @@
 plugins {
     id("com.android.application")
     id("kotlin-android")
-    id("kotlin-kapt")
+    id("com.google.devtools.ksp")
     id("androidx.navigation.safeargs.kotlin")
     id("kotlinx-serialization")
     id("androidx.baselineprofile")
@@ -96,13 +96,6 @@ android {
         buildConfig = true
     }
 
-    composeOptions {
-        kotlinCompilerExtensionVersion = deps.versions.kotlinExtension
-    }
-
-    kotlinOptions {
-        jvmTarget = "17"
-    }
     namespace = "com.swordfish.lemuroid"
 }
 
@@ -138,7 +131,6 @@ dependencies {
     implementation(deps.libs.androidx.lifecycle.commonJava8)
     implementation(deps.libs.androidx.lifecycle.reactiveStreams)
 
-    kapt(deps.libs.androidx.lifecycle.processor)
 
     implementation(deps.libs.androidx.leanback.leanback)
     implementation(deps.libs.androidx.leanback.leanbackPreference)
@@ -187,8 +179,8 @@ dependencies {
     // Uncomment this when using a local aar file.
     // implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar", "*.aar"))))
 
-    kapt(deps.libs.dagger.android.processor)
-    kapt(deps.libs.dagger.compiler)
+    ksp(deps.libs.dagger.android.processor)
+    ksp(deps.libs.dagger.compiler)
 }
 
 fun releaseSigning(name: String): String? = System.getenv(name) ?: findProperty(name) as String?

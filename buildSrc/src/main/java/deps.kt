@@ -8,9 +8,10 @@ object deps {
     }
 
     object versions {
-        const val dagger          = "2.19"
+        const val dagger          = "2.60.1"
         const val gms             = "21.6.0"
-        const val kotlin          = "2.0.21"
+        const val kotlin          = "2.2.21"
+        const val ksp             = "2.2.21-2.0.5"
         const val okHttp          = "4.9.1"
         const val retrofit        = "2.9.0"
         const val work            = "2.9.0"
@@ -19,13 +20,12 @@ object deps {
         const val leanback        = "1.1.0-rc01"
         const val googleApiClient = "1.32.1"
         const val paging          = "3.2.1"
-        const val room            = "2.6.1"
+        const val room            = "2.8.4"
         const val serialization   = "1.2.2"
         const val fragment        = "1.5.1"
         const val activity        = "1.13.0"
         const val libretrodroid   = "0.14.0"
         const val composeBom      = "2026.06.01"
-        const val kotlinExtension = "1.4.6"
         const val padkit          = "1.0.0-beta1"
 
         // Make sure this is compatible with current bom versions:

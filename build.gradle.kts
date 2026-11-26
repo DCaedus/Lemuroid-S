@@ -15,13 +15,14 @@ buildscript {
 plugins {
     id("org.jetbrains.kotlin.jvm") version deps.versions.kotlin
     id("com.github.ben-manes.versions") version "0.51.0"
-    id("org.jetbrains.kotlin.plugin.serialization") version "1.4.0"
+    id("org.jetbrains.kotlin.plugin.serialization") version deps.versions.kotlin apply false
     id("org.jlleitschuh.gradle.ktlint") version "12.1.0"
     id("com.android.test") version "8.10.1" apply false
     id("org.jetbrains.kotlin.android") version deps.versions.kotlin apply false
     id("androidx.baselineprofile") version "1.4.1" apply false
     id("com.android.application") version "8.10.1" apply false
     id("org.jetbrains.kotlin.plugin.compose") version deps.versions.kotlin apply false
+    id("com.google.devtools.ksp") version deps.versions.ksp apply false
 }
 
 allprojects {
@@ -49,6 +50,11 @@ allprojects {
 }
 
 subprojects {
+    // Lemuroid-S: Kotlin bytecode target for every module (replaces the old per-module kotlinOptions).
+    tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile>().configureEach {
+        compilerOptions.jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_17)
+    }
+
     afterEvaluate {
         if (hasProperty("android")) {
             // BaseExtension is common parent for application, library and test modules
