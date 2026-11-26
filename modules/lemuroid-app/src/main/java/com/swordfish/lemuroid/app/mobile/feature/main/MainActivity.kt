@@ -141,6 +141,7 @@ class MainActivity : RetrogradeComponentActivity(), BusyActivity, GameLaunchHost
                     FirstLaunchSetupLayer {
                         MainScreen(navController)
                     }
+                    AppUpdateDialogs()
                 }
             }
         }

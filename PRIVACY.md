@@ -1,6 +1,6 @@
 # Lemuroid-S Privacy Policy
 
-_Last updated: 26 November 2026_
+_Last updated: 27 November 2026_
 
 Lemuroid-S is a free, open-source emulator for Android. It has no ads, no analytics and no tracking,
 and it does not collect, store or share any personal data. This page explains what the app does with
@@ -32,6 +32,9 @@ Lemuroid-S connects to the internet only for these things:
   the files it created there, not the rest of your Drive. Sign-in is handled by Google Play services. You
   can turn it off at any time in the app, which also withdraws Lemuroid-S's access, or remove access in
   your Google Account settings.
+- **Update check (GitHub version only).** As often as you choose in Settings (daily, weekly, monthly or
+  never), Lemuroid-S asks GitHub for the latest release. If you choose to update, it downloads the new
+  APK from GitHub and opens Android's installer.
 - **Rating prompt (Google Play version only).** Google Play may occasionally show its standard "rate this
   app" prompt. This is handled entirely by Google Play.
 
@@ -42,6 +45,7 @@ own privacy policies apply: [GitHub](https://docs.github.com/site-policy/privacy
 ## Permissions
 
 - **Internet and network state:** for the downloads above.
+- **Install apps (GitHub version only):** to install an update you chose to download.
 - **Notifications and foreground service:** to show progress, and keep working, while scanning games,
   importing saves or saving a game in the background.
 - **Storage (older Android versions and some Android TV devices only):** to read your ROMs folder where

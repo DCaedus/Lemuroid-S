@@ -149,6 +149,18 @@
         <item>@string/game_orientation_landscape</item>
         <item>@string/game_orientation_reverse_landscape</item>
     </string-array>
+    <string-array translatable="false" name="pref_key_update_frequency_values">
+        <item>never</item>
+        <item>daily</item>
+        <item>weekly</item>
+        <item>monthly</item>
+    </string-array>
+    <string-array translatable="false" name="pref_key_update_frequency_display_names">
+        <item>@string/update_frequency_never</item>
+        <item>@string/update_frequency_daily</item>
+        <item>@string/update_frequency_weekly</item>
+        <item>@string/update_frequency_monthly</item>
+    </string-array>
     <string-array translatable="false" name="pref_key_start_screen_values">
         <item>home</item>
         <item>favorites</item>
