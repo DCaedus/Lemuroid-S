@@ -236,7 +236,7 @@
     <string name="game_orientation_reverse_landscape">Landscape (top of device on the right)</string>
     <string name="settings_title_game_orientation">Game screen orientation</string>
     <string name="settings_title_menus_portrait">Menus always in portrait</string>
-    <string name="settings_description_menus_portrait">Keep the app\'s screens and the game menu in portrait, even when the device is turned</string>
+    <string name="settings_description_menus_portrait">Keep the app\'s screens in portrait, even when the device is turned. Games and the in-game menu keep the game\'s orientation</string>
     <string name="game_menu_display_filter_hd_mode">Turn off HD mode in Settings to use display filters</string>
     <string name="game_menu_state_autosave_automatic">Saved automatically</string>
     <string name="game_menu_change_disk_button">Change Disk</string>
