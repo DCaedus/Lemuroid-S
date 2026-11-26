@@ -2,6 +2,7 @@ package com.swordfish.lemuroid.app.shared.game
 
 import android.content.Intent
 import android.os.Bundle
+import androidx.activity.result.contract.ActivityResultContracts
 import android.view.View
 import androidx.core.view.isVisible
 import androidx.lifecycle.Lifecycle
@@ -36,7 +37,7 @@ import javax.inject.Inject
  * complete.
  */
 @OptIn(FlowPreview::class)
-class ExternalGameLauncherActivity : ImmersiveActivity() {
+class ExternalGameLauncherActivity : ImmersiveActivity(), GameLaunchHost {
     @Inject
     lateinit var retrogradeDatabase: RetrogradeDatabase
 
@@ -118,25 +119,26 @@ class ExternalGameLauncherActivity : ImmersiveActivity() {
         return PendingOperationsMonitor(applicationContext).anyOperationInProgress()
     }
 
-    override fun onActivityResult(
-        requestCode: Int,
+    // Lemuroid-S: the game screen's result through the activity result API (was onActivityResult).
+    private val gameActivityLauncher =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            onGameFinished(result.resultCode, result.data)
+        }
+
+    override fun launchGameActivity(intent: Intent) = gameActivityLauncher.launch(intent)
+
+    private fun onGameFinished(
         resultCode: Int,
         data: Intent?,
     ) {
-        super.onActivityResult(requestCode, resultCode, data)
+        val isLeanback = data?.extras?.getBoolean(BaseGameActivity.PLAY_GAME_RESULT_LEANBACK) == true
 
-        when (requestCode) {
-            BaseGameActivity.REQUEST_PLAY_GAME -> {
-                val isLeanback = data?.extras?.getBoolean(BaseGameActivity.PLAY_GAME_RESULT_LEANBACK) == true
-
-                GlobalScope.safeLaunch {
-                    if (isLeanback) {
-                        ChannelUpdateWork.enqueue(applicationContext)
-                    }
-                    gameLaunchTaskHandler.handleGameFinish(false, this@ExternalGameLauncherActivity, resultCode, data)
-                    finish()
-                }
+        GlobalScope.safeLaunch {
+            if (isLeanback) {
+                ChannelUpdateWork.enqueue(applicationContext)
             }
+            gameLaunchTaskHandler.handleGameFinish(false, this@ExternalGameLauncherActivity, resultCode, data)
+            finish()
         }
     }
 }

@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import androidx.activity.result.contract.ActivityResultContracts
 import com.swordfish.lemuroid.R
 import com.swordfish.lemuroid.app.shared.library.LibraryIndexScheduler
 import com.swordfish.lemuroid.app.utils.android.displayErrorDialog
@@ -35,7 +36,7 @@ class StorageFrameworkPickerLauncher : RetrogradeActivity() {
                     this.putExtra(Intent.EXTRA_LOCAL_ONLY, true)
                 }
             try {
-                startActivityForResult(intent, REQUEST_CODE_PICK_FOLDER)
+                folderPicker.launch(intent)
             } catch (e: Exception) {
                 showStorageAccessFrameworkNotSupportedDialog()
             }
@@ -48,14 +49,17 @@ class StorageFrameworkPickerLauncher : RetrogradeActivity() {
         displayErrorDialog(message, actionLabel) { finish() }
     }
 
-    override fun onActivityResult(
-        requestCode: Int,
+    // Lemuroid-S: folder picker result through the activity result API (was onActivityResult).
+    private val folderPicker =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            onFolderPicked(result.resultCode, result.data)
+        }
+
+    private fun onFolderPicked(
         resultCode: Int,
         resultData: Intent?,
     ) {
-        super.onActivityResult(requestCode, resultCode, resultData)
-
-        if (requestCode == REQUEST_CODE_PICK_FOLDER && resultCode == Activity.RESULT_OK) {
+        if (resultCode == Activity.RESULT_OK) {
             val sharedPreferences = SharedPreferencesHelper.getLegacySharedPreferences(this)
             val preferenceKey = getString(com.swordfish.lemuroid.lib.R.string.pref_key_extenral_folder)
 
@@ -115,7 +119,6 @@ class StorageFrameworkPickerLauncher : RetrogradeActivity() {
     }
 
     companion object {
-        private const val REQUEST_CODE_PICK_FOLDER = 1
 
         fun pickFolder(context: Context) {
             context.startActivity(Intent(context, StorageFrameworkPickerLauncher::class.java))

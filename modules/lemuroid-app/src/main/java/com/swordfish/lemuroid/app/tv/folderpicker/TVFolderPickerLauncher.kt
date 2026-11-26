@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import androidx.activity.result.contract.ActivityResultContracts
 import com.swordfish.lemuroid.R
 import com.swordfish.lemuroid.app.shared.ImmersiveActivity
 import com.swordfish.lemuroid.app.shared.library.LibraryIndexScheduler
@@ -14,18 +15,21 @@ class TVFolderPickerLauncher : ImmersiveActivity() {
         super.onCreate(savedInstanceState)
 
         if (savedInstanceState == null) {
-            startActivityForResult(Intent(this, TVFolderPickerActivity::class.java), REQUEST_CODE_PICK_FOLDER)
+            folderPicker.launch(Intent(this, TVFolderPickerActivity::class.java))
         }
     }
 
-    override fun onActivityResult(
-        requestCode: Int,
+    // Lemuroid-S: folder picker result through the activity result API (was onActivityResult).
+    private val folderPicker =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            onFolderPicked(result.resultCode, result.data)
+        }
+
+    private fun onFolderPicked(
         resultCode: Int,
         resultData: Intent?,
     ) {
-        super.onActivityResult(requestCode, resultCode, resultData)
-
-        if (requestCode == REQUEST_CODE_PICK_FOLDER && resultCode == Activity.RESULT_OK) {
+        if (resultCode == Activity.RESULT_OK) {
             val sharedPreferences = SharedPreferencesHelper.getLegacySharedPreferences(this)
             val preferenceKey = getString(com.swordfish.lemuroid.lib.R.string.pref_key_legacy_external_folder)
 
@@ -49,8 +53,6 @@ class TVFolderPickerLauncher : ImmersiveActivity() {
     }
 
     companion object {
-        private const val REQUEST_CODE_PICK_FOLDER = 1
-
         fun pickFolder(context: Context) {
             context.startActivity(Intent(context, TVFolderPickerLauncher::class.java))
         }

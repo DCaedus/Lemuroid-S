@@ -7,6 +7,7 @@ import android.os.Bundle
 import androidx.activity.SystemBarStyle
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
@@ -55,6 +56,7 @@ import com.swordfish.lemuroid.app.mobile.feature.systems.MetaSystemsViewModel
 import com.swordfish.lemuroid.app.mobile.shared.compose.ui.AppTheme
 import com.swordfish.lemuroid.app.shared.GameInteractor
 import com.swordfish.lemuroid.app.shared.game.BaseGameActivity
+import com.swordfish.lemuroid.app.shared.game.GameLaunchHost
 import com.swordfish.lemuroid.app.shared.game.GameLauncher
 import com.swordfish.lemuroid.app.shared.input.InputDeviceManager
 import com.swordfish.lemuroid.app.shared.main.BusyActivity
@@ -82,7 +84,7 @@ import kotlinx.coroutines.GlobalScope
 import javax.inject.Inject
 
 @OptIn(DelicateCoroutinesApi::class)
-class MainActivity : RetrogradeComponentActivity(), BusyActivity {
+class MainActivity : RetrogradeComponentActivity(), BusyActivity, GameLaunchHost {
     private var menuOrientationListener: android.content.SharedPreferences.OnSharedPreferenceChangeListener? = null
 
     override fun onDestroy() {
@@ -415,24 +417,25 @@ class MainActivity : RetrogradeComponentActivity(), BusyActivity {
 
     override fun isBusy(): Boolean = mainViewModel.state.value.operationInProgress ?: false
 
-    override fun onActivityResult(
-        requestCode: Int,
+    // Lemuroid-S: the game screen's result through the activity result API (was onActivityResult).
+    private val gameLauncher =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            onGameFinished(result.resultCode, result.data)
+        }
+
+    override fun launchGameActivity(intent: Intent) = gameLauncher.launch(intent)
+
+    private fun onGameFinished(
         resultCode: Int,
         data: Intent?,
     ) {
-        super.onActivityResult(requestCode, resultCode, data)
-
-        when (requestCode) {
-            BaseGameActivity.REQUEST_PLAY_GAME -> {
-                GlobalScope.safeLaunch {
-                    gameLaunchTaskHandler.handleGameFinish(
-                        true,
-                        this@MainActivity,
-                        resultCode,
-                        data,
-                    )
-                }
-            }
+        GlobalScope.safeLaunch {
+            gameLaunchTaskHandler.handleGameFinish(
+                true,
+                this@MainActivity,
+                resultCode,
+                data,
+            )
         }
     }
 

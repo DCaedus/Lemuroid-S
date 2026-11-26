@@ -8,6 +8,7 @@ import android.view.KeyEvent
 import android.view.MotionEvent
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.compose.setContent
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.compose.runtime.Composable
 import androidx.lifecycle.Lifecycle
@@ -221,7 +222,7 @@ abstract class BaseGameActivity : ImmersiveActivity() {
                 // TODO PADS... Make sure to avoid passing this if a physical pad is connected.
                 this.putExtra(GameMenuContract.EXTRA_TILT_ALL_CONFIGS, tiltConfigurations.toTypedArray())
             }
-        startActivityForResult(intent, DIALOG_REQUEST)
+        gameMenuLauncher.launch(intent)
         overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
     }
 
@@ -360,26 +361,27 @@ abstract class BaseGameActivity : ImmersiveActivity() {
         super.onDestroy()
     }
 
-    override fun onActivityResult(
-        requestCode: Int,
-        resultCode: Int,
-        data: Intent?,
-    ) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == DIALOG_REQUEST) {
+    // Lemuroid-S: game menu result through the activity result API (was onActivityResult).
+    private val gameMenuLauncher =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            onGameMenuResult(result.data)
+        }
+
+    private fun onGameMenuResult(data: Intent?) {
+        run {
             Timber.i("Game menu dialog response: ${data?.extras.dump()}")
             if (data?.getBooleanExtra(GameMenuContract.RESULT_RESET, false) == true) {
-                GlobalScope.launch {
+                lifecycleScope.launch {
                     baseGameScreenViewModel.reset()
                 }
             }
             if (data?.hasExtra(GameMenuContract.RESULT_SAVE) == true) {
-                GlobalScope.launch {
+                lifecycleScope.launch {
                     baseGameScreenViewModel.saveSlot(data.getIntExtra(GameMenuContract.RESULT_SAVE, 0))
                 }
             }
             if (data?.hasExtra(GameMenuContract.RESULT_LOAD) == true) {
-                GlobalScope.launch {
+                lifecycleScope.launch {
                     baseGameScreenViewModel.loadSlot(data.getIntExtra(GameMenuContract.RESULT_LOAD, 0))
                 }
             }
@@ -423,14 +425,12 @@ abstract class BaseGameActivity : ImmersiveActivity() {
     }
 
     companion object {
-        const val DIALOG_REQUEST = 100
 
         private const val EXTRA_GAME = "GAME"
         private const val EXTRA_LOAD_SAVE = "LOAD_SAVE"
         private const val EXTRA_LEANBACK = "LEANBACK"
         private const val EXTRA_SYSTEM_CORE_CONFIG = "EXTRA_SYSTEM_CORE_CONFIG"
 
-        const val REQUEST_PLAY_GAME = 1001
         const val PLAY_GAME_RESULT_SESSION_DURATION = "PLAY_GAME_RESULT_SESSION_DURATION"
         const val PLAY_GAME_RESULT_GAME = "PLAY_GAME_RESULT_GAME"
         const val PLAY_GAME_RESULT_LEANBACK = "PLAY_GAME_RESULT_LEANBACK"
@@ -452,16 +452,18 @@ abstract class BaseGameActivity : ImmersiveActivity() {
                 } else {
                     GameActivity::class.java
                 }
-            activity.startActivityForResult(
+            val intent =
                 Intent(activity, gameActivity).apply {
                     putExtra(EXTRA_GAME, game)
                     putExtra(EXTRA_LOAD_SAVE, loadSave)
                     putExtra(EXTRA_LEANBACK, useLeanback)
                     putExtra(EXTRA_SYSTEM_CORE_CONFIG, systemCoreConfig)
-                },
-                REQUEST_PLAY_GAME,
-            )
-            activity.overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
+                }
+            // Called from a background coroutine: start the game screen on the main thread.
+            activity.runOnUiThread {
+                (activity as GameLaunchHost).launchGameActivity(intent)
+                activity.overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
+            }
         }
     }
 }

@@ -1,6 +1,8 @@
 package com.swordfish.lemuroid.app.mobile.feature.settings.general
 
 import android.net.Uri
+import android.provider.Settings
+import android.content.Intent
 import android.os.Build
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -292,6 +294,19 @@ private fun InterfaceSettings() {
             title = { Text(text = stringResource(id = R.string.settings_title_pure_black)) },
             subtitle = { Text(text = stringResource(id = R.string.settings_description_pure_black)) },
         )
+        // Lemuroid-S: Android 13+ lets each app have its own language; this opens that page.
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            val context = LocalContext.current
+            LemuroidSettingsMenuLink(
+                title = { Text(text = stringResource(id = R.string.settings_title_language)) },
+                subtitle = { Text(text = stringResource(id = R.string.settings_description_language)) },
+                onClick = {
+                    context.startActivity(
+                        Intent(Settings.ACTION_APP_LOCALE_SETTINGS, Uri.fromParts("package", context.packageName, null)),
+                    )
+                },
+            )
+        }
         LemuroidSettingsSwitch(
             state = booleanPreferenceState(R.string.pref_key_menus_portrait, false),
             title = { Text(text = stringResource(id = R.string.settings_title_menus_portrait)) },

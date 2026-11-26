@@ -15,6 +15,7 @@ import com.swordfish.lemuroid.R
 import com.swordfish.lemuroid.app.mobile.feature.shortcuts.ShortcutsGenerator
 import com.swordfish.lemuroid.app.shared.GameInteractor
 import com.swordfish.lemuroid.app.shared.game.BaseGameActivity
+import com.swordfish.lemuroid.app.shared.game.GameLaunchHost
 import com.swordfish.lemuroid.app.shared.game.GameLauncher
 import com.swordfish.lemuroid.app.shared.main.BusyActivity
 import com.swordfish.lemuroid.app.shared.main.GameLaunchTaskHandler
@@ -39,7 +40,7 @@ import kotlinx.coroutines.GlobalScope
 import javax.inject.Inject
 
 @OptIn(DelicateCoroutinesApi::class)
-class MainTVActivity : BaseTVActivity(), BusyActivity {
+class MainTVActivity : BaseTVActivity(), BusyActivity, GameLaunchHost {
     @Inject
     lateinit var gameLaunchTaskHandler: GameLaunchTaskHandler
 
@@ -65,20 +66,21 @@ class MainTVActivity : BaseTVActivity(), BusyActivity {
         ensureLegacyStoragePermissionsIfNeeded()
     }
 
-    override fun onActivityResult(
-        requestCode: Int,
+    // Lemuroid-S: the game screen's result through the activity result API (was onActivityResult).
+    private val gameLauncher =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            onGameFinished(result.resultCode, result.data)
+        }
+
+    override fun launchGameActivity(intent: Intent) = gameLauncher.launch(intent)
+
+    private fun onGameFinished(
         resultCode: Int,
         data: Intent?,
     ) {
-        super.onActivityResult(requestCode, resultCode, data)
-
-        when (requestCode) {
-            BaseGameActivity.REQUEST_PLAY_GAME -> {
-                GlobalScope.safeLaunch {
-                    gameLaunchTaskHandler.handleGameFinish(false, this@MainTVActivity, resultCode, data)
-                    ChannelUpdateWork.enqueue(applicationContext)
-                }
-            }
+        GlobalScope.safeLaunch {
+            gameLaunchTaskHandler.handleGameFinish(false, this@MainTVActivity, resultCode, data)
+            ChannelUpdateWork.enqueue(applicationContext)
         }
     }
 

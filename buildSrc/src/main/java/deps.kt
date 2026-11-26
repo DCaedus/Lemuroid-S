@@ -160,6 +160,7 @@ object deps {
         const val flowPreferences          = "com.fredporciuncula:flow-preferences:1.8.0"
         const val timber                   = "com.jakewharton.timber:timber:5.0.1"
         const val material                 = "com.google.android.material:material:1.12.0"
+        const val guava                    = "com.google.guava:guava:33.4.8-android"
         const val harmony                  = "com.frybits.harmony:harmony:1.2.7"
         const val startup                  = "androidx.startup:startup-runtime:1.2.0"
         const val composeHtmlText          = "de.charlex.compose.material3:material3-html-text:2.0.0-beta01"

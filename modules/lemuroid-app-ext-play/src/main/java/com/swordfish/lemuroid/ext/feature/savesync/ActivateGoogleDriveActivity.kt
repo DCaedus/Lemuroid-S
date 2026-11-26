@@ -1,6 +1,8 @@
 package com.swordfish.lemuroid.ext.feature.savesync
 
-import android.app.Activity
+import androidx.activity.ComponentActivity
+import androidx.activity.result.IntentSenderRequest
+import androidx.activity.result.contract.ActivityResultContracts
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
@@ -13,7 +15,13 @@ import com.swordfish.lemuroid.ext.R
 import timber.log.Timber
 
 /** Connects Google Drive save sync, or disconnects it if it's already connected. */
-class ActivateGoogleDriveActivity : Activity() {
+class ActivateGoogleDriveActivity : ComponentActivity() {
+    // The account picker / consent screen, through the activity result API.
+    private val authorizeLauncher =
+        registerForActivityResult(ActivityResultContracts.StartIntentSenderForResult()) { result ->
+            onAuthorizeResult(result.data)
+        }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         if (savedInstanceState != null) return
@@ -37,7 +45,7 @@ class ActivateGoogleDriveActivity : Activity() {
                 if (result.hasResolution() && pendingIntent != null) {
                     // The user picks an account and allows access.
                     runCatching {
-                        startIntentSenderForResult(pendingIntent.intentSender, REQUEST_AUTHORIZE, null, 0, 0, 0)
+                        authorizeLauncher.launch(IntentSenderRequest.Builder(pendingIntent.intentSender).build())
                     }.onFailure { onFailed(it) }
                 } else {
                     onConnected(result)
@@ -46,14 +54,7 @@ class ActivateGoogleDriveActivity : Activity() {
             .addOnFailureListener { onFailed(it) }
     }
 
-    @Deprecated("Deprecated in Java")
-    override fun onActivityResult(
-        requestCode: Int,
-        resultCode: Int,
-        data: Intent?,
-    ) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode != REQUEST_AUTHORIZE) return
+    private fun onAuthorizeResult(data: Intent?) {
         runCatching { Identity.getAuthorizationClient(this).getAuthorizationResultFromIntent(data) }
             .onSuccess { onConnected(it) }
             .onFailure { onFailed(it) }
@@ -79,9 +80,5 @@ class ActivateGoogleDriveActivity : Activity() {
             Toast.makeText(this, R.string.gdrive_sign_out_success, Toast.LENGTH_SHORT).show()
             finish()
         }
-    }
-
-    companion object {
-        const val REQUEST_AUTHORIZE = 45
     }
 }

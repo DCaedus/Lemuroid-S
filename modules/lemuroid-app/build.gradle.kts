@@ -47,7 +47,7 @@ android {
             useLegacyPackaging = true
         }
         resources {
-            excludes += setOf("META-INF/DEPENDENCIES", "META-INF/library_release.kotlin_module")
+            excludes += setOf("META-INF/DEPENDENCIES", "META-INF/library_release.kotlin_module", "META-INF/INDEX.LIST")
         }
     }
 
@@ -85,6 +85,12 @@ android {
             versionNameSuffix = "-DEBUG"
             resValue("string", "lemuroid_name", "Lemuroid-S Debug")
         }
+    }
+
+    // Lemuroid-S: lists the app's languages so Android 13+ offers a per-app language
+    // (Settings > Apps > Lemuroid-S > Language, also linked from the app's Settings).
+    androidResources {
+        generateLocaleConfig = true
     }
 
     lint {
@@ -150,6 +156,8 @@ dependencies {
     implementation(deps.libs.retrofit)
     implementation(deps.libs.flowPreferences)
     implementation(deps.libs.androidx.documentfile)
+    // WorkManager's ListenableFuture: the Play build's Google libraries otherwise leave only an empty stub.
+    implementation(deps.libs.guava)
     implementation(deps.libs.androidx.leanback.tvProvider)
     implementation(deps.libs.harmony)
     implementation(deps.libs.startup)
