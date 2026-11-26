@@ -53,7 +53,7 @@ android {
 
     signingConfigs {
         maybeCreate("debug").apply {
-            storeFile = file("$rootDir/debug.keystore")
+            storeFile = file("debug.keystore")
         }
 
         // Lemuroid-S: the release key is never stored in git. Its location and passwords come from
