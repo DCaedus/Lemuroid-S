@@ -44,6 +44,13 @@ object RomsFolder {
         setLocation(context, LOCATION_CUSTOM)
     }
 
+    /** True once a ROMs folder (Lemuroid-S/roms or a custom one) has been chosen. */
+    fun isSet(context: Context): Boolean {
+        @Suppress("DEPRECATION")
+        return SharedPreferencesHelper.getLegacySharedPreferences(context)
+            .getString(context.getString(com.swordfish.lemuroid.lib.R.string.pref_key_extenral_folder), null) != null
+    }
+
     /** True if the ROMs folder is Lemuroid-S/roms (the default) rather than a custom folder. */
     fun isMainLocation(context: Context): Boolean {
         val location =

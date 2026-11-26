@@ -74,6 +74,13 @@
     <string name="import_covers_running">Importing covers…</string>
     <string name="import_covers_result">Imported %1$d covers from RetroArch.</string>
     <string name="import_covers_failed">Could not find RetroArch\'s thumbnails folder, or the Lemuroid-S folder isn\'t set up.</string>
+    <string name="first_launch_setup_title">Welcome to Lemuroid-S</string>
+    <string name="first_launch_setup_message">Set up a few things before you start. You can open this again from Settings > Advanced.</string>
+    <string name="first_launch_setup_done">Done</string>
+    <string name="first_launch_setup_step_done">Done</string>
+    <string name="first_launch_setup_needs_folder">Create the Lemuroid-S folder to continue.</string>
+    <string name="settings_title_first_launch_setup">First-launch setup</string>
+    <string name="settings_description_first_launch_setup">Open the setup cards again: Lemuroid-S folder, ROMs folder, notifications and Import Saves</string>
     <string name="home_import_saves_title">Import Saves</string>
     <string name="home_import_saves_message">Import your saves from other emulators or folders.</string>
     <string name="home_import_saves_action">Import Saves</string>

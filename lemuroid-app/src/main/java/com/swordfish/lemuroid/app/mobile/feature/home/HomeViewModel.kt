@@ -8,7 +8,6 @@ import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
-import com.swordfish.lemuroid.R
 import com.swordfish.lemuroid.app.shared.library.PendingOperationsMonitor
 import com.swordfish.lemuroid.app.shared.settings.StorageFrameworkPickerLauncher
 import com.swordfish.lemuroid.common.coroutines.combine
@@ -16,8 +15,6 @@ import com.swordfish.lemuroid.lib.core.CoresSelection
 import com.swordfish.lemuroid.lib.library.SystemID
 import com.swordfish.lemuroid.lib.library.db.RetrogradeDatabase
 import com.swordfish.lemuroid.lib.library.db.entity.Game
-import com.swordfish.lemuroid.lib.preferences.SharedPreferencesHelper
-import com.swordfish.lemuroid.lib.storage.MainFolder
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
@@ -53,64 +50,6 @@ class HomeViewModel(
         }
     }
 
-    /** Lemuroid-S setup cards shown on the home screen until handled or dismissed. */
-    data class SetupCards(
-        val showMainFolder: Boolean = false,
-        val showRomsFolder: Boolean = false,
-        val showImportSaves: Boolean = false,
-    )
-
-    /** True once a ROMs folder (Lemuroid-S/roms or a custom one) has been chosen. */
-    private fun isRomsFolderSet(context: Context): Boolean {
-        @Suppress("DEPRECATION")
-        return SharedPreferencesHelper.getLegacySharedPreferences(context)
-            .getString(context.getString(com.swordfish.lemuroid.lib.R.string.pref_key_extenral_folder), null) != null
-    }
-
-    private val setupPreferences = SharedPreferencesHelper.getSharedPreferences(appContext)
-
-    private fun wasPrompted(keyId: Int) = setupPreferences.getBoolean(appContext.getString(keyId), false)
-
-    private fun markPrompted(keyId: Int) {
-        setupPreferences.edit().putBoolean(appContext.getString(keyId), true).apply()
-    }
-
-    private val setupCards =
-        MutableStateFlow(
-            SetupCards(
-                showMainFolder = !MainFolder(appContext).isSet(),
-                showRomsFolder = !isRomsFolderSet(appContext),
-                showImportSaves = !wasPrompted(R.string.pref_key_home_import_saves_prompted),
-            ),
-        )
-
-    fun getSetupCards(): Flow<SetupCards> = setupCards
-
-    init {
-        // One-time cleanup of duplicate folders ("gba (1)") made by earlier test builds.
-        viewModelScope.launch(Dispatchers.IO) {
-            val key = appContext.getString(R.string.pref_key_duplicate_folders_merged)
-            if (setupPreferences.getBoolean(key, false)) return@launch
-            val mainFolder = MainFolder(appContext)
-            if (!mainFolder.isSet()) return@launch
-            runCatching { mainFolder.mergeDuplicateFolders() }
-            setupPreferences.edit().putBoolean(key, true).apply()
-        }
-    }
-
-    fun onMainFolderChosen() {
-        setupCards.value = setupCards.value.copy(showMainFolder = false)
-    }
-
-    fun onRomsFolderChosen() {
-        setupCards.value = setupCards.value.copy(showRomsFolder = !isRomsFolderSet(appContext))
-    }
-
-    fun dismissImportSavesCard() {
-        markPrompted(R.string.pref_key_home_import_saves_prompted)
-        setupCards.value = setupCards.value.copy(showImportSaves = false)
-    }
-
     data class UIState(
         val favoritesGames: List<Game> = emptyList(),
         val recentGames: List<Game> = emptyList(),
@@ -135,11 +74,6 @@ class HomeViewModel(
     }
 
     fun updatePermissions(context: Context) {
-        setupCards.value =
-            setupCards.value.copy(
-                showMainFolder = !MainFolder(context).isSet(),
-                showRomsFolder = !isRomsFolderSet(context),
-            )
         notificationsPermissionEnabledState.value = isNotificationsPermissionGranted(context)
         microphonePermissionEnabledState.value = isMicrophonePermissionGranted(context)
     }

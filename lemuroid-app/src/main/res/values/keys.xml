@@ -28,7 +28,7 @@
 
     <string name="pref_key_artwork_type" translatable="false">artwork_type</string>
     <string name="pref_key_retroarch_folder" translatable="false">retroarch_folder</string>
-    <string name="pref_key_home_import_saves_prompted" translatable="false">home_import_saves_prompted</string>
+    <string name="pref_key_first_launch_setup_done" translatable="false">first_launch_setup_done</string>
     <string name="pref_key_duplicate_folders_merged" translatable="false">duplicate_folders_merged_v1</string>
     <string name="pref_key_periodic_autosave_minutes" translatable="false">periodic_autosave_minutes</string>
     <string name="pref_key_show_framerate" translatable="false">show_framerate</string>

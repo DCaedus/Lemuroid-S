@@ -1,7 +1,6 @@
 package com.swordfish.lemuroid.app.mobile.feature.home
 
 import android.Manifest
-import android.os.Build
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.animation.AnimatedVisibility
@@ -24,9 +23,6 @@ import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -35,11 +31,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.Lifecycle
 import com.swordfish.lemuroid.R
-import com.swordfish.lemuroid.app.mobile.feature.settings.general.ImportSavesDialog
-import com.swordfish.lemuroid.app.mobile.feature.settings.general.rememberMainFolderPicker
-import com.swordfish.lemuroid.app.mobile.feature.settings.general.useMainRomsFolder
 import com.swordfish.lemuroid.app.mobile.shared.compose.ui.LemuroidGameCard
-import com.swordfish.lemuroid.app.shared.settings.StorageFrameworkPickerLauncher
 import com.swordfish.lemuroid.app.utils.android.ComposableLifecycle
 import com.swordfish.lemuroid.common.displayDetailsSettingsScreen
 import com.swordfish.lemuroid.lib.library.db.entity.Game
@@ -74,59 +66,25 @@ fun HomeScreen(
         }
 
     val state = viewModel.getViewStates().collectAsState(HomeViewModel.UIState())
-    val setupCards = viewModel.getSetupCards().collectAsState(HomeViewModel.SetupCards())
 
-    val scope = rememberCoroutineScope()
-    var showImportConfirmation by remember { mutableStateOf(false) }
-    val onMainFolderChosen = { viewModel.onMainFolderChosen() }
-    val mainFolderPicker = rememberMainFolderPicker(onChosen = onMainFolderChosen)
-    ImportSavesDialog(
-        show = showImportConfirmation,
-        onDismiss = { showImportConfirmation = false },
-        onImportStarted = { viewModel.dismissImportSavesCard() },
-    )
-
+    // Lemuroid-S: the setup cards (folders, notifications, Import Saves) are on the first-launch
+    // setup layer (FirstLaunchSetup.kt); only the microphone card stays here.
     HomeScreen(
         modifier,
         state.value,
-        setupCards.value,
-        mainFolderPicker,
-        { showImportConfirmation = true },
-        { viewModel.dismissImportSavesCard() },
         onGameClick,
         onGameLongClick,
-        {
-            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU) {
-                return@HomeScreen
-            }
-
-            permissionsLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
-        },
         { permissionsLauncher.launch(Manifest.permission.RECORD_AUDIO) },
-        {
-            scope.launch {
-                useMainRomsFolder(context)
-                viewModel.onRomsFolderChosen()
-            }
-        },
-        { StorageFrameworkPickerLauncher.pickFolder(context) },
-    ) // TODO COMPOSE We need to understand what's going to happen here.
+    )
 }
 
 @Composable
 private fun HomeScreen(
     modifier: Modifier = Modifier,
     state: HomeViewModel.UIState,
-    setupCards: HomeViewModel.SetupCards,
-    onChooseMainFolder: () -> Unit,
-    onImportSaves: () -> Unit,
-    onDismissImportSaves: () -> Unit,
     onGameClicked: (Game) -> Unit,
     onGameLongClick: (Game) -> Unit,
-    onEnableNotificationsClicked: () -> Unit,
     onEnableMicrophoneClicked: () -> Unit,
-    onSetDirectoryClicked: () -> Unit,
-    onSetCustomDirectoryClicked: () -> Unit,
 ) {
     Column(
         modifier =
@@ -135,44 +93,6 @@ private fun HomeScreen(
                 .padding(top = 16.dp, bottom = 16.dp),
         verticalArrangement = Arrangement.spacedBy(16.dp),
     ) {
-        AnimatedVisibility(setupCards.showMainFolder) {
-            HomeNotification(
-                titleId = R.string.main_folder_card_title,
-                messageId = R.string.main_folder_card_message,
-                actionId = R.string.main_folder_card_action,
-                onAction = onChooseMainFolder,
-            )
-        }
-        // Setup cards, in order: Lemuroid-S folder, ROMs folder, notifications, import saves.
-        AnimatedVisibility(state.showNoGamesCard && setupCards.showRomsFolder) {
-            HomeNotification(
-                titleId = R.string.home_empty_title,
-                messageId = R.string.home_empty_message,
-                actionId = R.string.home_roms_main_action,
-                onAction = onSetDirectoryClicked,
-                secondaryActionId = R.string.folder_option_custom,
-                onSecondaryAction = onSetCustomDirectoryClicked,
-                enabled = !state.indexInProgress,
-            )
-        }
-        AnimatedVisibility(state.showNoNotificationPermissionCard) {
-            HomeNotification(
-                titleId = R.string.home_notification_title,
-                messageId = R.string.home_notification_message,
-                actionId = R.string.home_notification_action,
-                onAction = onEnableNotificationsClicked,
-            )
-        }
-        AnimatedVisibility(setupCards.showImportSaves) {
-            HomeNotification(
-                titleId = R.string.home_import_saves_title,
-                messageId = R.string.home_import_saves_message,
-                actionId = R.string.home_import_saves_action,
-                onAction = onImportSaves,
-                secondaryActionId = R.string.home_card_not_now,
-                onSecondaryAction = onDismissImportSaves,
-            )
-        }
         AnimatedVisibility(state.showNoMicrophonePermissionCard) {
             HomeNotification(
                 titleId = R.string.home_microphone_title,
