@@ -275,7 +275,7 @@ class BaseGameScreenViewModel(
 
     fun isFastForwardButtonVisible(): Flow<Boolean> =
         flow {
-            emit(system.fastForwardSupport && settingsManager.showFastForwardButton())
+            emit(system.fastForwardSupport && settingsManager.showFastForwardButton(system.id.dbname))
         }
 
     fun isFramerateCounterEnabled(): Flow<Boolean> = flow { emit(settingsManager.showFramerate()) }

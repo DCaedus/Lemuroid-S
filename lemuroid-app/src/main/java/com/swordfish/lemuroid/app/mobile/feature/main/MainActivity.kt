@@ -8,9 +8,9 @@ import androidx.activity.SystemBarStyle
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
-import androidx.compose.animation.fadeOut
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.AlertDialog
@@ -42,6 +42,7 @@ import com.swordfish.lemuroid.app.mobile.feature.settings.advanced.AdvancedSetti
 import com.swordfish.lemuroid.app.mobile.feature.settings.artwork.ArtworkSettingsScreen
 import com.swordfish.lemuroid.app.mobile.feature.settings.bios.BiosScreen
 import com.swordfish.lemuroid.app.mobile.feature.settings.bios.BiosSettingsViewModel
+import com.swordfish.lemuroid.app.mobile.feature.settings.fastforward.FastForwardButtonSettingsScreen
 import com.swordfish.lemuroid.app.mobile.feature.settings.general.SettingsScreen
 import com.swordfish.lemuroid.app.mobile.feature.settings.general.SettingsViewModel
 import com.swordfish.lemuroid.app.mobile.feature.settings.inputdevices.InputDevicesSettingsScreen
@@ -307,6 +308,9 @@ class MainActivity : RetrogradeComponentActivity(), BusyActivity {
                                 ),
                             navController = navController,
                         )
+                    }
+                    composable(MainRoute.SETTINGS_FAST_FORWARD_BUTTON) {
+                        FastForwardButtonSettingsScreen(modifier = Modifier.padding(padding))
                     }
                     composable(MainRoute.SETTINGS_ARTWORK) {
                         ArtworkSettingsScreen(modifier = Modifier.padding(padding))

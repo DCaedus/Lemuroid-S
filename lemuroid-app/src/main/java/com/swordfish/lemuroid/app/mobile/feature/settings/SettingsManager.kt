@@ -63,6 +63,24 @@ class SettingsManager(private val context: Context, sharedPreferences: Lazy<Shar
 
     suspend fun showFastForwardButton() = booleanPreference(R.string.pref_key_fast_forward_button, true)
 
+    /** The fast-forward button setting for [systemDbName]: its own choice, or the global setting. */
+    suspend fun showFastForwardButton(systemDbName: String): Boolean {
+        val choice =
+            withContext(Dispatchers.IO) {
+                sharedPreferences.getString(
+                    fastForwardButtonSystemKey(context, systemDbName),
+                    FAST_FORWARD_BUTTON_DEFAULT,
+                )
+                    .asFlow()
+                    .first()
+            }
+        return when (choice) {
+            FAST_FORWARD_BUTTON_SHOW -> true
+            FAST_FORWARD_BUTTON_HIDE -> false
+            else -> showFastForwardButton()
+        }
+    }
+
     /** Minutes between timed auto-saves while playing. 0 means off. */
     suspend fun periodicAutoSaveMinutes(): Int =
         stringPreference(R.string.pref_key_periodic_autosave_minutes, "0").toIntOrNull() ?: 0
@@ -127,6 +145,16 @@ class SettingsManager(private val context: Context, sharedPreferences: Lazy<Shar
         const val DEFAULT_FAST_FORWARD_AUDIO = "lower"
         const val DEFAULT_HD_MODE = true
         const val DEFAULT_HD_MODE_QUALITY = 0
+
+        const val FAST_FORWARD_BUTTON_DEFAULT = "default"
+        const val FAST_FORWARD_BUTTON_SHOW = "show"
+        const val FAST_FORWARD_BUTTON_HIDE = "hide"
+
+        fun fastForwardButtonSystemKey(
+            context: Context,
+            systemDbName: String,
+        ) = context.getString(R.string.pref_key_fast_forward_button_system_prefix) + systemDbName
+
         const val FAST_FORWARD_AUDIO_NORMAL = "normal"
         const val FAST_FORWARD_AUDIO_MUTE = "mute"
         const val FAST_FORWARD_AUDIO_LOWER = "lower"

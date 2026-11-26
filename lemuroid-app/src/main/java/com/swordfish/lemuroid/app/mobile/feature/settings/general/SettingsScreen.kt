@@ -59,7 +59,7 @@ fun SettingsScreen(
             scanInProgress = scanInProgress,
         )
         GeneralSettings()
-        FastForwardSettings()
+        FastForwardSettings(navController)
         ArtworkSettings(navController = navController)
         TestSettings()
         InputSettings(navController = navController)
@@ -108,7 +108,7 @@ private fun MiscSettings(
 }
 
 @Composable
-private fun FastForwardSettings() {
+private fun FastForwardSettings(navController: NavController) {
     val audioModeValues = stringListResource(R.array.pref_key_fast_forward_audio_values)
     val audioMode =
         indexPreferenceState(
@@ -157,6 +157,15 @@ private fun FastForwardSettings() {
             state = booleanPreferenceState(R.string.pref_key_fast_forward_button, true),
             title = { Text(text = stringResource(id = R.string.settings_title_fast_forward_button)) },
             subtitle = { Text(text = stringResource(id = R.string.settings_description_fast_forward_button)) },
+        )
+        LemuroidSettingsMenuLink(
+            title = { Text(text = stringResource(id = R.string.settings_title_fast_forward_button_per_system)) },
+            subtitle = {
+                Text(
+                    text = stringResource(id = R.string.settings_description_fast_forward_button_per_system),
+                )
+            },
+            onClick = { navController.navigateToRoute(MainRoute.SETTINGS_FAST_FORWARD_BUTTON) },
         )
     }
 }
