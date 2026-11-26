@@ -3,6 +3,7 @@ import org.gradle.api.Project
 import org.gradle.api.file.DirectoryProperty
 import org.gradle.api.provider.Property
 import org.gradle.api.tasks.Input
+import org.gradle.api.tasks.InputDirectory
 import org.gradle.api.tasks.OutputDirectory
 import org.gradle.api.tasks.TaskAction
 import java.io.File
@@ -19,6 +20,9 @@ import java.util.zip.ZipInputStream
 object PlayCores {
     const val FOLDER = "play-cores"
     private const val REPOSITORY_URL = "https://github.com/DCaedus/Lemuroid-S/raw/cores/"
+
+    /** Every module must cover the same ABIs as the app (Play rule); missing ones get a placeholder library. */
+    private val ABIS = listOf("arm64-v8a", "armeabi-v7a", "x86", "x86_64")
 
     /** Names of the Play core modules ("lemuroid_core_fbneo", ...), from the play-cores folder. */
     fun moduleNames(rootDir: File): List<String> =
@@ -50,6 +54,7 @@ object PlayCores {
                 library.set(libraryName)
                 version.set(coresVersion(project.rootDir))
                 outputDir.set(libsDir(project))
+                placeholderDir.set(File(project.rootDir, "$FOLDER/placeholder"))
             }
         project.tasks.configureEach {
             if (name.startsWith("merge") && name.endsWith("JniLibFolders")) dependsOn(fetch)
@@ -62,6 +67,9 @@ object PlayCores {
 
         @get:Input
         abstract val version: Property<String>
+
+        @get:InputDirectory
+        abstract val placeholderDir: DirectoryProperty
 
         @get:OutputDirectory
         abstract val outputDir: DirectoryProperty
@@ -86,6 +94,13 @@ object PlayCores {
                 check(hash == expectedHash) { "Checksum mismatch for $zipName" }
                 unzip(data, File(output, abi))
                 logger.lifecycle("Core ${library.get()}: $abi")
+            }
+
+            // See play-cores/placeholder/README.md.
+            ABIS.filter { !File(output, it).isDirectory }.forEach { abi ->
+                val placeholder = File(placeholderDir.get().asFile, "$abi/libcore_placeholder.so")
+                placeholder.copyTo(File(output, "$abi/libplaceholder_${library.get()}.so"))
+                logger.lifecycle("Core ${library.get()}: $abi not available, placeholder added")
             }
         }
 

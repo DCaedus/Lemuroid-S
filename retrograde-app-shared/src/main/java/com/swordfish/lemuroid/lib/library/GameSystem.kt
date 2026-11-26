@@ -933,6 +933,8 @@ data class GameSystem(
                     listOf(
                         SystemCoreConfig(
                             CoreID.MELONDS,
+                            // melonDS DS has no 32-bit x86 build.
+                            supportedOnlyArchitectures = setOf("arm64-v8a", "armeabi-v7a", "x86_64"),
                             exposedSettings =
                                 listOf(
                                     ExposedSetting(
