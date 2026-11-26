@@ -28,7 +28,7 @@ class GamePadShortcutBindingActivity : RetrogradeActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        shortcutBindingUpdater = ShortcutBindingUpdater(inputDeviceManager, intent)
+        shortcutBindingUpdater = ShortcutBindingUpdater(inputDeviceManager, intent) { finish() }
 
         setContent {
             AppTheme {
@@ -59,6 +59,11 @@ class GamePadShortcutBindingActivity : RetrogradeActivity() {
         }
 
         return result
+    }
+
+    override fun onDestroy() {
+        shortcutBindingUpdater.cancel()
+        super.onDestroy()
     }
 
     @dagger.Module

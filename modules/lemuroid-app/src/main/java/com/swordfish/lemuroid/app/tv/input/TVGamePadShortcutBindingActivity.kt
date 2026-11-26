@@ -17,7 +17,7 @@ class TVGamePadShortcutBindingActivity : BaseTVActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        shortcutBindingUpdater = ShortcutBindingUpdater(inputDeviceManager, intent)
+        shortcutBindingUpdater = ShortcutBindingUpdater(inputDeviceManager, intent) { finish() }
 
         if (null == savedInstanceState) {
             val fragment =
@@ -27,6 +27,11 @@ class TVGamePadShortcutBindingActivity : BaseTVActivity() {
                 )
             GuidedStepSupportFragment.addAsRoot(this, fragment, android.R.id.content)
         }
+    }
+
+    override fun onDestroy() {
+        shortcutBindingUpdater.cancel()
+        super.onDestroy()
     }
 
     override fun onKeyDown(

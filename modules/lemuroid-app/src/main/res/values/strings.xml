@@ -229,6 +229,10 @@
     <string name="game_menu_settings">Settings</string>
     <string name="game_menu_state">State %1$s</string>
     <string name="game_menu_state_autosave">Autosave</string>
+    <string name="game_menu_orientation">Screen orientation</string>
+    <string name="game_orientation_auto">Auto (follow phone)</string>
+    <string name="game_orientation_portrait">Portrait</string>
+    <string name="game_orientation_landscape">Landscape</string>
     <string name="game_menu_display_filter_hd_mode">Turn off HD mode in Settings to use display filters</string>
     <string name="game_menu_state_autosave_automatic">Saved automatically</string>
     <string name="game_menu_change_disk_button">Change Disk</string>
@@ -308,7 +312,7 @@
     <string name="gamepad_binding_update_title">Associate \"RetroPad %1$s\"</string>
     <string name="gamepad_binding_update_description">Press a button on your \"%1$s\"</string>
     <string name="shortcut_binding_update_title">Associate \"Shortcut %1$s\"</string>
-    <string name="shortcut_binding_update_description">Press the first, then second button to bind a combo on your \"%1$s\"</string>
+    <string name="shortcut_binding_update_description">Press one button, or two buttons one after the other for a combo, on your \"%1$s\"</string>
 
     <string name="tv_search_results">Games</string>
     <string name="tv_game_message_missing_gamepad">Gamepads are required to play. Please connect one.</string>

@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ScreenRotation
 import androidx.compose.material.icons.filled.Sensors
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
@@ -144,6 +145,28 @@ fun GameMenuHomeScreen(
                 },
             )
         }
+
+        // Screen orientation for all games; portrait/landscape work even with auto-rotate locked.
+        val orientationContext = LocalContext.current
+        val orientationKey = stringResource(id = R.string.pref_key_game_orientation)
+        val orientationValues = stringListResource(R.array.pref_key_game_orientation_values)
+        LemuroidSettingsList(
+            title = { Text(text = stringResource(id = R.string.game_menu_orientation)) },
+            items = stringListResource(R.array.pref_key_game_orientation_display_names),
+            icon = {
+                Icon(
+                    imageVector = Icons.Filled.ScreenRotation,
+                    contentDescription = stringResource(id = R.string.game_menu_orientation),
+                )
+            },
+            state = indexPreferenceState(orientationKey, orientationValues.first(), orientationValues),
+            onItemSelected = { index, _ ->
+                SharedPreferencesHelper.getSharedPreferences(orientationContext).edit()
+                    .putString(orientationKey, orientationValues[index])
+                    .apply()
+                onResult { putExtra(GameMenuContract.RESULT_ORIENTATION_CHANGED, true) }
+            },
+        )
 
         // Display filter: the general setting (same as Settings > Display filter), applied right away.
         // Filters are only used while HD mode is off.

@@ -311,14 +311,17 @@ class GameViewModelInput(
                         return@safeCollect
                     }
 
+                    // Lemuroid-S: only a newly pressed button can trigger a shortcut (shortcuts can be
+                    // a single button), so releasing one button of a combo never re-triggers it.
+                    var newlyPressed = false
                     if (action == KeyEvent.ACTION_DOWN) {
-                        pressedKeys.add(keyCode)
+                        newlyPressed = pressedKeys.add(keyCode)
                     } else if (action == KeyEvent.ACTION_UP) {
                         pressedKeys.remove(keyCode)
                     }
 
                     shortcuts[device]?.forEach { shortcut ->
-                        if (shortcut.keys.isNotEmpty() && pressedKeys.containsAll(shortcut.keys)) {
+                        if (newlyPressed && shortcut.keys.isNotEmpty() && pressedKeys.containsAll(shortcut.keys)) {
                             when (shortcut.type) {
                                 GameShortcutType.MENU -> sideEffects.showMenu(tilt, this)
                                 GameShortcutType.QUICK_LOAD -> sideEffects.loadQuickSave()

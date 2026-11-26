@@ -89,6 +89,9 @@ abstract class BaseGameActivity : ImmersiveActivity() {
     private val startGameTime = System.currentTimeMillis()
     private var finishTriggered = false
 
+    /** Lemuroid-S: applies the in-game screen orientation setting (phones only; TV stays landscape). */
+    protected open fun applyOrientationSetting() {}
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setUpExceptionsHandler()
@@ -382,6 +385,9 @@ abstract class BaseGameActivity : ImmersiveActivity() {
             }
             if (data?.getBooleanExtra(GameMenuContract.RESULT_QUIT, false) == true) {
                 baseGameScreenViewModel.requestFinish()
+            }
+            if (data?.getBooleanExtra(GameMenuContract.RESULT_ORIENTATION_CHANGED, false) == true) {
+                applyOrientationSetting()
             }
             if (data?.getBooleanExtra(GameMenuContract.RESULT_SHADER_CHANGED, false) == true) {
                 baseGameScreenViewModel.refreshShader()
