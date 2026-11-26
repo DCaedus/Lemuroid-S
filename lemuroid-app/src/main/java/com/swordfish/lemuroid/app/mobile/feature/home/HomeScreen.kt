@@ -90,8 +90,8 @@ private fun HomeScreen(
         modifier =
             modifier
                 .verticalScroll(rememberScrollState())
-                .padding(top = 16.dp, bottom = 16.dp),
-        verticalArrangement = Arrangement.spacedBy(16.dp),
+                .padding(top = 8.dp, bottom = 8.dp),
+        verticalArrangement = Arrangement.spacedBy(4.dp),
     ) {
         AnimatedVisibility(state.showNoMicrophonePermissionCard) {
             HomeNotification(
@@ -144,14 +144,14 @@ private fun HomeRow(
         Text(
             text = title,
             style = MaterialTheme.typography.labelMedium,
-            modifier = Modifier.padding(start = 16.dp, end = 16.dp),
+            modifier = Modifier.padding(start = 12.dp, end = 12.dp),
         )
         LazyRow(
             modifier =
                 Modifier
                     .fillMaxWidth(),
-            horizontalArrangement = Arrangement.spacedBy(16.dp),
-            contentPadding = PaddingValues(16.dp),
+            horizontalArrangement = Arrangement.spacedBy(8.dp),
+            contentPadding = PaddingValues(horizontal = 12.dp, vertical = 8.dp),
         ) {
             items(games.size, key = { games[it].id }) { index ->
                 val game = games[index]

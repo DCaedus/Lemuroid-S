@@ -1,6 +1,7 @@
 package com.swordfish.lemuroid.app.mobile.feature.settings.general
 
 import android.net.Uri
+import android.os.Build
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -58,14 +59,14 @@ fun SettingsScreen(
             indexingInProgress = indexingInProgress,
             scanInProgress = scanInProgress,
         )
-        GeneralSettings()
+        InterfaceSettings()
+        DisplaySettings()
+        SavesSettings(isSaveSyncSupported = state.isSaveSyncSupported, navController = navController)
         FastForwardSettings(navController)
         ArtworkSettings(navController = navController)
-        TestSettings()
         InputSettings(navController = navController)
         MiscSettings(
             indexingInProgress = indexingInProgress,
-            isSaveSyncSupported = state.isSaveSyncSupported,
             navController = navController,
         )
     }
@@ -74,21 +75,11 @@ fun SettingsScreen(
 @Composable
 private fun MiscSettings(
     indexingInProgress: Boolean,
-    isSaveSyncSupported: Boolean,
     navController: NavController,
 ) {
     LemuroidCardSettingsGroup(
         title = { Text(text = stringResource(id = R.string.settings_category_misc)) },
     ) {
-        if (isSaveSyncSupported) {
-            LemuroidSettingsMenuLink(
-                title = { Text(text = stringResource(id = R.string.settings_title_save_sync)) },
-                subtitle = {
-                    Text(text = stringResource(id = R.string.settings_description_save_sync))
-                },
-                onClick = { navController.navigateToRoute(MainRoute.SETTINGS_SAVE_SYNC) },
-            )
-        }
         LemuroidSettingsMenuLink(
             title = { Text(text = stringResource(id = R.string.settings_title_display_bios_info)) },
             subtitle = {
@@ -170,13 +161,20 @@ private fun FastForwardSettings(navController: NavController) {
     }
 }
 
-/** Lemuroid-S settings that are new and still being tested. */
+/** Lemuroid-S: autosave, importing and syncing saves. */
 @Composable
-private fun TestSettings() {
-    val context = LocalContext.current
+private fun SavesSettings(
+    isSaveSyncSupported: Boolean,
+    navController: NavController,
+) {
     LemuroidCardSettingsGroup(
-        title = { Text(text = stringResource(id = R.string.settings_category_test)) },
+        title = { Text(text = stringResource(id = R.string.settings_category_saves)) },
     ) {
+        LemuroidSettingsSwitch(
+            state = booleanPreferenceState(R.string.pref_key_autosave, true),
+            title = { Text(text = stringResource(id = R.string.settings_title_enable_autosave)) },
+            subtitle = { Text(text = stringResource(id = R.string.settings_description_enable_autosave)) },
+        )
         LemuroidSettingsList(
             state =
                 indexPreferenceState(
@@ -186,11 +184,6 @@ private fun TestSettings() {
                 ),
             title = { Text(text = stringResource(id = R.string.settings_title_periodic_autosave)) },
             items = stringListResource(R.array.pref_key_periodic_autosave_display_names),
-        )
-        LemuroidSettingsSwitch(
-            state = booleanPreferenceState(R.string.pref_key_show_framerate, false),
-            title = { Text(text = stringResource(id = R.string.settings_title_show_framerate)) },
-            subtitle = { Text(text = stringResource(id = R.string.settings_description_show_framerate)) },
         )
         var showImportConfirmation by remember { mutableStateOf(false) }
         LemuroidSettingsMenuLink(
@@ -202,6 +195,15 @@ private fun TestSettings() {
             show = showImportConfirmation,
             onDismiss = { showImportConfirmation = false },
         )
+        if (isSaveSyncSupported) {
+            LemuroidSettingsMenuLink(
+                title = { Text(text = stringResource(id = R.string.settings_title_save_sync)) },
+                subtitle = {
+                    Text(text = stringResource(id = R.string.settings_description_save_sync))
+                },
+                onClick = { navController.navigateToRoute(MainRoute.SETTINGS_SAVE_SYNC) },
+            )
+        }
     }
 }
 
@@ -261,13 +263,11 @@ private fun InputSettings(navController: NavController) {
     }
 }
 
+/** Lemuroid-S: how the app itself looks and opens. */
 @Composable
-private fun GeneralSettings() {
-    val hdMode = booleanPreferenceState(R.string.pref_key_hd_mode, SettingsManager.DEFAULT_HD_MODE)
-    val immersiveMode = booleanPreferenceState(R.string.pref_key_enable_immersive_mode, false)
-
+private fun InterfaceSettings() {
     LemuroidCardSettingsGroup(
-        title = { Text(text = stringResource(id = R.string.settings_category_general)) },
+        title = { Text(text = stringResource(id = R.string.settings_category_interface)) },
     ) {
         LemuroidSettingsList(
             state =
@@ -279,16 +279,29 @@ private fun GeneralSettings() {
             title = { Text(text = stringResource(id = R.string.settings_title_start_screen)) },
             items = stringListResource(R.array.pref_key_start_screen_display_names),
         )
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            LemuroidSettingsSwitch(
+                state = booleanPreferenceState(R.string.pref_key_wallpaper_colors, true),
+                title = { Text(text = stringResource(id = R.string.settings_title_wallpaper_colors)) },
+                subtitle = { Text(text = stringResource(id = R.string.settings_description_wallpaper_colors)) },
+            )
+        }
         LemuroidSettingsSwitch(
-            state = booleanPreferenceState(R.string.pref_key_autosave, true),
-            title = { Text(text = stringResource(id = R.string.settings_title_enable_autosave)) },
-            subtitle = { Text(text = stringResource(id = R.string.settings_description_enable_autosave)) },
+            state = booleanPreferenceState(R.string.pref_key_pure_black, false),
+            title = { Text(text = stringResource(id = R.string.settings_title_pure_black)) },
+            subtitle = { Text(text = stringResource(id = R.string.settings_description_pure_black)) },
         )
-        LemuroidSettingsSwitch(
-            state = immersiveMode,
-            title = { Text(text = stringResource(id = R.string.settings_title_immersive_mode)) },
-            subtitle = { Text(text = stringResource(id = R.string.settings_description_immersive_mode)) },
-        )
+    }
+}
+
+/** How games are shown: HD mode, filters, position on screen. */
+@Composable
+private fun DisplaySettings() {
+    val hdMode = booleanPreferenceState(R.string.pref_key_hd_mode, SettingsManager.DEFAULT_HD_MODE)
+
+    LemuroidCardSettingsGroup(
+        title = { Text(text = stringResource(id = R.string.settings_category_display)) },
+    ) {
         LemuroidSettingsSwitch(
             state = hdMode,
             title = { Text(text = stringResource(id = R.string.settings_title_hd_mode)) },
@@ -333,6 +346,11 @@ private fun GeneralSettings() {
             title = { Text(text = stringResource(id = R.string.settings_title_viewport_alignment)) },
             items = stringListResource(R.array.pref_key_viewport_alignment_display_names),
         )
+        LemuroidSettingsSwitch(
+            state = booleanPreferenceState(R.string.pref_key_enable_immersive_mode, false),
+            title = { Text(text = stringResource(id = R.string.settings_title_immersive_mode)) },
+            subtitle = { Text(text = stringResource(id = R.string.settings_description_immersive_mode)) },
+        )
     }
 }
 
@@ -351,7 +369,7 @@ private fun RomsSettings(
             runCatching { MainFolder.displayName(context, Uri.parse(currentDirectory)) }.getOrNull()
         }
 
-    LemuroidCardSettingsGroup(title = { Text(text = stringResource(id = R.string.settings_category_storage)) }) {
+    LemuroidCardSettingsGroup(title = { Text(text = stringResource(id = R.string.settings_category_library)) }) {
         RomsFolderSettings(enabled = !indexingInProgress, currentCustomFolderName = currentDirectoryName)
         if (scanInProgress) {
             LemuroidSettingsMenuLink(

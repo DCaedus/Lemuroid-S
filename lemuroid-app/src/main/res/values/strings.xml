@@ -35,6 +35,10 @@
     <string name="settings_title_fast_forward_button">Fast-forward button</string>
     <string name="settings_description_fast_forward_button">Show a fast-forward button in the on-screen controls</string>
     <string name="settings_title_start_screen">Start screen</string>
+    <string name="settings_title_wallpaper_colors">Wallpaper colors</string>
+    <string name="settings_description_wallpaper_colors">Match the app\'s colors to your wallpaper (Android 12 and newer)</string>
+    <string name="settings_title_pure_black">Pure black</string>
+    <string name="settings_description_pure_black">Black backgrounds, for OLED screens</string>
     <string name="settings_title_fast_forward_button_per_system">Fast-forward button per console</string>
     <string name="settings_description_fast_forward_button_per_system">Show or hide the fast-forward button for specific consoles</string>
     <string name="fast_forward_button_names_show">Show</string>
@@ -45,7 +49,10 @@
     <string name="fast_forward_audio_names_lower">Lower volume</string>
     <string name="game_menu_fast_forward_speed">Fast-forward speed</string>
     <string name="settings_category_artwork">Artwork</string>
-    <string name="settings_category_test">New test settings</string>
+    <string name="settings_category_library">Library</string>
+    <string name="settings_category_interface">Interface</string>
+    <string name="settings_category_display">Display</string>
+    <string name="settings_category_saves">Saves</string>
     <string name="settings_category_storage">Storage</string>
     <string name="main_folder_not_set">Not set. Choose where the Lemuroid-S folder goes</string>
     <string name="main_folder_setting_title">Lemuroid-S folder</string>
@@ -133,7 +140,7 @@
     <string name="settings_title_viewport_alignment">Viewport alignment</string>
 
     <string name="settings_title_immersive_mode">Immersive mode</string>
-    <string name="settings_description_immersive_mode">Dynamically colors the background based on game visuals</string>
+    <string name="settings_description_immersive_mode">Fills the empty space around the game with its blurred colors</string>
 
     <string name="settings_title_gamepad_settings">External devices</string>
     <string name="settings_description_gamepad_settings">Configure external gamepads and keyboards</string>
