@@ -30,20 +30,23 @@ fun FastForwardButtonSettingsScreen(modifier: Modifier = Modifier) {
     val values = stringListResource(R.array.pref_key_fast_forward_button_system_values)
     val names = listOf(stringResource(R.string.artwork_type_names_default, globalName), showName, hideName)
 
-    // Only consoles that support fast-forward (it's off for some, e.g. 3DS).
     val systems =
         remember {
-            GameSystem.all()
-                .filter { it.fastForwardSupport }
-                .sortedBy { context.getString(it.titleResId) }
+            GameSystem.all().sortedBy { context.getString(it.titleResId) }
         }
+    val notSupported = stringResource(R.string.fast_forward_button_not_supported)
 
     LemuroidSettingsPage(modifier = modifier.fillMaxSize()) {
         LemuroidCardSettingsGroup(
             title = { Text(text = stringResource(id = R.string.settings_title_fast_forward_button_per_system)) },
         ) {
             systems.forEach { system ->
+                // Consoles without fast-forward (e.g. 3DS) are listed greyed out.
+                val supported = system.fastForwardSupport
                 LemuroidSettingsList(
+                    enabled = supported,
+                    useSelectedValueAsSubtitle = supported,
+                    subtitle = if (supported) null else ({ Text(text = notSupported) }),
                     state =
                         indexPreferenceState(
                             SettingsManager.fastForwardButtonSystemKey(context, system.id.dbname),

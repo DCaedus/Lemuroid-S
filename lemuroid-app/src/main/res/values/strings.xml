@@ -37,6 +37,7 @@
     <string name="settings_description_fast_forward_button_per_system">Show or hide the fast-forward button for specific consoles</string>
     <string name="fast_forward_button_names_show">Show</string>
     <string name="fast_forward_button_names_hide">Hide</string>
+    <string name="fast_forward_button_not_supported">Not supported</string>
     <string name="fast_forward_audio_names_normal">Normal</string>
     <string name="fast_forward_audio_names_mute">Mute</string>
     <string name="fast_forward_audio_names_lower">Lower volume</string>
