@@ -18,24 +18,7 @@ android {
 
     if (usePlayDynamicFeatures()) {
         println("Building Google Play version. Bundling dynamic features.")
-        dynamicFeatures.addAll(
-            setOf(
-                ":lemuroid_core_dosbox_pure",
-                ":lemuroid_core_fbneo",
-                ":lemuroid_core_genesis_plus_gx",
-                ":lemuroid_core_handy",
-                ":lemuroid_core_mame2003_plus",
-                ":lemuroid_core_mednafen_ngp",
-                ":lemuroid_core_mednafen_pce_fast",
-                ":lemuroid_core_mednafen_wswan",
-                ":lemuroid_core_melonds",
-                ":lemuroid_core_mupen64plus_next_gles3",
-                ":lemuroid_core_ppsspp",
-                ":lemuroid_core_prosystem",
-                ":lemuroid_core_stella",
-                ":lemuroid_core_citra",
-            ),
-        )
+        dynamicFeatures.addAll(PlayCores.moduleNames(rootDir).map { ":$it" })
     }
 
     // Since some dependencies are closed source we make a completely free as in free speech variant.

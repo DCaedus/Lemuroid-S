@@ -20,4 +20,15 @@
     <string name="core_name_mednafen_ngp" translatable="false">mednafen_ngp</string>
     <string name="core_name_mednafen_wswan" translatable="false">mednafen_wswan</string>
     <string name="core_name_citra" translatable="false">citra</string>
+    <string name="core_name_a5200" translatable="false">a5200</string>
+    <string name="core_name_azahar" translatable="false">azahar</string>
+    <string name="core_name_flycast" translatable="false">flycast</string>
+    <string name="core_name_freeintv" translatable="false">freeintv</string>
+    <string name="core_name_gearcoleco" translatable="false">gearcoleco</string>
+    <string name="core_name_mednafen_vb" translatable="false">mednafen_vb</string>
+    <string name="core_name_melondsds" translatable="false">melondsds</string>
+    <string name="core_name_neocd" translatable="false">neocd</string>
+    <string name="core_name_picodrive" translatable="false">picodrive</string>
+    <string name="core_name_pokemini" translatable="false">pokemini</string>
+    <string name="core_name_vecx" translatable="false">vecx</string>
 </resources>
