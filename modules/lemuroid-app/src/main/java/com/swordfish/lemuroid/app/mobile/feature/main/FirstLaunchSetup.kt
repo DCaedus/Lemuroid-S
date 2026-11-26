@@ -10,8 +10,10 @@ import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.tween
+import androidx.compose.animation.expandVertically
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
+import androidx.compose.animation.shrinkVertically
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -217,6 +219,15 @@ private fun FirstLaunchSetupScreen(onDone: () -> Unit) {
                 onAction = { showImportDialog = true },
             )
 
+            val allDone = status.mainFolder && status.romsFolder && status.notifications && importStarted
+            AnimatedVisibility(visible = allDone, enter = fadeIn(), exit = fadeOut()) {
+                Text(
+                    modifier = Modifier.padding(horizontal = 16.dp),
+                    text = stringResource(R.string.first_launch_setup_all_done),
+                    style = MaterialTheme.typography.bodyMedium,
+                )
+            }
+
             Column(
                 modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp),
                 horizontalAlignment = Alignment.End,
@@ -237,7 +248,7 @@ private fun FirstLaunchSetupScreen(onDone: () -> Unit) {
     }
 }
 
-/** A setup card, like the ones Lemuroid shows on its home screen, with a "Done" mark once handled. */
+/** A setup card, like the ones Lemuroid shows on its home screen. */
 @Composable
 private fun SetupCard(
     titleId: Int,
@@ -248,6 +259,23 @@ private fun SetupCard(
     onAction: () -> Unit,
     secondaryActionId: Int? = null,
     onSecondaryAction: () -> Unit = { },
+) {
+    // Lemuroid-S: a card goes away once its step is done.
+    AnimatedVisibility(visible = !done, enter = fadeIn() + expandVertically(), exit = fadeOut() + shrinkVertically()) {
+        SetupCardContent(titleId, messageId, actionId, done, enabled, onAction, secondaryActionId, onSecondaryAction)
+    }
+}
+
+@Composable
+private fun SetupCardContent(
+    titleId: Int,
+    messageId: Int,
+    actionId: Int,
+    done: Boolean,
+    enabled: Boolean,
+    onAction: () -> Unit,
+    secondaryActionId: Int?,
+    onSecondaryAction: () -> Unit,
 ) {
     ElevatedCard(modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp)) {
         Column(

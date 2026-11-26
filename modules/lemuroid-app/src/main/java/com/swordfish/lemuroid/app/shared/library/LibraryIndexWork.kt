@@ -1,6 +1,9 @@
 package com.swordfish.lemuroid.app.shared.library
 
 import android.content.Context
+import android.os.Handler
+import android.os.Looper
+import android.widget.Toast
 import androidx.work.CoroutineWorker
 import androidx.work.ListenableWorker
 import androidx.work.WorkerParameters
@@ -63,7 +66,21 @@ class LibraryIndexWork(context: Context, workerParams: WorkerParameters) :
         }
 
         result.exceptionOrNull()?.let {
-            Timber.e("Library indexing work terminated with an exception:", it)
+            Timber.e(it, "Library indexing work terminated with an exception")
+            // Lemuroid-S: say why, so a failed scan isn't silent.
+            val message = "${it.javaClass.simpleName}: ${it.message}"
+            notificationsManager.showResult(
+                NotificationsManager.LIBRARY_RESULT_NOTIFICATION_ID,
+                applicationContext.getString(R.string.library_failed_title),
+                message,
+            )
+            Handler(Looper.getMainLooper()).post {
+                Toast.makeText(
+                    applicationContext,
+                    applicationContext.getString(R.string.library_failed_title) + "\n" + message,
+                    Toast.LENGTH_LONG,
+                ).show()
+            }
         }
 
         LibraryIndexScheduler.scheduleCoreUpdate(applicationContext)

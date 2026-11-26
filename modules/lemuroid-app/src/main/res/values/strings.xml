@@ -110,6 +110,7 @@
     <string name="first_launch_setup_message">Set up a few things before you start. You can open this again from Settings > Advanced.</string>
     <string name="first_launch_setup_done">Done</string>
     <string name="first_launch_setup_step_done">Done</string>
+    <string name="first_launch_setup_all_done">All set. Tap Done to start playing.</string>
     <string name="first_launch_setup_needs_folder">Create the Lemuroid-S folder to continue.</string>
     <string name="settings_title_first_launch_setup">First-launch setup</string>
     <string name="settings_description_first_launch_setup">Open the setup cards again: Lemuroid-S folder, ROMs folder, notifications and Import Saves</string>
@@ -286,6 +287,7 @@
     <string name="saves_import_notification_message">Copying battery saves and save states into Lemuroid-S</string>
     <string name="library_result_title">Library scan finished</string>
     <string name="library_result_message">%1$d games in your library (%2$d new).</string>
+    <string name="library_failed_title">Library scan failed</string>
     <string name="saves_import_result_title">Saves imported</string>
     <string name="saves_import_failed_title">Saves import failed</string>
     <string name="covers_import_result_title">Covers imported</string>
