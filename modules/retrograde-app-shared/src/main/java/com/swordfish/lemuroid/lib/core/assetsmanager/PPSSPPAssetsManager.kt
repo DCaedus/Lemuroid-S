@@ -27,6 +27,11 @@ class PPSSPPAssetsManager : CoreID.AssetsManager {
         }
 
         try {
+            // The "full" APK carries the files itself.
+            directoriesManager.openBundledAsset(BUNDLED_ASSETS_FILE)?.let { stream ->
+                extract(directoriesManager, ZipInputStream(stream), sharedPreferences)
+                return
+            }
             val response = coreUpdaterApi.downloadZip(CoresRelease.PPSSPP_ASSETS_URL)
             handleSuccess(directoriesManager, response, sharedPreferences)
         } catch (e: Throwable) {
@@ -39,11 +44,20 @@ class PPSSPPAssetsManager : CoreID.AssetsManager {
         response: Response<ZipInputStream>,
         sharedPreferences: SharedPreferences,
     ) {
+        val zip = response.body() ?: return
+        extract(directoriesManager, zip, sharedPreferences)
+    }
+
+    private suspend fun extract(
+        directoriesManager: DirectoriesManager,
+        zip: ZipInputStream,
+        sharedPreferences: SharedPreferences,
+    ) {
         val coreAssetsDirectory = getAssetsDirectory(directoriesManager)
         coreAssetsDirectory.deleteRecursively()
         coreAssetsDirectory.mkdirs()
 
-        response.body()?.use { zipInputStream ->
+        zip.use { zipInputStream ->
             val rootPath = coreAssetsDirectory.canonicalPath + File.separator
             while (true) {
                 val entry = zipInputStream.nextEntry ?: break
@@ -92,5 +106,7 @@ class PPSSPPAssetsManager : CoreID.AssetsManager {
         const val PPSSPP_ASSETS_VERSION_KEY = "ppsspp_assets_version_key"
 
         const val PPSSPP_ASSETS_FOLDER_NAME = "PPSSPP"
+
+        private const val BUNDLED_ASSETS_FILE = "ppsspp-assets.zip"
     }
 }

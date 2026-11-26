@@ -116,6 +116,9 @@ class AppUpdater(context: Context) {
             else -> null
         }
 
+    /** The "full" APK carries every core, e.g. PPSSPP, among the app's own libraries. */
+    private fun isFullBuild(): Boolean = File(appContext.applicationInfo.nativeLibraryDir, FULL_BUILD_MARKER).exists()
+
     private fun currentVersion(): String =
         runCatching {
             appContext.packageManager.getPackageInfo(appContext.packageName, 0).versionName
@@ -123,11 +126,13 @@ class AppUpdater(context: Context) {
 
     private fun parseRelease(json: JSONObject): Release {
         val assets = json.optJSONArray("assets")
-        val apkUrl =
+        val apks =
             (0 until (assets?.length() ?: 0))
                 .map { assets!!.getJSONObject(it) }
-                .firstOrNull { it.optString("name").endsWith(".apk", ignoreCase = true) }
-                ?.optString("browser_download_url")
+                .filter { it.optString("name").endsWith(".apk", ignoreCase = true) }
+        // The release has a regular APK and a "full" one (all cores inside): update to the same kind.
+        val wanted = apks.firstOrNull { it.optString("name").contains("full", ignoreCase = true) == isFullBuild() }
+        val apkUrl = (wanted ?: apks.firstOrNull())?.optString("browser_download_url")
         return Release(
             version = json.optString("tag_name").removePrefix("v").removePrefix("V"),
             notes = json.optString("body").take(MAX_NOTES_LENGTH),
@@ -141,6 +146,7 @@ class AppUpdater(context: Context) {
         const val DEFAULT_FREQUENCY = "weekly"
         private const val PREF_LAST_CHECK = "update_last_check"
         private const val UPDATE_FOLDER = "updates"
+        private const val FULL_BUILD_MARKER = "libppsspp_libretro_android.so"
         private const val MAX_NOTES_LENGTH = 800
         private const val LATEST_RELEASE_URL = "https://api.github.com/repos/DCaedus/Lemuroid-S/releases/latest"
         private const val RELEASES_PAGE_URL = "https://github.com/DCaedus/Lemuroid-S/releases"

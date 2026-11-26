@@ -26,6 +26,7 @@ android {
     productFlavors {
         create("free") { dimension = "opensource" }
         create("play") { dimension = "opensource" }
+        create("bundle") { dimension = "cores" }
         create("dynamic") { dimension = "cores" }
     }
 }

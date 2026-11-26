@@ -7,6 +7,7 @@ import androidx.compose.ui.Modifier
 import com.swordfish.touchinput.controller.R
 import com.swordfish.touchinput.radial.LocalFastForwardActive
 import com.swordfish.touchinput.radial.LocalFastForwardButtonEnabled
+import com.swordfish.touchinput.radial.LocalTurboButtonEnabled
 import com.swordfish.touchinput.radial.controls.LemuroidControlAnalog
 import com.swordfish.touchinput.radial.controls.LemuroidControlButton
 import com.swordfish.touchinput.radial.settings.TouchControllerSettingsManager
@@ -123,6 +124,22 @@ fun SecondaryButtonMenuPlaceholder(settings: TouchControllerSettingsManager.Sett
     } else {
         Box(modifier = position)
     }
+    SecondaryButtonTurbo(settings)
+}
+
+/** Lemuroid-S: hold it and press a button to turn turbo on or off for that button. */
+context(PadKitScope, LayoutRadialSecondaryDialsScope)
+@Composable
+fun SecondaryButtonTurbo(settings: TouchControllerSettingsManager.Settings) {
+    if (!LocalTurboButtonEnabled.current) return
+    LemuroidControlButton(
+        modifier =
+            Modifier.radialPosition(
+                -150f - 2f * settings.rotation * TouchControllerSettingsManager.MAX_ROTATION,
+            ),
+        id = Id.Key(ComposeTouchLayouts.KEYCODE_TURBO),
+        icon = R.drawable.button_turbo,
+    )
 }
 
 context(PadKitScope, LayoutRadialSecondaryDialsScope)
@@ -170,4 +187,7 @@ object ComposeTouchLayouts {
 
     /** Key sent by the on-screen fast-forward button. It's handled by the app and never sent to the core. */
     const val KEYCODE_FAST_FORWARD = KeyEvent.KEYCODE_MEDIA_FAST_FORWARD
+
+    /** Key sent by the on-screen turbo button. It's handled by the app and never sent to the core. */
+    const val KEYCODE_TURBO = KeyEvent.KEYCODE_BUTTON_16
 }

@@ -41,6 +41,7 @@ class GameViewModelTouchControls(
     private val retroGameView: GameViewModelRetroGameView,
     private val inputs: GameViewModelInput,
     private val tilt: GameViewModelTilt,
+    private val turbo: GameViewModelTurbo,
     private val sideEffects: GameViewModelSideEffects,
     private val scope: CoroutineScope,
 ) : DefaultLifecycleObserver {
@@ -129,7 +130,10 @@ class GameViewModelTouchControls(
                     if (event.id == ComposeTouchLayouts.KEYCODE_FAST_FORWARD) {
                         // On-screen fast-forward button: tap to toggle. Not sent to the core.
                         if (event.pressed) sideEffects.toggleFastForward()
-                    } else {
+                    } else if (event.id == ComposeTouchLayouts.KEYCODE_TURBO) {
+                        // On-screen turbo button: hold it and press a button to turn turbo on or off.
+                        turbo.setTurboHeld(0, event.pressed)
+                    } else if (!turbo.onButton(0, event.id, event.pressed)) {
                         handleVirtualInputButton(event)
                     }
                 }

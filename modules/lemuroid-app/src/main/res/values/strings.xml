@@ -34,6 +34,8 @@
     <string name="settings_description_fast_forward_volume">%1$d%%</string>
     <string name="settings_title_fast_forward_button">Fast-forward button</string>
     <string name="settings_description_fast_forward_button">Show a fast-forward button in the on-screen controls</string>
+    <string name="settings_title_turbo_button">Turbo button</string>
+    <string name="settings_description_turbo_button">Hold it and press a button to turn turbo on or off for that button</string>
     <string name="settings_title_start_screen">Start screen</string>
     <string name="settings_title_update_frequency">Check for updates</string>
     <string name="update_frequency_never">Never</string>

@@ -7,6 +7,7 @@ import androidx.compose.ui.Modifier
 import com.swordfish.touchinput.radial.LocalLemuroidPadTheme
 import com.swordfish.touchinput.radial.ui.LemuroidCompositeForeground
 import com.swordfish.touchinput.radial.ui.LemuroidControlBackground
+import com.swordfish.touchinput.radial.ui.TurboHalo
 import gg.padkit.PadKitScope
 import gg.padkit.anchors.Anchor
 import gg.padkit.controls.ControlFaceButtons
@@ -36,7 +37,7 @@ fun LemuroidControlFaceButtons(
         ids = ids,
         trackPointers = trackPointers,
         rotationInDegrees = rotationInDegrees,
-        foreground = { id, pressed -> (idsForegrounds[id]!!)(pressed) },
+        foreground = { id, pressed -> TurboHalo(id.value) { (idsForegrounds[id]!!)(pressed) } },
         background = background,
         foregroundComposite = { LemuroidCompositeForeground(it) },
     )
@@ -60,7 +61,7 @@ fun LemuroidControlFaceButtons(
         primaryAnchors = primaryAnchors,
         compositeAnchors = persistentListOf(),
         trackPointers = trackPointers,
-        foreground = { id, pressed -> (idsForegrounds[id]!!)(pressed) },
+        foreground = { id, pressed -> TurboHalo(id.value) { (idsForegrounds[id]!!)(pressed) } },
         background = background,
         foregroundComposite = { LemuroidCompositeForeground(it) },
     )

@@ -31,14 +31,21 @@ jobs:
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
 
-      - name: Run Assemble Artifact
-        run: ./gradlew assembleFreeDynamic
+      - name: Build APKs
+        # Regular APK (cores downloaded when needed) and full APK (every core inside, 64-bit ARM only).
+        run: ./gradlew assembleFreeDynamicRelease assembleFreeBundleRelease
+
+      - name: Rename APKs
+        run: |
+          mkdir apk
+          cp modules/lemuroid-app/build/outputs/apk/freeDynamic/release/lemuroid-app-free-dynamic-release.apk "apk/lemuroid-s-${GITHUB_REF_NAME}.apk"
+          cp modules/lemuroid-app/build/outputs/apk/freeBundle/release/lemuroid-app-free-bundle-release.apk "apk/lemuroid-s-${GITHUB_REF_NAME}-full.apk"
 
       - name: Upload Artifact
-        uses: actions/upload-artifact@v3.1.0
+        uses: actions/upload-artifact@v4
         with:
           name: apk
-          path: modules/lemuroid-app/build/outputs/apk/freeDynamic/release/lemuroid-app-free-dynamic-release.apk
+          path: apk/*.apk
 
   publish_apk:
     name: Publish APK on Github
@@ -47,7 +54,7 @@ jobs:
 
     steps:
       - name: Download Artifact
-        uses: actions/download-artifact@v3.0.0
+        uses: actions/download-artifact@v4
         with:
           name: apk
 
@@ -57,4 +64,4 @@ jobs:
           repo_token: "${{ secrets.GITHUB_TOKEN }}"
           prerelease: true
           title: "Pre-release"
-          files: lemuroid-app-free-dynamic-release.apk
+          files: "*.apk"

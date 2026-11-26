@@ -32,6 +32,7 @@ enum class GameShortcutType {
     QUICK_LOAD,
     QUICK_SAVE,
     TOGGLE_FAST_FORWARD,
+    TURBO,
     ;
 
     fun displayName() = name.split('_').joinToString(" ") { it.lowercase().replaceFirstChar { it.uppercase() } }

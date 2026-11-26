@@ -44,20 +44,67 @@ object PlayCores {
     /** Folder the module's libraries are unpacked to (<abi>/lib<core>_libretro_android.so). */
     fun libsDir(project: Project): File = project.layout.buildDirectory.dir("coreLibs").get().asFile
 
-    /** Registers the download of [libraryName] (e.g. "fbneo") and runs it before native libraries are merged. */
+    /** Core names (e.g. "fbneo") of all on-demand cores, from the Play module names. */
+    fun coreNames(rootDir: File): List<String> = moduleNames(rootDir).map { it.removePrefix("lemuroid_core_") }
+
+    /**
+     * Registers the download of [libraryName] (e.g. "fbneo") into [outputDir] and runs it before native
+     * libraries are merged. Play modules add [placeholders] for ABIs the core isn't built for.
+     */
     fun registerFetch(
         project: Project,
         libraryName: String,
+        taskName: String = "fetchCoreLibraries",
+        outputDir: File = libsDir(project),
+        placeholders: Boolean = true,
     ) {
         val fetch =
-            project.tasks.register("fetchCoreLibraries", FetchCoreLibraries::class.java) {
+            project.tasks.register(taskName, FetchCoreLibraries::class.java) {
                 library.set(libraryName)
                 version.set(coresVersion(project.rootDir))
-                outputDir.set(libsDir(project))
+                this.outputDir.set(outputDir)
+                addPlaceholders.set(placeholders)
                 placeholderDir.set(File(project.rootDir, "$FOLDER/placeholder"))
             }
         project.tasks.configureEach {
-            if (name.startsWith("merge") && name.endsWith("JniLibFolders")) dependsOn(fetch)
+            if ((name.startsWith("merge") && name.endsWith("JniLibFolders")) || name.contains("lint", ignoreCase = true)) dependsOn(fetch)
+        }
+    }
+
+    /** Registers the download of a release file (e.g. "ppsspp-assets.zip") into [outputDir], before assets are merged. */
+    fun registerFetchFile(
+        project: Project,
+        fileName: String,
+        outputDir: File,
+    ) {
+        val fetch =
+            project.tasks.register("fetchCoreFile_" + fileName.replace(Regex("[^A-Za-z0-9]"), "_"), FetchCoreFile::class.java) {
+                file.set(fileName)
+                version.set(coresVersion(project.rootDir))
+                this.outputDir.set(outputDir)
+            }
+        project.tasks.configureEach {
+            if ((name.startsWith("merge") && name.endsWith("Assets")) || name.contains("lint", ignoreCase = true)) dependsOn(fetch)
+        }
+    }
+
+    abstract class FetchCoreFile : DefaultTask() {
+        @get:Input
+        abstract val file: Property<String>
+
+        @get:Input
+        abstract val version: Property<String>
+
+        @get:OutputDirectory
+        abstract val outputDir: DirectoryProperty
+
+        @TaskAction
+        fun fetch() {
+            val output = outputDir.get().asFile
+            output.deleteRecursively()
+            output.mkdirs()
+            val data = URI("$REPOSITORY_URL${version.get()}/${file.get()}").toURL().openStream().use { it.readBytes() }
+            File(output, file.get()).writeBytes(data)
         }
     }
 
@@ -70,6 +117,9 @@ object PlayCores {
 
         @get:InputDirectory
         abstract val placeholderDir: DirectoryProperty
+
+        @get:Input
+        abstract val addPlaceholders: Property<Boolean>
 
         @get:OutputDirectory
         abstract val outputDir: DirectoryProperty
@@ -97,6 +147,7 @@ object PlayCores {
             }
 
             // See modules/play-cores/placeholder/README.md.
+            if (!addPlaceholders.get()) return
             ABIS.filter { !File(output, it).isDirectory }.forEach { abi ->
                 val placeholder = File(placeholderDir.get().asFile, "$abi/libcore_placeholder.so")
                 placeholder.copyTo(File(output, "$abi/libplaceholder_${library.get()}.so"))

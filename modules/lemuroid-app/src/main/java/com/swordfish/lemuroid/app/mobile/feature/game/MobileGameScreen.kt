@@ -62,6 +62,8 @@ import com.swordfish.touchinput.controller.R
 import com.swordfish.touchinput.radial.LemuroidPadTheme
 import com.swordfish.touchinput.radial.LocalFastForwardActive
 import com.swordfish.touchinput.radial.LocalFastForwardButtonEnabled
+import com.swordfish.touchinput.radial.LocalTurboButtonEnabled
+import com.swordfish.touchinput.radial.LocalTurboKeys
 import com.swordfish.touchinput.radial.LocalLemuroidPadTheme
 import com.swordfish.touchinput.radial.sensors.TiltConfiguration
 import com.swordfish.touchinput.radial.settings.TouchControllerSettingsManager
@@ -97,6 +99,8 @@ fun MobileGameScreen(viewModel: BaseGameScreenViewModel) {
 
         val fastForwardButtonVisible = remember { viewModel.isFastForwardButtonVisible() }.collectAsState(false)
         val fastForwardActive = viewModel.fastForwardActive.collectAsState()
+        val turboButtonVisible = remember { viewModel.isTurboButtonVisible() }.collectAsState(false)
+        val turboKeys = viewModel.turboKeys.collectAsState(emptySet())
 
         val touchControllerSettings = touchControllerSettingsState.value
         val currentControllerConfig = controllerConfigState.value
@@ -186,6 +190,8 @@ fun MobileGameScreen(viewModel: BaseGameScreenViewModel) {
                         LocalLemuroidPadTheme provides LemuroidPadTheme(),
                         LocalFastForwardButtonEnabled provides fastForwardButtonVisible.value,
                         LocalFastForwardActive provides fastForwardActive.value,
+                        LocalTurboButtonEnabled provides turboButtonVisible.value,
+                        LocalTurboKeys provides turboKeys.value,
                     ) {
                         if (!isLandscape) {
                             PadContainer(

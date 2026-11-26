@@ -4,6 +4,9 @@ import android.content.Context
 import java.io.File
 
 class DirectoriesManager(private val appContext: Context) {
+    /** Lemuroid-S: a file packed in the app's assets (the "full" APK includes core support files), or null. */
+    fun openBundledAsset(name: String): java.io.InputStream? = runCatching { appContext.assets.open(name) }.getOrNull()
+
     @Deprecated("Use the external states directory")
     fun getInternalStatesDirectory(): File =
         File(appContext.filesDir, "states").apply {

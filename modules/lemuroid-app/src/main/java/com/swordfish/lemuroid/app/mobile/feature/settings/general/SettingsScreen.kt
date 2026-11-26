@@ -183,6 +183,11 @@ private fun FastForwardSettings(navController: NavController) {
             },
             onClick = { navController.navigateToRoute(MainRoute.SETTINGS_FAST_FORWARD_BUTTON) },
         )
+        LemuroidSettingsSwitch(
+            state = booleanPreferenceState(R.string.pref_key_turbo_button, true),
+            title = { Text(text = stringResource(id = R.string.settings_title_turbo_button)) },
+            subtitle = { Text(text = stringResource(id = R.string.settings_description_turbo_button)) },
+        )
     }
 }
 

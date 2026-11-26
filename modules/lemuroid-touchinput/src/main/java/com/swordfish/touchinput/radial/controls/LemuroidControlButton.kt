@@ -8,6 +8,7 @@ import androidx.compose.ui.Modifier
 import com.swordfish.touchinput.radial.LocalLemuroidPadTheme
 import com.swordfish.touchinput.radial.ui.LemuroidButtonForeground
 import com.swordfish.touchinput.radial.ui.LemuroidControlBackground
+import com.swordfish.touchinput.radial.ui.TurboHalo
 import gg.padkit.PadKitScope
 import gg.padkit.controls.ControlButton
 import gg.padkit.ids.Id
@@ -29,7 +30,7 @@ fun LemuroidControlButton(
         foreground = { pressed ->
             // An active toggle (e.g. fast-forward on) keeps the pressed look.
             val shown = remember(pressed, active) { derivedStateOf { pressed.value || active } }
-            LemuroidButtonForeground(pressed = shown, icon = icon, label = label)
+            TurboHalo(id.value) { LemuroidButtonForeground(pressed = shown, icon = icon, label = label) }
         },
         background = { LemuroidControlBackground() },
     )

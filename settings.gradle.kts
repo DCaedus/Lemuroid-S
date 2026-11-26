@@ -19,6 +19,7 @@ listOf(
     "lemuroid-app-ext-free",
     "lemuroid-app-ext-play",
     "baselineprofile",
+    "bundled-cores",
 ).forEach { name ->
     include(":$name")
     project(":$name").projectDir = File(rootDir, "modules/$name")

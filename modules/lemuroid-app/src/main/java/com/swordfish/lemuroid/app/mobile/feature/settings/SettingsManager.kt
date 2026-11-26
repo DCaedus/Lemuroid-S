@@ -63,6 +63,8 @@ class SettingsManager(private val context: Context, sharedPreferences: Lazy<Shar
 
     suspend fun showFastForwardButton() = booleanPreference(R.string.pref_key_fast_forward_button, true)
 
+    suspend fun showTurboButton() = booleanPreference(R.string.pref_key_turbo_button, true)
+
     /** The fast-forward button setting for [systemDbName]: its own choice, or the global setting. */
     suspend fun showFastForwardButton(systemDbName: String): Boolean {
         val choice =

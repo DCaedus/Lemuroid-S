@@ -20,6 +20,7 @@ import com.swordfish.lemuroid.app.shared.game.viewmodel.GameViewModelSaves
 import com.swordfish.lemuroid.app.shared.game.viewmodel.GameViewModelSideEffects
 import com.swordfish.lemuroid.app.shared.game.viewmodel.GameViewModelTilt
 import com.swordfish.lemuroid.app.shared.game.viewmodel.GameViewModelTouchControls
+import com.swordfish.lemuroid.app.shared.game.viewmodel.GameViewModelTurbo
 import com.swordfish.lemuroid.app.shared.input.InputDeviceManager
 import com.swordfish.lemuroid.app.shared.rumble.RumbleManager
 import com.swordfish.lemuroid.app.shared.settings.ControllerConfigsManager
@@ -112,6 +113,7 @@ class BaseGameScreenViewModel(
             viewModelScope,
         )
     private val tilt = GameViewModelTilt(appContext, settingsManager)
+    private val turbo = GameViewModelTurbo(retroGameView, viewModelScope)
     private val inputs =
         GameViewModelInput(
             appContext,
@@ -121,6 +123,7 @@ class BaseGameScreenViewModel(
             controllerConfigsManager,
             retroGameView,
             tilt,
+            turbo,
             sideEffects,
             viewModelScope,
         )
@@ -131,6 +134,7 @@ class BaseGameScreenViewModel(
             retroGameView,
             inputs,
             tilt,
+            turbo,
             sideEffects,
             viewModelScope,
         )
@@ -277,6 +281,11 @@ class BaseGameScreenViewModel(
         flow {
             emit(system.fastForwardSupport && settingsManager.showFastForwardButton(system.id.dbname))
         }
+
+    fun isTurboButtonVisible(): Flow<Boolean> = flow { emit(settingsManager.showTurboButton()) }
+
+    /** The first player's buttons with turbo on, for the halo on the touch controls. */
+    val turboKeys: Flow<Set<Int>> = turbo.firstPlayerTurboKeys
 
     fun isFramerateCounterEnabled(): Flow<Boolean> = flow { emit(settingsManager.showFramerate()) }
 

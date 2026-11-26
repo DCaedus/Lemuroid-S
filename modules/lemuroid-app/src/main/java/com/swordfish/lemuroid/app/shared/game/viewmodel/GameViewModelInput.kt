@@ -55,6 +55,7 @@ class GameViewModelInput(
     private val controllerConfigsManager: ControllerConfigsManager,
     private val retroGameView: GameViewModelRetroGameView,
     private val tilt: GameViewModelTilt,
+    private val turbo: GameViewModelTurbo,
     private val sideEffects: GameViewModelSideEffects,
     private val scope: CoroutineScope,
 ) : DefaultLifecycleObserver {
@@ -279,7 +280,7 @@ class GameViewModelInput(
     }
 
     private suspend fun initializeGamePadKeysFlow() {
-        val pressedKeys = mutableSetOf<Int>()
+        val pressedKeys = mutableMapOf<InputDevice, MutableSet<Int>>()
 
         val filteredKeyEvents =
             keyEventsFlow
@@ -305,37 +306,52 @@ class GameViewModelInput(
                 val port = ports(device)
                 val bindKeyCode = bindings(device)[InputKey(keyCode)]?.keyCode ?: keyCode
 
+                if (port == null) return@safeCollect
+
+                // Lemuroid-S: only a newly pressed button can trigger a shortcut (shortcuts can be
+                // a single button), so releasing one button of a combo never re-triggers it.
+                val devicePressedKeys = pressedKeys.getOrPut(device) { mutableSetOf() }
+                var newlyPressed = false
+                if (action == KeyEvent.ACTION_DOWN) {
+                    newlyPressed = devicePressedKeys.add(keyCode)
+                } else if (action == KeyEvent.ACTION_UP) {
+                    devicePressedKeys.remove(keyCode)
+                }
+
+                // Turbo works for every player: it's held like a modifier, not triggered once.
+                val turboShortcut = shortcuts[device]?.firstOrNull { it.type == GameShortcutType.TURBO }
+                if (turboShortcut != null && turboShortcut.keys.isNotEmpty() && keyCode in turboShortcut.keys) {
+                    turbo.setTurboHeld(port, devicePressedKeys.containsAll(turboShortcut.keys))
+                    // A single turbo key is the app's own; keys of a combo still reach the game.
+                    if (turboShortcut.keys.size == 1) return@safeCollect
+                }
+
                 if (port == 0) {
                     if (bindKeyCode == KeyEvent.KEYCODE_BUTTON_MODE && action == KeyEvent.ACTION_DOWN) {
                         sideEffects.showMenu(tilt, this)
                         return@safeCollect
                     }
 
-                    // Lemuroid-S: only a newly pressed button can trigger a shortcut (shortcuts can be
-                    // a single button), so releasing one button of a combo never re-triggers it.
-                    var newlyPressed = false
-                    if (action == KeyEvent.ACTION_DOWN) {
-                        newlyPressed = pressedKeys.add(keyCode)
-                    } else if (action == KeyEvent.ACTION_UP) {
-                        pressedKeys.remove(keyCode)
-                    }
-
                     shortcuts[device]?.forEach { shortcut ->
-                        if (newlyPressed && shortcut.keys.isNotEmpty() && pressedKeys.containsAll(shortcut.keys)) {
+                        if (shortcut.type == GameShortcutType.TURBO) return@forEach
+                        if (newlyPressed && shortcut.keys.isNotEmpty() && devicePressedKeys.containsAll(shortcut.keys)) {
                             when (shortcut.type) {
                                 GameShortcutType.MENU -> sideEffects.showMenu(tilt, this)
                                 GameShortcutType.QUICK_LOAD -> sideEffects.loadQuickSave()
                                 GameShortcutType.QUICK_SAVE -> sideEffects.saveQuickSave()
                                 GameShortcutType.TOGGLE_FAST_FORWARD -> sideEffects.toggleFastForward()
+                                GameShortcutType.TURBO -> Unit
                             }
                             return@safeCollect
                         }
                     }
                 }
 
-                port?.let {
-                    retroGameView.retroGameView?.sendKeyEvent(action, bindKeyCode, it)
+                val isButtonEvent = action == KeyEvent.ACTION_DOWN || action == KeyEvent.ACTION_UP
+                if (isButtonEvent && turbo.onButton(port, bindKeyCode, action == KeyEvent.ACTION_DOWN)) {
+                    return@safeCollect
                 }
+                retroGameView.retroGameView?.sendKeyEvent(action, bindKeyCode, port)
             }
     }
 

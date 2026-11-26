@@ -33,8 +33,14 @@ android {
             dimension = "opensource"
         }
 
-        // Lemuroid-S: cores ship in the app (5) or download on demand (Google Play modules or the "cores"
-        // branch on GitHub). Lemuroid's "bundle" flavor (all cores in the APK) was removed.
+        // Lemuroid-S "full" GitHub APK: every core inside the app, no downloads. 64-bit ARM only (all cores
+        // for all processor types would make a ~250 MB APK); other devices use the regular APK.
+        create("bundle") {
+            dimension = "cores"
+            ndk { abiFilters += "arm64-v8a" }
+        }
+
+        // Cores ship in the app (5) or download on demand (Google Play modules or the "cores" branch on GitHub).
         create("dynamic") {
             dimension = "cores"
         }
@@ -115,7 +121,8 @@ dependencies {
     implementation(deps.libs.androidx.profileInstaller)
 
     // Lemuroid-S: the most popular cores ship with the app; the rest download on demand.
-    "dynamicImplementation"(project(":lemuroid-included-cores"))
+    implementation(project(":lemuroid-included-cores"))
+    "bundleImplementation"(project(":bundled-cores"))
 
     "freeImplementation"(project(":lemuroid-app-ext-free"))
     "playImplementation"(project(":lemuroid-app-ext-play"))

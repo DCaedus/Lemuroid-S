@@ -70,6 +70,12 @@ val LocalFastForwardButtonEnabled = compositionLocalOf { false }
 /** Whether fast-forward is on: the fast-forward button then keeps its pressed (dark) look. */
 val LocalFastForwardActive = compositionLocalOf { false }
 
+/** Whether to show the on-screen turbo button (next to the fast-forward button). */
+val LocalTurboButtonEnabled = compositionLocalOf { false }
+
+/** Key codes with turbo on: their buttons get a halo. */
+val LocalTurboKeys = compositionLocalOf { emptySet<Int>() }
+
 val LocalLemuroidPadTheme =
     compositionLocalOf<LemuroidPadTheme> {
         error("LemuroidPadTheme is missing")
