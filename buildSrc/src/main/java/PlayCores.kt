@@ -12,13 +12,13 @@ import java.security.MessageDigest
 import java.util.zip.ZipInputStream
 
 /**
- * Lemuroid-S: the Google Play build delivers cores as on-demand Play modules (play-cores/lemuroid_core_<core>).
+ * Lemuroid-S: the Google Play build delivers cores as on-demand Play modules (modules/play-cores/lemuroid_core_<core>).
  * Their libraries aren't stored in git: each module downloads them at build time from the same release the
  * APK build uses (the "cores" branch, folder CoresRelease.VERSION), checks them against its SHA256SUMS and
  * unpacks them for packaging.
  */
 object PlayCores {
-    const val FOLDER = "play-cores"
+    const val FOLDER = "modules/play-cores"
     private const val REPOSITORY_URL = "https://github.com/DCaedus/Lemuroid-S/raw/cores/"
 
     /** Every module must cover the same ABIs as the app (Play rule); missing ones get a placeholder library. */
@@ -35,7 +35,7 @@ object PlayCores {
     /** The cores release (CoresRelease.VERSION), read from the app's code so it's defined once. */
     fun coresVersion(rootDir: File): String {
         val source =
-            File(rootDir, "retrograde-app-shared/src/main/java/com/swordfish/lemuroid/lib/core/CoresRelease.kt")
+            File(rootDir, "modules/retrograde-app-shared/src/main/java/com/swordfish/lemuroid/lib/core/CoresRelease.kt")
                 .readText()
         return Regex("""const val VERSION = "([^"]+)"""").find(source)?.groupValues?.get(1)
             ?: error("CoresRelease.VERSION not found")
@@ -96,7 +96,7 @@ object PlayCores {
                 logger.lifecycle("Core ${library.get()}: $abi")
             }
 
-            // See play-cores/placeholder/README.md.
+            // See modules/play-cores/placeholder/README.md.
             ABIS.filter { !File(output, it).isDirectory }.forEach { abi ->
                 val placeholder = File(placeholderDir.get().asFile, "$abi/libcore_placeholder.so")
                 placeholder.copyTo(File(output, "$abi/libplaceholder_${library.get()}.so"))

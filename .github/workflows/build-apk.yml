@@ -17,8 +17,8 @@ jobs:
       - name: Fetch LibretroDroid dependencies
         run: |
           git submodule update --init --depth 1 \
-            libretrodroid/src/main/cpp/oboe \
-            libretrodroid/src/main/cpp/libretro/libretro-common
+            modules/libretrodroid/src/main/cpp/oboe \
+            modules/libretrodroid/src/main/cpp/libretro/libretro-common
 
       - name: Set up JDK 17
         uses: actions/setup-java@v4
@@ -36,4 +36,4 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: lemuroid-s-test-apk
-          path: lemuroid-app/build/outputs/apk/freeDynamic/debug/*.apk
+          path: modules/lemuroid-app/build/outputs/apk/freeDynamic/debug/*.apk
