@@ -1,61 +1,53 @@
-# Lemuroid
+# Lemuroid-S
 
-[<img src="https://fdroid.gitlab.io/artwork/badge/get-it-on.png"
-     alt="Get it on F-Droid"
-     height="80">](https://f-droid.org/packages/com.swordfish.lemuroid/)
-[<img src="https://play.google.com/intl/en_us/badges/images/generic/en-play-badge.png"
-     alt="Get it on Google Play"
-     height="80">](https://play.google.com/store/apps/details?id=com.swordfish.lemuroid)
+A free, open-source retro game emulator for Android, based on [Lemuroid](https://github.com/Swordfish90/Lemuroid) and
+libretro. Lemuroid's simplicity, with features inspired by [RetroArch](https://github.com/libretro/RetroArch).
+No ads, no tracking, no "All files access".
 
-## Description
+> Unofficial fork of Lemuroid by [Swordfish90](https://github.com/Swordfish90), not affiliated with the original project.
+> It has its own app ID, so it installs next to Lemuroid.
 
-Lemuroid is an open-source emulation project for Android based on Libretro. Its main goal is ease of use, good Android integration and a great user experience.
+**Download:** [GitHub Releases](https://github.com/DCaedus/Lemuroid-S/releases) (from version 1.2) · Google Play (coming soon)
 
-It originated from a rib of [Retrograde](https://github.com/retrograde/retrograde-android), but graduated to a standalone project integrating [LibretroDroid](https://github.com/Swordfish90/LibretroDroid).
+## New in Lemuroid-S
 
-|Screen 1|Screen 2|Screen 3|
-|---|---|---|
-|![Screen1](https://github.com/Swordfish90/Lemuroid/blob/master/fastlane/metadata/android/en-US/images/phoneScreenshots/1.jpg)|![Screen2](https://github.com/Swordfish90/Lemuroid/blob/master/fastlane/metadata/android/en-US/images/phoneScreenshots/2.jpg)|![Screen3](https://github.com/Swordfish90/Lemuroid/blob/master/fastlane/metadata/android/en-US/images/phoneScreenshots/3.jpg)|
+- **One Lemuroid-S folder** for ROMs, BIOS, saves, states and covers, sorted by system (ES-DE folder names)
+- **Games load straight from your folders**, zipped or not, without copying them first
+- **RetroArch-compatible saves** and **Import Saves** from RetroArch, other emulators or a ZIP file
+- **Covers like RetroArch:** box art, screenshot or title screen per console, or import RetroArch's
+- **Autosave slot**, filled on exit and every few minutes while playing
+- **Fast-forward** up to 8x, with lower or muted audio
+- **New display filters:** Scale2x, xBR, SABR, MMPX, CRT (zfast)
+- **Up-to-date cores and 10 new systems**, including Dreamcast, 32X and Neo Geo CD; melonDS DS and Azahar for DS and 3DS
 
-### Supported Systems:
-- Atari 2600 (A26) ([stella](https://docs.libretro.com/library/stella/))
-- Atari 7800 (A78) ([prosystem](https://docs.libretro.com/library/prosystem/))
-- Atari Lynx (Lynx) ([handy](https://docs.libretro.com/library/handy/))
-- Nintendo (NES) ([fceumm](https://docs.libretro.com/library/fceumm/))
-- Super Nintendo (SNES) ([snes9x](https://docs.libretro.com/library/snes9x/))
-- Game Boy (GB) ([gambatte](https://docs.libretro.com/library/gambatte/))
-- Game Boy Color (GBC) ([gambatte](https://docs.libretro.com/library/gambatte/))
-- Game Boy Advance (GBA) ([mgba](https://docs.libretro.com/library/mgba/))
-- Sega Genesis (aka Megadrive) ([genesis_plus_gx](https://docs.libretro.com/library/genesis_plus_gx/))
-- Sega CD (aka Mega CD) ([genesis_plus_gx](https://docs.libretro.com/library/genesis_plus_gx/))
-- Sega Master System (SMS) ([genesis_plus_gx](https://docs.libretro.com/library/genesis_plus_gx/))
-- Sega Game Gear (GG) ([genesis_plus_gx](https://docs.libretro.com/library/genesis_plus_gx/))
-- Nintendo 64 (N64) ([mupen64plus](https://docs.libretro.com/library/mupen64plus/))
-- PlayStation (PSX) ([PCSX-ReARMed](https://docs.libretro.com/library/pcsx_rearmed/))
-- PlayStation Portable (PSP) ([ppsspp](https://docs.libretro.com/library/ppsspp/))
-- FinalBurn Neo (Arcade) ([fbneo](https://github.com/libretro/FBNeo/))
-- Nintendo DS (NDS) ([desmume](https://docs.libretro.com/library/desmume/)/[MelonDS](https://docs.libretro.com/library/melonds/))
-- NEC PC Engine (PCE) ([beetle_pce_fast](https://docs.libretro.com/library/beetle_pce_fast/))
-- Neo Geo Pocket (NGP) ([mednafen_ngp](https://docs.libretro.com/library/beetle_neopop/))
-- Neo Geo Pocket Color (NGC) ([mednafen_ngp](https://docs.libretro.com/library/beetle_neopop/))
-- WonderSwan (WS) ([beetle_cygne](https://docs.libretro.com/library/beetle_cygne/))
-- WonderSwan Color (WSC) ([beetle_cygne](https://docs.libretro.com/library/beetle_cygne/))
-- Nintendo 3DS (3DS) ([citra](https://docs.libretro.com/library/citra/))
+## From Lemuroid
 
-### Features:
-- Android TV support
-- Automatically save and restore game states.
-- ROMs scanning and indexing
-- Optimized touch controls
-- Quick save/load
-- Support for Zipped ROMs
-- Display simulation (LCD/CRT)
-- Gamepad support
-- Local multiplayer
-- Tilt input
-- Customizable touch controls (size and position)
-- Cloud save sync
-- HD mode
+- Simple, clean interface for phones and Android TV
+- Automatic ROM scanning and indexing
+- Customizable touch controls, gamepad support and local multiplayer
+- Save states with quick save/load
+- HD mode and LCD/CRT display simulation
+- Google Drive save sync (Google Play version)
 
-### Languages:
-You can help translate Lemuroid in your native language by going here: https://crowdin.com/project/lemuroid
+## Supported systems
+
+- **Nintendo:** NES, SNES, Nintendo 64, Game Boy, Game Boy Color, Game Boy Advance, Nintendo DS, Nintendo 3DS (64-bit ARM),
+  Virtual Boy, Pokémon Mini
+- **Sega:** Master System, Game Gear, Genesis / Mega Drive, Sega CD, 32X, SG-1000, Dreamcast
+- **Sony:** PlayStation, PlayStation Portable
+- **SNK:** Neo Geo CD, Neo Geo Pocket, Neo Geo Pocket Color
+- **Atari:** 2600, 5200, 7800, Lynx
+- **Arcade:** FinalBurn Neo, MAME 2003-Plus
+- **Others:** PC Engine / TurboGrafx-16, WonderSwan, WonderSwan Color, ColecoVision, Intellivision, Vectrex, DOS
+
+Lemuroid-S doesn't include any games: use your own legally obtained game files.
+
+## Credits
+
+[Lemuroid](https://github.com/Swordfish90/Lemuroid) and [LibretroDroid](https://github.com/Swordfish90/LibretroDroid) by
+Swordfish90, [RetroArch](https://github.com/libretro/RetroArch) and the [libretro](https://www.libretro.com/) project, and the
+authors of every emulator core and display filter. Each core keeps its own license.
+
+## License
+
+[GPL-3.0](COPYING) · [Privacy policy](PRIVACY.md)
