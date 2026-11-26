@@ -140,7 +140,7 @@
     <string name="settings_title_viewport_alignment">Viewport alignment</string>
 
     <string name="settings_title_immersive_mode">Immersive mode</string>
-    <string name="settings_description_immersive_mode">Fills the empty space around the game with its blurred colors</string>
+    <string name="settings_description_immersive_mode">Dynamically colors the game\'s background with its on-screen colors</string>
 
     <string name="settings_title_gamepad_settings">External devices</string>
     <string name="settings_description_gamepad_settings">Configure external gamepads and keyboards</string>
