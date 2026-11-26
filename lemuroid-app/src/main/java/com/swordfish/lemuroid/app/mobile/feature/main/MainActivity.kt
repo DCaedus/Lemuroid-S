@@ -135,6 +135,17 @@ class MainActivity : RetrogradeComponentActivity(), BusyActivity {
         }
     }
 
+    private fun startScreenRoute(): MainRoute {
+        val value =
+            SharedPreferencesHelper.getSharedPreferences(applicationContext)
+                .getString(getString(R.string.pref_key_start_screen), START_SCREEN_HOME)
+        return when (value) {
+            START_SCREEN_FAVORITES -> MainRoute.FAVORITES
+            START_SCREEN_SYSTEMS -> MainRoute.SYSTEMS
+            else -> MainRoute.HOME
+        }
+    }
+
     @OptIn(ExperimentalMaterial3Api::class)
     @Composable
     private fun MainScreen(navController: NavHostController) {
@@ -176,6 +187,9 @@ class MainActivity : RetrogradeComponentActivity(), BusyActivity {
                 infoDialogDisplayed.value = true
             }
 
+            // Lemuroid-S: the tab the app opens on (Settings > General > Start screen).
+            val startRoute = remember { startScreenRoute() }
+
             val mainUIState =
                 mainViewModel.state
                     .collectAsState(MainViewModel.UiState())
@@ -196,7 +210,7 @@ class MainActivity : RetrogradeComponentActivity(), BusyActivity {
                 NavHost(
                     modifier = Modifier.fillMaxSize(),
                     navController = navController,
-                    startDestination = MainRoute.HOME.route,
+                    startDestination = startRoute.route,
                     // Quick crossfade; the screen being left ignores touches (see ScreenTransitionContent).
                     enterTransition = { fadeIn(tween(SCREEN_FADE_MS)) },
                     exitTransition = { fadeOut(tween(SCREEN_FADE_MS)) },
@@ -438,3 +452,7 @@ class MainActivity : RetrogradeComponentActivity(), BusyActivity {
         }
     }
 }
+
+private const val START_SCREEN_HOME = "home"
+private const val START_SCREEN_FAVORITES = "favorites"
+private const val START_SCREEN_SYSTEMS = "systems"
