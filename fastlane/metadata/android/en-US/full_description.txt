@@ -1,49 +1,27 @@
-Lemuroid is an open-source emulator based on Libretro. It's designed to work on a wide range of devices, from phones to TVs, and to provide the best user experience on Android. It's completely free and without ads.
-
-
-Supported Systems:
-
-- Atari 2600 (A26)
-- Atari 7800 (A78)
-- Atari Lynx (Lynx)
-- Nintendo (NES)
-- Super Nintendo (SNES)
-- Game Boy (GB)
-- Game Boy Color (GBC)
-- Game Boy Advance (GBA)
-- Sega Genesis (aka Megadrive)
-- Sega CD (aka Mega CD)
-- Sega Master System (SMS)
-- Sega Game Gear (GG)
-- Nintendo 64 (N64)
-- PlayStation (PSX)
-- PlayStation Portable (PSP)
-- FinalBurn Neo (Arcade)
-- Nintendo DS (NDS)
-- NEC PC Engine (PCE)
-- Neo Geo Pocket (NGP)
-- Neo Geo Pocket Color (NGC)
-- WonderSwan (WS)
-- WonderSwan Color (WSC)
-- Nintendo 3DS (3DS)
-
+Lemuroid-S is a free, open-source retro game emulator built on Lemuroid and libretro. It keeps Lemuroid's simplicity and adds features modeled on RetroArch: one folder for all your games, saves and covers, RetroArch-compatible saves, up-to-date emulator cores and more systems. It's light on battery and runs well on older phones. No ads, no tracking, no "All files access".
 
 Features:
+- One Lemuroid-S folder for ROMs (optional), BIOS files, saves, save states and covers, sorted by system. Your saves stay in your storage, survive reinstalls and are easy to back up
+- Games load straight from your folders, zipped or not, without copying them first
+- RetroArch-compatible saves, and Import Saves from RetroArch, other emulators or a ZIP file
+- Covers like RetroArch: box art, screenshot or title screen per console, downloaded or imported from RetroArch
+- Autosave on exit and while playing, with an Autosave slot next to 4 save slots
+- Fast-forward up to 8x, with lower or muted audio and an on-screen button per console
+- Display filters: CRT, LCD, Scale2x, xBR, SABR, MMPX, CRT (zfast) and HD mode
+- One up-to-date core per system: the most popular are built in, the others download when first needed
+- Gamepad support, local multiplayer, customizable touch controls, tilt input, quick save/load and Google Drive save sync
 
-- Automatically save and restore game states
-- ROMs scanning and indexing
-- Optimized touch controls
-- Quick save/load with slots
-- Support for zipped ROMs
-- Display simulation (LCD/CRT)
-- Fast-forward support
-- Gamepad support
-- Tilt to stick support
-- Touch control customization (size and position)
-- Cloud save sync
-- No ads
-- Local multiplayer (connect multiple gamepads to the same device)
+Supported systems:
+- Nintendo: NES, SNES, Nintendo 64, Game Boy, Game Boy Color, Game Boy Advance, Nintendo DS, Nintendo 3DS (64-bit ARM devices), Virtual Boy, Pokémon Mini
+- Sega: Master System, Game Gear, Genesis / Mega Drive, Sega CD, 32X, SG-1000, Dreamcast
+- Sony: PlayStation, PlayStation Portable
+- SNK: Neo Geo CD, Neo Geo Pocket, Neo Geo Pocket Color
+- Atari: 2600, 5200, 7800, Lynx
+- Arcade (FinalBurn Neo, MAME 2003-Plus)
+- Others: PC Engine / TurboGrafx-16, WonderSwan, WonderSwan Color, ColecoVision, Intellivision, Vectrex, DOS
 
-Keep in mind not every device can emulate every console. A very powerful one is required for more recent systems such as PSP and DS and 3DS.
+Not every device can run every system: Nintendo DS, 3DS, PSP and Dreamcast need a fast phone.
 
-This application does not contain any games. You need to provide your own legally owned ROM files.
+Lemuroid-S is an unofficial fork of Lemuroid by Swordfish90 and is not affiliated with the original project. All credit for Lemuroid goes to its author and contributors. Licensed under GPL-3.0. Source code: https://github.com/DCaedus/Lemuroid-S
+
+This app does not include any games. Use your own legally obtained game files.
