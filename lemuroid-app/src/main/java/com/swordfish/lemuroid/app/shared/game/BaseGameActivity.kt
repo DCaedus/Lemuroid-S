@@ -383,6 +383,9 @@ abstract class BaseGameActivity : ImmersiveActivity() {
             if (data?.getBooleanExtra(GameMenuContract.RESULT_QUIT, false) == true) {
                 baseGameScreenViewModel.requestFinish()
             }
+            if (data?.getBooleanExtra(GameMenuContract.RESULT_SHADER_CHANGED, false) == true) {
+                baseGameScreenViewModel.refreshShader()
+            }
             if (data?.hasExtra(GameMenuContract.RESULT_CHANGE_DISK) == true) {
                 val index = data.getIntExtra(GameMenuContract.RESULT_CHANGE_DISK, 0)
                 baseGameScreenViewModel.retroGameView.retroGameView?.changeDisk(index)

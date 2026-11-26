@@ -288,6 +288,21 @@ class BaseGameScreenViewModel(
     /** Whether fast-forward is on, for the on-screen button's look. */
     val fastForwardActive: StateFlow<Boolean> = fastForwardActiveState
 
+    /** Applies the display filter / HD mode settings again, e.g. after changing them in the game menu. */
+    fun refreshShader() {
+        viewModelScope.launch {
+            val shader =
+                ShaderChooser.getShaderForSystem(
+                    appContext,
+                    settingsManager.hdMode(),
+                    settingsManager.hdModeQuality(),
+                    settingsManager.screenFilter(),
+                    system,
+                )
+            retroGameView.retroGameView?.shader = shader
+        }
+    }
+
     fun isFastForwardEnabled(): Boolean {
         return (retroGameView.retroGameView?.frameSpeed ?: 1) > 1
     }
