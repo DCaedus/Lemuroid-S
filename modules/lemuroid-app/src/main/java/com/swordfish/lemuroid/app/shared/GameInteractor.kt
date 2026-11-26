@@ -9,12 +9,12 @@ import com.swordfish.lemuroid.R
 import com.swordfish.lemuroid.app.mobile.feature.shortcuts.ShortcutsGenerator
 import com.swordfish.lemuroid.app.shared.game.GameLauncher
 import com.swordfish.lemuroid.app.shared.main.BusyActivity
+import com.swordfish.lemuroid.common.coroutines.safeLaunch
 import com.swordfish.lemuroid.common.displayToast
 import com.swordfish.lemuroid.lib.library.covers.CustomCoverManager
 import com.swordfish.lemuroid.lib.library.db.RetrogradeDatabase
 import com.swordfish.lemuroid.lib.library.db.entity.Game
 import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
 
 class GameInteractor(
     private val activity: BusyActivity,
@@ -48,13 +48,13 @@ class GameInteractor(
         game: Game,
         isFavorite: Boolean,
     ) {
-        GlobalScope.launch {
-            retrogradeDb.gameDao().update(game.copy(isFavorite = isFavorite))
+        GlobalScope.safeLaunch {
+            retrogradeDb.gameDao().updateFavorite(game.id, isFavorite)
         }
     }
 
     fun onCreateShortcut(game: Game) {
-        GlobalScope.launch {
+        GlobalScope.safeLaunch {
             shortcutsGenerator.pinShortcutForGame(game)
         }
     }
@@ -64,14 +64,14 @@ class GameInteractor(
     }
 
     fun onSetCustomName(game: Game, customName: String) {
-        GlobalScope.launch {
-            retrogradeDb.gameDao().update(game.copy(customName = customName))
+        GlobalScope.safeLaunch {
+            retrogradeDb.gameDao().updateCustomName(game.id, customName)
         }
     }
 
     fun onClearCustomName(game: Game) {
-        GlobalScope.launch {
-            retrogradeDb.gameDao().update(game.copy(customName = null))
+        GlobalScope.safeLaunch {
+            retrogradeDb.gameDao().updateCustomName(game.id, null)
         }
     }
 
@@ -81,9 +81,9 @@ class GameInteractor(
      * app restarts regardless of where the user picked the file from.
      */
     fun onSetCustomCoverUri(game: Game, sourceUri: String) {
-        GlobalScope.launch {
+        GlobalScope.safeLaunch {
             val localUri = customCoverManager.importCover(game.id, Uri.parse(sourceUri))
-            retrogradeDb.gameDao().update(game.copy(customCoverUri = localUri))
+            retrogradeDb.gameDao().updateCustomCoverUri(game.id, localUri)
         }
     }
 
@@ -92,9 +92,9 @@ class GameInteractor(
      * clears the database field.
      */
     fun onClearCustomCoverUri(game: Game) {
-        GlobalScope.launch {
+        GlobalScope.safeLaunch {
             customCoverManager.deleteCover(game.id)
-            retrogradeDb.gameDao().update(game.copy(customCoverUri = null))
+            retrogradeDb.gameDao().updateCustomCoverUri(game.id, null)
         }
     }
 

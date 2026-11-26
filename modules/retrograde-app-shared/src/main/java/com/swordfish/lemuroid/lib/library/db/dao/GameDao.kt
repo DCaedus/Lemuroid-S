@@ -68,6 +68,26 @@ interface GameDao {
     @Query("SELECT * FROM games WHERE isFavorite = 1 ORDER BY lastPlayedAt DESC LIMIT :limit")
     fun selectFirstFavorites(limit: Int): Flow<List<Game>>
 
+    // Lemuroid-S: single-field updates, so a game object loaded earlier (e.g. in a list) can't
+    // overwrite newer data such as play time or last played.
+    @Query("UPDATE games SET isFavorite = :isFavorite WHERE id = :id")
+    suspend fun updateFavorite(
+        id: Int,
+        isFavorite: Boolean,
+    )
+
+    @Query("UPDATE games SET customName = :customName WHERE id = :id")
+    suspend fun updateCustomName(
+        id: Int,
+        customName: String?,
+    )
+
+    @Query("UPDATE games SET customCoverUri = :customCoverUri WHERE id = :id")
+    suspend fun updateCustomCoverUri(
+        id: Int,
+        customCoverUri: String?,
+    )
+
     /** Lemuroid-S: games with the most play time ("Frequently played"), favorites excluded like Recent. */
     @Query("SELECT * FROM games WHERE playTimeMillis > 0 AND isFavorite = 0 ORDER BY playTimeMillis DESC LIMIT :limit")
     fun selectFirstMostPlayed(limit: Int): Flow<List<Game>>

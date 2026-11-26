@@ -6,8 +6,6 @@ import android.view.InputDevice
 import android.view.KeyEvent
 import com.swordfish.lemuroid.R
 import kotlinx.coroutines.DelicateCoroutinesApi
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.async
 import kotlinx.coroutines.runBlocking
 import timber.log.Timber
 
@@ -40,10 +38,9 @@ class InputBindingUpdater(private val inputDeviceManager: InputDeviceManager, in
     private fun onKeyUp(event: KeyEvent): Boolean {
         if (!isTargetedDevice(event.device)) return false
 
+        // Lemuroid-S: wait for the binding to be saved (the old code started the save without waiting).
         runBlocking {
-            GlobalScope.async {
-                inputDeviceManager.updateBinding(event.device, RetroKey(extras.retroKey), InputKey(event.keyCode))
-            }
+            inputDeviceManager.updateBinding(event.device, RetroKey(extras.retroKey), InputKey(event.keyCode))
         }
 
         return true

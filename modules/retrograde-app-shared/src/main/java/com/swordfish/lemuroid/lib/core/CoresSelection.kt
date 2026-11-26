@@ -7,7 +7,6 @@ import com.swordfish.lemuroid.lib.library.CoreID
 import com.swordfish.lemuroid.lib.library.GameSystem
 import com.swordfish.lemuroid.lib.library.SystemCoreConfig
 import com.swordfish.lemuroid.lib.library.SystemID
-import com.swordfish.lemuroid.lib.migration.DesmumeMigrationHandler
 import dagger.Lazy
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
@@ -21,7 +20,6 @@ import kotlinx.coroutines.withContext
 
 class CoresSelection(
     private val sharedPreferencesFactory: Lazy<SharedPreferences>,
-    private val desmumeMigrationHandler: DesmumeMigrationHandler,
 ) {
     private val sharedPreferences by lazy { sharedPreferencesFactory.get() }
 
