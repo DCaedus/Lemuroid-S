@@ -17,7 +17,7 @@ class GamePresenter(
     private val gameInteractor: GameInteractor,
 ) : Presenter() {
     override fun onBindViewHolder(
-        viewHolder: Presenter.ViewHolder?,
+        viewHolder: Presenter.ViewHolder,
         item: Any?,
     ) {
         if (item == null || viewHolder !is ViewHolder) return
@@ -37,7 +37,7 @@ class GamePresenter(
         return ViewHolder(cardView)
     }
 
-    override fun onUnbindViewHolder(viewHolder: Presenter.ViewHolder?) {
+    override fun onUnbindViewHolder(viewHolder: Presenter.ViewHolder) {
         val viewHolder = viewHolder as ViewHolder
         viewHolder.mCardView.mainImage = null
         viewHolder.view.setOnCreateContextMenuListener(null)

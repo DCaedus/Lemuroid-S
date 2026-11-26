@@ -129,7 +129,6 @@ dependencies {
     implementation(deps.libs.arch.work.runtime)
     implementation(deps.libs.arch.work.runtimeKtx)
     implementation(deps.libs.androidx.lifecycle.commonJava8)
-    implementation(deps.libs.androidx.lifecycle.reactiveStreams)
 
 
     implementation(deps.libs.androidx.leanback.leanback)
@@ -150,7 +149,6 @@ dependencies {
     implementation(deps.libs.okio)
     implementation(deps.libs.retrofit)
     implementation(deps.libs.flowPreferences)
-    implementation(deps.libs.guava)
     implementation(deps.libs.androidx.documentfile)
     implementation(deps.libs.androidx.leanback.tvProvider)
     implementation(deps.libs.harmony)

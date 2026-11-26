@@ -12,21 +12,22 @@ object deps {
         const val gms             = "21.6.0"
         const val kotlin          = "2.2.21"
         const val ksp             = "2.2.21-2.0.5"
-        const val okHttp          = "4.9.1"
-        const val retrofit        = "2.9.0"
-        const val work            = "2.9.0"
+        const val okHttp          = "4.12.0"
+        const val retrofit        = "3.0.0"
+        const val work            = "2.10.5"
         const val navigation      = "2.9.7"
         const val lifecycle       = "2.10.0"
-        const val leanback        = "1.1.0-rc01"
-        const val googleApiClient = "1.32.1"
-        const val paging          = "3.2.1"
+        const val leanback        = "1.2.0"
+        const val googleApiClient = "2.9.2"
+        const val paging          = "3.3.6"
         const val room            = "2.8.4"
-        const val serialization   = "1.2.2"
-        const val fragment        = "1.5.1"
+        const val serialization   = "1.9.0"
+        const val fragment        = "1.8.9"
         const val activity        = "1.13.0"
         const val libretrodroid   = "0.14.0"
         const val composeBom      = "2026.06.01"
         const val padkit          = "1.0.0-beta1"
+        const val coroutines      = "1.10.2"
 
         // Make sure this is compatible with current bom versions:
         // https://developer.android.com/jetpack/compose/bom/bom-mapping
@@ -36,30 +37,29 @@ object deps {
     object libs {
         object androidx {
             object appcompat {
-                const val appcompat = "androidx.appcompat:appcompat:1.4.2"
-                const val recyclerView = "androidx.recyclerview:recyclerview:1.2.1"
-                const val constraintLayout = "androidx.constraintlayout:constraintlayout:2.1.4"
+                const val appcompat = "androidx.appcompat:appcompat:1.7.1"
+                const val recyclerView = "androidx.recyclerview:recyclerview:1.4.0"
+                const val constraintLayout = "androidx.constraintlayout:constraintlayout:2.2.1"
             }
             object leanback {
                 const val leanback = "androidx.leanback:leanback:${versions.leanback}"
                 const val leanbackPreference = "androidx.leanback:leanback-preference:${versions.leanback}"
-                const val leanbackPaging = "androidx.leanback:leanback-paging:1.1.0-alpha07"
-                const val tvProvider = "androidx.tvprovider:tvprovider:1.0.0"
+                const val leanbackPaging = "androidx.leanback:leanback-paging:1.1.0"
+                const val tvProvider = "androidx.tvprovider:tvprovider:1.1.0"
             }
             object ktx {
-                const val core = "androidx.core:core-ktx:1.8.0"
-                const val coreKtx = "androidx.core:core-ktx:1.8.0"
-                const val collection = "androidx.collection:collection-ktx:1.1.0"
+                const val core = "androidx.core:core-ktx:1.17.0"
+                const val coreKtx = "androidx.core:core-ktx:1.17.0"
+                const val collection = "androidx.collection:collection-ktx:1.5.0"
             }
             object lifecycle {
                 const val commonJava8 = "androidx.lifecycle:lifecycle-common-java8:${versions.lifecycle}"
                 const val processor = "androidx.lifecycle:lifecycle-compiler:${versions.lifecycle}"
                 const val runtime = "androidx.lifecycle:lifecycle-runtime-ktx:${versions.lifecycle}"
-                const val reactiveStreams = "android.arch.lifecycle:reactivestreams:1.1.1"
-                const val viewModelCompose = "androidx.lifecycle:lifecycle-viewmodel-compose:2.5.1"
+                const val viewModelCompose = "androidx.lifecycle:lifecycle-viewmodel-compose:${versions.lifecycle}"
             }
             object preferences {
-                const val preferencesKtx = "androidx.preference:preference-ktx:1.1.1"
+                const val preferencesKtx = "androidx.preference:preference-ktx:1.2.1"
             }
             object paging {
                 const val common = "androidx.paging:paging-common:${versions.paging}"
@@ -82,7 +82,7 @@ object deps {
                 const val fragment = "androidx.fragment:fragment:${versions.fragment}"
                 const val ktx = "androidx.fragment:fragment-ktx:${versions.fragment}"
             }
-            const val documentfile = "androidx.documentfile:documentfile:1.0.1"
+            const val documentfile = "androidx.documentfile:documentfile:1.1.0"
             object activity {
                 const val activity = "androidx.activity:activity:${versions.activity}"
                 const val activityKtx = "androidx.activity:activity-ktx:${versions.activity}"
@@ -107,7 +107,7 @@ object deps {
                     const val drawablePainter = "com.google.accompanist:accompanist-drawablepainter:${versions.accompanist}"
                 }
             }
-            const val profileInstaller = "androidx.profileinstaller:profileinstaller:1.3.1"
+            const val profileInstaller = "androidx.profileinstaller:profileinstaller:1.4.1"
         }
         object arch {
             object work {
@@ -135,15 +135,15 @@ object deps {
             const val featureDelivery = "com.google.android.play:feature-delivery:2.1.0"
             const val featureDeliveryKtx = "com.google.android.play:feature-delivery-ktx:2.1.0"
             const val playServices = "com.google.android.gms:play-services-auth:${versions.gms}"
-            const val coroutine = "org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.6.4"
+            const val coroutine = "org.jetbrains.kotlinx:kotlinx-coroutines-play-services:${versions.coroutines}"
         }
         object gdrive {
             const val apiClient            = "com.google.api-client:google-api-client:${versions.googleApiClient}"
-            const val apiServicesDrive     = "com.google.apis:google-api-services-drive:v3-rev20210725-${versions.googleApiClient}"
+            const val apiServicesDrive     = "com.google.apis:google-api-services-drive:v3-rev20261106-2.9.2"
         }
         object coil {
-            const val coil = "io.coil-kt:coil:2.6.0"
-            const val coilCompose = "io.coil-kt:coil-compose:2.6.0"
+            const val coil = "io.coil-kt:coil:2.7.0"
+            const val coilCompose = "io.coil-kt:coil-compose:2.7.0"
         }
 
         object composeSettings {
@@ -153,16 +153,15 @@ object deps {
             const val memoryStorage = "com.github.alorma:compose-settings-storage-memory:2.0.0"
         }
 
-        const val kotlinxCoroutinesAndroid = "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.4"
-        const val okio                     = "com.squareup.okio:okio:2.10.0"
+        const val kotlinxCoroutinesAndroid = "org.jetbrains.kotlinx:kotlinx-coroutines-android:${versions.coroutines}"
+        const val okio                     = "com.squareup.okio:okio:3.9.1"
         const val okHttp3                  = "com.squareup.okhttp3:okhttp:${versions.okHttp}"
         const val retrofit                 = "com.squareup.retrofit2:retrofit:${versions.retrofit}"
         const val flowPreferences          = "com.fredporciuncula:flow-preferences:1.8.0"
         const val timber                   = "com.jakewharton.timber:timber:5.0.1"
-        const val material                 = "com.google.android.material:material:1.6.1"
-        const val guava                    = "com.google.guava:guava:30.1.1-android"
-        const val harmony                  = "com.frybits.harmony:harmony:1.1.9"
-        const val startup                  = "androidx.startup:startup-runtime:1.1.1"
+        const val material                 = "com.google.android.material:material:1.12.0"
+        const val harmony                  = "com.frybits.harmony:harmony:1.2.7"
+        const val startup                  = "androidx.startup:startup-runtime:1.2.0"
         const val composeHtmlText          = "de.charlex.compose.material3:material3-html-text:2.0.0-beta01"
         const val collectionsImmutable     = "org.jetbrains.kotlinx:kotlinx-collections-immutable:0.3.8"
         const val padkit                   = "io.github.swordfish90:padkit:${versions.padkit}"
