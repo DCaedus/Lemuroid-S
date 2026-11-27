@@ -318,4 +318,5 @@
     <string name="game_busy">Vänta…</string>
     <string name="game_saving_previous">Sparar ditt senaste spel…</string>
     <string name="setup_microphone_message">Vissa spel använder mikrofonen, till exempel Nintendo DS-spel och spel till andra konsoler som stöder den, för att blåsa eller prata i den.</string>
+    <string name="autosave_import_warning">Spel fortsätter från sin senaste autosparning, som även innehåller spelets egen sparning. Om du själv kopierar sparningar från andra emulatorer till Lemuroid-S kan du behöva stänga av detta så att spelen använder dem. Importera sparningar sköter detta själv.</string>
 </resources>

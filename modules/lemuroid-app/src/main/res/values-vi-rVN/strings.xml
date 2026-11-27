@@ -316,4 +316,5 @@
     <string name="game_busy">Vui lòng đợi…</string>
     <string name="game_saving_previous">Đang lưu trò chơi gần nhất…</string>
     <string name="setup_microphone_message">Một số trò chơi dùng micrô, như trò chơi Nintendo DS và của bất kỳ máy chơi game nào khác hỗ trợ, ví dụ để thổi hoặc nói vào micrô.</string>
+    <string name="autosave_import_warning">Trò chơi sẽ tiếp tục từ lần tự động lưu gần nhất, vốn cũng chứa bản lưu trong trò chơi. Nếu bạn tự sao chép bản lưu từ trình giả lập khác vào Lemuroid-S, có thể bạn cần tắt tùy chọn này để trò chơi dùng các bản lưu đó. Nhập bản lưu sẽ tự xử lý việc này.</string>
 </resources>

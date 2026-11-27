@@ -43,7 +43,7 @@ class SavesImporter(
     data class Result(
         val saves: Int,
         val states: Int,
-        /** Files not copied: already up to date, or in a format Lemuroid-S can't use. */
+        /** Files not copied: in a format Lemuroid-S can't use, or older copies of a file imported in the same go. */
         val skipped: Int,
     )
 
@@ -62,8 +62,8 @@ class SavesImporter(
     )
 
     private class Target(val folder: ExternalSavesStorage.SaveFolder) {
-        // Kept up to date while importing: two sources can map to one name (Game.srm and Game.sav).
-        val existing: MutableMap<String, Long> by lazy { folder.lastModifiedTimes().toMutableMap() }
+        /** Source dates of what this import wrote: two sources can map to one name (Game.srm and Game.sav). */
+        val imported = mutableMapOf<String, Long>()
     }
 
     /** Imports from a picked folder (tree uri) or a picked ZIP file (document uri). Null if nothing usable. */
@@ -84,14 +84,16 @@ class SavesImporter(
 
             val counters = Counters()
             val targets = mutableMapOf<Pair<Boolean, String?>, Target?>()
+            val targetFor = { isState: Boolean, system: String? ->
+                targets.getOrPut(isState to system) {
+                    externalSavesStorage.importTargetFolder(isState, system)?.let { Target(it) }
+                }
+            }
             for (file in files) {
                 val databaseSystem = systemsByStem[gameStem(file.name)]?.let { MainFolder.systemFolderName(it) }
                 val system = quickSystem(file) ?: databaseSystem
-                val target =
-                    targets.getOrPut(file.isState to system) {
-                        externalSavesStorage.importTargetFolder(file.isState, system)?.let { Target(it) }
-                    } ?: continue
-                copy(file, target, system, counters)
+                val target = targetFor(file.isState, system) ?: continue
+                copy(file, target, system, counters) { targetFor(true, system) }
             }
             Result(counters.saves, counters.states, counters.skipped)
         }
@@ -212,14 +214,12 @@ class SavesImporter(
         target: Target,
         system: String?,
         counters: Counters,
+        statesTarget: () -> Target?,
     ) {
         val targetName = if (file.isState) retroArchStateName(file.name) else file.name.substringBeforeLast('.') + ".srm"
-        val targetTime = target.existing[targetName]
-        if (targetTime != null && targetTime >= file.lastModified) {
-            counters.skipped++
-            return
-        }
-        if (!file.isState && hasNewerSave(targetName, file.lastModified)) {
+        // Within one import the newest of two sources with the same name wins.
+        val importedTime = target.imported[targetName]
+        if (importedTime != null && importedTime >= file.lastModified) {
             counters.skipped++
             return
         }
@@ -240,9 +240,17 @@ class SavesImporter(
                 counters.skipped++
                 return
             }
+            // Lemuroid-S: imported saves replace Lemuroid-S's whatever their dates; the replaced file
+            // is kept next to it as "<name>.backup1" (".backup2"... when there are older backups).
+            if (importedTime == null) {
+                target.folder.backup(targetName)
+                if (!file.isState) {
+                    backupFallbackSave(targetName)
+                    backupAutoSaveState(targetName, statesTarget())
+                }
+            }
             target.folder.write(targetName, converted)
-            // The written copy stands for the source's date, so an older source of the same name is skipped.
-            target.existing[targetName] = file.lastModified
+            target.imported[targetName] = file.lastModified
             if (file.isState) counters.states++ else counters.saves++
         }.onFailure { Timber.w(it, "Could not import ${file.name}") }
     }
@@ -263,13 +271,36 @@ class SavesImporter(
         return name
     }
 
-    /** Lemuroid-S keeps battery saves by name, so a newer one there is kept. */
-    private fun hasNewerSave(
+    /**
+     * With "Autosave on exit" a game opens from its autosave state, which holds the old in-game save
+     * too: it's kept as a backup so the game starts from the imported save. An autosave state
+     * imported in the same go is left alone.
+     */
+    private fun backupAutoSaveState(
         saveName: String,
-        lastModified: Long,
-    ): Boolean {
+        statesTarget: Target?,
+    ) {
+        if (statesTarget == null) return
+        val autoSaveName = saveName.removeSuffix(".srm") + ".state.auto"
+        if (autoSaveName in statesTarget.imported) return
+        runCatching {
+            statesTarget.folder.backup(autoSaveName)
+            statesTarget.folder.backup("$autoSaveName.metadata")
+        }.onFailure { Timber.w(it, "Could not keep $autoSaveName as a backup") }
+    }
+
+    /**
+     * A copy of the save left in app storage (when writing to the folder failed) would otherwise be
+     * moved over the imported one: it's kept as a backup there too.
+     */
+    private fun backupFallbackSave(saveName: String) {
         val current = File(directoriesManager.getSavesDirectory(), saveName)
-        return current.exists() && current.length() > 0 && current.lastModified() >= lastModified
+        if (!current.exists()) return
+        val backup =
+            generateSequence(1) { it + 1 }
+                .map { File(current.parentFile, "$saveName${ExternalSavesStorage.BACKUP_SUFFIX}$it") }
+                .first { !it.exists() }
+        if (!current.renameTo(backup)) current.delete()
     }
 
     companion object {

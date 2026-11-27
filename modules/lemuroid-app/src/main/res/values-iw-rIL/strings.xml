@@ -308,4 +308,5 @@
     <string name="game_busy">רק רגע…</string>
     <string name="game_saving_previous">המשחק האחרון נשמר…</string>
     <string name="setup_microphone_message">חלק מהמשחקים משתמשים במיקרופון, כמו משחקי Nintendo DS ומשחקים של כל קונסולה אחרת שתומכת בו, למשל כדי לנשוף או לדבר לתוכו.</string>
+    <string name="autosave_import_warning">המשחקים ימשיכו מהשמירה האוטומטית האחרונה, שכוללת גם את השמירה שבתוך המשחק. אם אתם מעתיקים בעצמכם שמירות מאמולטורים אחרים אל Lemuroid-S, ייתכן שתצטרכו לכבות את זה כדי שהמשחקים ישתמשו בהן. ייבוא שמירות מטפל בזה בעצמו.</string>
 </resources>

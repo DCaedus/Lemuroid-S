@@ -297,4 +297,5 @@
     <string name="game_busy">Espera un moment…</string>
     <string name="game_saving_previous">S\'està desant l\'última partida…</string>
     <string name="setup_microphone_message">Alguns jocs fan servir el micròfon, com els de Nintendo DS i els de qualsevol altra consola que ho admeti, per exemple per bufar o parlar-hi.</string>
+    <string name="autosave_import_warning">Els jocs continuaran des de la seva última desada automàtica, que també conté la partida desada del joc. Si copies tu mateix partides d\'altres emuladors a Lemuroid-S, potser hauràs de desactivar-ho perquè els jocs facin servir aquestes partides. Importa partides ho gestiona tot sol.</string>
 </resources>

@@ -317,4 +317,5 @@
     <string name="game_busy">يُرجى الانتظار…</string>
     <string name="game_saving_previous">جارٍ حفظ آخر لعبة…</string>
     <string name="setup_microphone_message">تستخدم بعض الألعاب الميكروفون، مثل ألعاب Nintendo DS وألعاب أي جهاز آخر يدعمه، على سبيل المثال للنفخ فيه أو التحدث إليه.</string>
+    <string name="autosave_import_warning">ستستأنف الألعاب من آخر حفظ تلقائي، والذي يتضمن أيضًا الحفظ داخل اللعبة. إذا نسخت ملفات الحفظ من محاكيات أخرى إلى Lemuroid-S بنفسك، فقد تحتاج إلى إيقاف هذا الخيار لكي تستخدم الألعاب تلك الملفات. ميزة استيراد الحفظ تتولى ذلك تلقائيًا.</string>
 </resources>

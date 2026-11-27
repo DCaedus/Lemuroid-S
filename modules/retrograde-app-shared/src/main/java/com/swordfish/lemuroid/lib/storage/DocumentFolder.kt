@@ -147,6 +147,17 @@ class DocumentFolder(
         }
     }
 
+    /** Renames [child] to [newName] in place; copies it under that name when the storage can't rename. */
+    fun rename(
+        child: Child,
+        newName: String,
+    ): Boolean {
+        val renamed = runCatching { DocumentsContract.renameDocument(contentResolver, child.uri, newName) }.getOrNull()
+        if (renamed != null) return true
+        val data = read(child) ?: return false
+        return runCatching { write(newName, data, null) }.isSuccess
+    }
+
     fun deleteFile(fileUri: Uri): Boolean {
         return runCatching { DocumentsContract.deleteDocument(contentResolver, fileUri) }.getOrDefault(false)
     }

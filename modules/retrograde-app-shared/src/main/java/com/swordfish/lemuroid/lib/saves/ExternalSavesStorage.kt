@@ -83,6 +83,27 @@ class ExternalSavesStorage(private val appContext: Context) {
 
         fun delete(fileName: String)
 
+        /** Renames [fileName] to [backupName], leaving it in this folder. */
+        fun rename(
+            fileName: String,
+            backupName: String,
+        )
+
+        /**
+         * Lemuroid-S: keeps [fileName] as a backup next to it ("Game.srm.backup1", then ".backup2"...)
+         * before it gets replaced. Returns the backup's name, or null if there was nothing to keep.
+         */
+        fun backup(fileName: String): String? {
+            val names = lastModifiedTimes().keys
+            if (fileName !in names) return null
+            val backupName =
+                generateSequence(1) { it + 1 }
+                    .map { "$fileName$BACKUP_SUFFIX$it" }
+                    .first { it !in names }
+            rename(fileName, backupName)
+            return backupName
+        }
+
         class Local(private val directory: File) : SaveFolder {
             override fun lastModifiedTimes(): Map<String, Long> {
                 return directory.listFiles()?.associate { it.name to it.lastModified() } ?: emptyMap()
@@ -102,6 +123,15 @@ class ExternalSavesStorage(private val appContext: Context) {
 
             override fun delete(fileName: String) {
                 File(directory, fileName).delete()
+            }
+
+            override fun rename(
+                fileName: String,
+                backupName: String,
+            ) {
+                val file = File(directory, fileName)
+                val backup = File(directory, backupName)
+                if (!file.renameTo(backup)) file.copyTo(backup)
             }
         }
 
@@ -147,10 +177,25 @@ class ExternalSavesStorage(private val appContext: Context) {
                 children()[fileName]?.let { folder.deleteFile(it.uri) }
                 listing = null
             }
+
+            override fun rename(
+                fileName: String,
+                backupName: String,
+            ) {
+                try {
+                    val child = children()[fileName] ?: return
+                    check(folder.rename(child, backupName)) { "Could not keep $fileName as $backupName" }
+                } finally {
+                    listing = null
+                }
+            }
         }
     }
 
     companion object {
+        /** Ending of the backups kept when imported saves replace existing ones (".backup1", ".backup2"...). */
+        const val BACKUP_SUFFIX = ".backup"
+
         /** Logs and swallows errors (callers fall back to app storage). */
         inline fun <T> safely(
             what: String,

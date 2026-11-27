@@ -318,4 +318,5 @@
     <string name="game_busy">Aguarde…</string>
     <string name="game_saving_previous">A guardar o seu último jogo…</string>
     <string name="setup_microphone_message">Alguns jogos usam o microfone, como os da Nintendo DS e de qualquer outra consola que o suporte, por exemplo para soprar ou falar para ele.</string>
+    <string name="autosave_import_warning">Os jogos continuarão a partir da última gravação automática, que também contém o progresso guardado no jogo. Se copiar gravações de outros emuladores para o Lemuroid-S por si mesmo, poderá ter de desativar isto para que os jogos as usem. Importar jogos guardados trata disto sozinho.</string>
 </resources>

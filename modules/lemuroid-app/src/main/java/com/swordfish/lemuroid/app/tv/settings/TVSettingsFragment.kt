@@ -125,6 +125,18 @@ class TVSettingsFragment : LeanbackPreferenceFragmentCompat() {
             }
         }
 
+        // Lemuroid-S: turning "Autosave on exit" on explains how it interacts with imported saves.
+        findPreference<Preference>(getString(R.string.pref_key_autosave))?.setOnPreferenceChangeListener { _, value ->
+            if (value == true) {
+                android.app.AlertDialog.Builder(requireContext())
+                    .setTitle(R.string.settings_title_enable_autosave)
+                    .setMessage(R.string.autosave_import_warning)
+                    .setPositiveButton(R.string.ok, null)
+                    .show()
+            }
+            true
+        }
+
         // Lemuroid-S: newer settings.
         findPreference<PreferenceScreen>(getString(R.string.pref_key_open_core_settings))?.let { addCoreSettings(it) }
         findPreference<Preference>(getString(R.string.pref_key_tv_language))?.isVisible =
