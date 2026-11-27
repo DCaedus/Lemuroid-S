@@ -10,10 +10,8 @@
     <string name="discover">Objevit</string>
     <string name="rescan">Znovu prohledat</string>
     <string name="stop">Zastavit</string>
-    <string name="none">Žádný</string>
     <string name="directory">Složka</string>
     <string name="display_filter">Filtr obrazovky</string>
-    <string name="roms">ROMky</string>
     <string name="ok">OK</string>
     <string name="cancel">Zrušit</string>
     <string name="settings">Nastavení</string>
@@ -30,9 +28,6 @@
     <string name="settings_title_enable_touch_feedback">Vibrace při dotyku</string>
     <string name="settings_title_tilt_sensitivity">Citlivost senzoru naklánění</string>
     <string name="settings_title_hd_quality">Kvalita HD režimu</string>
-    <string name="settings_title_maximum_cache_usage">Limit velikosti cache</string>
-    <string name="settings_title_hd_mode">HD režim</string>
-    <string name="settings_description_hd_mode">Použít filtr zvětšení rozlišení obrazu</string>
     <string name="settings_description_hd_quality">Uprav kvalitu režimu HD</string>
     <string name="settings_title_immersive_mode">Pohlcující režim</string>
     <string name="settings_description_immersive_mode">Dynamicky barví pozadí na základě herních vizuálů</string>
@@ -42,10 +37,6 @@
     <string name="settings_gamepad_category_enabled">Povolená zařízení</string>
     <string name="settings_gamepad_category_general">Obecné</string>
     <string name="settings_gamepad_title_reset_bindings">Rezetovat nastavení kláves</string>
-    <string name="settings_gamepad_title_game_menu">Menu</string>
-    <string name="settings_title_open_cores_selection">Změnit jádra</string>
-    <string name="settings_description_open_cores_selection">Vyberte, které jádro je přiřazeno k systému</string>
-    <string name="settings_core_selection_ds_info">DeSmuME je zastaralý a brzy bude odstraněn. Uložte uvnitř hry a pak přepněte na melonDS: ve hře se tam automaticky načítá, ale ušetřete státy na jádře, které je vytvořilo.</string>
     <string name="settings_title_display_bios_info">BIOS</string>
     <string name="settings_description_display_bios_info">Zobrazit detekované a podporované soubory BIOSu</string>
     <string name="settings_bios_category_detected">Detekováno</string>
@@ -56,8 +47,6 @@
     <string name="settings_description_advanced_settings">Zobrazit pokročilé nastavení</string>
     <string name="settings_title_low_latency_audio">Preferovat zvuk s nízkou latencí</string>
     <string name="settings_description_low_latency_audio">Snížit latenci zvuku na podporovaných zařízeních. Může způsobit nepříjemné zvuky.</string>
-    <string name="settings_title_direct_game_load">Přímé načtení hry</string>
-    <string name="settings_description_direct_game_load">(Experimentální) Sníží čas načítání a využití cache na podporovaných konzolích.</string>
     <string name="settings_title_enable_rumble">Vibrace</string>
     <string name="settings_description_enable_rumble">Povolit vybrace v podporovaných hrách a ovladačích</string>
     <string name="settings_title_enable_device_rumble">Vybrace zařízení</string>
@@ -88,10 +77,6 @@
     <string name="home_microphone_action">Povolit</string>
     <string name="home_empty_title">Zvolit složku s ROMkami</string>
     <string name="home_empty_message">Lemuroid potřebuje naskenovat složku obsahující ROM soubory.\nTo může trvat až několik minut.</string>
-    <string name="home_empty_action">Vybrat adresář</string>
-    <string name="home_notification_desmume_deprecated_title">DeSmuME brzy odejde</string>
-    <string name="home_notification_desmume_deprecated_message">Uložte hru, přepněte se na melonDS, a váš postup bude pokračovat. Uložte stavy zůstávají vázány na DeSmuME.</string>
-    <string name="home_notification_desmume_deprecated_action">Přepnout na melonDS</string>
     <string name="game_menu_save">Uložit</string>
     <string name="game_menu_load">Načíst</string>
     <string name="game_menu_restart">Restartovat</string>
@@ -110,7 +95,6 @@
     <string name="game_toast_quick_save_loaded">Rychlé načtení</string>
     <string name="game_toast_quick_save_saved">Rychlé uložení</string>
     <string name="empty_view_default">Žádné položky</string>
-    <string name="core_settings_title">Nastavení jádra</string>
     <string name="core_settings_category_preferences">Preference</string>
     <string name="core_settings_category_controllers">Ovladače</string>
     <string name="core_settings_controller">Ovladač %1$s</string>
@@ -133,7 +117,6 @@
         \n\nPokud nic z výše uvedeného nepomůže, je možné, že tato hra/jádro není podporováno vaším zařízením.
     </string>
     <string name="game_loader_error_missing_bios">Vypadá to, že vám chybí požadované BIOS soubory. Vložte je do složky s ROMkami a znovu naskenujte. Vyžadouvané soubory: %1$s</string>
-    <string name="game_shortcut_error">Nastala chyba při načítání vaší hry. Prosím, zkontrolujte, zda tato hra existuje ve vaší knihovně.</string>
     <string name="dialog_saf_not_found">Toto zařízení nepodporuje výběr souborů zapomocí StorageAccessFramework. Prosím, zkopírujte ručně nekomprimované ROM soubory do %1$s a znovu oskenujte.</string>
     <string name="system_grid_details">%1$s her</string>
     <string name="tv_folder_picker_title">Zvolit složku s ROMkami</string>
@@ -152,10 +135,8 @@
     <string name="shortcut_binding_update_description">Stiskněte první, poté druhé tlačítko pro navázání kombinace na \"%1$s\"</string>
     <string name="tv_search_results">Hry</string>
     <string name="tv_game_message_missing_gamepad">Gamepad je zapotřebí k hraní. Prosím připojte nějaký.</string>
-    <string name="game_edit_touch_controls_error_not_visible">Odpojte ovladač pro úpravu dotykového ovládání</string>
     <string name="game_interactory_busy">Vyčkejte pro dokončení zbývajících operací</string>
     <string name="mobile_settings_help">Nápověda</string>
-    <string name="mobile_settings_support">Podpora</string>
     <string name="lemuroid_help_content"><![CDATA[        <b>&#8226;Jak se používá Lemuroid</b><br/>
         Zkopírujte veškeré vaše ROM soubory do složky na vašem zařízení a vyberte ji v Lemuroidu. Tahle složka může mít podsložky. Až sken zkončí, měli by jste vidět vaše hry.<br/><br/>
         <b>&#8226;Proč to nenašlo žádné hry?</b><br/>
@@ -227,7 +208,6 @@
     <string name="settings_category_interface">Rozhraní</string>
     <string name="settings_category_display">Zobrazení</string>
     <string name="settings_category_saves">Uložené hry</string>
-    <string name="settings_category_storage">Úložiště</string>
     <string name="main_folder_not_set">Nenastaveno. Zvolte, kde bude složka Lemuroid-S</string>
     <string name="main_folder_setting_title">Složka Lemuroid-S</string>
     <string name="main_folder_card_title">Vytvořit složku Lemuroid-S</string>
@@ -242,13 +222,9 @@
     <string name="main_folder_lost_action">Zvolit složku</string>
     <string name="select_roms_folder">Vybrat složku s ROMy</string>
     <string name="folder_option_main">Složka Lemuroid-S</string>
-    <string name="folder_option_roms">Složka s ROMy</string>
     <string name="folder_option_custom">Vlastní složka</string>
     <string name="roms_option_main">Složka Lemuroid-S (Lemuroid-S/roms)</string>
     <string name="roms_option_custom_named">Vlastní složka (%1$s)</string>
-    <string name="saves_option_main">Složka Lemuroid-S (Lemuroid-S/saves a /states)</string>
-    <string name="saves_option_roms">Složka s ROMy (vedle každé hry)</string>
-    <string name="home_choose">Zvolit</string>
     <string name="import_saves_confirm_title">Importovat uložené hry z jiných emulátorů</string>
     <string name="import_saves_confirm_warning">UPOZORNĚNÍ: Stávající uložené hry Lemuroid-S mohou být přepsány.</string>
     <string name="import_saves_confirm_message">Zvolte, odkud importovat:</string>
@@ -282,8 +258,6 @@
     <string name="home_import_saves_title">Importovat uložené hry</string>
     <string name="home_import_saves_message">Importujte uložené hry z jiných emulátorů nebo složek.</string>
     <string name="home_import_saves_action">Importovat uložené hry</string>
-    <string name="home_card_not_now">Teď ne</string>
-    <string name="done">Hotovo</string>
     <string name="settings_title_import_saves">Importovat uložené hry</string>
     <string name="settings_description_import_saves">Z RetroArch nebo jiných emulátorů</string>
     <string name="import_saves_result">Importováno uložených her: %1$d a stavů: %2$d. Přeskočeno: %3$d (už aktuální nebo nečitelné).</string>
@@ -291,7 +265,6 @@
     <string name="settings_title_show_framerate">Zobrazit FPS</string>
     <string name="settings_description_show_framerate">Zobrazí FPS a rychlost hry přes obraz</string>
     <string name="settings_title_periodic_autosave">Automatické ukládání během hraní</string>
-    <string name="settings_description_periodic_autosave">Během hraní ukládá hru do slotu automatického uložení v tomto intervalu</string>
     <string name="periodic_autosave_names_off">Vypnuto</string>
     <string name="periodic_autosave_names_5">Každých 5 minut</string>
     <string name="periodic_autosave_names_10">Každých 10 minut</string>

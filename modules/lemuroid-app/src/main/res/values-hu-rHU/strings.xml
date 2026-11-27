@@ -10,10 +10,8 @@
     <string name="discover">Felfedezés</string>
     <string name="rescan">Beolvasás</string>
     <string name="stop">Megállítás</string>
-    <string name="none">Semmi</string>
     <string name="directory">Könyvtár</string>
     <string name="display_filter">Színmód</string>
-    <string name="roms">ROM-ok</string>
     <string name="ok">OK</string>
     <string name="cancel">Mégse</string>
     <string name="settings">Beállítások</string>
@@ -25,16 +23,12 @@
     <string name="settings_title_enable_autosave">Automatikus mentés</string>
     <string name="settings_title_enable_touch_feedback">Érintéskor vibrálás</string>
     <string name="settings_title_tilt_sensitivity">Döntés-szenzor érzékenység</string>
-    <string name="settings_title_maximum_cache_usage">Cache méret</string>
     <string name="settings_title_gamepad_settings">Külső eszközök</string>
     <string name="settings_description_gamepad_settings">Külső eszközök konfigurálása</string>
     <string name="settings_retropad_button_name">RetroPad %1$s</string>
     <string name="settings_gamepad_category_enabled">Eszközök engedélyezése</string>
     <string name="settings_gamepad_category_general">Általános</string>
     <string name="settings_gamepad_title_reset_bindings">Alaphelyzetbe állítás</string>
-    <string name="settings_gamepad_title_game_menu">Menü</string>
-    <string name="settings_title_open_cores_selection">Váltás a Core-ok között</string>
-    <string name="settings_description_open_cores_selection">Core társítása egyes konzolokhoz</string>
     <string name="settings_title_display_bios_info">BIOS</string>
     <string name="haptic_feedback_mode_names_none">Semmi</string>
     <string name="haptic_feedback_mode_names_press">Nyomd</string>
@@ -83,7 +77,6 @@
     <string name="settings_category_interface">Felület</string>
     <string name="settings_category_display">Megjelenítés</string>
     <string name="settings_category_saves">Mentések</string>
-    <string name="settings_category_storage">Tárhely</string>
     <string name="main_folder_not_set">Nincs beállítva. Válaszd ki, hol legyen a Lemuroid-S mappa</string>
     <string name="main_folder_setting_title">Lemuroid-S mappa</string>
     <string name="main_folder_card_title">Lemuroid-S mappa létrehozása</string>
@@ -98,13 +91,9 @@
     <string name="main_folder_lost_action">Mappa kiválasztása</string>
     <string name="select_roms_folder">ROM-mappa kiválasztása</string>
     <string name="folder_option_main">Lemuroid-S mappa</string>
-    <string name="folder_option_roms">ROM-mappa</string>
     <string name="folder_option_custom">Egyéni mappa</string>
     <string name="roms_option_main">Lemuroid-S mappa (Lemuroid-S/roms)</string>
     <string name="roms_option_custom_named">Egyéni mappa (%1$s)</string>
-    <string name="saves_option_main">Lemuroid-S mappa (Lemuroid-S/saves és /states)</string>
-    <string name="saves_option_roms">ROM-mappa (minden játék mellett)</string>
-    <string name="home_choose">Kiválasztás</string>
     <string name="import_saves_confirm_title">Mentések importálása más emulátorokból</string>
     <string name="import_saves_confirm_warning">FIGYELEM: a meglévő Lemuroid-S mentések felülíródhatnak.</string>
     <string name="import_saves_confirm_message">Válaszd ki, honnan importálsz:</string>
@@ -138,8 +127,6 @@
     <string name="home_import_saves_title">Mentések importálása</string>
     <string name="home_import_saves_message">Importáld a mentéseidet más emulátorokból vagy mappákból.</string>
     <string name="home_import_saves_action">Mentések importálása</string>
-    <string name="home_card_not_now">Most nem</string>
-    <string name="done">Kész</string>
     <string name="settings_title_import_saves">Mentések importálása</string>
     <string name="settings_description_import_saves">RetroArchból vagy más emulátorokból</string>
     <string name="import_saves_result">%1$d mentés és %2$d állapot importálva. %3$d kihagyva (már naprakész vagy olvashatatlan).</string>
@@ -147,7 +134,6 @@
     <string name="settings_title_show_framerate">FPS megjelenítése</string>
     <string name="settings_description_show_framerate">Megjeleníti a játék FPS-ét és sebességét a kép fölött</string>
     <string name="settings_title_periodic_autosave">Automatikus mentés játék közben</string>
-    <string name="settings_description_periodic_autosave">Játék közben ilyen időközönként menti a játékot az automatikus mentés helyére</string>
     <string name="periodic_autosave_names_off">Ki</string>
     <string name="periodic_autosave_names_5">5 percenként</string>
     <string name="periodic_autosave_names_10">10 percenként</string>
@@ -204,8 +190,6 @@
     <string name="game_page_search_suggestion">Játékok keresése</string>
     <string name="settings_description_enable_autosave">Automatikus mentés a játék bezárásakor vagy a Lemuroid-S elhagyásakor</string>
     <string name="settings_title_hd_quality">HD mód minősége</string>
-    <string name="settings_title_hd_mode">HD mód</string>
-    <string name="settings_description_hd_mode">Felskálázó utófeldolgozási szűrő alkalmazása</string>
     <string name="settings_description_hd_quality">A HD mód minőségének beállítása</string>
     <string name="settings_title_immersive_mode">Magával ragadó mód</string>
     <string name="settings_description_immersive_mode">A játék hátterét dinamikusan a képernyőn látható színekkel színezi</string>
@@ -218,8 +202,6 @@
     <string name="settings_description_advanced_settings">Speciális beállítások megjelenítése</string>
     <string name="settings_title_low_latency_audio">Alacsony késleltetésű hang előnyben</string>
     <string name="settings_description_low_latency_audio">Csökkenti a hang késleltetését a támogatott eszközökön. Több hanghibát okozhat.</string>
-    <string name="settings_title_direct_game_load">Közvetlen játékbetöltés</string>
-    <string name="settings_description_direct_game_load">(Kísérleti) Csökkenti a betöltési időt és a gyorsítótár-használatot a támogatott konzolokon.</string>
     <string name="settings_title_enable_rumble">Rezgés</string>
     <string name="settings_description_enable_rumble">Rezgés bekapcsolása a támogatott játékokban és kontrollereken</string>
     <string name="settings_title_enable_device_rumble">Eszköz rezgése</string>
@@ -250,7 +232,6 @@
     <string name="home_microphone_action">Bekapcsolás</string>
     <string name="home_empty_title">ROM-mappa kiválasztása</string>
     <string name="home_empty_message">Használd az alapértelmezett Lemuroid-S mappát, vagy válaszd ki a saját ROM-mappádat.</string>
-    <string name="home_empty_action">Kiválasztás</string>
     <string name="game_menu_save">Mentés</string>
     <string name="game_menu_load">Betöltés</string>
     <string name="game_menu_restart">Újrakezdés</string>
@@ -269,7 +250,6 @@
     <string name="game_toast_quick_save_loaded">Gyorsbetöltve</string>
     <string name="game_toast_quick_save_saved">Gyorsmentve</string>
     <string name="empty_view_default">Nincsenek elemek</string>
-    <string name="core_settings_title">Mag beállításai</string>
     <string name="core_settings_category_preferences">Beállítások</string>
     <string name="core_settings_category_controllers">Kontrollerek</string>
     <string name="core_settings_controller">%1$s. kontroller</string>
@@ -286,7 +266,6 @@
     <string name="game_loader_error_save">Hiba történt a mentésfájllal. Ha a probléma továbbra is fennáll, kapcsold ki az automatikus mentést.</string>
     <string name="game_loader_error_unsupported_architecture">Az eszközöd nem támogatja ezt a magot.</string>
     <string name="game_loader_error_missing_bios">Úgy tűnik, hiányzik a szükséges BIOS. Tedd a ROM-mappádba, és keresd újra a játékokat. Szükséges fájlok: %1$s</string>
-    <string name="game_shortcut_error">Hiba történt a játék betöltésekor. Ellenőrizd, hogy a játék még szerepel-e a könyvtáradban.</string>
     <string name="dialog_saf_not_found">Ez az eszköz nem támogatja a StorageAccessFramework fájlválasztót. Másold kézzel a tömörítetlen ROM-fájlokat ide: %1$s, majd koppints az Újrakeresés gombra.</string>
     <string name="system_grid_details">%1$s játék</string>
     <string name="tv_folder_picker_title">ROM-mappa kiválasztása</string>
@@ -305,10 +284,8 @@
     <string name="shortcut_binding_update_description">Nyomj meg egy gombot, vagy kombinációhoz két gombot egymás után ezen: „%1$s”</string>
     <string name="tv_search_results">Játékok</string>
     <string name="tv_game_message_missing_gamepad">A játékhoz kontroller szükséges. Csatlakoztass egyet.</string>
-    <string name="game_edit_touch_controls_error_not_visible">Válaszd le a kontrollert az érintéses vezérlők szerkesztéséhez</string>
     <string name="game_interactory_busy">Várd meg, amíg a folyamatban lévő műveletek befejeződnek</string>
     <string name="mobile_settings_help">Súgó</string>
-    <string name="mobile_settings_support">Támogatás</string>
     <string name="error_message_incompatible_state">Ez az állapotmentés nem kompatibilis a mag jelenlegi verziójával. Töltsd be a legutóbbi játékon belüli mentést, vagy használj egy korábbi Lemuroid-verziót.</string>
     <string name="shader_filter_names_auto">Automatikus</string>
     <string name="shader_filter_names_sharp">Éles</string>

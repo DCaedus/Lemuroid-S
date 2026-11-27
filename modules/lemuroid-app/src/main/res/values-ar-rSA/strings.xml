@@ -10,10 +10,8 @@
     <string name="discover">اكتشف</string>
     <string name="rescan">إعادة المسح</string>
     <string name="stop">إيقاف</string>
-    <string name="none">لا شيء</string>
     <string name="directory">المجلد</string>
     <string name="display_filter">فلتر العرض</string>
-    <string name="roms">الأقراص</string>
     <string name="ok">موافق</string>
     <string name="cancel">إلغاء</string>
     <string name="settings">الإعدادات</string>
@@ -30,9 +28,6 @@
     <string name="settings_title_enable_touch_feedback">اهتزاز عند اللمس</string>
     <string name="settings_title_tilt_sensitivity">حساسية مستشعر الميل</string>
     <string name="settings_title_hd_quality">وضع الجودة عالي الدقة</string>
-    <string name="settings_title_maximum_cache_usage">حد حجم الذاكرة المؤقتة</string>
-    <string name="settings_title_hd_mode">وضع HD</string>
-    <string name="settings_description_hd_mode">تطبيق عامل التصفية بعد المعالجة</string>
     <string name="settings_description_hd_quality">ضبط جودة الوضع عالي الدِّقَّة</string>
     <string name="settings_title_immersive_mode">وضع الغمار</string>
     <string name="settings_description_immersive_mode">تلوين الخلفية بشكل ديناميكي استناداً إلى مرئيات اللعبة</string>
@@ -42,10 +37,6 @@
     <string name="settings_gamepad_category_enabled">الأجهزة المفعلة</string>
     <string name="settings_gamepad_category_general">عام</string>
     <string name="settings_gamepad_title_reset_bindings">إعادة ضبط الارتباطات</string>
-    <string name="settings_gamepad_title_game_menu">القائمة</string>
-    <string name="settings_title_open_cores_selection">تغيير النواة</string>
-    <string name="settings_description_open_cores_selection">حدد أي نواة مرتبطة بنظام</string>
-    <string name="settings_core_selection_ds_info">DeSmuME مهمل وسيتم إزالته قريباً. حفظ داخل اللعبة، ثم قم بالتبديل إلى melonDS: في اللعبة يحفظ التحميل هناك تلقائيا، ولكن حفظ الدول تبقى في قلب اللعبة الذي أنشأها.</string>
     <string name="settings_title_display_bios_info">BIOS</string>
     <string name="settings_description_display_bios_info">عرض ملفات BIOS المكتشفة والمدعومة</string>
     <string name="settings_bios_category_detected">تم الكشف</string>
@@ -56,8 +47,6 @@
     <string name="settings_description_advanced_settings">عرض الإعدادات المتقدمة</string>
     <string name="settings_title_low_latency_audio">تفضيل صوت مباشر</string>
     <string name="settings_description_low_latency_audio">تقليل تأخير الصوت على الأجهزة المدعومة. قد يؤدي ذلك إلى زيادة اخطاء في الصوت.</string>
-    <string name="settings_title_direct_game_load">Direct game load</string>
-    <string name="settings_description_direct_game_load">(تجريبي) تقليل وقت التحميل واستخدام ذاكرة التخزين المؤقت على وحدات التحكم المدعومة.</string>
     <string name="settings_title_enable_rumble">الاهتزاز</string>
     <string name="settings_description_enable_rumble">تمكين الاهتزاز في الألعاب المدعومة والتحكم</string>
     <string name="settings_title_enable_device_rumble">اهتزاز الجهاز</string>
@@ -88,10 +77,6 @@
     <string name="home_microphone_action">تفعيل</string>
     <string name="home_empty_title">حدد مجلد ROM</string>
     <string name="home_empty_message">يحتاج Lemuroid إلى فحص المجلد الذي يحتوي على ملفات ROM.\nقد يستغرق ذلك بضع دقائق.</string>
-    <string name="home_empty_action">حدد المجلد</string>
-    <string name="home_notification_desmume_deprecated_title">يتقاعد DSmuME قريباً</string>
-    <string name="home_notification_desmume_deprecated_message">حفظ داخل اللعبة، التبديل إلى melonDS، والتقدم الذي أحرزتمونه. حفظ الدول يبقى مرتبطا بـ DeSmuME.</string>
-    <string name="home_notification_desmume_deprecated_action">التبديل إلى melonDS</string>
     <string name="game_menu_save">حفظ</string>
     <string name="game_menu_load">تحميل</string>
     <string name="game_menu_restart">إعادة التشغيل</string>
@@ -110,7 +95,6 @@
     <string name="game_toast_quick_save_loaded">تحميل سريع</string>
     <string name="game_toast_quick_save_saved">حفظ سريع</string>
     <string name="empty_view_default">لا توجد عناصر</string>
-    <string name="core_settings_title">إعدادات النواة</string>
     <string name="core_settings_category_preferences">التفضيلات</string>
     <string name="core_settings_category_controllers">التحكم</string>
     <string name="core_settings_controller">التحكم %1$s</string>
@@ -133,7 +117,6 @@
         \n\nإذا لم تعمل أي من الخطوات المذكورة أعلاه، قد يكون من الممكن أن تكون هذه اللعبة/النواة غير مدعومة على هذا الجهاز.
     </string>
     <string name="game_loader_error_missing_bios">يبدو أنك فقدت BIOS المطلوب، ضعهم في مجلد ROMs الخاص بك وإعادة الفحص. الملفات المطلوبة: %1$s</string>
-    <string name="game_shortcut_error">حدث شيء سيئ أثناء تحميل لعبتك. الرجاء التأكد من أن هذه اللعبة لا تزال موجودة في مكتبتك.</string>
     <string name="dialog_saf_not_found">هذا الجهاز لا يدعم منتقي ملفات StorageAccessFramework. الرجاء نسخ ملفات ROM غير مضغوطة يدوياً إلى %1$s ثم اضغط على إعادة الفحص.</string>
     <string name="system_grid_details">%1$s ألعاب</string>
     <string name="tv_folder_picker_title">حدد مجلد ROM</string>
@@ -152,10 +135,8 @@
     <string name="shortcut_binding_update_description">اضغط على الزر الأول، ثم ثانية لربط مجموعة على \"%1$s\"</string>
     <string name="tv_search_results">الأعاب</string>
     <string name="tv_game_message_missing_gamepad">وحدة التحكم مطلوبة للعب. الرجاء توصيل واحدة منها.</string>
-    <string name="game_edit_touch_controls_error_not_visible">أقطع الاتصال بلوحة التحكم الخاصة بك لتحرير عناصر التحكم الخاصة بها</string>
     <string name="game_interactory_busy">انتظر حتى تكتمل العمليات المعلقة</string>
     <string name="mobile_settings_help">مساعدة</string>
-    <string name="mobile_settings_support">الدعم</string>
     <string name="lemuroid_help_content"><![CDATA[        <b>&#8226;كيف أستخدم Lemuroid؟</b><br/>
         نسخ جميع ملفات الالعاب الخاصة بك في مجلد على جهازك واختيارها داخل تطبيق Lemuroid. يسمح لهذا المجلد بأن يحتوي على دلائل فرعية. بعد الانتهاء من الفحص، لابد ان ترى ألعابك.<br/><br/>
         <b>&#8226;لماذا لم يتم اكتشاف ألعابي؟</b><br/>
@@ -227,7 +208,6 @@
     <string name="settings_category_interface">الواجهة</string>
     <string name="settings_category_display">العرض</string>
     <string name="settings_category_saves">الحفظ</string>
-    <string name="settings_category_storage">التخزين</string>
     <string name="main_folder_not_set">غير محدد. اختر مكان مجلد Lemuroid-S</string>
     <string name="main_folder_setting_title">مجلد Lemuroid-S</string>
     <string name="main_folder_card_title">إنشاء مجلد Lemuroid-S</string>
@@ -242,13 +222,9 @@
     <string name="main_folder_lost_action">اختيار مجلد</string>
     <string name="select_roms_folder">اختيار مجلد ROM</string>
     <string name="folder_option_main">مجلد Lemuroid-S</string>
-    <string name="folder_option_roms">مجلد ROM</string>
     <string name="folder_option_custom">مجلد مخصص</string>
     <string name="roms_option_main">مجلد Lemuroid-S (Lemuroid-S/roms)</string>
     <string name="roms_option_custom_named">مجلد مخصص (%1$s)</string>
-    <string name="saves_option_main">مجلد Lemuroid-S (Lemuroid-S/saves و/states)</string>
-    <string name="saves_option_roms">مجلد ROM (بجانب كل لعبة)</string>
-    <string name="home_choose">اختيار</string>
     <string name="import_saves_confirm_title">استيراد ملفات الحفظ من محاكيات أخرى</string>
     <string name="import_saves_confirm_warning">تحذير: قد تُستبدل ملفات حفظ Lemuroid-S الحالية.</string>
     <string name="import_saves_confirm_message">اختر مصدر الاستيراد:</string>
@@ -282,8 +258,6 @@
     <string name="home_import_saves_title">استيراد ملفات الحفظ</string>
     <string name="home_import_saves_message">استورد ملفات الحفظ من محاكيات أو مجلدات أخرى.</string>
     <string name="home_import_saves_action">استيراد ملفات الحفظ</string>
-    <string name="home_card_not_now">ليس الآن</string>
-    <string name="done">تم</string>
     <string name="settings_title_import_saves">استيراد ملفات الحفظ</string>
     <string name="settings_description_import_saves">من RetroArch أو محاكيات أخرى</string>
     <string name="import_saves_result">تم استيراد %1$d ملف حفظ و%2$d حالة. تم تخطي %3$d (محدّثة بالفعل أو غير قابلة للقراءة).</string>
@@ -291,7 +265,6 @@
     <string name="settings_title_show_framerate">عرض FPS</string>
     <string name="settings_description_show_framerate">يعرض معدل الإطارات وسرعة اللعبة فوق الصورة</string>
     <string name="settings_title_periodic_autosave">الحفظ التلقائي أثناء اللعب</string>
-    <string name="settings_description_periodic_autosave">يحفظ لعبتك في خانة الحفظ التلقائي بهذا الفاصل الزمني أثناء اللعب</string>
     <string name="periodic_autosave_names_off">متوقف</string>
     <string name="periodic_autosave_names_5">كل 5 دقائق</string>
     <string name="periodic_autosave_names_10">كل 10 دقائق</string>

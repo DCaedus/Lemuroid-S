@@ -10,10 +10,8 @@
     <string name="discover">Descobreix</string>
     <string name="rescan">Tornar a escanejar</string>
     <string name="stop">Aturar</string>
-    <string name="none">Cap</string>
     <string name="directory">Directori</string>
     <string name="display_filter">Filtre d\'imatge</string>
-    <string name="roms">ROMS</string>
     <string name="ok">D\'acord</string>
     <string name="cancel">Cancel·la</string>
     <string name="settings">Configuració</string>
@@ -26,14 +24,11 @@
     <string name="settings_category_misc">Altres</string>
     <string name="settings_title_enable_autosave">Estat de desat automàtic</string>
     <string name="settings_title_enable_touch_feedback">Vibrar en tocar</string>
-    <string name="settings_title_hd_mode">Mode alta definició</string>
     <string name="settings_title_gamepad_settings">Dispositius externs</string>
     <string name="settings_description_gamepad_settings">Configura gamepads i teclats externs</string>
     <string name="settings_retropad_button_name">RetroPad %1$s</string>
     <string name="settings_gamepad_category_enabled">Dispositius habilitats</string>
     <string name="settings_gamepad_category_general">General</string>
-    <string name="settings_gamepad_title_game_menu">Menú</string>
-    <string name="settings_title_open_cores_selection">Canviar nuclis</string>
     <string name="settings_title_display_bios_info">BIOS</string>
     <string name="settings_bios_category_detected">Detectat</string>
     <string name="settings_bios_category_not_detected">Suportat</string>
@@ -54,7 +49,6 @@
     <string name="game_context_menu_resume">Reprèn</string>
     <string name="game_context_menu_restart">Reinicia</string>
     <string name="home_empty_title">Seleccionar directori de ROMs</string>
-    <string name="home_empty_action">Seleccioneu la carpeta</string>
     <string name="game_menu_save">Desar</string>
     <string name="game_menu_load">Carrega</string>
     <string name="game_menu_restart">Reinicia</string>
@@ -84,7 +78,6 @@
     <string name="tv_home_section_settings">Configuració</string>
     <string name="tv_search_results">Jocs</string>
     <string name="mobile_settings_help">Ajuda</string>
-    <string name="mobile_settings_support">Assistència</string>
     <!-- Lemuroid-S -->
     <string name="home_frequently_played">Jugats sovint</string>
     <string name="settings_category_fast_forward">Avançament ràpid</string>
@@ -130,7 +123,6 @@
     <string name="settings_category_interface">Interfície</string>
     <string name="settings_category_display">Pantalla</string>
     <string name="settings_category_saves">Partides desades</string>
-    <string name="settings_category_storage">Emmagatzematge</string>
     <string name="main_folder_not_set">No definida. Tria on va la carpeta Lemuroid-S</string>
     <string name="main_folder_setting_title">Carpeta Lemuroid-S</string>
     <string name="main_folder_card_title">Crea la carpeta Lemuroid-S</string>
@@ -145,13 +137,9 @@
     <string name="main_folder_lost_action">Tria la carpeta</string>
     <string name="select_roms_folder">Selecciona la carpeta de ROM</string>
     <string name="folder_option_main">Carpeta Lemuroid-S</string>
-    <string name="folder_option_roms">Carpeta de ROM</string>
     <string name="folder_option_custom">Carpeta personalitzada</string>
     <string name="roms_option_main">Carpeta Lemuroid-S (Lemuroid-S/roms)</string>
     <string name="roms_option_custom_named">Carpeta personalitzada (%1$s)</string>
-    <string name="saves_option_main">Carpeta Lemuroid-S (Lemuroid-S/saves i /states)</string>
-    <string name="saves_option_roms">Carpeta de ROM (al costat de cada joc)</string>
-    <string name="home_choose">Tria</string>
     <string name="import_saves_confirm_title">Importa partides d\'altres emuladors</string>
     <string name="import_saves_confirm_warning">ATENCIÓ: es poden sobreescriure partides desades de Lemuroid-S.</string>
     <string name="import_saves_confirm_message">Tria d\'on vols importar:</string>
@@ -185,8 +173,6 @@
     <string name="home_import_saves_title">Importa partides</string>
     <string name="home_import_saves_message">Importa les teves partides desades d\'altres emuladors o carpetes.</string>
     <string name="home_import_saves_action">Importa partides</string>
-    <string name="home_card_not_now">Ara no</string>
-    <string name="done">Fet</string>
     <string name="settings_title_import_saves">Importa partides</string>
     <string name="settings_description_import_saves">Des de RetroArch o altres emuladors</string>
     <string name="import_saves_result">S\'han importat %1$d partides desades i %2$d estats. %3$d omesos (ja actualitzats o il·legibles).</string>
@@ -194,7 +180,6 @@
     <string name="settings_title_show_framerate">Mostra els FPS</string>
     <string name="settings_description_show_framerate">Mostra els FPS i la velocitat del joc a la pantalla</string>
     <string name="settings_title_periodic_autosave">Desament automàtic mentre jugues</string>
-    <string name="settings_description_periodic_autosave">Desa la partida a la ranura de desament automàtic amb aquest interval mentre jugues</string>
     <string name="periodic_autosave_names_off">Desactivat</string>
     <string name="periodic_autosave_names_5">Cada 5 minuts</string>
     <string name="periodic_autosave_names_10">Cada 10 minuts</string>
@@ -250,19 +235,14 @@
     <string name="settings_description_enable_autosave">Desa automàticament en tancar el joc o sortir de Lemuroid-S</string>
     <string name="settings_title_tilt_sensitivity">Sensibilitat del sensor d\'inclinació</string>
     <string name="settings_title_hd_quality">Qualitat del mode HD</string>
-    <string name="settings_title_maximum_cache_usage">Límit de la memòria cau</string>
-    <string name="settings_description_hd_mode">Aplica un filtre d\'escalat de postprocessament</string>
     <string name="settings_description_hd_quality">Ajusta la qualitat del mode HD</string>
     <string name="settings_title_immersive_mode">Mode immersiu</string>
     <string name="settings_description_immersive_mode">Acoloreix dinàmicament el fons del joc amb els colors de la pantalla</string>
     <string name="settings_gamepad_title_reset_bindings">Restableix les assignacions</string>
-    <string name="settings_description_open_cores_selection">Tria quin nucli s\'associa a cada sistema</string>
     <string name="settings_description_display_bios_info">Mostra els fitxers BIOS detectats i compatibles</string>
     <string name="settings_description_reset_settings">Restableix la configuració de fàbrica de Lemuroid</string>
     <string name="settings_title_low_latency_audio">Prefereix àudio de baixa latència</string>
     <string name="settings_description_low_latency_audio">Redueix la latència de l\'àudio en dispositius compatibles. Pot augmentar els errors d\'àudio.</string>
-    <string name="settings_title_direct_game_load">Càrrega directa de jocs</string>
-    <string name="settings_description_direct_game_load">(Experimental) Redueix el temps de càrrega i l\'ús de memòria cau en consoles compatibles.</string>
     <string name="settings_description_enable_rumble">Activa la vibració en jocs i comandaments compatibles</string>
     <string name="settings_description_enable_device_rumble">Si no hi ha cap comandament connectat, fa vibrar el dispositiu</string>
     <string name="reset_settings_warning_message_description">Això restablirà la configuració de fàbrica de Lemuroid. Les partides i els estats es conservaran.</string>
@@ -282,7 +262,6 @@
     <string name="game_menu_tilt_sensor">Sensor d\'inclinació</string>
     <string name="game_toast_quick_save_loaded">Càrrega ràpida feta</string>
     <string name="game_toast_quick_save_saved">Desament ràpid fet</string>
-    <string name="core_settings_title">Configuració del nucli</string>
     <string name="save_sync_notification_title">Sincronització al núvol en curs</string>
     <string name="game_running_notification_title_alternative">S\'està executant un joc</string>
     <string name="game_running_notification_message">Recorda desar el teu progrés</string>
@@ -291,7 +270,6 @@
     <string name="game_loader_error_save">Hi ha hagut un error amb el fitxer de desament. Si el problema continua, desactiva el desament automàtic.</string>
     <string name="game_loader_error_unsupported_architecture">El dispositiu no admet aquest nucli.</string>
     <string name="game_loader_error_missing_bios">Sembla que falta la BIOS necessària. Posa-la a la carpeta de ROM i torna a cercar. Fitxers necessaris: %1$s</string>
-    <string name="game_shortcut_error">Hi ha hagut un error en carregar el joc. Comprova que el joc encara és a la biblioteca.</string>
     <string name="dialog_saf_not_found">Aquest dispositiu no admet el selector de fitxers StorageAccessFramework. Copia manualment els fitxers ROM sense comprimir a %1$s i toca Torna a cercar.</string>
     <string name="system_grid_details">%1$s jocs</string>
     <string name="tv_folder_picker_title">Selecciona la carpeta de ROM</string>
@@ -305,7 +283,6 @@
     <string name="shortcut_binding_update_title">Assigna \"Drecera %1$s\"</string>
     <string name="shortcut_binding_update_description">Prem un botó, o dos botons un després de l\'altre per a una combinació, del teu \"%1$s\"</string>
     <string name="tv_game_message_missing_gamepad">Cal un comandament per jugar. Connecta\'n un.</string>
-    <string name="game_edit_touch_controls_error_not_visible">Desconnecta el comandament per editar els controls tàctils</string>
     <string name="game_interactory_busy">Espera que acabin les operacions pendents</string>
     <string name="error_message_incompatible_state">Aquest estat desat no és compatible amb la versió actual del nucli. Carrega la darrera partida desada al joc o fes servir una versió anterior de Lemuroid.</string>
     <string name="shader_filter_names_auto">Automàtic</string>

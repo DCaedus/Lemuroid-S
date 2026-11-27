@@ -10,10 +10,8 @@
     <string name="discover">Descubra</string>
     <string name="rescan">Verificar novamente</string>
     <string name="stop">Parar</string>
-    <string name="none">Nenhuma</string>
     <string name="directory">Diretório</string>
     <string name="display_filter">Filtro de exibição</string>
-    <string name="roms">ROMs</string>
     <string name="ok">OK</string>
     <string name="cancel">Cancelar</string>
     <string name="settings">Configurações</string>
@@ -30,9 +28,6 @@
     <string name="settings_title_enable_touch_feedback">Vibrar no toque</string>
     <string name="settings_title_tilt_sensitivity">Sensibilidade do sensor de inclinação</string>
     <string name="settings_title_hd_quality">Qualidade do modo HD</string>
-    <string name="settings_title_maximum_cache_usage">Limite de tamanho do cache</string>
-    <string name="settings_title_hd_mode">Modo HD</string>
-    <string name="settings_description_hd_mode">Aplicar filtro no aumento de escala pós-processado</string>
     <string name="settings_description_hd_quality">Ajustar a qualidade do modo HD</string>
     <string name="settings_title_immersive_mode">Modo imersivo</string>
     <string name="settings_description_immersive_mode">Colore o fundo dinamicamente com base no visual do jogo</string>
@@ -42,10 +37,6 @@
     <string name="settings_gamepad_category_enabled">Dispositivos ativos</string>
     <string name="settings_gamepad_category_general">Geral</string>
     <string name="settings_gamepad_title_reset_bindings">Redefinir ligações</string>
-    <string name="settings_gamepad_title_game_menu">Menu</string>
-    <string name="settings_title_open_cores_selection">Alterar Núcleos</string>
-    <string name="settings_description_open_cores_selection">Selecione qual núcleo está associado ao sistema</string>
-    <string name="settings_core_selection_ds_info">O DeSmuME está obsoleto e será removido em breve. Salvar dentro do jogo, em seguida, mudar para melonDS: economizadores no jogo são carregados automaticamente, mas salvar estados ficam no núcleo que os criou.</string>
     <string name="settings_title_display_bios_info">BIOS</string>
     <string name="settings_description_display_bios_info">Exibir arquivos BIOS detectados e suportados</string>
     <string name="settings_bios_category_detected">Detectado</string>
@@ -56,8 +47,6 @@
     <string name="settings_description_advanced_settings">Exibir configurações avançadas</string>
     <string name="settings_title_low_latency_audio">Preferir áudio com baixa latência</string>
     <string name="settings_description_low_latency_audio">Reduzir a latência do áudio nos dispositivos suportados. Pode aumentar as falhas no áudio.</string>
-    <string name="settings_title_direct_game_load">Carregamento direto do jogo</string>
-    <string name="settings_description_direct_game_load">(Experimental) Reduzir o tempo de carregamento e o uso do cache em consoles suportados.</string>
     <string name="settings_title_enable_rumble">Vibração</string>
     <string name="settings_description_enable_rumble">Ativar vibração em jogos e controles suportados</string>
     <string name="settings_title_enable_device_rumble">Vibração do dispositivo</string>
@@ -88,10 +77,6 @@
     <string name="home_microphone_action">Ativar</string>
     <string name="home_empty_title">Selecionar diretório das ROMs</string>
     <string name="home_empty_message">Lemuroid precisa verificar um diretório contendo arquivos da ROM.\nIsto pode levar alguns minutos.</string>
-    <string name="home_empty_action">Selecione o diretório</string>
-    <string name="home_notification_desmume_deprecated_title">DeSmuME se aposentando em breve</string>
-    <string name="home_notification_desmume_deprecated_message">Salve no jogo, mude para melonDS, e seu progresso será transferido. Salve os estados permanecem vinculados ao DeSmuME.</string>
-    <string name="home_notification_desmume_deprecated_action">Alternar para melonDS</string>
     <string name="game_menu_save">Salvar</string>
     <string name="game_menu_load">Carregar</string>
     <string name="game_menu_restart">Reiniciar</string>
@@ -110,7 +95,6 @@
     <string name="game_toast_quick_save_loaded">Carregamento rápido</string>
     <string name="game_toast_quick_save_saved">Salvamento rapido</string>
     <string name="empty_view_default">Nenhum item</string>
-    <string name="core_settings_title">Configurações do Núcleo</string>
     <string name="core_settings_category_preferences">Preferências</string>
     <string name="core_settings_category_controllers">Controles</string>
     <string name="core_settings_controller">Controle %1$s</string>
@@ -133,7 +117,6 @@
         \n\n Se nenhuma das opções acima funcionar, pode ser possível que este jogo/núcleo não seja compatível com este dispositivo.
     </string>
     <string name="game_loader_error_missing_bios">Parece que você está faltando a BIOS necessária, coloque-a no diretório das suas ROMs e tente novamente. Arquivos necessários: %1$s</string>
-    <string name="game_shortcut_error">Algo ruim aconteceu durante o carregamento do seu jogo. Por favor, certifique-se de que este jogo ainda existe na sua biblioteca.</string>
     <string name="dialog_saf_not_found">Este dispositivo não suporta o selecionador de arquivo \"StorageAccessFramework\". Por favor, copie manualmente arquivos da ROM descomprimida para %1$s e aperte em verificar novamente.</string>
     <string name="system_grid_details">%1$s Jogos</string>
     <string name="tv_folder_picker_title">Selecionar diretório das ROMs</string>
@@ -152,10 +135,8 @@
     <string name="shortcut_binding_update_description">Pressione o primeiro e depois o segundo botão para configurar um combo no seu \"%1$s\"</string>
     <string name="tv_search_results">Jogos</string>
     <string name="tv_game_message_missing_gamepad">Controles são necessários para jogar. Por favor, conecte um.</string>
-    <string name="game_edit_touch_controls_error_not_visible">Desconecte seu controle para editar seus controles de toque</string>
     <string name="game_interactory_busy">Aguarde a conclusão das operações pendentes</string>
     <string name="mobile_settings_help">Ajuda</string>
-    <string name="mobile_settings_support">Apoie-nos</string>
     <string name="lemuroid_help_content"><![CDATA[        <b>&#8226;Como eu uso o Lemuroid?</b><br/>
         Copie todas as suas ROMs para um diretório no seu dispositivo e selecione-o dentro do Lemuroid. Esse diretório pode ter subdiretórios. Após a conclusão da digitalização, você deve ver seus jogos.<br/><br/>
         <b>&#8226;Por que meus jogos não são detectados?</b><br/>
@@ -228,7 +209,6 @@
     <string name="settings_category_interface">Interface</string>
     <string name="settings_category_display">Tela</string>
     <string name="settings_category_saves">Saves</string>
-    <string name="settings_category_storage">Armazenamento</string>
     <string name="main_folder_not_set">Não definida. Escolha onde fica a pasta Lemuroid-S</string>
     <string name="main_folder_setting_title">Pasta Lemuroid-S</string>
     <string name="main_folder_card_title">Criar a pasta Lemuroid-S</string>
@@ -243,13 +223,9 @@
     <string name="main_folder_lost_action">Escolher pasta</string>
     <string name="select_roms_folder">Selecionar pasta de ROMs</string>
     <string name="folder_option_main">Pasta Lemuroid-S</string>
-    <string name="folder_option_roms">Pasta de ROMs</string>
     <string name="folder_option_custom">Pasta personalizada</string>
     <string name="roms_option_main">Pasta Lemuroid-S (Lemuroid-S/roms)</string>
     <string name="roms_option_custom_named">Pasta personalizada (%1$s)</string>
-    <string name="saves_option_main">Pasta Lemuroid-S (Lemuroid-S/saves e /states)</string>
-    <string name="saves_option_roms">Pasta de ROMs (ao lado de cada jogo)</string>
-    <string name="home_choose">Escolher</string>
     <string name="import_saves_confirm_title">Importar saves de outros emuladores</string>
     <string name="import_saves_confirm_warning">ATENÇÃO: saves existentes do Lemuroid-S podem ser substituídos.</string>
     <string name="import_saves_confirm_message">Escolha de onde importar:</string>
@@ -283,8 +259,6 @@
     <string name="home_import_saves_title">Importar saves</string>
     <string name="home_import_saves_message">Importe seus saves de outros emuladores ou pastas.</string>
     <string name="home_import_saves_action">Importar saves</string>
-    <string name="home_card_not_now">Agora não</string>
-    <string name="done">Concluído</string>
     <string name="settings_title_import_saves">Importar saves</string>
     <string name="settings_description_import_saves">Do RetroArch ou de outros emuladores</string>
     <string name="import_saves_result">%1$d saves e %2$d estados importados. %3$d ignorados (já atualizados ou ilegíveis).</string>
@@ -292,7 +266,6 @@
     <string name="settings_title_show_framerate">Mostrar FPS</string>
     <string name="settings_description_show_framerate">Mostra o FPS e a velocidade do jogo na tela</string>
     <string name="settings_title_periodic_autosave">Salvamento automático durante o jogo</string>
-    <string name="settings_description_periodic_autosave">Salva seu jogo no espaço de salvamento automático neste intervalo enquanto você joga</string>
     <string name="periodic_autosave_names_off">Desativado</string>
     <string name="periodic_autosave_names_5">A cada 5 minutos</string>
     <string name="periodic_autosave_names_10">A cada 10 minutos</string>

@@ -10,10 +10,8 @@
     <string name="discover">Discover</string>
     <string name="rescan">再読み込み</string>
     <string name="stop">停止</string>
-    <string name="none">なし</string>
     <string name="directory">ディレクトリ</string>
     <string name="display_filter">表示フィルター</string>
-    <string name="roms">ROM</string>
     <string name="ok">OK</string>
     <string name="cancel">キャンセル</string>
     <string name="settings">設定</string>
@@ -30,9 +28,6 @@
     <string name="settings_title_enable_touch_feedback">タッチ時に振動</string>
     <string name="settings_title_tilt_sensitivity">傾きセンサーの感度</string>
     <string name="settings_title_hd_quality">HDモードの品質</string>
-    <string name="settings_title_maximum_cache_usage">キャッシュサイズ制限</string>
-    <string name="settings_title_hd_mode">HDモード</string>
-    <string name="settings_description_hd_mode">後処理アップスケーリングフィルターを適用する</string>
     <string name="settings_description_hd_quality">HDモードの画質を調整する</string>
     <string name="settings_title_immersive_mode">没入モード</string>
     <string name="settings_description_immersive_mode">ゲームのビジュアルに基づいて背景を動的に色付けします</string>
@@ -42,10 +37,6 @@
     <string name="settings_gamepad_category_enabled">有効なデバイス</string>
     <string name="settings_gamepad_category_general">全般</string>
     <string name="settings_gamepad_title_reset_bindings">バインディングをリセット</string>
-    <string name="settings_gamepad_title_game_menu">メニュー</string>
-    <string name="settings_title_open_cores_selection">コアを変更</string>
-    <string name="settings_description_open_cores_selection">システムに関連付けられているコアを選択してください</string>
-    <string name="settings_core_selection_ds_info">DeSmuME は非推奨で、まもなく削除されます。 ゲーム内に保存し、メロンDSに切り替えてください:ゲーム内では自動的にロードが保存されますが、保存状態はそれらを作成したコアに留まります。</string>
     <string name="settings_title_display_bios_info">BIOS</string>
     <string name="settings_description_display_bios_info">検出され、サポートされている BIOS ファイルを表示します</string>
     <string name="settings_bios_category_detected">検出済み</string>
@@ -56,8 +47,6 @@
     <string name="settings_description_advanced_settings">詳細設定を表示します</string>
     <string name="settings_title_low_latency_audio">低遅延音声を優先</string>
     <string name="settings_description_low_latency_audio">対応デバイスで音声の遅延を軽減します。音声の乱れが発生する場合があります。</string>
-    <string name="settings_title_direct_game_load">ゲームの直接ロード</string>
-    <string name="settings_description_direct_game_load">（実験的機能）対応しているコンソールで読み込み時間とキャッシュ使用量を削減します。</string>
     <string name="settings_title_enable_rumble">振動</string>
     <string name="settings_description_enable_rumble">対応しているゲームおよびコントローラーで振動機能を有効にする</string>
     <string name="settings_title_enable_device_rumble">デバイスの振動</string>
@@ -89,10 +78,6 @@
     <string name="home_empty_title">ROMディレクトリを選択</string>
     <string name="home_empty_message">LemuroidはROMファイルが入ったディレクトリをスキャンする必要があります。
 \nこれには数分かかる場合があります。</string>
-    <string name="home_empty_action">ディレクトリを選択</string>
-    <string name="home_notification_desmume_deprecated_title">DeSmuME はすぐに引退します</string>
-    <string name="home_notification_desmume_deprecated_message">ゲーム内で保存し、メロンDSに切り替えると、進行状況が引き継がれます。DeSmuMEに関連した状態を保存します。</string>
-    <string name="home_notification_desmume_deprecated_action">メロンDSに切り替える</string>
     <string name="game_menu_save">保存</string>
     <string name="game_menu_load">読み込み</string>
     <string name="game_menu_restart">再起動</string>
@@ -110,7 +95,6 @@
     <string name="game_toast_quick_save_loaded">クイック読み込み中</string>
     <string name="game_toast_quick_save_saved">クイック保存</string>
     <string name="empty_view_default">アイテムがありません</string>
-    <string name="core_settings_title">コア設定</string>
     <string name="core_settings_category_preferences">設定</string>
     <string name="core_settings_category_controllers">コントローラ</string>
     <string name="core_settings_controller">コントローラ %1$s</string>
@@ -134,7 +118,6 @@
     </string>
     <string name="game_loader_error_missing_bios">必要なBIOSファイルが見つかりません。ROMディレクトリにBIOSを入れて、再スキャンしてください。
 \n必要なファイル：%1$s</string>
-    <string name="game_shortcut_error">ゲームの読み込み中に問題が発生しました。このゲームがまだライブラリに存在していることを確認してください。</string>
     <string name="dialog_saf_not_found">このデバイスはStorageAccessFrameworkファイルピッカーをサポートしていません。非圧縮ROMファイルを手動で %1$s にコピーし、Rescanを押してください。</string>
     <string name="system_grid_details">%1$s ゲーム</string>
     <string name="tv_folder_picker_title">ROMディレクトリを選択</string>
@@ -153,10 +136,8 @@
     <string name="shortcut_binding_update_description">最初のボタンを押し、次に2番目のボタンを押してコンボ\"%1$s\"をバインドします</string>
     <string name="tv_search_results">ゲーム</string>
     <string name="tv_game_message_missing_gamepad">ゲームパッドが必要です。接続してください。</string>
-    <string name="game_edit_touch_controls_error_not_visible">タッチコントロールを編集するにはパッドを取り外してください</string>
     <string name="game_interactory_busy">保留中の操作が完了するまで待ちます</string>
     <string name="mobile_settings_help">ヘルプ</string>
-    <string name="mobile_settings_support">サポート</string>
     <string name="lemuroid_help_content"><![CDATA[        <b>&#8226;Lemuroidの使い方は？</b><br/>
         すべてのROMファイルをお使いのデバイス内のディレクトリにコピーし、Lemuroidでそのディレクトリを選択してください。このディレクトリ内にサブディレクトリがあっても問題ありません。スキャンが完了すると、ゲームが表示されるはずです。<br/><br/>
         <b>&#8226;・ゲームが認識されないのはなぜ？</b><br/>
@@ -229,7 +210,6 @@
     <string name="settings_category_interface">インターフェース</string>
     <string name="settings_category_display">表示</string>
     <string name="settings_category_saves">セーブデータ</string>
-    <string name="settings_category_storage">ストレージ</string>
     <string name="main_folder_not_set">未設定です。Lemuroid-S フォルダの場所を選んでください</string>
     <string name="main_folder_setting_title">Lemuroid-S フォルダ</string>
     <string name="main_folder_card_title">Lemuroid-S フォルダを作成</string>
@@ -244,13 +224,9 @@
     <string name="main_folder_lost_action">フォルダを選択</string>
     <string name="select_roms_folder">ROM フォルダを選択</string>
     <string name="folder_option_main">Lemuroid-S フォルダ</string>
-    <string name="folder_option_roms">ROM フォルダ</string>
     <string name="folder_option_custom">任意のフォルダ</string>
     <string name="roms_option_main">Lemuroid-S フォルダ (Lemuroid-S/roms)</string>
     <string name="roms_option_custom_named">任意のフォルダ (%1$s)</string>
-    <string name="saves_option_main">Lemuroid-S フォルダ (Lemuroid-S/saves と /states)</string>
-    <string name="saves_option_roms">ROM フォルダ (各ゲームの隣)</string>
-    <string name="home_choose">選択</string>
     <string name="import_saves_confirm_title">他のエミュレーターからセーブデータをインポート</string>
     <string name="import_saves_confirm_warning">注意: 既存の Lemuroid-S のセーブデータが上書きされる場合があります。</string>
     <string name="import_saves_confirm_message">インポート元を選んでください:</string>
@@ -284,8 +260,6 @@
     <string name="home_import_saves_title">セーブデータのインポート</string>
     <string name="home_import_saves_message">他のエミュレーターやフォルダからセーブデータをインポートします。</string>
     <string name="home_import_saves_action">セーブデータをインポート</string>
-    <string name="home_card_not_now">後で</string>
-    <string name="done">完了</string>
     <string name="settings_title_import_saves">セーブデータのインポート</string>
     <string name="settings_description_import_saves">RetroArch や他のエミュレーターから</string>
     <string name="import_saves_result">セーブデータ %1$d 件とステート %2$d 件をインポートしました。%3$d 件はスキップしました (最新または読み取り不可)。</string>
@@ -293,7 +267,6 @@
     <string name="settings_title_show_framerate">FPS を表示</string>
     <string name="settings_description_show_framerate">ゲームの FPS と速度を画面に重ねて表示します</string>
     <string name="settings_title_periodic_autosave">プレイ中の自動セーブ</string>
-    <string name="settings_description_periodic_autosave">プレイ中、この間隔で自動セーブスロットにゲームを保存します</string>
     <string name="periodic_autosave_names_off">オフ</string>
     <string name="periodic_autosave_names_5">5 分ごと</string>
     <string name="periodic_autosave_names_10">10 分ごと</string>

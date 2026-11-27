@@ -11,7 +11,6 @@ import androidx.lifecycle.viewModelScope
 import com.swordfish.lemuroid.app.shared.library.PendingOperationsMonitor
 import com.swordfish.lemuroid.app.shared.settings.StorageFrameworkPickerLauncher
 import com.swordfish.lemuroid.common.coroutines.combine
-import com.swordfish.lemuroid.lib.core.CoresSelection
 import com.swordfish.lemuroid.lib.library.SystemID
 import com.swordfish.lemuroid.lib.library.db.RetrogradeDatabase
 import com.swordfish.lemuroid.lib.library.db.entity.Game
@@ -33,7 +32,6 @@ import kotlinx.coroutines.launch
 class HomeViewModel(
     private val appContext: Context,
     retrogradeDb: RetrogradeDatabase,
-    private val coresSelection: CoresSelection,
 ) : ViewModel() {
     companion object {
         const val CAROUSEL_MAX_ITEMS = 10
@@ -43,10 +41,9 @@ class HomeViewModel(
     class Factory(
         val appContext: Context,
         val retrogradeDb: RetrogradeDatabase,
-        val coresSelection: CoresSelection,
     ) : ViewModelProvider.Factory {
         override fun <T : ViewModel> create(modelClass: Class<T>): T {
-            return HomeViewModel(appContext, retrogradeDb, coresSelection) as T
+            return HomeViewModel(appContext, retrogradeDb) as T
         }
     }
 
@@ -59,7 +56,6 @@ class HomeViewModel(
         val showNoNotificationPermissionCard: Boolean = false,
         val showNoMicrophonePermissionCard: Boolean = false,
         val showNoGamesCard: Boolean = false,
-        val showDesmumeDeprecatedCard: Boolean = false,
     )
 
     private val microphonePermissionEnabledState = MutableStateFlow(true)
@@ -123,7 +119,6 @@ class HomeViewModel(
             showNoNotificationPermissionCard = !notificationsPermissionEnabled,
             showNoMicrophonePermissionCard = showMicrophoneCard,
             showNoGamesCard = noGames,
-            showDesmumeDeprecatedCard = false,
         )
     }
 
@@ -178,13 +173,10 @@ class HomeViewModel(
                 if (isMicrophoneEnabled) {
                     flowOf(false)
                 } else {
-                    combine(
-                        coresSelection.getSelectedCores(),
-                        dsGamesCount(db),
-                    ) { cores, dsCount ->
-                        cores.any { it.coreConfig.supportsMicrophone } &&
-                            dsCount > 0
-                    }
+                    // Lemuroid-S: Nintendo DS (melonDS DS) is the system that uses the microphone. This
+                    // used to wait on the (now empty) list of systems with a choice of cores, which
+                    // never emitted, so Home never showed anything without the microphone permission.
+                    dsGamesCount(db).map { it > 0 }
                 }
                     .distinctUntilChanged()
             }

@@ -10,10 +10,8 @@
     <string name="discover">Opdag</string>
     <string name="rescan">Scan igen</string>
     <string name="stop">Stop</string>
-    <string name="none">Ingen</string>
     <string name="directory">Mappe</string>
     <string name="display_filter">Skærmfilter</string>
-    <string name="roms">ROM\'er</string>
     <string name="ok">Ok</string>
     <string name="cancel">Annullér</string>
     <string name="settings">Indstillinger</string>
@@ -30,9 +28,6 @@
     <string name="settings_title_enable_touch_feedback">Vibrér ved berøring</string>
     <string name="settings_title_tilt_sensitivity">Tilt sensor følsomhed</string>
     <string name="settings_title_hd_quality">HD-mode kvalitet</string>
-    <string name="settings_title_maximum_cache_usage">Cache størrelsesgrænse</string>
-    <string name="settings_title_hd_mode">HD-tilstand</string>
-    <string name="settings_description_hd_mode">Anvend opskaleringsfilter efter behandling</string>
     <string name="settings_description_hd_quality">Juster kvaliteten af HD-tilstand</string>
     <string name="settings_title_immersive_mode">Fuldskærmstilstand</string>
     <string name="settings_description_immersive_mode">Dynamisk farver baggrunden baseret på spil visuals</string>
@@ -42,10 +37,6 @@
     <string name="settings_gamepad_category_enabled">Aktiverede enheder</string>
     <string name="settings_gamepad_category_general">Generelt</string>
     <string name="settings_gamepad_title_reset_bindings">Nulstil bindinger</string>
-    <string name="settings_gamepad_title_game_menu">Menu</string>
-    <string name="settings_title_open_cores_selection">Skift Core System</string>
-    <string name="settings_description_open_cores_selection">Vælg hvilken Core der er tilknyttet et system</string>
-    <string name="settings_core_selection_ds_info">DeSmuME er forældet og vil snart blive fjernet. Gem inde i spillet, og skift derefter til melonDS: in-game gemmer indlæse der automatisk, men gem stater forblive på kernen, der oprettede dem.</string>
     <string name="settings_title_display_bios_info">BIOS</string>
     <string name="settings_description_display_bios_info">Vis registrerede og understøttede BIOS-filer</string>
     <string name="settings_bios_category_detected">Registreret</string>
@@ -56,8 +47,6 @@
     <string name="settings_description_advanced_settings">Vis avancerede indstillinger</string>
     <string name="settings_title_low_latency_audio">Foretræk low-latency lyd</string>
     <string name="settings_description_low_latency_audio">Reducer latency på understøttede enheder. Kan øge antallet af lydfejl.</string>
-    <string name="settings_title_direct_game_load">Direkte spil indlæsning</string>
-    <string name="settings_description_direct_game_load">(Eksperimentel) Reducer indlæsningstiden og cacheforbruget på understøttede konsoller.</string>
     <string name="settings_title_enable_rumble">Rumble</string>
     <string name="settings_description_enable_rumble">Aktiver rumble i understøttede spil og controllere</string>
     <string name="settings_title_enable_device_rumble">Enhedens rumble</string>
@@ -88,10 +77,6 @@
     <string name="home_microphone_action">Aktiver</string>
     <string name="home_empty_title">Vælg ROMs-mappe</string>
     <string name="home_empty_message">Lemuroid skanner mappen med ROM-filer.\nDette kan tage op til et par minutter.</string>
-    <string name="home_empty_action">Vælg mappe</string>
-    <string name="home_notification_desmume_deprecated_title">DeSmuME går snart på pension</string>
-    <string name="home_notification_desmume_deprecated_message">Gem i spil, skift til melonDS, og dine fremskridt vil bære. Gem stater forblive bundet til DeSmuME.</string>
-    <string name="home_notification_desmume_deprecated_action">Skift til melonDS</string>
     <string name="game_menu_save">Gem</string>
     <string name="game_menu_load">Indlæs</string>
     <string name="game_menu_restart">Genstart</string>
@@ -110,7 +95,6 @@
     <string name="game_toast_quick_save_loaded">Hurtig indlæst</string>
     <string name="game_toast_quick_save_saved">Hurtig gemt</string>
     <string name="empty_view_default">Ingen filer</string>
-    <string name="core_settings_title">System Indstillinger</string>
     <string name="core_settings_category_preferences">Indstillinger</string>
     <string name="core_settings_category_controllers">Controllere</string>
     <string name="core_settings_controller">Controller %1$s</string>
@@ -133,7 +117,6 @@
         \n\n Hvis ingen af ovenstående virker, kan det være muligt, at dette spil/system ikke understøttes af denne enhed.
     </string>
     <string name="game_loader_error_missing_bios">Det ser ud til, at du mangler de nødvendige BIOS, gem dem i din ROMS-mappe og skan igen. Krævede filer: %1$s</string>
-    <string name="game_shortcut_error">Der skete en fejl under indlæsning af dit spil. Sørg for, at dette spil stadig findes i dit bibliotek.</string>
     <string name="dialog_saf_not_found">Denne enhed understøtter ikke StorageAccessFramework filvælgeren. Kopiér venligst ukomprimerede ROM-filer til %1$s manuelt og tryk på Skan igen.</string>
     <string name="system_grid_details">%1$s spil</string>
     <string name="tv_folder_picker_title">Vælg ROMs-mappe</string>
@@ -152,10 +135,8 @@
     <string name="shortcut_binding_update_description">Tryk på den første, derefter anden knap for at binde en combo på din \"%1$s\"</string>
     <string name="tv_search_results">Spil</string>
     <string name="tv_game_message_missing_gamepad">Gamepads er påkrævet for at spille. Tilslut venligst en.</string>
-    <string name="game_edit_touch_controls_error_not_visible">Afbryd forbindelsen til din Gamepad for at redigere din touch-kontroller</string>
     <string name="game_interactory_busy">Vent til processen er afsluttet</string>
     <string name="mobile_settings_help">Hjælp</string>
-    <string name="mobile_settings_support">Support</string>
     <string name="lemuroid_help_content"><![CDATA[        <b>&#8226;Hvordan bruger jeg Lemuroid?</b><br/>
         Kopier alle dine ROMS-filer til en mappe på din enhed og vælg denne i Lemuroid. Denne mappe har tilladelse til at have undermapper. Efter scanningen er færdig, skulle du se dine spil.<br/><br/>
         <b>&#8226;Hvorfor blev mine spil ikke opdaget?</b><br/>
@@ -228,7 +209,6 @@
     <string name="settings_category_interface">Brugerflade</string>
     <string name="settings_category_display">Billede</string>
     <string name="settings_category_saves">Gemte spil</string>
-    <string name="settings_category_storage">Lagerplads</string>
     <string name="main_folder_not_set">Ikke valgt. Vælg, hvor Lemuroid-S-mappen skal ligge</string>
     <string name="main_folder_setting_title">Lemuroid-S-mappen</string>
     <string name="main_folder_card_title">Opret Lemuroid-S-mappen</string>
@@ -243,13 +223,9 @@
     <string name="main_folder_lost_action">Vælg mappe</string>
     <string name="select_roms_folder">Vælg ROM-mappe</string>
     <string name="folder_option_main">Lemuroid-S-mappen</string>
-    <string name="folder_option_roms">ROM-mappen</string>
     <string name="folder_option_custom">Egen mappe</string>
     <string name="roms_option_main">Lemuroid-S-mappen (Lemuroid-S/roms)</string>
     <string name="roms_option_custom_named">Egen mappe (%1$s)</string>
-    <string name="saves_option_main">Lemuroid-S-mappen (Lemuroid-S/saves og /states)</string>
-    <string name="saves_option_roms">ROM-mappen (ved siden af hvert spil)</string>
-    <string name="home_choose">Vælg</string>
     <string name="import_saves_confirm_title">Importér gemte spil fra andre emulatorer</string>
     <string name="import_saves_confirm_warning">ADVARSEL: Eksisterende gemte spil i Lemuroid-S kan blive overskrevet.</string>
     <string name="import_saves_confirm_message">Vælg, hvor der skal importeres fra:</string>
@@ -283,8 +259,6 @@
     <string name="home_import_saves_title">Importér gemte spil</string>
     <string name="home_import_saves_message">Importér dine gemte spil fra andre emulatorer eller mapper.</string>
     <string name="home_import_saves_action">Importér gemte spil</string>
-    <string name="home_card_not_now">Ikke nu</string>
-    <string name="done">Færdig</string>
     <string name="settings_title_import_saves">Importér gemte spil</string>
     <string name="settings_description_import_saves">Fra RetroArch eller andre emulatorer</string>
     <string name="import_saves_result">%1$d gemte spil og %2$d states importeret. %3$d sprunget over (allerede opdateret eller ulæselig).</string>
@@ -292,7 +266,6 @@
     <string name="settings_title_show_framerate">Vis FPS</string>
     <string name="settings_description_show_framerate">Viser spillets FPS og hastighed oven på billedet</string>
     <string name="settings_title_periodic_autosave">Automatisk gem under spil</string>
-    <string name="settings_description_periodic_autosave">Gemmer dit spil i autogem-pladsen med dette interval, mens du spiller</string>
     <string name="periodic_autosave_names_off">Fra</string>
     <string name="periodic_autosave_names_5">Hvert 5. minut</string>
     <string name="periodic_autosave_names_10">Hvert 10. minut</string>

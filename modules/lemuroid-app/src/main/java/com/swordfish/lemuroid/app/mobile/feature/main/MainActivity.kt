@@ -68,7 +68,6 @@ import com.swordfish.lemuroid.common.coroutines.safeLaunch
 import com.swordfish.lemuroid.ext.feature.review.ReviewManager
 import com.swordfish.lemuroid.lib.android.RetrogradeComponentActivity
 import com.swordfish.lemuroid.lib.bios.BiosManager
-import com.swordfish.lemuroid.lib.core.CoresSelection
 import com.swordfish.lemuroid.lib.injection.PerActivity
 import com.swordfish.lemuroid.lib.library.MetaSystemID
 import com.swordfish.lemuroid.lib.library.SystemID
@@ -107,9 +106,6 @@ class MainActivity : RetrogradeComponentActivity(), BusyActivity, GameLaunchHost
 
     @Inject
     lateinit var biosManager: BiosManager
-
-    @Inject
-    lateinit var coresSelection: CoresSelection
 
     @Inject
     lateinit var settingsInteractor: SettingsInteractor
@@ -239,7 +235,6 @@ class MainActivity : RetrogradeComponentActivity(), BusyActivity, GameLaunchHost
                                         HomeViewModel.Factory(
                                             applicationContext,
                                             retrogradeDb,
-                                            coresSelection,
                                         ),
                                 ),
                             onGameClick = onGameClick,

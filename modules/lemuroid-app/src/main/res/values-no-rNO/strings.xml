@@ -10,10 +10,8 @@
     <string name="discover">Utforsk</string>
     <string name="rescan">Skann</string>
     <string name="stop">Stopp</string>
-    <string name="none">Ingen</string>
     <string name="directory">Katalog</string>
     <string name="display_filter">Vis filter</string>
-    <string name="roms">ROM</string>
     <string name="ok">OK</string>
     <string name="cancel">Avbryt</string>
     <string name="settings">Innstillinger</string>
@@ -30,9 +28,6 @@
     <string name="settings_title_enable_touch_feedback">Vibrer ved berøring</string>
     <string name="settings_title_tilt_sensitivity">Følsomhet for tilt sensor</string>
     <string name="settings_title_hd_quality">HD-modus kvalitet</string>
-    <string name="settings_title_maximum_cache_usage">Størrelsesgrense for mellomlager</string>
-    <string name="settings_title_hd_mode">HD modus</string>
-    <string name="settings_description_hd_mode">Bruk oppskaleringsfilter for etterbehandling</string>
     <string name="settings_description_hd_quality">Juster kvaliteten til HD-modus</string>
     <string name="settings_title_immersive_mode">Fullskjermsmodus</string>
     <string name="settings_description_immersive_mode">Dynamisk farger bakgrunnen basert på spillbilder</string>
@@ -42,10 +37,6 @@
     <string name="settings_gamepad_category_enabled">Aktiverte enheter</string>
     <string name="settings_gamepad_category_general">Generelt</string>
     <string name="settings_gamepad_title_reset_bindings">Tilbakestill knappetildelinger</string>
-    <string name="settings_gamepad_title_game_menu">Meny</string>
-    <string name="settings_title_open_cores_selection">Endre kjerner</string>
-    <string name="settings_description_open_cores_selection">Velg hvilken kjerne som er tilknyttet et system</string>
-    <string name="settings_core_selection_ds_info">DeSmuME er foreldet og vil bli fjernet snart. Lagre i spillet, så bytt til melonDS: Under spillet lastes det automatisk, men lagre stater, bli i kjernen som opprettet dem.</string>
     <string name="settings_title_display_bios_info">BIOS</string>
     <string name="settings_description_display_bios_info">Vis oppdagede og støttede BIOS-filer</string>
     <string name="settings_bios_category_detected">Oppdaget</string>
@@ -56,8 +47,6 @@
     <string name="settings_description_advanced_settings">Vis avanserte innstillinger</string>
     <string name="settings_title_low_latency_audio">Foretrekk lyd med lav forsinkelse</string>
     <string name="settings_description_low_latency_audio">Reduser lydforsinkelse på støttede enheter. Kan øke lydfeil.</string>
-    <string name="settings_title_direct_game_load">Direkte spillinnlasting</string>
-    <string name="settings_description_direct_game_load">(Eksperimentell) Reduser lastetiden og bruk av bufferminne på støttede konsoller.</string>
     <string name="settings_title_enable_rumble">Vibrasjon</string>
     <string name="settings_description_enable_rumble">Aktiver vibrasjon på støttede spill og kontrollere</string>
     <string name="settings_title_enable_device_rumble">Enhets vibrasjon</string>
@@ -88,10 +77,6 @@
     <string name="home_microphone_action">Aktiver</string>
     <string name="home_empty_title">Velg ROM-katalog</string>
     <string name="home_empty_message">Lemuroid trenger å skanne en mappe som inneholder ROM-filer.\nDette kan ta opptil noen få minutter.</string>
-    <string name="home_empty_action">Velg mappe</string>
-    <string name="home_notification_desmume_deprecated_title">DeSmuME injeksjonsvæske snart</string>
-    <string name="home_notification_desmume_deprecated_message">Lagre i spillet, bytt til melonDS, og fremgangen din vil fortsette. Lagre stater forblir knyttet til DeSmuME.</string>
-    <string name="home_notification_desmume_deprecated_action">Bytt til melonDS</string>
     <string name="game_menu_save">Lagre</string>
     <string name="game_menu_load">Last inn</string>
     <string name="game_menu_restart">Start på nytt</string>
@@ -110,7 +95,6 @@
     <string name="game_toast_quick_save_loaded">Hurtig lastet</string>
     <string name="game_toast_quick_save_saved">Rask lagret</string>
     <string name="empty_view_default">Ingen elementer</string>
-    <string name="core_settings_title">Kjerne innstillinger</string>
     <string name="core_settings_category_preferences">Preferanser</string>
     <string name="core_settings_category_controllers">Kontrollere</string>
     <string name="core_settings_controller">Kontroller %1$s</string>
@@ -133,7 +117,6 @@
         \n\n Hvis ingen av de ovennevnte alternativene fungerer, kan det være mulig at dette spillet / kjernen ikke støttes av denne enheten.
     </string>
     <string name="game_loader_error_missing_bios">Det ser ut som om du mangler nødvendig BIOS. Legg dem i ROM-katalogen din og skann på nytt. Påkrevde filer: %1$s</string>
-    <string name="game_shortcut_error">Noe gikk galt mens spillet ble lastet inn. Sørg for at spillet fortsatt eksisterer i biblioteket ditt.</string>
     <string name="dialog_saf_not_found">Denne enheten støtter ikke filvelgeren for tilgangsrammeverk for lagring. Kopier ukomprimerte ROM-filer manuelt til %1$s og trykk Skann på nytt.</string>
     <string name="system_grid_details">%1$s spill</string>
     <string name="tv_folder_picker_title">Velg ROM katalog</string>
@@ -152,10 +135,8 @@
     <string name="shortcut_binding_update_description">Trykk først og så andre-knappen for å binde en combo på din \"%1$s\"</string>
     <string name="tv_search_results">Spill</string>
     <string name="tv_game_message_missing_gamepad">Spillkontroller er påkrevd for å spille. Vennligst koble til en.</string>
-    <string name="game_edit_touch_controls_error_not_visible">Koble fra kontrolleren for å redigere berøringsskjerm-kontrollene dine</string>
     <string name="game_interactory_busy">Vent på at pågående operasjoner fullføres</string>
     <string name="mobile_settings_help">Hjelp</string>
-    <string name="mobile_settings_support">Brukerstøtte</string>
     <string name="lemuroid_help_content"><![CDATA[        <b>&#8226;Hvordan bruker jeg Lemuroid?</b><br/>
         Kopier alle ROM-filene dine til en mappe på enheten din og velg denne mappen i Lemuroid. Undermapper i denne mappen støttes også. Etter at skanningen er fullført, skal du se spillene dine.<br/><br/>
         <b>&#8226;Hvorfor blir ikke spillene mine oppdaget?</b><br/>
@@ -228,7 +209,6 @@
     <string name="settings_category_interface">Grensesnitt</string>
     <string name="settings_category_display">Bilde</string>
     <string name="settings_category_saves">Lagrede spill</string>
-    <string name="settings_category_storage">Lagring</string>
     <string name="main_folder_not_set">Ikke valgt. Velg hvor Lemuroid-S-mappen skal ligge</string>
     <string name="main_folder_setting_title">Lemuroid-S-mappen</string>
     <string name="main_folder_card_title">Opprett Lemuroid-S-mappen</string>
@@ -243,13 +223,9 @@
     <string name="main_folder_lost_action">Velg mappe</string>
     <string name="select_roms_folder">Velg ROM-mappe</string>
     <string name="folder_option_main">Lemuroid-S-mappen</string>
-    <string name="folder_option_roms">ROM-mappen</string>
     <string name="folder_option_custom">Egen mappe</string>
     <string name="roms_option_main">Lemuroid-S-mappen (Lemuroid-S/roms)</string>
     <string name="roms_option_custom_named">Egen mappe (%1$s)</string>
-    <string name="saves_option_main">Lemuroid-S-mappen (Lemuroid-S/saves og /states)</string>
-    <string name="saves_option_roms">ROM-mappen (ved siden av hvert spill)</string>
-    <string name="home_choose">Velg</string>
     <string name="import_saves_confirm_title">Importer lagrede spill fra andre emulatorer</string>
     <string name="import_saves_confirm_warning">ADVARSEL: Eksisterende lagrede spill i Lemuroid-S kan bli overskrevet.</string>
     <string name="import_saves_confirm_message">Velg hvor du vil importere fra:</string>
@@ -283,8 +259,6 @@
     <string name="home_import_saves_title">Importer lagrede spill</string>
     <string name="home_import_saves_message">Importer lagrede spill fra andre emulatorer eller mapper.</string>
     <string name="home_import_saves_action">Importer lagrede spill</string>
-    <string name="home_card_not_now">Ikke nå</string>
-    <string name="done">Ferdig</string>
     <string name="settings_title_import_saves">Importer lagrede spill</string>
     <string name="settings_description_import_saves">Fra RetroArch eller andre emulatorer</string>
     <string name="import_saves_result">%1$d lagrede spill og %2$d states ble importert. %3$d ble hoppet over (allerede oppdatert eller uleselig).</string>
@@ -292,7 +266,6 @@
     <string name="settings_title_show_framerate">Vis FPS</string>
     <string name="settings_description_show_framerate">Viser spillets FPS og hastighet oppå bildet</string>
     <string name="settings_title_periodic_autosave">Autolagring under spilling</string>
-    <string name="settings_description_periodic_autosave">Lagrer spillet i autolagringsplassen med dette intervallet mens du spiller</string>
     <string name="periodic_autosave_names_off">Av</string>
     <string name="periodic_autosave_names_5">Hvert 5. minutt</string>
     <string name="periodic_autosave_names_10">Hvert 10. minutt</string>

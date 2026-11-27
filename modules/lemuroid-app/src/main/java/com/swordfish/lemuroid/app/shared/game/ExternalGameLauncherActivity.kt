@@ -18,7 +18,6 @@ import com.swordfish.lemuroid.common.animationDuration
 import com.swordfish.lemuroid.common.coroutines.launchOnState
 import com.swordfish.lemuroid.common.coroutines.safeLaunch
 import com.swordfish.lemuroid.common.longAnimationDuration
-import com.swordfish.lemuroid.lib.core.CoresSelection
 import com.swordfish.lemuroid.lib.library.db.RetrogradeDatabase
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.GlobalScope
@@ -43,9 +42,6 @@ class ExternalGameLauncherActivity : ImmersiveActivity(), GameLaunchHost {
 
     @Inject
     lateinit var gameLaunchTaskHandler: GameLaunchTaskHandler
-
-    @Inject
-    lateinit var coresSelection: CoresSelection
 
     @Inject
     lateinit var gameLauncher: GameLauncher

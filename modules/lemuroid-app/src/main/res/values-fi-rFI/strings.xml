@@ -10,10 +10,8 @@
     <string name="discover">Löydä</string>
     <string name="rescan">Uudelleen</string>
     <string name="stop">Pysäytä</string>
-    <string name="none">Ei Mitään</string>
     <string name="directory">Hakemisto</string>
     <string name="display_filter">Näytä suodatin</string>
-    <string name="roms">ROM</string>
     <string name="ok">Ok</string>
     <string name="cancel">Peruuta</string>
     <string name="settings">Asetukset</string>
@@ -30,9 +28,6 @@
     <string name="settings_title_enable_touch_feedback">Värinä kosketettaessa</string>
     <string name="settings_title_tilt_sensitivity">Kallistusanturin herkkyys</string>
     <string name="settings_title_hd_quality">HD-tilan laatu</string>
-    <string name="settings_title_maximum_cache_usage">Kätkön kokoraja</string>
-    <string name="settings_title_hd_mode">HD-tila</string>
-    <string name="settings_description_hd_mode">Käytä jälkikäsittelyn suotimia</string>
     <string name="settings_description_hd_quality">Säädä HD-tilan laatua</string>
     <string name="settings_title_immersive_mode">Immersive mode</string>
     <string name="settings_description_immersive_mode">Dynaamisesti värittää pelin visuaalisiin kuviin perustuvan taustan</string>
@@ -42,10 +37,6 @@
     <string name="settings_gamepad_category_enabled">Käytössä olevat laitteet</string>
     <string name="settings_gamepad_category_general">Yleiset</string>
     <string name="settings_gamepad_title_reset_bindings">Nollaa sidokset</string>
-    <string name="settings_gamepad_title_game_menu">Valikko</string>
-    <string name="settings_title_open_cores_selection">Vaihda Ytimiä</string>
-    <string name="settings_description_open_cores_selection">Valitse mikä ydin on liitetty järjestelmään</string>
-    <string name="settings_core_selection_ds_info">DeSmuME on vanhentunut ja se poistetaan pian. Tallenna pelin sisällä, vaihda sitten melonDS:ään: pelinsisäinen tallennus sinne automaattisesti, mutta tallenna valtiot pysyvät ytimessä, joka loi ne.</string>
     <string name="settings_title_display_bios_info">BIOS</string>
     <string name="settings_description_display_bios_info">Näytä havaitut ja tuetut BIOS-tiedostot</string>
     <string name="settings_bios_category_detected">Havaittu</string>
@@ -56,8 +47,6 @@
     <string name="settings_description_advanced_settings">Näytä lisäasetukset</string>
     <string name="settings_title_low_latency_audio">Suosi alhaisen latenssin ääntä</string>
     <string name="settings_description_low_latency_audio">Vähentää äänilatenssia tuetuissa laitteissa. Voi lisätä ääniglitches.</string>
-    <string name="settings_title_direct_game_load">Suora peli kuormitus</string>
-    <string name="settings_description_direct_game_load">(Experimental) Vähentää latausaikaa ja välimuistin käyttöä tuetuilla konsoleilla.</string>
     <string name="settings_title_enable_rumble">Kelaa</string>
     <string name="settings_description_enable_rumble">Ota rumble käyttöön tuetuissa peleissä ja ohjaimissa</string>
     <string name="settings_title_enable_device_rumble">Laitteen rumble</string>
@@ -88,10 +77,6 @@
     <string name="home_microphone_action">Aktivoi</string>
     <string name="home_empty_title">Valitse ROMien hakemisto</string>
     <string name="home_empty_message">Lemuroid tarvitsee skannata ROM -tiedostoja sisältävän hakemiston.\nTämä saattaa kestää jopa muutaman minuutin.</string>
-    <string name="home_empty_action">Valitse Hakemisto</string>
-    <string name="home_notification_desmume_deprecated_title">DeSmuME eläkkeellä pian</string>
-    <string name="home_notification_desmume_deprecated_message">Tallenna pelissä vaihtaaksesi melonDS:ään, ja edistymisesi siirtyy eteenpäin. Tallenna valtiot pysyvät sidottuna DeSmuMEen.</string>
-    <string name="home_notification_desmume_deprecated_action">Vaihda melonDS:ään</string>
     <string name="game_menu_save">Tallenna</string>
     <string name="game_menu_load">Lataa</string>
     <string name="game_menu_restart">Käynnistä Uudelleen</string>
@@ -109,7 +94,6 @@
     <string name="game_toast_quick_save_loaded">Nopea ladattu</string>
     <string name="game_toast_quick_save_saved">Nopea tallennus</string>
     <string name="empty_view_default">Ei Kohteita</string>
-    <string name="core_settings_title">Ydin Asetukset</string>
     <string name="core_settings_category_preferences">Asetukset</string>
     <string name="core_settings_category_controllers">Ohjaimet</string>
     <string name="core_settings_controller">Ohjain %1$s</string>
@@ -132,7 +116,6 @@
         \n\nJos mikään yllämainituista ei toimi, saattaa olla mahdollista, että tämä laite ei tue tätä peliä/ydintä.
     </string>
     <string name="game_loader_error_missing_bios">Näyttää siltä, että sinulta puuttuu tarvittava BIOS, laita ne ROM-hakemistoosi ja rescan. Vaaditut tiedostot: %1$s</string>
-    <string name="game_shortcut_error">Jotain pahaa tapahtui ladattaessa peliäsi. Varmista, että tämä peli on edelleen olemassa kirjastossasi.</string>
     <string name="dialog_saf_not_found">Tämä laite ei tue StorageAccessFramework tiedostojen poimintaa. Kopioi manuaalisesti pakkaamattomat ROM tiedostot %1$s ja paina Rescania.</string>
     <string name="system_grid_details">%1$s peliä</string>
     <string name="tv_folder_picker_title">Valitse ROMien Hakemisto</string>
@@ -151,10 +134,8 @@
     <string name="shortcut_binding_update_description">Paina ensimmäistä, sitten toista painiketta sitomaan combo sinun \"%1$s\"</string>
     <string name="tv_search_results">Pelit</string>
     <string name="tv_game_message_missing_gamepad">Pelitassut vaaditaan pelaamaan. Ole hyvä ja yhdistä yksi.</string>
-    <string name="game_edit_touch_controls_error_not_visible">Katkaise laitteesi yhteys muokataksesi kosketustoimintojasi</string>
     <string name="game_interactory_busy">Odota, että vireillä olevat toimet saatetaan päätökseen</string>
     <string name="mobile_settings_help">Ohje</string>
-    <string name="mobile_settings_support">Tuki</string>
     <string name="lemuroid_crash_disclamer">Näyttää siltä, että Libretro ydin on kokenut odottamattoman ongelman. Jos se on pysyvä, kokeile seuraavasti:\n
         \n\u2022 Poista automaattinen tallennus ja käynnistä peli
         \n\u2022 Mene Android-asetuksiin ja tyhjennä sovelluksen välimuisti
@@ -222,7 +203,6 @@
     <string name="settings_category_interface">Käyttöliittymä</string>
     <string name="settings_category_display">Näyttö</string>
     <string name="settings_category_saves">Tallennukset</string>
-    <string name="settings_category_storage">Tallennustila</string>
     <string name="main_folder_not_set">Ei asetettu. Valitse Lemuroid-S-kansion sijainti</string>
     <string name="main_folder_setting_title">Lemuroid-S-kansio</string>
     <string name="main_folder_card_title">Luo Lemuroid-S-kansio</string>
@@ -237,13 +217,9 @@
     <string name="main_folder_lost_action">Valitse kansio</string>
     <string name="select_roms_folder">Valitse ROM-kansio</string>
     <string name="folder_option_main">Lemuroid-S-kansio</string>
-    <string name="folder_option_roms">ROM-kansio</string>
     <string name="folder_option_custom">Oma kansio</string>
     <string name="roms_option_main">Lemuroid-S-kansio (Lemuroid-S/roms)</string>
     <string name="roms_option_custom_named">Oma kansio (%1$s)</string>
-    <string name="saves_option_main">Lemuroid-S-kansio (Lemuroid-S/saves ja /states)</string>
-    <string name="saves_option_roms">ROM-kansio (kunkin pelin vieressä)</string>
-    <string name="home_choose">Valitse</string>
     <string name="import_saves_confirm_title">Tuo tallennuksia muista emulaattoreista</string>
     <string name="import_saves_confirm_warning">VAROITUS: Lemuroid-S:n nykyiset tallennukset voidaan korvata.</string>
     <string name="import_saves_confirm_message">Valitse, mistä tuodaan:</string>
@@ -277,8 +253,6 @@
     <string name="home_import_saves_title">Tuo tallennuksia</string>
     <string name="home_import_saves_message">Tuo tallennuksesi muista emulaattoreista tai kansioista.</string>
     <string name="home_import_saves_action">Tuo tallennuksia</string>
-    <string name="home_card_not_now">Ei nyt</string>
-    <string name="done">Valmis</string>
     <string name="settings_title_import_saves">Tuo tallennuksia</string>
     <string name="settings_description_import_saves">RetroArchista tai muista emulaattoreista</string>
     <string name="import_saves_result">Tuotiin %1$d tallennusta ja %2$d tilaa. %3$d ohitettiin (jo ajan tasalla tai lukukelvoton).</string>
@@ -286,7 +260,6 @@
     <string name="settings_title_show_framerate">Näytä FPS</string>
     <string name="settings_description_show_framerate">Näyttää pelin FPS:n ja nopeuden kuvan päällä</string>
     <string name="settings_title_periodic_autosave">Automaattinen tallennus pelatessa</string>
-    <string name="settings_description_periodic_autosave">Tallentaa pelisi automaattitallennuspaikkaan tällä välillä pelatessasi</string>
     <string name="periodic_autosave_names_off">Pois</string>
     <string name="periodic_autosave_names_5">5 minuutin välein</string>
     <string name="periodic_autosave_names_10">10 minuutin välein</string>

@@ -10,10 +10,8 @@
     <string name="discover">גלה עוד</string>
     <string name="rescan">סריקה מחדש</string>
     <string name="stop">עצור</string>
-    <string name="none">כלום</string>
     <string name="directory">ספריה</string>
     <string name="display_filter">פילטר תצוגה</string>
-    <string name="roms">קבצי משחק (ROMs)</string>
     <string name="ok">בסדר</string>
     <string name="cancel">ביטול</string>
     <string name="settings">הגדרות</string>
@@ -25,17 +23,12 @@
     <string name="settings_title_enable_autosave">מצב שמירה אוטומטית</string>
     <string name="settings_title_enable_touch_feedback">רטט במגע</string>
     <string name="settings_title_tilt_sensitivity">רגישות חיישן ההטייה</string>
-    <string name="settings_title_maximum_cache_usage">גודל מקסימלי של המטמון</string>
-    <string name="settings_title_hd_mode">איכות תצוגה גבוהה</string>
     <string name="settings_title_gamepad_settings">התקן חיצוני</string>
     <string name="settings_description_gamepad_settings">הגדר מקלדות ובקרים חיצוניים</string>
     <string name="settings_retropad_button_name">RetroPad %1$s</string>
     <string name="settings_gamepad_category_enabled">מכשירים מופעלים</string>
     <string name="settings_gamepad_category_general">כללי</string>
     <string name="settings_gamepad_title_reset_bindings">אפס את התאמת המקשים בבקר המשחק</string>
-    <string name="settings_gamepad_title_game_menu">תפריט</string>
-    <string name="settings_title_open_cores_selection">שנה ליבה</string>
-    <string name="settings_description_open_cores_selection">הגדר אילו ליבות יקושרו לקונסולות</string>
     <string name="settings_title_display_bios_info">BIOS</string>
     <string name="settings_description_display_bios_info">הצג קבצי BIOS שזוהו ונמצאו מתאימים</string>
     <string name="settings_bios_category_detected">זוהה</string>
@@ -46,8 +39,6 @@
     <string name="settings_description_advanced_settings">הצג הגדרות מתקדמות</string>
     <string name="settings_title_low_latency_audio">תעדף שמע מופחת השהייה (Low-latency)</string>
     <string name="settings_description_low_latency_audio">הפחת השהיית שמע במכשירים נתמכים. עשוי להגביר את השיבושים בשמע.</string>
-    <string name="settings_title_direct_game_load">טעינת משחק ישירה</string>
-    <string name="settings_description_direct_game_load">(נסיוני) הפחת זמן טעינה וניצול מטמון בקונסולות נתמכות.</string>
     <string name="settings_title_enable_rumble">רטט</string>
     <string name="settings_description_enable_rumble">הפעל רטט במשחקים ובקרים המאפשרים זאת</string>
     <string name="settings_title_enable_device_rumble">רטט מכשיר</string>
@@ -72,7 +63,6 @@
     <string name="game_context_menu_create_shortcut">הצמד למסך הבית</string>
     <string name="home_empty_title">בחר את תיקיית היעד בה נמצאים קבצי ה-ROM</string>
     <string name="home_empty_message">Lemuroid צריך לסרוק תיקייה המכילה קבצי ROM. \nפעולה זו עשויה לארוך מספר דקות.</string>
-    <string name="home_empty_action">בחירת תיקייה</string>
     <string name="game_menu_save">שמור</string>
     <string name="game_menu_load">טען</string>
     <string name="game_menu_restart">הפעל מחדש</string>
@@ -88,7 +78,6 @@
     <string name="game_toast_settings_button_using_gamepad">זוהה שלט חיצוני. גש למסך ההגדרות עם %1$s.</string>
     <string name="game_toast_load_state_failed">טעינת מצב משחק זו נכשלה</string>
     <string name="empty_view_default">אין שום דבר</string>
-    <string name="core_settings_title">הגדרות ליבה</string>
     <string name="core_settings_category_preferences">העדפות</string>
     <string name="core_settings_category_controllers">בקרי משחק</string>
     <string name="core_settings_controller">בקר %1$s</string>
@@ -101,7 +90,6 @@
     <string name="game_loader_error_gl_incompatible">ליבה זו דורשת גירסה של OpenGL ES שמכשירך אינו תומך בה.</string>
     <string name="game_loader_error_load_game">משהו רע התרחש בעת טעינת המשחק. אנא וודא שהקובץ נתמך על ידי למורואיד וסרוק מחדש את המשחקים שלך.</string>
     <string name="game_loader_error_save">משהו רע התרחש עם קובץ השמירה. אם הבעיה אינה מפסיקה, נסה לבטל את השמירה האוטומטית.</string>
-    <string name="game_shortcut_error">משהו רע התרחש בעת טעינת המשחק. אנא וודא שהמשחק עדיין קיים בספרייה שלך.</string>
     <string name="system_grid_details">%1$s משחקים</string>
     <string name="tv_folder_picker_action_choose">בחר</string>
     <string name="tv_folder_picker_action_cancel">בטל</string>
@@ -110,7 +98,6 @@
     <string name="tv_folder_storage_title">בחר מקום אחסון</string>
     <string name="tv_home_section_favorites">אהובים</string>
     <string name="mobile_settings_help">עזרה</string>
-    <string name="mobile_settings_support">תמיכה</string>
     <string name="lemuroid_help_content"><![CDATA[&#8226;כיצד להשתמש ב-Lemuroid?</b><br/>
         העתק את כל קבצי ה-ROM שלך אל תיקייה לבחירתך במכשיר ובחר אותה מתוך הגדרות האפליקציה. ניתן ליצור תיקיות משנה (לקונסולות ספציפיות למשל) באותה תיקייה ראשית. לאחר השלמת הסריקה המשחקים אמורים להופיע.<br/><br/>
         <b>&#8226;למה המשחקים שלי לא מזוהים?</b><br/>
@@ -168,7 +155,6 @@
     <string name="settings_category_interface">ממשק</string>
     <string name="settings_category_display">תצוגה</string>
     <string name="settings_category_saves">שמירות</string>
-    <string name="settings_category_storage">אחסון</string>
     <string name="main_folder_not_set">לא הוגדרה. יש לבחור היכן תהיה תיקיית Lemuroid-S</string>
     <string name="main_folder_setting_title">תיקיית Lemuroid-S</string>
     <string name="main_folder_card_title">יצירת תיקיית Lemuroid-S</string>
@@ -183,13 +169,9 @@
     <string name="main_folder_lost_action">בחירת תיקייה</string>
     <string name="select_roms_folder">בחירת תיקיית ROM</string>
     <string name="folder_option_main">תיקיית Lemuroid-S</string>
-    <string name="folder_option_roms">תיקיית ROM</string>
     <string name="folder_option_custom">תיקייה מותאמת אישית</string>
     <string name="roms_option_main">תיקיית Lemuroid-S (Lemuroid-S/roms)</string>
     <string name="roms_option_custom_named">תיקייה מותאמת אישית (%1$s)</string>
-    <string name="saves_option_main">תיקיית Lemuroid-S (Lemuroid-S/saves ו-/states)</string>
-    <string name="saves_option_roms">תיקיית ROM (ליד כל משחק)</string>
-    <string name="home_choose">בחירה</string>
     <string name="import_saves_confirm_title">ייבוא שמירות מאמולטורים אחרים</string>
     <string name="import_saves_confirm_warning">אזהרה: שמירות קיימות של Lemuroid-S עלולות להידרס.</string>
     <string name="import_saves_confirm_message">מאיפה לייבא:</string>
@@ -223,8 +205,6 @@
     <string name="home_import_saves_title">ייבוא שמירות</string>
     <string name="home_import_saves_message">ייבוא השמירות שלך מאמולטורים או מתיקיות אחרים.</string>
     <string name="home_import_saves_action">ייבוא שמירות</string>
-    <string name="home_card_not_now">לא עכשיו</string>
-    <string name="done">סיום</string>
     <string name="settings_title_import_saves">ייבוא שמירות</string>
     <string name="settings_description_import_saves">מ-RetroArch או מאמולטורים אחרים</string>
     <string name="import_saves_result">יובאו %1$d שמירות ו-%2$d מצבים. %3$d דולגו (כבר מעודכנים או לא קריאים).</string>
@@ -232,7 +212,6 @@
     <string name="settings_title_show_framerate">הצגת FPS</string>
     <string name="settings_description_show_framerate">מציג את ה-FPS ואת מהירות המשחק מעל התמונה</string>
     <string name="settings_title_periodic_autosave">שמירה אוטומטית במהלך המשחק</string>
-    <string name="settings_description_periodic_autosave">שומר את המשחק במשבצת השמירה האוטומטית במרווח הזה בזמן המשחק</string>
     <string name="periodic_autosave_names_off">כבוי</string>
     <string name="periodic_autosave_names_5">כל 5 דקות</string>
     <string name="periodic_autosave_names_10">כל 10 דקות</string>
@@ -289,7 +268,6 @@
     <string name="game_page_search_suggestion">חיפוש משחקים</string>
     <string name="settings_description_enable_autosave">שמירה אוטומטית בעת סגירת המשחק או יציאה מ-Lemuroid-S</string>
     <string name="settings_title_hd_quality">איכות מצב HD</string>
-    <string name="settings_description_hd_mode">החלת מסנן הגדלה לאחר עיבוד</string>
     <string name="settings_description_hd_quality">כוונון האיכות של מצב HD</string>
     <string name="settings_title_immersive_mode">מצב סוחף</string>
     <string name="settings_description_immersive_mode">צובע את רקע המשחק באופן דינמי בצבעים שעל המסך</string>
@@ -317,7 +295,6 @@
     <string name="shortcut_binding_update_description">יש ללחוץ על כפתור אחד, או על שני כפתורים בזה אחר זה לשילוב, ב-\"%1$s\"</string>
     <string name="tv_search_results">משחקים</string>
     <string name="tv_game_message_missing_gamepad">כדי לשחק צריך בקר. יש לחבר בקר.</string>
-    <string name="game_edit_touch_controls_error_not_visible">יש לנתק את הבקר כדי לערוך את פקדי המגע</string>
     <string name="game_interactory_busy">יש להמתין לסיום הפעולות הממתינות</string>
     <string name="shader_filter_names_auto">אוטומטי</string>
     <string name="shader_filter_names_sharp">חד</string>

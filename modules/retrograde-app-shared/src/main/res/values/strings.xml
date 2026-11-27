@@ -15,8 +15,6 @@
     <string name="controller_portrait">Portrait</string>
 
     <string name="controller_dos_auto">Auto</string>
-    <string name="controller_dos_mouse_left">Mouse with Left Stick</string>
-    <string name="controller_dos_mouse_right">Mouse with Right Stick</string>
 
     <!-- Core settings titles -->
     <string name="setting_stella_filter">TV effect</string>
@@ -45,16 +43,11 @@
     <string name="setting_pcsx_rearmed_frameskip">Frameskip</string>
     <string name="setting_pcsx_rearmed_drc">Dynamic recompiler</string>
     <string name="setting_ppsspp_auto_frameskip">Auto frameskip</string>
-    <string name="setting_ppsspp_frameskip">Frameskip</string>
     <string name="setting_ppsspp_cpu_core">Dynamic recompiler</string>
     <string name="setting_ppsspp_internal_resolution">Resolution</string>
     <string name="setting_ppsspp_texture_scaling_level">Texture scaling level</string>
-    <string name="setting_ppsspp_texture_scaling_type">Texture scaling type</string>
-    <string name="setting_ppsspp_texture_filtering">Texture filtering</string>
     <string name="setting_fbneo_frameskip">Frameskip</string>
     <string name="setting_fbneo_cpu_speed_adjust">CPU speed</string>
-    <string name="setting_desmume_screens_layout">Screens layout</string>
-    <string name="setting_desmume_frameskip">Frameskip</string>
     <string name="setting_melonds_screen_layout">Screens layout</string>
     <string name="setting_melonds_threaded_renderer">Threaded renderer</string>
     <string name="setting_melonds_jit_enable">Dynamic recompiler</string>
@@ -65,7 +58,6 @@
     <string name="setting_citra_layout_option">Screens layout</string>
     <string name="setting_citra_resolution_factor">Resolution scaling</string>
     <string name="setting_citra_use_acc_mul">Accurate shaders multiplication</string>
-    <string name="setting_citra_use_acc_geo_shaders">Accurate geometry shaders</string>
 
     <!-- Core settings values. Duplicated here to ease the translation process. -->
     <string name="value_gambatte_mix_frames_disabled">Disabled</string>
@@ -119,16 +111,12 @@
 
     <string name="value_melonds_screen_layout_topbottom">Top - Bottom</string>
     <string name="value_melonds_screen_layout_leftright">Left - Right</string>
-    <string name="value_melonds_screen_layout_hybridtop">Hybrid Top</string>
-    <string name="value_melonds_screen_layout_hybridbottom">Hybrid Bottom</string>
     <string name="value_melonds_mic_input_microphone">Real microphone</string>
     <string name="value_melonds_mic_input_blow">Simulate blow sounds</string>
 
     <string name="value_citra_layout_option_topbottom">Top - Bottom</string>
     <string name="value_citra_layout_option_sidebyside">Left - Right</string>
 
-    <string name="value_desmume_screens_layout_topbottom">Top - Bottom</string>
-    <string name="value_desmume_screens_layout_leftright">Left - Right</string>
 
     <string name="value_ppsspp_cpu_core_jit">JIT</string>
     <string name="value_ppsspp_cpu_core_irjit">IR JIT</string>

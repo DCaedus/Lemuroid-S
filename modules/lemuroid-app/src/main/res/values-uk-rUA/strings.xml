@@ -10,10 +10,8 @@
     <string name="discover">Огляд</string>
     <string name="rescan">Сканувати знову</string>
     <string name="stop">Зупинити</string>
-    <string name="none">Нiчого</string>
     <string name="directory">Каталог</string>
     <string name="display_filter">Відобразити фільтр</string>
-    <string name="roms">Прошивки</string>
     <string name="ok">ОК</string>
     <string name="cancel">Скасувати</string>
     <string name="settings">Налаштування</string>
@@ -30,9 +28,6 @@
     <string name="settings_title_enable_touch_feedback">Вібрувати при дотику</string>
     <string name="settings_title_tilt_sensitivity">Чутливість датчика нахилу</string>
     <string name="settings_title_hd_quality">HD якість</string>
-    <string name="settings_title_maximum_cache_usage">Обмеження розміру кешу</string>
-    <string name="settings_title_hd_mode">HD режим</string>
-    <string name="settings_description_hd_mode">Застосувати фільтр пост-обробки масштабування</string>
     <string name="settings_description_hd_quality">Налаштування якості HD-режиму</string>
     <string name="settings_title_immersive_mode">Режим занурення</string>
     <string name="settings_description_immersive_mode">Інтелектуальний фон на основі візуальних ефектів</string>
@@ -42,10 +37,6 @@
     <string name="settings_gamepad_category_enabled">Активні пристрої</string>
     <string name="settings_gamepad_category_general">Загальні</string>
     <string name="settings_gamepad_title_reset_bindings">Скинути прив\'язки клавіш</string>
-    <string name="settings_gamepad_title_game_menu">Меню</string>
-    <string name="settings_title_open_cores_selection">Змінити ядра</string>
-    <string name="settings_description_open_cores_selection">Виберіть, яке ядро пов’язане з системою</string>
-    <string name="settings_core_selection_ds_info">DeSmuME є застарілим і незабаром буде вилучено. Збережіть всередині гри, а потім перемкніться на мелонДК: всередині гри економить там завантаження автоматично, але зберігайте стани, що залишаються на ядрі, що їх створили.</string>
     <string name="settings_title_display_bios_info">БІОС</string>
     <string name="settings_description_display_bios_info">Відображати знайдені та підтримувані файли BIOS</string>
     <string name="settings_bios_category_detected">Знайдено</string>
@@ -56,8 +47,6 @@
     <string name="settings_description_advanced_settings">Показати додаткові налаштування</string>
     <string name="settings_title_low_latency_audio">Надавати перевагу звуку з низькою затримкою</string>
     <string name="settings_description_low_latency_audio">Зменшення затримки аудіо на підтримуваних пристроях. Може збільшити збої аудіо.</string>
-    <string name="settings_title_direct_game_load">Пряме завантаження гри</string>
-    <string name="settings_description_direct_game_load">(Експериментальне) Зменшує час завантаження та використання кешу на підтримуваних консолях.</string>
     <string name="settings_title_enable_rumble">Вібрація</string>
     <string name="settings_description_enable_rumble">Увімкнення вібрації для сумісних ігор та контролерів</string>
     <string name="settings_title_enable_device_rumble">Вібрація пристрою</string>
@@ -88,10 +77,6 @@
     <string name="home_microphone_action">Увімкнути</string>
     <string name="home_empty_title">Виберіть каталог ROM</string>
     <string name="home_empty_message">Лемуроїд повинен сканувати каталог, що містить ROM файли.\nЦе може зайняти до декількох хвилин.</string>
-    <string name="home_empty_action">Виберіть каталог</string>
-    <string name="home_notification_desmume_deprecated_title">DSmuME незабаром вийшло на пенсію</string>
-    <string name="home_notification_desmume_deprecated_message">Заощаджуйте в грі, перемикайтесь на melonDS, і ваш прогрес буде перенесений. Економна держава, яка залишиться прив\'язаною до DeSmuME.</string>
-    <string name="home_notification_desmume_deprecated_action">Перемкнути на динарії</string>
     <string name="game_menu_save">Зберегти</string>
     <string name="game_menu_load">Завантажити</string>
     <string name="game_menu_restart">Перезапуск</string>
@@ -110,7 +95,6 @@
     <string name="game_toast_quick_save_loaded">Швидко завантажити</string>
     <string name="game_toast_quick_save_saved">Швидке збереження</string>
     <string name="empty_view_default">Немає елементів</string>
-    <string name="core_settings_title">Налаштування ядра</string>
     <string name="core_settings_category_preferences">Налаштування</string>
     <string name="core_settings_category_controllers">Контролери</string>
     <string name="core_settings_controller">Контролер %1$s</string>
@@ -133,7 +117,6 @@
         \n\nЯкщо нічого з переліченого не допомогло, може бути що ця гра/ядро не підтримується на вашому приладі.
     </string>
     <string name="game_loader_error_missing_bios">Схоже, що у вас відсутній необхідний BIOS, помістіть його у папку з вашими ROM-ами і повторно проскануйте. Необхідні файли: %1$s</string>
-    <string name="game_shortcut_error">Щось пішло не так під час завантаження вашої гри. Переконайтеся, що ця гра все ще існує у вашій бібліотеці.</string>
     <string name="dialog_saf_not_found">Цей пристрій не підтримує вікно вибору файлів StorageAccessFramework. Будь ласка, скопіюйте розпаковані файли ROM в %1$s і натисніть \"Повторити сканування\".</string>
     <string name="system_grid_details">%1$s ігор</string>
     <string name="tv_folder_picker_title">Вибрати директорію з ROM</string>
@@ -152,11 +135,9 @@
     <string name="shortcut_binding_update_description">Натисніть першою, а потім другу кнопку, щоб пов\'язати комбо на вашому \"%1$s\"</string>
     <string name="tv_search_results">Ігри</string>
     <string name="tv_game_message_missing_gamepad">Для гри потрібен ґеймпад. Будь ласка, під\'єднайте його.</string>
-    <string name="game_edit_touch_controls_error_not_visible">Від\'єднайте ґеймпад для редагування сенсорних кнопок</string>
     <string name="game_interactory_busy">Дочекайтеся завершення операції</string>
     <string name="game_interactor_notification_permission_required">Будь ласка, увімкніть сповіщення з Головної, щоб продовжити</string>
     <string name="mobile_settings_help">Допомога</string>
-    <string name="mobile_settings_support">Підтримка</string>
     <string name="lemuroid_help_content"><![CDATA[        <b>&#8226;Як я використовую Лемуроїд?</b><br/>
         Скопіюйте всі файли ROM в каталог на вашому пристрої і виберіть його в Lemuroid. Цей каталог може містити підкаталоги. Після того, як сканування завершиться, ви повинні побачити свої ігри.<br/><br/>,        <b>&#8226;Чому не виявлено моїх ігор?</b><br/>
         Якщо ваші ігри стиснуті, спробуйте розпакувати їх. Якщо це не спрацює, спробуйте покласти прошивки в окремі каталоги, одну для кожної системи з такими іменами: $SYSTEMS.
@@ -228,7 +209,6 @@
     <string name="settings_category_interface">Інтерфейс</string>
     <string name="settings_category_display">Зображення</string>
     <string name="settings_category_saves">Збереження</string>
-    <string name="settings_category_storage">Сховище</string>
     <string name="main_folder_not_set">Не задано. Виберіть, де буде папка Lemuroid-S</string>
     <string name="main_folder_setting_title">Папка Lemuroid-S</string>
     <string name="main_folder_card_title">Створити папку Lemuroid-S</string>
@@ -243,13 +223,9 @@
     <string name="main_folder_lost_action">Вибрати папку</string>
     <string name="select_roms_folder">Вибрати папку з ROM</string>
     <string name="folder_option_main">Папка Lemuroid-S</string>
-    <string name="folder_option_roms">Папка з ROM</string>
     <string name="folder_option_custom">Власна папка</string>
     <string name="roms_option_main">Папка Lemuroid-S (Lemuroid-S/roms)</string>
     <string name="roms_option_custom_named">Власна папка (%1$s)</string>
-    <string name="saves_option_main">Папка Lemuroid-S (Lemuroid-S/saves і /states)</string>
-    <string name="saves_option_roms">Папка з ROM (поруч із кожною грою)</string>
-    <string name="home_choose">Вибрати</string>
     <string name="import_saves_confirm_title">Імпорт збережень з інших емуляторів</string>
     <string name="import_saves_confirm_warning">УВАГА: наявні збереження Lemuroid-S можуть бути перезаписані.</string>
     <string name="import_saves_confirm_message">Виберіть, звідки імпортувати:</string>
@@ -283,8 +259,6 @@
     <string name="home_import_saves_title">Імпорт збережень</string>
     <string name="home_import_saves_message">Імпортуйте збереження з інших емуляторів або папок.</string>
     <string name="home_import_saves_action">Імпортувати збереження</string>
-    <string name="home_card_not_now">Не зараз</string>
-    <string name="done">Готово</string>
     <string name="settings_title_import_saves">Імпорт збережень</string>
     <string name="settings_description_import_saves">З RetroArch або інших емуляторів</string>
     <string name="import_saves_result">Імпортовано збережень: %1$d, станів: %2$d. Пропущено: %3$d (уже актуальні або не читаються).</string>
@@ -292,7 +266,6 @@
     <string name="settings_title_show_framerate">Показувати FPS</string>
     <string name="settings_description_show_framerate">Показує FPS і швидкість гри поверх зображення</string>
     <string name="settings_title_periodic_autosave">Автозбереження під час гри</string>
-    <string name="settings_description_periodic_autosave">Зберігає гру в слот автозбереження з цим інтервалом, поки ви граєте</string>
     <string name="periodic_autosave_names_off">Вимкнено</string>
     <string name="periodic_autosave_names_5">Кожні 5 хвилин</string>
     <string name="periodic_autosave_names_10">Кожні 10 хвилин</string>

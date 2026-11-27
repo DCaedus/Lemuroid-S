@@ -52,9 +52,6 @@ class TVSettingsFragment : LeanbackPreferenceFragmentCompat() {
     lateinit var inputDeviceManager: InputDeviceManager
 
     @Inject
-    lateinit var coresSelectionPreferences: CoresSelectionPreferences
-
-    @Inject
     lateinit var saveSyncManager: SaveSyncManager
 
     lateinit var saveSyncPreferences: SaveSyncPreferences

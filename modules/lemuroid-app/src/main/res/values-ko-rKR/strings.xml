@@ -10,10 +10,8 @@
     <string name="discover">발견하기</string>
     <string name="rescan">다시 검색</string>
     <string name="stop">중단</string>
-    <string name="none">없음</string>
     <string name="directory">디렉토리</string>
     <string name="display_filter">디스플레이 필터</string>
-    <string name="roms">ROM</string>
     <string name="ok">확인</string>
     <string name="cancel">취소</string>
     <string name="settings">설정</string>
@@ -30,9 +28,6 @@
     <string name="settings_title_enable_touch_feedback">터치 시 진동</string>
     <string name="settings_title_tilt_sensitivity">기울임 센서 감도</string>
     <string name="settings_title_hd_quality">HD 모드 품질</string>
-    <string name="settings_title_maximum_cache_usage">캐시 크기 제한</string>
-    <string name="settings_title_hd_mode">HD 모드</string>
-    <string name="settings_description_hd_mode">업스케일링 후처리 필터를 적용합니다</string>
     <string name="settings_description_hd_quality">HD 모드의 품질을 설정합니다</string>
     <string name="settings_title_immersive_mode">몰입형 모드</string>
     <string name="settings_description_immersive_mode">게임 화면에 따라 배경 색상을 동적으로 변경합니다</string>
@@ -42,10 +37,6 @@
     <string name="settings_gamepad_category_enabled">활성화된 장치</string>
     <string name="settings_gamepad_category_general">일반</string>
     <string name="settings_gamepad_title_reset_bindings">매핑 초기화</string>
-    <string name="settings_gamepad_title_game_menu">메뉴</string>
-    <string name="settings_title_open_cores_selection">코어 변경</string>
-    <string name="settings_description_open_cores_selection">시스템에 연결된 코어를 변경합니다</string>
-    <string name="settings_core_selection_ds_info">DeSmuME는 지원이 중단되었으며 이후 업데이트에서 삭제될 예정입니다. 게임 내에서 진행 상황을 저장하고, melonDS로 갈아타세요. 게임 내에서 한 저장은 melonDS에서 불러올 수 있지만, 상태저장은 생성된 코어에서만 사용할 수 있습니다.</string>
     <string name="settings_title_display_bios_info">BIOS</string>
     <string name="settings_description_display_bios_info">인식된 BIOS 파일을 표시합니다</string>
     <string name="settings_bios_category_detected">감지됨</string>
@@ -56,8 +47,6 @@
     <string name="settings_description_advanced_settings">고급 설정 표시</string>
     <string name="settings_title_low_latency_audio">저지연 오디오 선호</string>
     <string name="settings_description_low_latency_audio">지원되는 기기에서 오디오 레이턴시를 줄입니다. 오디오 문제가 발생할 수 있습니다.</string>
-    <string name="settings_title_direct_game_load">게임 직접 불러오기</string>
-    <string name="settings_description_direct_game_load">(실험적 기능) 지원되는 콘솔에 대해 로딩 시간과 캐시 사용량을 감소시킵니다.</string>
     <string name="settings_title_enable_rumble">진동</string>
     <string name="settings_description_enable_rumble">지원되는 게임과 컨트롤러에서 진동을 사용합니다</string>
     <string name="settings_title_enable_device_rumble">장치 진동</string>
@@ -88,10 +77,6 @@
     <string name="home_microphone_action">활성화</string>
     <string name="home_empty_title">ROM 디렉토리 선택</string>
     <string name="home_empty_message">Lemuroid가 검색할 ROM 파일이 담긴 디렉토리가 필요합니다.\n이 과정은 몇 분 정도 걸립니다.</string>
-    <string name="home_empty_action">디렉토리 선택</string>
-    <string name="home_notification_desmume_deprecated_title">DeSmuME의 지원이 중단됩니다</string>
-    <string name="home_notification_desmume_deprecated_message">게임 내에서 저장하고, melonDS로 갈아타 진행 상황을 보존하세요. 상태저장은 다른 코어로 가져갈 수 없으며 DeSmuME에서밖에 사용할 수 없습니다.</string>
-    <string name="home_notification_desmume_deprecated_action">melonDS로 갈아타기</string>
     <string name="game_menu_save">저장</string>
     <string name="game_menu_load">불러오기</string>
     <string name="game_menu_restart">다시 시작</string>
@@ -110,7 +95,6 @@
     <string name="game_toast_quick_save_loaded">빠른 저장 불러옴</string>
     <string name="game_toast_quick_save_saved">빠른 저장 생성됨</string>
     <string name="empty_view_default">항목 없음</string>
-    <string name="core_settings_title">코어 설정</string>
     <string name="core_settings_category_preferences">설정</string>
     <string name="core_settings_category_controllers">컨트롤러</string>
     <string name="core_settings_controller">컨트롤러 %1$s</string>
@@ -133,7 +117,6 @@
         \n\n이후에도 계속 문제가 발생할 경우, 이 장치에서 이 게임 또는 코어가 지원되지 않는 것일 수도 있습니다.
     </string>
     <string name="game_loader_error_missing_bios">필요한 BIOS 파일이 없는 것 같습니다. ROM 디렉토리에 필요한 파일을 추가한 뒤 게임을 다시 검색해주세요. 필요한 파일: %1$s</string>
-    <string name="game_shortcut_error">게임을 불러오는 중 문제가 발생했습니다. 게임이 아직 라이브러리에 존재하는지 확인해주세요.</string>
     <string name="dialog_saf_not_found">이 장치에서는 저장소 액세스 프레임워크 파일 선택기가 지원되지 않습니다. 압축되지 않은 ROM 파일을 %1$s에 복사한 뒤 게임을 다시 검색해주세요.</string>
     <string name="system_grid_details">%1$s개의 게임</string>
     <string name="tv_folder_picker_title">ROM 디렉토리 선택</string>
@@ -152,12 +135,10 @@
     <string name="shortcut_binding_update_description">\"%1$s\"에서 첫 번째 버튼을 누른 뒤, 두 번째 버튼을 눌러 단축키를 설정하세요</string>
     <string name="tv_search_results">게임</string>
     <string name="tv_game_message_missing_gamepad">게임패드가 필요합니다. 게임패드를 연결해주세요.</string>
-    <string name="game_edit_touch_controls_error_not_visible">터치 컨트롤을 변경하려면 게임패드 연결을 해제해주세요</string>
     <string name="game_interactory_busy">현재 작업이 완료될 때까지 기다려주세요</string>
     <string name="game_interactor_notification_permission_required">계속하려면 홈에서 알림 사용을 허용해주세요</string>
     <string name="game_process_another_game_running">다른 게임을 시작하려면 먼저 실행중인 게임을 종료해주세요</string>
     <string name="mobile_settings_help">도움말</string>
-    <string name="mobile_settings_support">지원</string>
     <string name="lemuroid_help_content"><![CDATA[        <b>&#8226;Lemuroid는 어떻게 사용하나요?</b><br/>
         ROM 파일들을 장치 내 디렉토리에 복사한 뒤 Lemuroid에서 해당 디렉토리를 선택합니다. 디렉토리 안에 디렉토리가 있어도 괜찮습니다. 검색이 끝나면 게임들을 보실 수 있습니다.<br/><br/>
         <b>&#8226;왜 제 게임이 감지되지 않는건가요?</b><br/>
@@ -230,7 +211,6 @@
     <string name="settings_category_interface">인터페이스</string>
     <string name="settings_category_display">디스플레이</string>
     <string name="settings_category_saves">세이브</string>
-    <string name="settings_category_storage">저장공간</string>
     <string name="main_folder_not_set">설정되지 않음. Lemuroid-S 폴더 위치를 선택하세요</string>
     <string name="main_folder_setting_title">Lemuroid-S 폴더</string>
     <string name="main_folder_card_title">Lemuroid-S 폴더 만들기</string>
@@ -245,13 +225,9 @@
     <string name="main_folder_lost_action">폴더 선택</string>
     <string name="select_roms_folder">ROM 폴더 선택</string>
     <string name="folder_option_main">Lemuroid-S 폴더</string>
-    <string name="folder_option_roms">ROM 폴더</string>
     <string name="folder_option_custom">사용자 지정 폴더</string>
     <string name="roms_option_main">Lemuroid-S 폴더 (Lemuroid-S/roms)</string>
     <string name="roms_option_custom_named">사용자 지정 폴더 (%1$s)</string>
-    <string name="saves_option_main">Lemuroid-S 폴더 (Lemuroid-S/saves 및 /states)</string>
-    <string name="saves_option_roms">ROM 폴더 (각 게임 옆)</string>
-    <string name="home_choose">선택</string>
     <string name="import_saves_confirm_title">다른 에뮬레이터에서 세이브 가져오기</string>
     <string name="import_saves_confirm_warning">경고: 기존 Lemuroid-S 세이브를 덮어쓸 수 있습니다.</string>
     <string name="import_saves_confirm_message">가져올 위치를 선택하세요:</string>
@@ -285,8 +261,6 @@
     <string name="home_import_saves_title">세이브 가져오기</string>
     <string name="home_import_saves_message">다른 에뮬레이터나 폴더에서 세이브를 가져옵니다.</string>
     <string name="home_import_saves_action">세이브 가져오기</string>
-    <string name="home_card_not_now">나중에</string>
-    <string name="done">완료</string>
     <string name="settings_title_import_saves">세이브 가져오기</string>
     <string name="settings_description_import_saves">RetroArch 또는 다른 에뮬레이터에서</string>
     <string name="import_saves_result">배터리 세이브 %1$d개와 세이브 스테이트 %2$d개를 가져왔습니다. %3$d개는 건너뛰었습니다(이미 최신이거나 읽을 수 없음).</string>
@@ -294,7 +268,6 @@
     <string name="settings_title_show_framerate">FPS 표시</string>
     <string name="settings_description_show_framerate">게임 FPS와 속도를 화면에 표시합니다</string>
     <string name="settings_title_periodic_autosave">플레이 중 자동 저장</string>
-    <string name="settings_description_periodic_autosave">플레이하는 동안 이 간격으로 자동 저장 슬롯에 게임을 저장합니다</string>
     <string name="periodic_autosave_names_off">끄기</string>
     <string name="periodic_autosave_names_5">5분마다</string>
     <string name="periodic_autosave_names_10">10분마다</string>

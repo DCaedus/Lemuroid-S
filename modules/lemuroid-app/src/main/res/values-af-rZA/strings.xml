@@ -45,7 +45,6 @@
     <string name="settings_category_interface">Koppelvlak</string>
     <string name="settings_category_display">Skerm</string>
     <string name="settings_category_saves">Gestoorde speletjies</string>
-    <string name="settings_category_storage">Berging</string>
     <string name="main_folder_not_set">Nie gestel nie. Kies waar die Lemuroid-S-vouer moet wees</string>
     <string name="main_folder_setting_title">Lemuroid-S-vouer</string>
     <string name="main_folder_card_title">Skep die Lemuroid-S-vouer</string>
@@ -60,13 +59,9 @@
     <string name="main_folder_lost_action">Kies vouer</string>
     <string name="select_roms_folder">Kies ROM-vouer</string>
     <string name="folder_option_main">Lemuroid-S-vouer</string>
-    <string name="folder_option_roms">ROM-vouer</string>
     <string name="folder_option_custom">Eie vouer</string>
     <string name="roms_option_main">Lemuroid-S-vouer (Lemuroid-S/roms)</string>
     <string name="roms_option_custom_named">Eie vouer (%1$s)</string>
-    <string name="saves_option_main">Lemuroid-S-vouer (Lemuroid-S/saves en /states)</string>
-    <string name="saves_option_roms">ROM-vouer (langs elke speletjie)</string>
-    <string name="home_choose">Kies</string>
     <string name="import_saves_confirm_title">Voer gestoorde speletjies van ander emulators in</string>
     <string name="import_saves_confirm_warning">WAARSKUWING: Bestaande gestoorde speletjies in Lemuroid-S kan oorskryf word.</string>
     <string name="import_saves_confirm_message">Kies waarvandaan om in te voer:</string>
@@ -100,8 +95,6 @@
     <string name="home_import_saves_title">Voer gestoorde speletjies in</string>
     <string name="home_import_saves_message">Voer jou gestoorde speletjies van ander emulators of vouers in.</string>
     <string name="home_import_saves_action">Voer gestoorde speletjies in</string>
-    <string name="home_card_not_now">Nie nou nie</string>
-    <string name="done">Klaar</string>
     <string name="settings_title_import_saves">Voer gestoorde speletjies in</string>
     <string name="settings_description_import_saves">Van RetroArch of ander emulators</string>
     <string name="import_saves_result">%1$d gestoorde speletjies en %2$d toestande ingevoer. %3$d oorgeslaan (reeds op datum of onleesbaar).</string>
@@ -109,7 +102,6 @@
     <string name="settings_title_show_framerate">Wys FPS</string>
     <string name="settings_description_show_framerate">Wys die speletjie se FPS en spoed bo-oor die beeld</string>
     <string name="settings_title_periodic_autosave">Outomaties stoor tydens speel</string>
-    <string name="settings_description_periodic_autosave">Stoor jou speletjie met hierdie tussenposes in die outostoorgleuf terwyl jy speel</string>
     <string name="periodic_autosave_names_off">Af</string>
     <string name="periodic_autosave_names_5">Elke 5 minute</string>
     <string name="periodic_autosave_names_10">Elke 10 minute</string>
@@ -171,10 +163,8 @@
     <string name="discover">Ontdek</string>
     <string name="rescan">Skandeer weer</string>
     <string name="stop">Stop</string>
-    <string name="none">Geen</string>
     <string name="directory">Vouer</string>
     <string name="display_filter">Skermfilter</string>
-    <string name="roms">ROM\'s</string>
     <string name="ok">Goed</string>
     <string name="cancel">Kanselleer</string>
     <string name="settings">Instellings</string>
@@ -191,9 +181,6 @@
     <string name="settings_title_enable_touch_feedback">Vibreer by aanraking</string>
     <string name="settings_title_tilt_sensitivity">Sensitiwiteit van kantelsensor</string>
     <string name="settings_title_hd_quality">HD-moduskwaliteit</string>
-    <string name="settings_title_maximum_cache_usage">Kasgroottelimiet</string>
-    <string name="settings_title_hd_mode">HD-modus</string>
-    <string name="settings_description_hd_mode">Pas \'n opskaleringsfilter toe</string>
     <string name="settings_description_hd_quality">Stel die kwaliteit van HD-modus in</string>
     <string name="settings_title_immersive_mode">Meesleurende modus</string>
     <string name="settings_description_immersive_mode">Kleur die speletjie se agtergrond dinamies met die kleure op die skerm</string>
@@ -203,9 +190,6 @@
     <string name="settings_gamepad_category_enabled">Geaktiveerde toestelle</string>
     <string name="settings_gamepad_category_general">Algemeen</string>
     <string name="settings_gamepad_title_reset_bindings">Stel knoppietoewysings terug</string>
-    <string name="settings_gamepad_title_game_menu">Spyskaart</string>
-    <string name="settings_title_open_cores_selection">Verander kerne</string>
-    <string name="settings_description_open_cores_selection">Kies watter kern by \'n stelsel hoort</string>
     <string name="settings_title_display_bios_info">BIOS</string>
     <string name="settings_description_display_bios_info">Wys gevonde en ondersteunde BIOS-lêers</string>
     <string name="settings_bios_category_detected">Gevind</string>
@@ -216,8 +200,6 @@
     <string name="settings_description_advanced_settings">Wys gevorderde instellings</string>
     <string name="settings_title_low_latency_audio">Verkies lae-latensie-klank</string>
     <string name="settings_description_low_latency_audio">Verminder klankvertraging op ondersteunde toestelle. Kan meer klankfoute veroorsaak.</string>
-    <string name="settings_title_direct_game_load">Direkte laai van speletjies</string>
-    <string name="settings_description_direct_game_load">(Eksperimenteel) Verminder laaityd en kasgebruik op ondersteunde konsoles.</string>
     <string name="settings_title_enable_rumble">Vibrasie</string>
     <string name="settings_description_enable_rumble">Aktiveer vibrasie in ondersteunde speletjies en beheerders</string>
     <string name="settings_title_enable_device_rumble">Toestelvibrasie</string>
@@ -248,7 +230,6 @@
     <string name="home_microphone_action">Aktiveer</string>
     <string name="home_empty_title">Kies ROM-vouer</string>
     <string name="home_empty_message">Gebruik die verstek-Lemuroid-S-vouer of kies jou eie ROM-vouer.</string>
-    <string name="home_empty_action">Kies</string>
     <string name="game_menu_save">Stoor</string>
     <string name="game_menu_load">Laai</string>
     <string name="game_menu_restart">Begin oor</string>
@@ -267,7 +248,6 @@
     <string name="game_toast_quick_save_loaded">Vinnig gelaai</string>
     <string name="game_toast_quick_save_saved">Vinnig gestoor</string>
     <string name="empty_view_default">Geen items</string>
-    <string name="core_settings_title">Kerninstellings</string>
     <string name="core_settings_category_preferences">Voorkeure</string>
     <string name="core_settings_category_controllers">Beheerders</string>
     <string name="core_settings_controller">Beheerder %1$s</string>
@@ -284,7 +264,6 @@
     <string name="game_loader_error_save">Iets het verkeerd geloop met jou stoorlêer. As die probleem voortduur, skakel outostoor af.</string>
     <string name="game_loader_error_unsupported_architecture">Jou toestel ondersteun nie hierdie kern nie.</string>
     <string name="game_loader_error_missing_bios">Dit lyk of die vereiste BIOS ontbreek. Sit dit in jou ROM-vouer en skandeer weer. Vereiste lêers: %1$s</string>
-    <string name="game_shortcut_error">Iets het verkeerd geloop met die laai van jou speletjie. Maak seker die speletjie is nog in jou biblioteek.</string>
     <string name="dialog_saf_not_found">Hierdie toestel ondersteun nie die StorageAccessFramework-lêerkieser nie. Kopieer ongekomprimeerde ROM-lêers met die hand na %1$s en tik op Skandeer weer.</string>
     <string name="system_grid_details">%1$s speletjies</string>
     <string name="tv_folder_picker_title">Kies ROM-vouer</string>
@@ -303,10 +282,8 @@
     <string name="shortcut_binding_update_description">Druk een knoppie, of twee knoppies na mekaar vir \'n kombinasie, op jou \"%1$s\"</string>
     <string name="tv_search_results">Speletjies</string>
     <string name="tv_game_message_missing_gamepad">Jy het \'n beheerder nodig om te speel. Koppel asseblief een.</string>
-    <string name="game_edit_touch_controls_error_not_visible">Ontkoppel jou beheerder om die raakkontroles te wysig</string>
     <string name="game_interactory_busy">Wag totdat die hangende bewerkings klaar is</string>
     <string name="mobile_settings_help">Hulp</string>
-    <string name="mobile_settings_support">Ondersteuning</string>
     <string name="error_message_incompatible_state">Hierdie gestoorde toestand is nie versoenbaar met die huidige kernweergawe nie. Laai die nuutste stoor binne die speletjie of gebruik \'n vorige Lemuroid-weergawe.</string>
     <string name="shader_filter_names_auto">Outo</string>
     <string name="shader_filter_names_sharp">Skerp</string>

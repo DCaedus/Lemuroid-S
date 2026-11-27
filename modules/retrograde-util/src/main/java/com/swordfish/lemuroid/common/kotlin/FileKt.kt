@@ -47,32 +47,11 @@ fun InputStream.calculateCrc32(): String =
         }
     }
 
-fun File.calculateMd5(): String {
-    val bytes =
-        MessageDigest
-            .getInstance("MD5")
-            .digest(this.readBytes())
-    return bytes.toHexString()
-}
-
 fun InputStream.writeToFile(file: File) {
     this.use { inputStream ->
         file.outputStream().use { outputStream ->
             inputStream.copyTo(outputStream)
         }
-    }
-}
-
-fun ZipInputStream.extractEntryToFile(
-    entryName: String,
-    gameFile: File,
-) {
-    this.use { inputStream ->
-        while (true) {
-            val entry = inputStream.nextEntry
-            if (entry.name == entryName) break
-        }
-        inputStream.writeToFile(gameFile)
     }
 }
 
@@ -162,16 +141,4 @@ fun File.readBytesUncompressedAtomic(): ByteArray {
     return atomicFile.openRead().use { input ->
         readBytesUncompressedStream(input.uncompressedInputStream())
     }
-}
-
-/** GZIP-compresses these bytes (the format Lemuroid uses for save states). */
-fun ByteArray.gzipped(): ByteArray {
-    val output = ByteArrayOutputStream()
-    GZIPOutputStream(output).use { it.write(this) }
-    return output.toByteArray()
-}
-
-/** These bytes uncompressed if they are GZIP data, otherwise unchanged. */
-fun ByteArray.uncompressedIfGzipped(): ByteArray {
-    return readBytesUncompressedStream(ByteArrayInputStream(this).uncompressedInputStream())
 }
