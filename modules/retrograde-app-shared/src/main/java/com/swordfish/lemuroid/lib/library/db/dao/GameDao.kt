@@ -52,12 +52,9 @@ interface GameDao {
     @Query("SELECT * FROM games WHERE isFavorite = 1 ORDER BY COALESCE(customName, title) ASC")
     fun selectFavorites(): PagingSource<Int, Game>
 
-    @Query(
-        """
-        SELECT * FROM games WHERE lastPlayedAt IS NOT NULL AND isFavorite = 0 ORDER BY lastPlayedAt DESC LIMIT :limit
-        """,
-    )
-    fun selectFirstUnfavoriteRecents(limit: Int): Flow<List<Game>>
+    // Lemuroid-S: favorites are included, Recent is the full play history.
+    @Query("SELECT * FROM games WHERE lastPlayedAt IS NOT NULL ORDER BY lastPlayedAt DESC LIMIT :limit")
+    fun selectFirstRecents(limit: Int): Flow<List<Game>>
 
     @Query("SELECT * FROM games WHERE isFavorite = 1 ORDER BY lastPlayedAt DESC LIMIT :limit")
     fun selectFirstFavoritesRecents(limit: Int): Flow<List<Game>>
@@ -88,8 +85,8 @@ interface GameDao {
         customCoverUri: String?,
     )
 
-    /** Lemuroid-S: games with the most play time ("Frequently played"), favorites excluded like Recent. */
-    @Query("SELECT * FROM games WHERE playTimeMillis > 0 AND isFavorite = 0 ORDER BY playTimeMillis DESC LIMIT :limit")
+    /** Lemuroid-S: games with the most play time ("Frequently played"), favorites included. */
+    @Query("SELECT * FROM games WHERE playTimeMillis > 0 ORDER BY playTimeMillis DESC LIMIT :limit")
     fun selectFirstMostPlayed(limit: Int): Flow<List<Game>>
 
     /** Records a finished session: last played now, plus its duration to the total play time. */

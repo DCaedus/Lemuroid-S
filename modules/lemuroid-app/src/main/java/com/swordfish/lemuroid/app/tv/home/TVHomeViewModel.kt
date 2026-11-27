@@ -112,5 +112,5 @@ class TVHomeViewModel(retrogradeDb: RetrogradeDatabase, appContext: Context) : V
 
     private fun recentGames(retrogradeDb: RetrogradeDatabase) =
         retrogradeDb.gameDao()
-            .selectFirstUnfavoriteRecents(CAROUSEL_MAX_ITEMS)
+            .selectFirstRecents(CAROUSEL_MAX_ITEMS)
 }

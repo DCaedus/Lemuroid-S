@@ -135,7 +135,6 @@ private fun FirstLaunchSetupScreen(onDone: () -> Unit) {
     var status by remember { mutableStateOf(readStatus(context)) }
     var importStarted by remember { mutableStateOf(false) }
     var importSkipped by remember { mutableStateOf(false) }
-    var notificationsSkipped by remember { mutableStateOf(false) }
     var showImportDialog by remember { mutableStateOf(false) }
     val refresh = { status = readStatus(context) }
 
@@ -208,11 +207,9 @@ private fun FirstLaunchSetupScreen(onDone: () -> Unit) {
                     titleId = R.string.home_notification_title,
                     messageId = R.string.home_notification_message,
                     actionId = R.string.home_notification_action,
-                    done = status.notifications || notificationsSkipped,
+                    done = status.notifications,
                     enabled = !status.notifications,
                     onAction = { permissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS) },
-                    secondaryActionId = R.string.first_launch_setup_not_now,
-                    onSecondaryAction = { notificationsSkipped = true },
                 )
             }
             SetupCard(
@@ -229,7 +226,7 @@ private fun FirstLaunchSetupScreen(onDone: () -> Unit) {
     }
 
     // Lemuroid-S: no Done button, setup closes by itself once every card is done or dismissed.
-    val allDone = status.mainFolder && status.romsFolder && (status.notifications || notificationsSkipped) &&
+    val allDone = status.mainFolder && status.romsFolder && status.notifications &&
         (importStarted || importSkipped)
     LaunchedEffect(allDone) {
         if (allDone) {
