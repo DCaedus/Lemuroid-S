@@ -16,7 +16,7 @@ import androidx.compose.ui.unit.dp
 object LemuroidGrid {
     private val PORTRAIT_MIN_TILE = 104.dp
     private val LANDSCAPE_MIN_TILE = 144.dp
-    private val SPACING = 8.dp
+    private val SPACING = 6.dp
 
     @Composable
     fun columns(): GridCells {
