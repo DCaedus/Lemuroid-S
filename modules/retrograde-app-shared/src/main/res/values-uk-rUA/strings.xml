@@ -28,18 +28,15 @@
     <string name="setting_gambatte_gbc_color_correction">Корекція кольорів</string>
     <string name="setting_mgba_solar_sensor_level">Рівень сенсора освітленості</string>
     <string name="setting_mgba_interframe_blending">LCD ghosting</string>
-    <string name="setting_mgba_frameskip">Frameskip</string>
     <string name="setting_mgba_color_correction">Корекція кольорів</string>
     <string name="setting_mupen64plus_43screensize">Розмір екрана 4:3</string>
     <string name="setting_mupen64plus_cpucore">Динамічний рекомпілятор</string>
     <string name="setting_mupen64plus_BilinearMode">Білінійний режим</string>
     <string name="setting_mupen64plus_pak1">Набір гравця 1</string>
     <string name="setting_mupen64plus_pak2">Набір гравця 2</string>
-    <string name="setting_ppsspp_auto_frameskip">Авто frameskip</string>
     <string name="setting_ppsspp_cpu_core">Динамічний рекомпілятор</string>
     <string name="setting_ppsspp_internal_resolution">Роздільна здатність</string>
     <string name="setting_ppsspp_texture_scaling_level">Рівень масштабування текстур</string>
-    <string name="setting_fbneo_frameskip">Frameskip</string>
     <string name="setting_fbneo_cpu_speed_adjust">Швидкість процесора</string>
     <string name="setting_melonds_screen_layout">Компонування екрана</string>
     <string name="setting_melonds_threaded_renderer">Розпаралелений рендер</string>
@@ -62,8 +59,6 @@
     <string name="value_mgba_interframe_blending_mix">Простий</string>
     <string name="value_mgba_interframe_blending_lcd_ghosting">Ghosting LCD (Точний)</string>
     <string name="value_mgba_interframe_blending_lcd_ghosting_fast">LCD Ghosting (Швидкий)</string>
-    <string name="value_mgba_frameskip_disabled">Вимкнено</string>
-    <string name="value_mgba_frameskip_auto">Авто</string>
     <string name="value_mgba_color_correction_off">Вимкнено</string>
     <string name="value_mgba_color_correction_gba">Увімкнути</string>
     <string name="value_stella_filter_disabled">Вимкнено</string>

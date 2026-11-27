@@ -28,18 +28,15 @@
     <string name="setting_gambatte_gbc_color_correction">تصحيح الألوان</string>
     <string name="setting_mgba_solar_sensor_level">مستوى الاستشعار الشمسي</string>
     <string name="setting_mgba_interframe_blending">شبح LCD</string>
-    <string name="setting_mgba_frameskip">تخطي الإطارات</string>
     <string name="setting_mgba_color_correction">تصحيح الألوان</string>
     <string name="setting_mupen64plus_43screensize">حجم الشاشة 4:3</string>
     <string name="setting_mupen64plus_cpucore">إعادة تجميع ديناميكية</string>
     <string name="setting_mupen64plus_BilinearMode">الوضع الثنائي الخطي</string>
     <string name="setting_mupen64plus_pak1">حزمة اللاعب 1</string>
     <string name="setting_mupen64plus_pak2">حزمة اللاعب 2</string>
-    <string name="setting_ppsspp_auto_frameskip">تخطي الإطارات تلقائيا</string>
     <string name="setting_ppsspp_cpu_core">إعادة تجميع ديناميكية</string>
     <string name="setting_ppsspp_internal_resolution">الدقة</string>
     <string name="setting_ppsspp_texture_scaling_level">مستوى حجم النسق</string>
-    <string name="setting_fbneo_frameskip">تخطي الإطارات</string>
     <string name="setting_fbneo_cpu_speed_adjust">سرعة وحدة المعالجة المركزية</string>
     <string name="setting_melonds_screen_layout">تخطيط الشاشات</string>
     <string name="setting_melonds_threaded_renderer">معالجة متعددة المهام</string>
@@ -62,8 +59,6 @@
     <string name="value_mgba_interframe_blending_mix">بسيطة</string>
     <string name="value_mgba_interframe_blending_lcd_ghosting">LCD Ghost (دقيقة)</string>
     <string name="value_mgba_interframe_blending_lcd_ghosting_fast">LCD Ghost (سريع)</string>
-    <string name="value_mgba_frameskip_disabled">معطل</string>
-    <string name="value_mgba_frameskip_auto">تلقائي</string>
     <string name="value_mgba_color_correction_off">معطل</string>
     <string name="value_mgba_color_correction_gba">ممكن</string>
     <string name="value_stella_filter_disabled">معطل</string>

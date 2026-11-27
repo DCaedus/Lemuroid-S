@@ -33,18 +33,15 @@
     <string name="setting_gambatte_gbc_color_correction">Color correction</string>
     <string name="setting_mgba_solar_sensor_level">Solar sensor level</string>
     <string name="setting_mgba_interframe_blending">LCD ghosting</string>
-    <string name="setting_mgba_frameskip">Frameskip</string>
     <string name="setting_mgba_color_correction">Color correction</string>
     <string name="setting_mupen64plus_43screensize">Screen size 4:3</string>
     <string name="setting_mupen64plus_cpucore">Dynamic recompiler</string>
     <string name="setting_mupen64plus_BilinearMode">Bilinear mode</string>
     <string name="setting_mupen64plus_pak1">Player 1 Pak</string>
     <string name="setting_mupen64plus_pak2">Player 2 Pak</string>
-    <string name="setting_ppsspp_auto_frameskip">Auto frameskip</string>
     <string name="setting_ppsspp_cpu_core">Dynamic recompiler</string>
     <string name="setting_ppsspp_internal_resolution">Resolution</string>
     <string name="setting_ppsspp_texture_scaling_level">Texture scaling level</string>
-    <string name="setting_fbneo_frameskip">Frameskip</string>
     <string name="setting_fbneo_cpu_speed_adjust">CPU speed</string>
     <string name="setting_melonds_screen_layout">Screens layout</string>
     <string name="setting_melonds_threaded_renderer">Threaded renderer</string>
@@ -70,8 +67,6 @@
     <string name="value_mgba_interframe_blending_lcd_ghosting">LCD Ghosting (Accurate)</string>
     <string name="value_mgba_interframe_blending_lcd_ghosting_fast">LCD Ghosting (Fast)</string>
 
-    <string name="value_mgba_frameskip_disabled">Disabled</string>
-    <string name="value_mgba_frameskip_auto">Auto</string>
 
     <string name="value_mgba_color_correction_off">Disabled</string>
     <string name="value_mgba_color_correction_gba">Enabled</string>
@@ -144,23 +139,10 @@
     <string name="value_enabled">On</string>
     <string name="value_disabled">Off</string>
     <string name="value_fceumm_palette_default">Default</string>
-    <string name="value_fceumm_palette_asqrealc" translatable="false">AspiringSquire\'s Real</string>
-    <string name="value_fceumm_palette_nintendo_vc" translatable="false">Nintendo Virtual Console</string>
     <string name="value_fceumm_palette_rgb" translatable="false">Nintendo RGB PPU</string>
-    <string name="value_fceumm_palette_yuv_v3" translatable="false">FBX\'s YUV-V3</string>
-    <string name="value_fceumm_palette_unsaturated_final" translatable="false">FBX\'s Unsaturated-Final</string>
     <string name="value_fceumm_palette_sony" translatable="false">Sony CXA2025AS US</string>
-    <string name="value_fceumm_palette_pal" translatable="false">PAL</string>
-    <string name="value_fceumm_palette_bmf_final2" translatable="false">BMF\'s Final 2</string>
-    <string name="value_fceumm_palette_bmf_final3" translatable="false">BMF\'s Final 3</string>
     <string name="value_fceumm_palette_smooth_fbx" translatable="false">FBX\'s Smooth</string>
-    <string name="value_fceumm_palette_composite_direct_fbx" translatable="false">FBX\'s Composite Direct</string>
-    <string name="value_fceumm_palette_pvm_fbx" translatable="false">FBX\'s PVM Style D93</string>
-    <string name="value_fceumm_palette_ntsc_hardware_fbx" translatable="false">FBX\'s NTSC Hardware</string>
-    <string name="value_fceumm_palette_nes_classic" translatable="false">FBX\'s NES Classic</string>
-    <string name="value_fceumm_palette_nescap" translatable="false">RGBSource\'s NESCAP</string>
-    <string name="value_fceumm_palette_wavebeam" translatable="false">nakedarthur\'s Wavebeam</string>
-    <string name="value_fceumm_palette_raw" translatable="false">Raw</string>
+    <string name="value_fceumm_palette_wii_vc" translatable="false">Wii Virtual Console</string>
     <string name="value_dosbox_cycles_315" translatable="false">8086, 4.77 MHz (1980)</string>
     <string name="value_dosbox_cycles_1320" translatable="false">286, 6 MHz (1982)</string>
     <string name="value_dosbox_cycles_2750" translatable="false">286, 12.5 MHz (1985)</string>

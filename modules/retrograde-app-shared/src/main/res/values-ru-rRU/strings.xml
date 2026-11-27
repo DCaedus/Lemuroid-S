@@ -28,18 +28,15 @@
     <string name="setting_gambatte_gbc_color_correction">Цветокоррекция</string>
     <string name="setting_mgba_solar_sensor_level">Уровень датчика освещения</string>
     <string name="setting_mgba_interframe_blending">ЖК-двоение</string>
-    <string name="setting_mgba_frameskip">Пропуск кадров</string>
     <string name="setting_mgba_color_correction">Цветокоррекция</string>
     <string name="setting_mupen64plus_43screensize">Размер экрана 4:3</string>
     <string name="setting_mupen64plus_cpucore">Динамический рекомпилятор</string>
     <string name="setting_mupen64plus_BilinearMode">Билинейный режим</string>
     <string name="setting_mupen64plus_pak1">Расширение Игрока 1</string>
     <string name="setting_mupen64plus_pak2">Расширение Игрока 2</string>
-    <string name="setting_ppsspp_auto_frameskip">Автоматический пропуск кадров</string>
     <string name="setting_ppsspp_cpu_core">Динамический рекомпилятор</string>
     <string name="setting_ppsspp_internal_resolution">Разрешение</string>
     <string name="setting_ppsspp_texture_scaling_level">Уровень масштабирования текстур</string>
-    <string name="setting_fbneo_frameskip">Пропуск кадров</string>
     <string name="setting_fbneo_cpu_speed_adjust">Скорость ЦП</string>
     <string name="setting_melonds_screen_layout">Расположение экранов</string>
     <string name="setting_melonds_threaded_renderer">Рендеринг в отдельном потоке</string>
@@ -62,8 +59,6 @@
     <string name="value_mgba_interframe_blending_mix">Простой</string>
     <string name="value_mgba_interframe_blending_lcd_ghosting">ЖК-двоение (Точно)</string>
     <string name="value_mgba_interframe_blending_lcd_ghosting_fast">ЖК-двоение (Быстро)</string>
-    <string name="value_mgba_frameskip_disabled">Отключено</string>
-    <string name="value_mgba_frameskip_auto">Автоматически</string>
     <string name="value_mgba_color_correction_off">Отключено</string>
     <string name="value_mgba_color_correction_gba">Включено</string>
     <string name="value_stella_filter_disabled">Отключено</string>

@@ -28,18 +28,15 @@
     <string name="setting_gambatte_gbc_color_correction">Färgkorrigering</string>
     <string name="setting_mgba_solar_sensor_level">Solsensornivå</string>
     <string name="setting_mgba_interframe_blending">LCD spöke</string>
-    <string name="setting_mgba_frameskip">Hoppa över bildrutor</string>
     <string name="setting_mgba_color_correction">Färgkorrigering</string>
     <string name="setting_mupen64plus_43screensize">Skärmstorlek 4:3</string>
     <string name="setting_mupen64plus_cpucore">Dynamisk omkompilator</string>
     <string name="setting_mupen64plus_BilinearMode">Bilinjärt läge</string>
     <string name="setting_mupen64plus_pak1">Spelare 1 Pak</string>
     <string name="setting_mupen64plus_pak2">Spelare 2 Pak</string>
-    <string name="setting_ppsspp_auto_frameskip">Automatisk överhoppning av bildrutor</string>
     <string name="setting_ppsspp_cpu_core">Dynamisk omkompilator</string>
     <string name="setting_ppsspp_internal_resolution">Upplösning</string>
     <string name="setting_ppsspp_texture_scaling_level">Skalningsnivå för texturer</string>
-    <string name="setting_fbneo_frameskip">Hoppa över bildrutor</string>
     <string name="setting_fbneo_cpu_speed_adjust">CPU-hastighet</string>
     <string name="setting_melonds_screen_layout">Skärmlayout</string>
     <string name="setting_melonds_threaded_renderer">Trådad renderare</string>
@@ -62,8 +59,6 @@
     <string name="value_mgba_interframe_blending_mix">Enkel</string>
     <string name="value_mgba_interframe_blending_lcd_ghosting">LCD spöke (exakt)</string>
     <string name="value_mgba_interframe_blending_lcd_ghosting_fast">LCD spöke (Fast)</string>
-    <string name="value_mgba_frameskip_disabled">Inaktiverad</string>
-    <string name="value_mgba_frameskip_auto">Auto</string>
     <string name="value_mgba_color_correction_off">Inaktiverad</string>
     <string name="value_mgba_color_correction_gba">Aktiverad</string>
     <string name="value_stella_filter_disabled">Inaktiverad</string>

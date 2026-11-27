@@ -28,18 +28,15 @@
     <string name="setting_gambatte_gbc_color_correction">色補正</string>
     <string name="setting_mgba_solar_sensor_level">太陽センサーレベル</string>
     <string name="setting_mgba_interframe_blending">LCD ゴースト</string>
-    <string name="setting_mgba_frameskip">Frameskip</string>
     <string name="setting_mgba_color_correction">色補正</string>
     <string name="setting_mupen64plus_43screensize">画面サイズ4:3</string>
     <string name="setting_mupen64plus_cpucore">Dynamic recompiler</string>
     <string name="setting_mupen64plus_BilinearMode">バイラインモード</string>
     <string name="setting_mupen64plus_pak1">プレイヤー1パック</string>
     <string name="setting_mupen64plus_pak2">プレイヤー2パック</string>
-    <string name="setting_ppsspp_auto_frameskip">Auto frameskip</string>
     <string name="setting_ppsspp_cpu_core">Dynamic recompiler</string>
     <string name="setting_ppsspp_internal_resolution">解像度</string>
     <string name="setting_ppsspp_texture_scaling_level">テクスチャのスケーリングレベル</string>
-    <string name="setting_fbneo_frameskip">Frameskip</string>
     <string name="setting_fbneo_cpu_speed_adjust">CPU速度</string>
     <string name="setting_melonds_screen_layout">画面のレイアウト</string>
     <string name="setting_melonds_threaded_renderer">スレッドレンダラー</string>
@@ -62,8 +59,6 @@
     <string name="value_mgba_interframe_blending_mix">単純な</string>
     <string name="value_mgba_interframe_blending_lcd_ghosting">LCDゴースト（精度）</string>
     <string name="value_mgba_interframe_blending_lcd_ghosting_fast">LCD ゴースト(高速)</string>
-    <string name="value_mgba_frameskip_disabled">無効</string>
-    <string name="value_mgba_frameskip_auto">自動</string>
     <string name="value_mgba_color_correction_off">無効</string>
     <string name="value_mgba_color_correction_gba">有効</string>
     <string name="value_stella_filter_disabled">無効</string>

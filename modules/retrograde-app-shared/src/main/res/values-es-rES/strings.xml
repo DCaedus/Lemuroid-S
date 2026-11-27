@@ -28,18 +28,15 @@
     <string name="setting_gambatte_gbc_color_correction">Corrección de color</string>
     <string name="setting_mgba_solar_sensor_level">Nivel del sensor solar</string>
     <string name="setting_mgba_interframe_blending">Ghosting LCD</string>
-    <string name="setting_mgba_frameskip">Salto de fotogramas</string>
     <string name="setting_mgba_color_correction">Corrección de color</string>
     <string name="setting_mupen64plus_43screensize">Tamaño de pantalla 4:3</string>
     <string name="setting_mupen64plus_cpucore">Recompilador dinámico</string>
     <string name="setting_mupen64plus_BilinearMode">Modo bilinear</string>
     <string name="setting_mupen64plus_pak1">Pak de jugador 1</string>
     <string name="setting_mupen64plus_pak2">Pak de jugador 2</string>
-    <string name="setting_ppsspp_auto_frameskip">Salto de fotogramas automático</string>
     <string name="setting_ppsspp_cpu_core">Recompilador dinámico</string>
     <string name="setting_ppsspp_internal_resolution">Resolución</string>
     <string name="setting_ppsspp_texture_scaling_level">Nivel de escala de textura</string>
-    <string name="setting_fbneo_frameskip">Salto de fotogramas</string>
     <string name="setting_fbneo_cpu_speed_adjust">Velocidad del CPU</string>
     <string name="setting_melonds_screen_layout">Disposición de pantallas</string>
     <string name="setting_melonds_threaded_renderer">Renderizador en paralelo</string>
@@ -62,8 +59,6 @@
     <string name="value_mgba_interframe_blending_mix">Simple</string>
     <string name="value_mgba_interframe_blending_lcd_ghosting">Ghosting LCD (Preciso)</string>
     <string name="value_mgba_interframe_blending_lcd_ghosting_fast">Ghosting LCD (Rápido)</string>
-    <string name="value_mgba_frameskip_disabled">Desactivado</string>
-    <string name="value_mgba_frameskip_auto">Automático</string>
     <string name="value_mgba_color_correction_off">Desactivado</string>
     <string name="value_mgba_color_correction_gba">Habilitado</string>
     <string name="value_stella_filter_disabled">Desactivado</string>

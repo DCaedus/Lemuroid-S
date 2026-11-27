@@ -103,23 +103,10 @@ data class GameSystem(
                                         R.string.setting_fceumm_palette,
                                         arrayListOf(
                                             ExposedSetting.Value("default", R.string.value_fceumm_palette_default),
-                                            ExposedSetting.Value("asqrealc", R.string.value_fceumm_palette_asqrealc),
-                                            ExposedSetting.Value("nintendo-vc", R.string.value_fceumm_palette_nintendo_vc),
                                             ExposedSetting.Value("rgb", R.string.value_fceumm_palette_rgb),
-                                            ExposedSetting.Value("yuv-v3", R.string.value_fceumm_palette_yuv_v3),
-                                            ExposedSetting.Value("unsaturated-final", R.string.value_fceumm_palette_unsaturated_final),
-                                            ExposedSetting.Value("sony-cxa2025as-us", R.string.value_fceumm_palette_sony),
-                                            ExposedSetting.Value("pal", R.string.value_fceumm_palette_pal),
-                                            ExposedSetting.Value("bmf-final2", R.string.value_fceumm_palette_bmf_final2),
-                                            ExposedSetting.Value("bmf-final3", R.string.value_fceumm_palette_bmf_final3),
                                             ExposedSetting.Value("smooth-fbx", R.string.value_fceumm_palette_smooth_fbx),
-                                            ExposedSetting.Value("composite-direct-fbx", R.string.value_fceumm_palette_composite_direct_fbx),
-                                            ExposedSetting.Value("pvm-style-d93-fbx", R.string.value_fceumm_palette_pvm_fbx),
-                                            ExposedSetting.Value("ntsc-hardware-fbx", R.string.value_fceumm_palette_ntsc_hardware_fbx),
-                                            ExposedSetting.Value("nes-classic-fbx-fs", R.string.value_fceumm_palette_nes_classic),
-                                            ExposedSetting.Value("nescap", R.string.value_fceumm_palette_nescap),
-                                            ExposedSetting.Value("wavebeam", R.string.value_fceumm_palette_wavebeam),
-                                            ExposedSetting.Value("raw", R.string.value_fceumm_palette_raw),
+                                            ExposedSetting.Value("sony-cxa2025as-us", R.string.value_fceumm_palette_sony),
+                                            ExposedSetting.Value("wii-vc", R.string.value_fceumm_palette_wii_vc),
                                         ),
                                     ),
                                     ExposedSetting(
@@ -161,7 +148,7 @@ data class GameSystem(
                             defaultSettings =
                                 listOf(
                                     CoreVariable("snes9x_reduce_sprite_flicker", "enabled"),
-                                    CoreVariable("snes9x_blargg", "s-video"),
+                                    CoreVariable("snes9x_blargg", "disabled"),
                                     CoreVariable("snes9x_overscan", "enabled"),
                                 ),
                             controllerConfigs =
@@ -636,17 +623,6 @@ data class GameSystem(
                                         ),
                                     ),
                                     ExposedSetting(
-                                        "mgba_frameskip",
-                                        R.string.setting_mgba_frameskip,
-                                        arrayListOf(
-                                            ExposedSetting.Value(
-                                                "disabled",
-                                                R.string.value_mgba_frameskip_disabled,
-                                            ),
-                                            ExposedSetting.Value("auto", R.string.value_mgba_frameskip_auto),
-                                        ),
-                                    ),
-                                    ExposedSetting(
                                         "mgba_color_correction",
                                         R.string.setting_mgba_color_correction,
                                         arrayListOf(
@@ -662,6 +638,10 @@ data class GameSystem(
                                     ),
                                 ),
                             rumbleSupported = true,
+                            defaultSettings =
+                                listOf(
+                                    CoreVariable("mgba_frameskip", "disabled"),
+                                ),
                             controllerConfigs =
                                 hashMapOf(
                                     0 to arrayListOf(ControllerConfigs.GBA),
@@ -847,18 +827,12 @@ data class GameSystem(
                             CoreID.PPSSPP,
                             defaultSettings =
                                 listOf(
+                                    CoreVariable("ppsspp_auto_frameskip", "disabled"),
+                                    CoreVariable("ppsspp_frameskip", "0"),
                                     CoreVariable("ppsspp_frame_duplication", "enabled"),
                                 ),
                             exposedSettings =
                                 listOf(
-                                    ExposedSetting(
-                                        "ppsspp_auto_frameskip",
-                                        R.string.setting_ppsspp_auto_frameskip,
-                                    ),
-                                    ExposedSetting(
-                                        "ppsspp_frameskip",
-                                        R.string.setting_mgba_frameskip,
-                                    ),
                                 ),
                             exposedAdvancedSettings =
                                 listOf(
@@ -912,10 +886,6 @@ data class GameSystem(
                             CoreID.FBNEO,
                             exposedSettings =
                                 listOf(
-                                    ExposedSetting(
-                                        "fbneo-frameskip-type",
-                                        R.string.setting_fbneo_frameskip,
-                                    ),
                                     ExposedSetting(
                                         "fbneo-cpu-speed-adjust",
                                         R.string.setting_fbneo_cpu_speed_adjust,

@@ -28,18 +28,15 @@
     <string name="setting_gambatte_gbc_color_correction">Corecție culoare</string>
     <string name="setting_mgba_solar_sensor_level">Nivel senzor solar</string>
     <string name="setting_mgba_interframe_blending">Fantomă LCD</string>
-    <string name="setting_mgba_frameskip">Frameskip</string>
     <string name="setting_mgba_color_correction">Corecție culoare</string>
     <string name="setting_mupen64plus_43screensize">Dimensiune ecran 4:3</string>
     <string name="setting_mupen64plus_cpucore">Recompilator dinamic</string>
     <string name="setting_mupen64plus_BilinearMode">Mod Bilinear</string>
     <string name="setting_mupen64plus_pak1">Pachet Jucător 1</string>
     <string name="setting_mupen64plus_pak2">Pachet Jucător 2</string>
-    <string name="setting_ppsspp_auto_frameskip">Auto frameskip</string>
     <string name="setting_ppsspp_cpu_core">Recompilator dinamic</string>
     <string name="setting_ppsspp_internal_resolution">Rezoluție</string>
     <string name="setting_ppsspp_texture_scaling_level">Nivel scalare textură</string>
-    <string name="setting_fbneo_frameskip">Frameskip</string>
     <string name="setting_fbneo_cpu_speed_adjust">Viteza procesorului</string>
     <string name="setting_melonds_screen_layout">Aspect ecran</string>
     <string name="setting_melonds_threaded_renderer">Randator glisat</string>
@@ -62,8 +59,6 @@
     <string name="value_mgba_interframe_blending_mix">Simplu</string>
     <string name="value_mgba_interframe_blending_lcd_ghosting">Ghosting LCD (acurata)</string>
     <string name="value_mgba_interframe_blending_lcd_ghosting_fast">Ghosting LCD (rapid)</string>
-    <string name="value_mgba_frameskip_disabled">Dezactivat</string>
-    <string name="value_mgba_frameskip_auto">Automat</string>
     <string name="value_mgba_color_correction_off">Dezactivat</string>
     <string name="value_mgba_color_correction_gba">Activat</string>
     <string name="value_stella_filter_disabled">Dezactivat</string>

@@ -28,18 +28,15 @@
     <string name="setting_gambatte_gbc_color_correction">Correção de cor</string>
     <string name="setting_mgba_solar_sensor_level">Nível do sensor solar</string>
     <string name="setting_mgba_interframe_blending">LCD ghosting</string>
-    <string name="setting_mgba_frameskip">Frameskip</string>
     <string name="setting_mgba_color_correction">Correção de cor</string>
     <string name="setting_mupen64plus_43screensize">Tamanho da tela 4:3</string>
     <string name="setting_mupen64plus_cpucore">Recompilador dinâmico</string>
     <string name="setting_mupen64plus_BilinearMode">Modo Bilinear</string>
     <string name="setting_mupen64plus_pak1">Player 1 Pak</string>
     <string name="setting_mupen64plus_pak2">Player 2 Pak</string>
-    <string name="setting_ppsspp_auto_frameskip">Frameskip automático</string>
     <string name="setting_ppsspp_cpu_core">Recompilador dinâmico</string>
     <string name="setting_ppsspp_internal_resolution">Resolução</string>
     <string name="setting_ppsspp_texture_scaling_level">Nível de escala da textura</string>
-    <string name="setting_fbneo_frameskip">Frameskip</string>
     <string name="setting_fbneo_cpu_speed_adjust">Velocidade da CPU</string>
     <string name="setting_melonds_screen_layout">Layout de tela</string>
     <string name="setting_melonds_threaded_renderer">Renderizador de thread</string>
@@ -62,8 +59,6 @@
     <string name="value_mgba_interframe_blending_mix">Simples</string>
     <string name="value_mgba_interframe_blending_lcd_ghosting">LCD Ghosting (preciso)</string>
     <string name="value_mgba_interframe_blending_lcd_ghosting_fast">LCD Ghosting (rápido)</string>
-    <string name="value_mgba_frameskip_disabled">Desabilitado</string>
-    <string name="value_mgba_frameskip_auto">Automático</string>
     <string name="value_mgba_color_correction_off">Desabilitado</string>
     <string name="value_mgba_color_correction_gba">Habilitado</string>
     <string name="value_stella_filter_disabled">Desabilitado</string>

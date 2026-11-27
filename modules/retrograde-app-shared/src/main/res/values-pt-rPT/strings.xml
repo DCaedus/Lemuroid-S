@@ -28,18 +28,15 @@
     <string name="setting_gambatte_gbc_color_correction">Correção de cor</string>
     <string name="setting_mgba_solar_sensor_level">Nível do sensor solar</string>
     <string name="setting_mgba_interframe_blending">Efeito Fantasma do LCD</string>
-    <string name="setting_mgba_frameskip">Frameskip</string>
     <string name="setting_mgba_color_correction">Correção de cor</string>
     <string name="setting_mupen64plus_43screensize">Tamanho da tela 4:3</string>
     <string name="setting_mupen64plus_cpucore">Re-compilador dinâmico</string>
     <string name="setting_mupen64plus_BilinearMode">Modo Bilinear</string>
     <string name="setting_mupen64plus_pak1">Pak do Jogador 1</string>
     <string name="setting_mupen64plus_pak2">Pak do Jogador 2</string>
-    <string name="setting_ppsspp_auto_frameskip">Auto frameskip</string>
     <string name="setting_ppsspp_cpu_core">Re-compilador dinâmico</string>
     <string name="setting_ppsspp_internal_resolution">Resolução</string>
     <string name="setting_ppsspp_texture_scaling_level">Nível de dimensionamento da textura</string>
-    <string name="setting_fbneo_frameskip">Pular Quadro</string>
     <string name="setting_fbneo_cpu_speed_adjust">Velocidade da CPU</string>
     <string name="setting_melonds_screen_layout">Layout das telas</string>
     <string name="setting_melonds_threaded_renderer">Renderizador Threaded</string>
@@ -62,8 +59,6 @@
     <string name="value_mgba_interframe_blending_mix">Simples</string>
     <string name="value_mgba_interframe_blending_lcd_ghosting">Efeito Fantasma do LCD (Preciso)</string>
     <string name="value_mgba_interframe_blending_lcd_ghosting_fast">Efeito Fantasma do LCD (Rápido)</string>
-    <string name="value_mgba_frameskip_disabled">Desabilitado</string>
-    <string name="value_mgba_frameskip_auto">Automático</string>
     <string name="value_mgba_color_correction_off">Desabilitado</string>
     <string name="value_mgba_color_correction_gba">Activo</string>
     <string name="value_stella_filter_disabled">Desabilitado</string>

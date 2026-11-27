@@ -28,18 +28,15 @@
     <string name="setting_gambatte_gbc_color_correction">Διόρθωση χρωμάτων</string>
     <string name="setting_mgba_solar_sensor_level">Επίπεδο ηλιακού αισθητήρα</string>
     <string name="setting_mgba_interframe_blending">LCD Ghosting</string>
-    <string name="setting_mgba_frameskip">Frameskip</string>
     <string name="setting_mgba_color_correction">Διόρθωση χρωμάτων</string>
     <string name="setting_mupen64plus_43screensize">Μέγεθος οθόνης 4:3</string>
     <string name="setting_mupen64plus_cpucore">Δυναμικός αναμεταγλωττιστής</string>
     <string name="setting_mupen64plus_BilinearMode">Bilinear mode</string>
     <string name="setting_mupen64plus_pak1">Παίκτης 1 Pak</string>
     <string name="setting_mupen64plus_pak2">Παίκτης 2 Pak</string>
-    <string name="setting_ppsspp_auto_frameskip">Auto frameskip</string>
     <string name="setting_ppsspp_cpu_core">Δυναμικός αναμεταγλωττιστής</string>
     <string name="setting_ppsspp_internal_resolution">Ανάλυση</string>
     <string name="setting_ppsspp_texture_scaling_level">Επίπεδο Texture scaling</string>
-    <string name="setting_fbneo_frameskip">Frameskip</string>
     <string name="setting_fbneo_cpu_speed_adjust">Ταχύτητα CPU</string>
     <string name="setting_melonds_screen_layout">Διάταξη οθόνης</string>
     <string name="setting_melonds_threaded_renderer">Threaded renderer</string>
@@ -62,8 +59,6 @@
     <string name="value_mgba_interframe_blending_mix">Απλό</string>
     <string name="value_mgba_interframe_blending_lcd_ghosting">LCD Ghosting (Ακριβής)</string>
     <string name="value_mgba_interframe_blending_lcd_ghosting_fast">LCD Ghosting (Γρήγορο)</string>
-    <string name="value_mgba_frameskip_disabled">Απενεργοποιημένο</string>
-    <string name="value_mgba_frameskip_auto">Αυτόματο</string>
     <string name="value_mgba_color_correction_off">Απενεργοποιημένο</string>
     <string name="value_mgba_color_correction_gba">Ενεργοποιημένο</string>
     <string name="value_stella_filter_disabled">Απενεργοποιημένο</string>

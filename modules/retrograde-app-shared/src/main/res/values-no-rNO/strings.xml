@@ -28,18 +28,15 @@
     <string name="setting_gambatte_gbc_color_correction">Fargekorrigering</string>
     <string name="setting_mgba_solar_sensor_level">Solcellesensornivå</string>
     <string name="setting_mgba_interframe_blending">LCD ghosting</string>
-    <string name="setting_mgba_frameskip">Frameskip</string>
     <string name="setting_mgba_color_correction">Fargekorrigering</string>
     <string name="setting_mupen64plus_43screensize">Skjermstørrelse 4:3</string>
     <string name="setting_mupen64plus_cpucore">Dynamisk re-kompilator</string>
     <string name="setting_mupen64plus_BilinearMode">Bilineær modus</string>
     <string name="setting_mupen64plus_pak1">Spiller 1 Pak</string>
     <string name="setting_mupen64plus_pak2">Spiller 2 Pak</string>
-    <string name="setting_ppsspp_auto_frameskip">Auto frameskip</string>
     <string name="setting_ppsspp_cpu_core">Dynamisk re-kompilator</string>
     <string name="setting_ppsspp_internal_resolution">Oppløsning</string>
     <string name="setting_ppsspp_texture_scaling_level">Nivå for teksturskalering</string>
-    <string name="setting_fbneo_frameskip">Frameskip</string>
     <string name="setting_fbneo_cpu_speed_adjust">CPU hastighet</string>
     <string name="setting_melonds_screen_layout">Skjermoppsett</string>
     <string name="setting_melonds_threaded_renderer">Tråd-basert renderingsmotor</string>
@@ -62,8 +59,6 @@
     <string name="value_mgba_interframe_blending_mix">Enkel</string>
     <string name="value_mgba_interframe_blending_lcd_ghosting">LCD Ghosting (Nøyaktig)</string>
     <string name="value_mgba_interframe_blending_lcd_ghosting_fast">LCD Ghosting (Rask)</string>
-    <string name="value_mgba_frameskip_disabled">Deaktivert</string>
-    <string name="value_mgba_frameskip_auto">Automatisk</string>
     <string name="value_mgba_color_correction_off">Deaktivert</string>
     <string name="value_mgba_color_correction_gba">Aktivert</string>
     <string name="value_stella_filter_disabled">Deaktivert</string>

@@ -28,18 +28,15 @@
     <string name="setting_gambatte_gbc_color_correction">Värin korjaus</string>
     <string name="setting_mgba_solar_sensor_level">Aurinkoanturin taso</string>
     <string name="setting_mgba_interframe_blending">LCD-aaveet</string>
-    <string name="setting_mgba_frameskip">Frameskip</string>
     <string name="setting_mgba_color_correction">Värin korjaus</string>
     <string name="setting_mupen64plus_43screensize">Näytön koko 4:3</string>
     <string name="setting_mupen64plus_cpucore">Dynaaminen kääntäjä</string>
     <string name="setting_mupen64plus_BilinearMode">Bilineaarinen tila</string>
     <string name="setting_mupen64plus_pak1">Pelaaja 1 Pak</string>
     <string name="setting_mupen64plus_pak2">Pelaaja 2 Pak</string>
-    <string name="setting_ppsspp_auto_frameskip">Auto frameskip</string>
     <string name="setting_ppsspp_cpu_core">Dynaaminen kääntäjä</string>
     <string name="setting_ppsspp_internal_resolution">Resoluutio</string>
     <string name="setting_ppsspp_texture_scaling_level">Tekstuurin skaalaus taso</string>
-    <string name="setting_fbneo_frameskip">Frameskip</string>
     <string name="setting_fbneo_cpu_speed_adjust">Suorittimen nopeus</string>
     <string name="setting_melonds_screen_layout">Näytön asettelu</string>
     <string name="setting_melonds_threaded_renderer">Kierrätetty renderoija</string>
@@ -62,8 +59,6 @@
     <string name="value_mgba_interframe_blending_mix">Yksinkertainen</string>
     <string name="value_mgba_interframe_blending_lcd_ghosting">Lcd-Ghosting (Tarkka)</string>
     <string name="value_mgba_interframe_blending_lcd_ghosting_fast">LCD Ghosting (Fast)</string>
-    <string name="value_mgba_frameskip_disabled">Pois Käytöstä</string>
-    <string name="value_mgba_frameskip_auto">Automaattinen</string>
     <string name="value_mgba_color_correction_off">Pois Käytöstä</string>
     <string name="value_mgba_color_correction_gba">Käytössä</string>
     <string name="value_stella_filter_disabled">Pois Käytöstä</string>

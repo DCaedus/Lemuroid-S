@@ -28,18 +28,15 @@
     <string name="setting_gambatte_gbc_color_correction">Farbkorrektur</string>
     <string name="setting_mgba_solar_sensor_level">Solarsensorpegel</string>
     <string name="setting_mgba_interframe_blending">LCD Schlieren</string>
-    <string name="setting_mgba_frameskip">Frameskip</string>
     <string name="setting_mgba_color_correction">Farbkorrektur</string>
     <string name="setting_mupen64plus_43screensize">Bildschirmgröße 4:3</string>
     <string name="setting_mupen64plus_cpucore">Dynamischer Neukompilierer</string>
     <string name="setting_mupen64plus_BilinearMode">Bilinear Modus</string>
     <string name="setting_mupen64plus_pak1">Spieler 1 Pak</string>
     <string name="setting_mupen64plus_pak2">Spieler 2 Pak</string>
-    <string name="setting_ppsspp_auto_frameskip">Auto frameskip</string>
     <string name="setting_ppsspp_cpu_core">Dynamischer Neukompilierer</string>
     <string name="setting_ppsspp_internal_resolution">Auflösung</string>
     <string name="setting_ppsspp_texture_scaling_level">Texturskalierungslevel</string>
-    <string name="setting_fbneo_frameskip">Frameskip</string>
     <string name="setting_fbneo_cpu_speed_adjust">CPU Geschwindigkeit</string>
     <string name="setting_melonds_screen_layout">Bildschirmlayout</string>
     <string name="setting_melonds_threaded_renderer">Threaded renderer</string>
@@ -62,8 +59,6 @@
     <string name="value_mgba_interframe_blending_mix">Einfach</string>
     <string name="value_mgba_interframe_blending_lcd_ghosting">LCD Schlieren (Genau)</string>
     <string name="value_mgba_interframe_blending_lcd_ghosting_fast">LCD Schlieren (Schnell)</string>
-    <string name="value_mgba_frameskip_disabled">Deaktiviert</string>
-    <string name="value_mgba_frameskip_auto">Automatisch</string>
     <string name="value_mgba_color_correction_off">Deaktiviert</string>
     <string name="value_mgba_color_correction_gba">Aktiv</string>
     <string name="value_stella_filter_disabled">Deaktiviert</string>

@@ -28,18 +28,15 @@
     <string name="setting_gambatte_gbc_color_correction">색 보정</string>
     <string name="setting_mgba_solar_sensor_level">태양광 센서 수준</string>
     <string name="setting_mgba_interframe_blending">LCD 고스팅</string>
-    <string name="setting_mgba_frameskip">프레임 스킵</string>
     <string name="setting_mgba_color_correction">색 보정</string>
     <string name="setting_mupen64plus_43screensize">4:3 화면 크기</string>
     <string name="setting_mupen64plus_cpucore">다이내믹 리컴파일러</string>
     <string name="setting_mupen64plus_BilinearMode">이중선형 모드</string>
     <string name="setting_mupen64plus_pak1">플레이어 1 팩</string>
     <string name="setting_mupen64plus_pak2">플레이어 2 팩</string>
-    <string name="setting_ppsspp_auto_frameskip">자동 프레임 스킵</string>
     <string name="setting_ppsspp_cpu_core">다이내믹 리컴파일러</string>
     <string name="setting_ppsspp_internal_resolution">해상도</string>
     <string name="setting_ppsspp_texture_scaling_level">텍스쳐 스케일링 수준</string>
-    <string name="setting_fbneo_frameskip">프레임 스킵</string>
     <string name="setting_fbneo_cpu_speed_adjust">CPU 속도</string>
     <string name="setting_melonds_screen_layout">화면 구성</string>
     <string name="setting_melonds_threaded_renderer">멀티스레드 렌더러</string>
@@ -62,8 +59,6 @@
     <string name="value_mgba_interframe_blending_mix">단순</string>
     <string name="value_mgba_interframe_blending_lcd_ghosting">LCD 고스팅 (정확하게)</string>
     <string name="value_mgba_interframe_blending_lcd_ghosting_fast">LCD 고스팅 (빠르게)</string>
-    <string name="value_mgba_frameskip_disabled">사용 안 함</string>
-    <string name="value_mgba_frameskip_auto">자동</string>
     <string name="value_mgba_color_correction_off">사용 안 함</string>
     <string name="value_mgba_color_correction_gba">사용함</string>
     <string name="value_stella_filter_disabled">사용 안 함</string>

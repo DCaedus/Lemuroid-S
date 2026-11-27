@@ -28,18 +28,15 @@
     <string name="setting_gambatte_gbc_color_correction">Корекција боје</string>
     <string name="setting_mgba_solar_sensor_level">Ниво соларног сензора</string>
     <string name="setting_mgba_interframe_blending">LCD духови</string>
-    <string name="setting_mgba_frameskip">Прескакање фрејмова</string>
     <string name="setting_mgba_color_correction">Корекција боје</string>
     <string name="setting_mupen64plus_43screensize">Величина екрана 4:3</string>
     <string name="setting_mupen64plus_cpucore">Динамични рекомпајлер</string>
     <string name="setting_mupen64plus_BilinearMode">Билинеарни режим</string>
     <string name="setting_mupen64plus_pak1">Плејер 1 Pak</string>
     <string name="setting_mupen64plus_pak2">Плејер 2 Pak</string>
-    <string name="setting_ppsspp_auto_frameskip">Аутоматско прескакање фрејмова</string>
     <string name="setting_ppsspp_cpu_core">Динамични рекомпајлер</string>
     <string name="setting_ppsspp_internal_resolution">Резолуција</string>
     <string name="setting_ppsspp_texture_scaling_level">Ниво скалирања текстуре</string>
-    <string name="setting_fbneo_frameskip">Прескакање фрејмова</string>
     <string name="setting_fbneo_cpu_speed_adjust">Брзина процесора (CPU)</string>
     <string name="setting_melonds_screen_layout">Распоред екрана</string>
     <string name="setting_melonds_threaded_renderer">Навојни цртач</string>
@@ -62,8 +59,6 @@
     <string name="value_mgba_interframe_blending_mix">Једноставно</string>
     <string name="value_mgba_interframe_blending_lcd_ghosting">LCD духови (прецизно)</string>
     <string name="value_mgba_interframe_blending_lcd_ghosting_fast">LCD духови (брзо)</string>
-    <string name="value_mgba_frameskip_disabled">Онемогућено</string>
-    <string name="value_mgba_frameskip_auto">Аутоматско</string>
     <string name="value_mgba_color_correction_off">Онемогућено</string>
     <string name="value_mgba_color_correction_gba">Омогућено</string>
     <string name="value_stella_filter_disabled">Онемогућено</string>

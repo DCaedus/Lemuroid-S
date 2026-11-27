@@ -28,18 +28,15 @@
     <string name="setting_gambatte_gbc_color_correction">Korekcja kolorów</string>
     <string name="setting_mgba_solar_sensor_level">Poziom czujnika słonecznego</string>
     <string name="setting_mgba_interframe_blending">Smużenie ekranu</string>
-    <string name="setting_mgba_frameskip">Frameskip</string>
     <string name="setting_mgba_color_correction">Korekcja kolorów</string>
     <string name="setting_mupen64plus_43screensize">Rozmiar ekranu 4:3</string>
     <string name="setting_mupen64plus_cpucore">Dynamiczny rekompilator</string>
     <string name="setting_mupen64plus_BilinearMode">Tryb filtrowania dwuliniowego</string>
     <string name="setting_mupen64plus_pak1">Pak gracza 1</string>
     <string name="setting_mupen64plus_pak2">Pak gracza 2</string>
-    <string name="setting_ppsspp_auto_frameskip">Automatyczny frameskip</string>
     <string name="setting_ppsspp_cpu_core">Dynamiczny rekompilator</string>
     <string name="setting_ppsspp_internal_resolution">Rozdzielczość</string>
     <string name="setting_ppsspp_texture_scaling_level">Poziom skalowania tekstur</string>
-    <string name="setting_fbneo_frameskip">Frameskip</string>
     <string name="setting_fbneo_cpu_speed_adjust">Szybkość CPU</string>
     <string name="setting_melonds_screen_layout">Układ ekranów</string>
     <string name="setting_melonds_threaded_renderer">Renderowanie wielowątkowe</string>
@@ -62,8 +59,6 @@
     <string name="value_mgba_interframe_blending_mix">Proste</string>
     <string name="value_mgba_interframe_blending_lcd_ghosting">Smużenie LCD (dokładne)</string>
     <string name="value_mgba_interframe_blending_lcd_ghosting_fast">Smużenie LCD (szybkie)</string>
-    <string name="value_mgba_frameskip_disabled">Wyłączony</string>
-    <string name="value_mgba_frameskip_auto">Automatyczny</string>
     <string name="value_mgba_color_correction_off">Wyłączona</string>
     <string name="value_mgba_color_correction_gba">Włączona</string>
     <string name="value_stella_filter_disabled">Wyłączony</string>

@@ -28,18 +28,15 @@
     <string name="setting_gambatte_gbc_color_correction">Korekce barev</string>
     <string name="setting_mgba_solar_sensor_level">Úroveň slunečního senzoru</string>
     <string name="setting_mgba_interframe_blending">LCD ghosting</string>
-    <string name="setting_mgba_frameskip">Frameskip</string>
     <string name="setting_mgba_color_correction">Korekce barev</string>
     <string name="setting_mupen64plus_43screensize">Velikost obrazovky 4:3</string>
     <string name="setting_mupen64plus_cpucore">Dynamický rekompilátor</string>
     <string name="setting_mupen64plus_BilinearMode">Bilineární režim</string>
     <string name="setting_mupen64plus_pak1">Hráč 1 Pak</string>
     <string name="setting_mupen64plus_pak2">Hráč 2 Pak</string>
-    <string name="setting_ppsspp_auto_frameskip">Automatický frameskip</string>
     <string name="setting_ppsspp_cpu_core">Dynamický rekompilátor</string>
     <string name="setting_ppsspp_internal_resolution">Rozlišení</string>
     <string name="setting_ppsspp_texture_scaling_level">Úroveň škálování textur</string>
-    <string name="setting_fbneo_frameskip">Frameskip</string>
     <string name="setting_fbneo_cpu_speed_adjust">Rychlost CPU</string>
     <string name="setting_melonds_screen_layout">Rozložení obrazovky</string>
     <string name="setting_melonds_threaded_renderer">Vykreslování ve vláknech</string>
@@ -62,8 +59,6 @@
     <string name="value_mgba_interframe_blending_mix">Jednoduché</string>
     <string name="value_mgba_interframe_blending_lcd_ghosting">LCD Ghosting (Přesné)</string>
     <string name="value_mgba_interframe_blending_lcd_ghosting_fast">LCD Ghosting (Rychlé)</string>
-    <string name="value_mgba_frameskip_disabled">Vypnuto</string>
-    <string name="value_mgba_frameskip_auto">Automatický</string>
     <string name="value_mgba_color_correction_off">Vypnuto</string>
     <string name="value_mgba_color_correction_gba">Zapnuto</string>
     <string name="value_stella_filter_disabled">Vypnuto</string>

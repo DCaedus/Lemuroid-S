@@ -28,18 +28,15 @@
     <string name="setting_gambatte_gbc_color_correction">色彩校正</string>
     <string name="setting_mgba_solar_sensor_level">光感传感器级别</string>
     <string name="setting_mgba_interframe_blending">LCD 重影</string>
-    <string name="setting_mgba_frameskip">跳帧</string>
     <string name="setting_mgba_color_correction">色彩校正</string>
     <string name="setting_mupen64plus_43screensize">屏幕尺寸 4:3</string>
     <string name="setting_mupen64plus_cpucore">动态重编译器</string>
     <string name="setting_mupen64plus_BilinearMode">双线性模式</string>
     <string name="setting_mupen64plus_pak1">玩家1</string>
     <string name="setting_mupen64plus_pak2">玩家2</string>
-    <string name="setting_ppsspp_auto_frameskip">自动跳帧</string>
     <string name="setting_ppsspp_cpu_core">动态重编译器</string>
     <string name="setting_ppsspp_internal_resolution">分辨率</string>
     <string name="setting_ppsspp_texture_scaling_level">纹理缩放级别</string>
-    <string name="setting_fbneo_frameskip">跳帧</string>
     <string name="setting_fbneo_cpu_speed_adjust">CPU 速度</string>
     <string name="setting_melonds_screen_layout">屏幕布局</string>
     <string name="setting_melonds_threaded_renderer">多线程渲染</string>
@@ -62,8 +59,6 @@
     <string name="value_mgba_interframe_blending_mix">简单</string>
     <string name="value_mgba_interframe_blending_lcd_ghosting">LCD 重影（精准）</string>
     <string name="value_mgba_interframe_blending_lcd_ghosting_fast">LCD 重影（快速）</string>
-    <string name="value_mgba_frameskip_disabled">停用</string>
-    <string name="value_mgba_frameskip_auto">自动</string>
     <string name="value_mgba_color_correction_off">停用</string>
     <string name="value_mgba_color_correction_gba">已启用</string>
     <string name="value_stella_filter_disabled">停用</string>
