@@ -65,6 +65,13 @@
             app:dependency="@string/pref_key_hd_mode"
             android:defaultValue="auto"/>
 
+        <SwitchPreference
+            android:key="@string/pref_key_show_framerate"
+            android:title="@string/settings_title_show_framerate"
+            android:summary="@string/settings_description_show_framerate"
+            app:iconSpaceReserved="false"
+            android:defaultValue="false"/>
+
     </PreferenceCategory>
 
     <PreferenceCategory
@@ -187,13 +194,6 @@
             <PreferenceCategory
                 android:title="@string/settings_category_general"
                 app:iconSpaceReserved="false">
-
-                <SwitchPreference
-                    android:key="@string/pref_key_show_framerate"
-                    android:title="@string/settings_title_show_framerate"
-                    android:summary="@string/settings_description_show_framerate"
-                    app:iconSpaceReserved="false"
-                    android:defaultValue="false"/>
 
                 <Preference
                     android:key="@string/pref_key_tv_first_launch_setup"

@@ -414,6 +414,11 @@ private fun DisplaySettings() {
             title = { Text(text = stringResource(id = R.string.settings_title_immersive_mode)) },
             subtitle = { Text(text = stringResource(id = R.string.settings_description_immersive_mode)) },
         )
+        LemuroidSettingsSwitch(
+            state = booleanPreferenceState(R.string.pref_key_show_framerate, false),
+            title = { Text(text = stringResource(id = R.string.settings_title_show_framerate)) },
+            subtitle = { Text(text = stringResource(id = R.string.settings_description_show_framerate)) },
+        )
     }
 }
 

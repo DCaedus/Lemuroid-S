@@ -84,11 +84,6 @@ private fun GeneralSettings(
             title = { Text(text = stringResource(id = R.string.settings_title_low_latency_audio)) },
             subtitle = { Text(text = stringResource(id = R.string.settings_description_low_latency_audio)) },
         )
-        LemuroidSettingsSwitch(
-            state = booleanPreferenceState(R.string.pref_key_show_framerate, false),
-            title = { Text(text = stringResource(id = R.string.settings_title_show_framerate)) },
-            subtitle = { Text(text = stringResource(id = R.string.settings_description_show_framerate)) },
-        )
         MainFolderSetting()
         LemuroidSettingsMenuLink(
             title = { Text(text = stringResource(id = R.string.settings_title_first_launch_setup)) },
