@@ -34,7 +34,7 @@ fun LemuroidTexts(
     subtitle: String,
 ) {
     Column(
-        modifier = modifier.padding(8.dp),
+        modifier = modifier.padding(horizontal = 8.dp, vertical = 6.dp),
     ) {
         Text(
             text = title,
