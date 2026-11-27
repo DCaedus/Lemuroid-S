@@ -319,4 +319,6 @@
     <string name="game_saving_previous">正在保存你上一个游戏…</string>
     <string name="setup_microphone_message">部分游戏会使用麦克风，例如 Nintendo DS 游戏以及其他支持麦克风的主机游戏，比如对着麦克风吹气或说话。</string>
     <string name="autosave_import_warning">游戏将从上次自动存档继续，自动存档也包含游戏内存档。如果你自己把其他模拟器的存档复制到 Lemuroid-S，可能需要关闭此选项，让游戏使用那些存档。“导入存档”会自动处理这一点。</string>
+    <string name="view_as_list">以列表显示</string>
+    <string name="view_as_tiles">以图块显示</string>
 </resources>

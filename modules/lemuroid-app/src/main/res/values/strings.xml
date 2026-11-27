@@ -377,4 +377,6 @@
     <string name="game_saving_previous">Saving your last game…</string>
     <string name="setup_microphone_message">Some games use the microphone, such as Nintendo DS games and those of any other console that supports it, for example to blow or talk into it.</string>
     <string name="autosave_import_warning">Games will continue from their last autosave, which also holds their in-game save. If you copy saves from other emulators into Lemuroid-S yourself, you may need to turn this off so games use those saves instead. Import Saves takes care of this by itself.</string>
+    <string name="view_as_list">Show as list</string>
+    <string name="view_as_tiles">Show as tiles</string>
 </resources>

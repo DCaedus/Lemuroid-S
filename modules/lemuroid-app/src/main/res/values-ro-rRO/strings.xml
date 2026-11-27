@@ -307,4 +307,6 @@
     <string name="game_saving_previous">Se salvează ultimul joc…</string>
     <string name="setup_microphone_message">Unele jocuri folosesc microfonul, cum ar fi jocurile Nintendo DS și cele ale oricărei alte console care îl acceptă, de exemplu pentru a sufla sau a vorbi în el.</string>
     <string name="autosave_import_warning">Jocurile vor continua de la ultima salvare automată, care conține și salvarea din joc. Dacă copiezi singur salvări din alte emulatoare în Lemuroid-S, s-ar putea să trebuiască să dezactivezi asta ca jocurile să folosească acele salvări. Importă salvări se ocupă singur de asta.</string>
+    <string name="view_as_list">Afișează ca listă</string>
+    <string name="view_as_tiles">Afișează ca dale</string>
 </resources>

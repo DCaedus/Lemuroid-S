@@ -319,4 +319,6 @@
     <string name="game_saving_previous">마지막 게임을 저장하는 중…</string>
     <string name="setup_microphone_message">닌텐도 DS 게임과 마이크를 지원하는 다른 콘솔의 게임 등 일부 게임은 바람을 불거나 말을 하기 위해 마이크를 사용합니다.</string>
     <string name="autosave_import_warning">게임은 마지막 자동 저장부터 이어서 진행되며, 자동 저장에는 게임 내 저장도 포함됩니다. 다른 에뮬레이터의 저장 파일을 직접 Lemuroid-S로 복사하는 경우, 게임이 그 저장 파일을 사용하도록 이 기능을 꺼야 할 수 있습니다. 세이브 가져오기는 이를 자동으로 처리합니다.</string>
+    <string name="view_as_list">목록으로 보기</string>
+    <string name="view_as_tiles">타일로 보기</string>
 </resources>

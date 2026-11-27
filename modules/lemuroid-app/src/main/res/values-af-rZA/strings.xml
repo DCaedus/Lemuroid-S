@@ -298,4 +298,6 @@
     <string name="game_saving_previous">Stoor jou laaste speletjie…</string>
     <string name="setup_microphone_message">Sommige speletjies gebruik die mikrofoon, soos Nintendo DS-speletjies en dié van enige ander konsole wat dit ondersteun, byvoorbeeld om daarin te blaas of te praat.</string>
     <string name="autosave_import_warning">Speletjies gaan voort vanaf hul laaste outostoor, wat ook hul stoor in die speletjie bevat. As jy self stoorlêers van ander emulators na Lemuroid-S kopieer, moet jy dit dalk afskakel sodat speletjies daardie stoorlêers gebruik. Voer stoorlêers in hanteer dit self.</string>
+    <string name="view_as_list">Wys as lys</string>
+    <string name="view_as_tiles">Wys as teëls</string>
 </resources>

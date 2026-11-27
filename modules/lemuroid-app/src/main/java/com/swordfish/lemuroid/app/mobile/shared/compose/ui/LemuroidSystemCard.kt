@@ -1,5 +1,14 @@
 package com.swordfish.lemuroid.app.mobile.shared.compose.ui
 
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.Alignment
+import androidx.compose.material3.Surface
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material3.ElevatedCard
@@ -38,6 +47,39 @@ fun LemuroidSystemCard(
         ) {
             LemuroidSystemImage(system)
             LemuroidTexts(title = title, subtitle = subtitle)
+        }
+    }
+}
+
+/** Lemuroid-S: a console in the Systems list view, laid out like a game in a console's list. */
+@Composable
+fun LemuroidSystemListRow(
+    modifier: Modifier = Modifier,
+    system: MetaSystemInfo,
+    onClick: () -> Unit,
+) {
+    val context = LocalContext.current
+    val title = remember(system.metaSystem.titleResId) { system.getName(context) }
+    val subtitle = stringResource(R.string.system_grid_details, system.count.toString())
+
+    Surface(modifier = modifier.fillMaxWidth(), onClick = onClick) {
+        Row(
+            modifier = Modifier.padding(start = 16.dp, top = 8.dp, bottom = 8.dp, end = 16.dp),
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+            Box(
+                modifier =
+                    Modifier
+                        .size(40.dp)
+                        .clip(RoundedCornerShape(4.dp)),
+            ) {
+                LemuroidSystemImage(system)
+            }
+            LemuroidTexts(
+                modifier = Modifier.weight(1f).padding(start = 8.dp),
+                title = title,
+                subtitle = subtitle,
+            )
         }
     }
 }

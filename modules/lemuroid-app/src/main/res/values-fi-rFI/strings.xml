@@ -315,4 +315,6 @@
     <string name="game_saving_previous">Viimeisintä peliä tallennetaan…</string>
     <string name="setup_microphone_message">Jotkin pelit käyttävät mikrofonia, kuten Nintendo DS -pelit ja minkä tahansa muun sitä tukevan konsolin pelit, esimerkiksi siihen puhaltamiseen tai puhumiseen.</string>
     <string name="autosave_import_warning">Pelit jatkuvat viimeisimmästä automaattitallennuksesta, joka sisältää myös pelin oman tallennuksen. Jos kopioit itse tallennuksia muista emulaattoreista Lemuroid-S:ään, tämä voi olla tarpeen kytkeä pois, jotta pelit käyttävät niitä. Tallennusten tuonti hoitaa tämän itse.</string>
+    <string name="view_as_list">Näytä luettelona</string>
+    <string name="view_as_tiles">Näytä ruutuina</string>
 </resources>

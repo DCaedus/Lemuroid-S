@@ -298,4 +298,6 @@
     <string name="game_saving_previous">Az utolsó játék mentése…</string>
     <string name="setup_microphone_message">Egyes játékok használják a mikrofont, például a Nintendo DS játékai és bármely más, ezt támogató konzol játékai, például belefújáshoz vagy beszédhez.</string>
     <string name="autosave_import_warning">A játékok az utolsó automatikus mentéstől folytatódnak, amely a játékon belüli mentést is tartalmazza. Ha más emulátorok mentéseit saját kezűleg másolod a Lemuroid-S-be, lehet, hogy ki kell kapcsolnod ezt, hogy a játékok azokat használják. A Mentések importálása ezt magától elintézi.</string>
+    <string name="view_as_list">Megjelenítés listaként</string>
+    <string name="view_as_tiles">Megjelenítés csempékként</string>
 </resources>

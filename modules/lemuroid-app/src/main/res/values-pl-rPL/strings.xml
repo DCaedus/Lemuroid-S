@@ -319,4 +319,6 @@
     <string name="game_saving_previous">Zapisywanie ostatniej gry…</string>
     <string name="setup_microphone_message">Niektóre gry korzystają z mikrofonu, np. gry na Nintendo DS i na każdą inną konsolę, która go obsługuje, na przykład do dmuchania lub mówienia.</string>
     <string name="autosave_import_warning">Gry będą kontynuowane od ostatniego autozapisu, który zawiera też zapis z gry. Jeśli samodzielnie kopiujesz zapisy z innych emulatorów do Lemuroid-S, może być konieczne wyłączenie tej opcji, aby gry używały tych zapisów. Importuj zapisy załatwia to samo.</string>
+    <string name="view_as_list">Pokaż jako listę</string>
+    <string name="view_as_tiles">Pokaż jako kafelki</string>
 </resources>

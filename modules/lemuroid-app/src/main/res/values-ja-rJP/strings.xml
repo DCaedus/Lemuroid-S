@@ -322,4 +322,6 @@
     <string name="game_saving_previous">前回のゲームを保存しています…</string>
     <string name="setup_microphone_message">ニンテンドーDSや、マイクに対応したその他のゲーム機のゲームでは、息を吹きかけたり話しかけたりするためにマイクを使うことがあります。</string>
     <string name="autosave_import_warning">ゲームは最後の自動保存から再開されます。自動保存にはゲーム内のセーブも含まれます。他のエミュレーターのセーブを自分で Lemuroid-S にコピーする場合は、ゲームがそのセーブを使うようにこれをオフにする必要があるかもしれません。「セーブデータのインポート」ではこれが自動で処理されます。</string>
+    <string name="view_as_list">リスト表示</string>
+    <string name="view_as_tiles">タイル表示</string>
 </resources>

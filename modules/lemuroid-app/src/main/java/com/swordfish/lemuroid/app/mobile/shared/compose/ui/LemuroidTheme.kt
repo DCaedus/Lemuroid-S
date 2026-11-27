@@ -135,7 +135,7 @@ private fun ColorScheme.pureBlack(): ColorScheme =
 
 /** A boolean preference that recomposes when it changes (e.g. from the Settings screen). */
 @Composable
-private fun rememberBooleanPreference(
+fun rememberBooleanPreference(
     key: String,
     default: Boolean,
 ): State<Boolean> {

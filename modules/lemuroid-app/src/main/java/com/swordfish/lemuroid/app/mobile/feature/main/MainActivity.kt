@@ -250,6 +250,7 @@ class MainActivity : RetrogradeComponentActivity(), BusyActivity, GameLaunchHost
                                 ),
                             onGameClick = onGameClick,
                             onGameLongClick = onGameLongClick,
+                            onGameFavoriteToggle = onGameFavoriteToggle,
                         )
                     }
                     composable(MainRoute.SEARCH) {

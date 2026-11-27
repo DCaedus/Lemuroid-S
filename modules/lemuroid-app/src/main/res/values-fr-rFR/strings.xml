@@ -319,4 +319,6 @@
     <string name="game_saving_previous">Sauvegarde de votre dernière partie…</string>
     <string name="setup_microphone_message">Certains jeux utilisent le micro, comme ceux de la Nintendo DS et de toute autre console qui le prend en charge, par exemple pour souffler ou parler dedans.</string>
     <string name="autosave_import_warning">Les jeux reprendront depuis leur dernière sauvegarde automatique, qui contient aussi la sauvegarde du jeu. Si vous copiez vous-même des sauvegardes d\'autres émulateurs dans Lemuroid-S, vous devrez peut-être désactiver cette option pour que les jeux les utilisent. Importer des sauvegardes s\'en occupe tout seul.</string>
+    <string name="view_as_list">Afficher en liste</string>
+    <string name="view_as_tiles">Afficher en vignettes</string>
 </resources>

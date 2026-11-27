@@ -319,4 +319,6 @@
     <string name="game_saving_previous">Lagrer det siste spillet ditt…</string>
     <string name="setup_microphone_message">Noen spill bruker mikrofonen, for eksempel Nintendo DS-spill og spill til andre konsoller som støtter det, for eksempel for å blåse eller snakke i den.</string>
     <string name="autosave_import_warning">Spill fortsetter fra siste autolagring, som også inneholder spillets egen lagring. Hvis du selv kopierer lagringer fra andre emulatorer til Lemuroid-S, må du kanskje slå dette av slik at spillene bruker dem. Importer lagringer tar seg av dette selv.</string>
+    <string name="view_as_list">Vis som liste</string>
+    <string name="view_as_tiles">Vis som fliser</string>
 </resources>

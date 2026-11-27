@@ -1,5 +1,8 @@
 package com.swordfish.lemuroid.app.mobile.feature.main
 
+import androidx.compose.material.icons.automirrored.outlined.ViewList
+import androidx.compose.material.icons.outlined.GridView
+import com.swordfish.lemuroid.app.mobile.shared.compose.ui.LemuroidViewMode
 import android.content.Context
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.fadeIn
@@ -142,6 +145,16 @@ fun LemuroidTopBarActions(
                 Icons.Outlined.Info,
                 stringResource(R.string.mobile_settings_help),
             )
+        }
+        // Lemuroid-S: tiles or list for this screen (remembered per screen).
+        LemuroidViewMode.forRoute(route)?.let { mode ->
+            val tiles = mode.rememberTiles().value
+            IconButton(onClick = { mode.toggle(context) }) {
+                Icon(
+                    if (tiles) Icons.AutoMirrored.Outlined.ViewList else Icons.Outlined.GridView,
+                    stringResource(if (tiles) R.string.view_as_list else R.string.view_as_tiles),
+                )
+            }
         }
         if (saveSyncEnabled) {
             IconButton(

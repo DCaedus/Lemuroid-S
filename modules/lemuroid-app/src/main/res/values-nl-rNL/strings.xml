@@ -319,4 +319,6 @@
     <string name="game_saving_previous">Je laatste game wordt opgeslagen…</string>
     <string name="setup_microphone_message">Sommige games gebruiken de microfoon, zoals Nintendo DS-games en die van elke andere console die het ondersteunt, bijvoorbeeld om erin te blazen of te praten.</string>
     <string name="autosave_import_warning">Games gaan verder vanaf hun laatste automatische opslag, waarin ook de opslag in de game zit. Als je zelf saves van andere emulators naar Lemuroid-S kopieert, moet je dit misschien uitzetten zodat games die saves gebruiken. Opslagbestanden importeren regelt dit zelf.</string>
+    <string name="view_as_list">Als lijst weergeven</string>
+    <string name="view_as_tiles">Als tegels weergeven</string>
 </resources>

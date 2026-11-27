@@ -319,4 +319,6 @@
     <string name="game_saving_previous">Gemmer dit seneste spil…</string>
     <string name="setup_microphone_message">Nogle spil bruger mikrofonen, f.eks. Nintendo DS-spil og spil til enhver anden konsol, der understøtter den, for eksempel til at puste eller tale i den.</string>
     <string name="autosave_import_warning">Spil fortsætter fra deres seneste autogem, som også indeholder spillets eget gem. Hvis du selv kopierer gem fra andre emulatorer til Lemuroid-S, skal du måske slå dette fra, så spillene bruger de gem i stedet. Importér gem klarer dette af sig selv.</string>
+    <string name="view_as_list">Vis som liste</string>
+    <string name="view_as_tiles">Vis som felter</string>
 </resources>

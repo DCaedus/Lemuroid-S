@@ -319,4 +319,6 @@
     <string name="game_saving_previous">Чување последње игре…</string>
     <string name="setup_microphone_message">Неке игре користе микрофон, као што су игре за Nintendo DS и за сваку другу конзолу која га подржава, на пример да се у њега дува или говори.</string>
     <string name="autosave_import_warning">Игре ће се наставити од последњег аутоматског чувања, које садржи и чување из игре. Ако сами копирате сачуване позиције из других емулатора у Lemuroid-S, можда ћете морати ово да искључите да би игре користиле те позиције. Увоз сачуваних позиција то решава сам.</string>
+    <string name="view_as_list">Прикажи као листу</string>
+    <string name="view_as_tiles">Прикажи као плочице</string>
 </resources>

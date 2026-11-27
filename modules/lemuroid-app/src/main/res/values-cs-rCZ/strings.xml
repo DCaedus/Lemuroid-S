@@ -318,4 +318,6 @@
     <string name="game_saving_previous">Ukládání poslední hry…</string>
     <string name="setup_microphone_message">Některé hry používají mikrofon, například hry pro Nintendo DS a pro jakoukoli další konzoli, která ho podporuje, třeba k foukání nebo mluvení do něj.</string>
     <string name="autosave_import_warning">Hry budou pokračovat od posledního automatického uložení, které obsahuje i uložení ze hry. Pokud do Lemuroid-S sami kopírujete uložené pozice z jiných emulátorů, možná to budete muset vypnout, aby hry použily tyto pozice. Import uložených pozic to vyřeší sám.</string>
+    <string name="view_as_list">Zobrazit jako seznam</string>
+    <string name="view_as_tiles">Zobrazit jako dlaždice</string>
 </resources>

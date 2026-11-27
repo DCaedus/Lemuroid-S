@@ -320,4 +320,6 @@ $SYSTEMS.
     <string name="game_saving_previous">Son oyununuz kaydediliyor…</string>
     <string name="setup_microphone_message">Nintendo DS oyunları ve bunu destekleyen diğer konsolların oyunları gibi bazı oyunlar, örneğin üflemek ya da konuşmak için mikrofonu kullanır.</string>
     <string name="autosave_import_warning">Oyunlar, oyun içi kaydı da içeren son otomatik kayıttan devam eder. Diğer emülatörlerin kayıtlarını Lemuroid-S\'e kendiniz kopyalarsanız, oyunların bu kayıtları kullanması için bunu kapatmanız gerekebilir. Kayıtları içe aktar bunu kendisi halleder.</string>
+    <string name="view_as_list">Liste olarak göster</string>
+    <string name="view_as_tiles">Kutucuk olarak göster</string>
 </resources>
