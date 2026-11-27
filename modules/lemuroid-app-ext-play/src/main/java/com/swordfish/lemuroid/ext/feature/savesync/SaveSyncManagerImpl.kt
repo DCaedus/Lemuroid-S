@@ -30,6 +30,13 @@ class SaveSyncManagerImpl(
 ) : SaveSyncManager() {
     private val externalSavesStorage = ExternalSavesStorage(appContext)
 
+    /**
+     * Lemuroid-S: for each synced file, the content (md5) both sides had after the last sync, and the
+     * local date then. Comparing with it tells which side changed since, instead of trusting dates
+     * (files in the Lemuroid-S folder can't keep the date of a downloaded save).
+     */
+    private val syncState = SharedPreferencesHelper.getSaveSyncStatePreferences(appContext)
+
     private var lastSyncTimestamp: Long by SharedPreferencesDelegates.LongDelegate(
         SharedPreferencesHelper.getSharedPreferences(appContext),
         appContext.getString(com.swordfish.lemuroid.lib.R.string.pref_key_last_save_sync),
@@ -90,7 +97,9 @@ class SaveSyncManagerImpl(
         syncLocalAndRemoteFolder(
             drive,
             getOrCreateAppDataFolder("core-saves"),
-            LocalTree.Files(directoriesManager.getSavesDirectory()),
+            // Lemuroid's own fallback saves (*.srm) are left out: they move to the Lemuroid-S folder
+            // once it can be reached, and syncing them would bring old copies back.
+            LocalTree.Files(directoriesManager.getSavesDirectory()) { !it.name.endsWith(".srm") },
             null,
         )
 
@@ -168,37 +177,75 @@ class SaveSyncManagerImpl(
         localFile: LocalTree.Entry?,
     ) {
         Timber.i("Handling file pair: $path")
+        val stateKey = "$remoteParentFolderId/$path"
 
         runCatching {
             if (remoteFile != null && localFile == null) {
                 downloadToLocal(drive, remoteFile, localTree, path)
+                recordSynced(stateKey, remoteFile.md5Checksum, UNKNOWN_DATE)
             } else if (remoteFile == null && localFile != null) {
-                onLocalOnly(remoteParentFolderId, localFile, drive)
+                val data = localFile.read()
+                onLocalOnly(remoteParentFolderId, localFile, data, drive)
+                recordSynced(stateKey, md5(data), localFile.lastModified)
             } else if (remoteFile != null && localFile != null) {
-                if (areFileDifferent(remoteFile, localFile)) {
-                    if (remoteFile.modifiedTime.value < localFile.lastModified) {
-                        onLocalUpdated(localFile, drive, remoteFile)
-                    } else if (remoteFile.modifiedTime.value > localFile.lastModified) {
-                        downloadToLocal(drive, remoteFile, localTree, path)
-                    }
-                }
+                syncBoth(drive, localTree, path, stateKey, remoteFile, localFile)
             }
         }.onFailure { Timber.w(it, "Could not sync $path") }
     }
 
-    private fun areFileDifferent(
+    /** A file on both sides: copies the side that changed since the last sync, or the newer one. */
+    private fun syncBoth(
+        drive: Drive,
+        localTree: LocalTree,
+        path: String,
+        stateKey: String,
         remoteFile: com.google.api.services.drive.model.File,
         localFile: LocalTree.Entry,
-    ): Boolean {
-        if (remoteFile.modifiedTime.value == localFile.lastModified) {
-            return false
+    ) {
+        val last = syncedState(stateKey)
+        val localMd5 =
+            if (last != null && last.second == localFile.lastModified) last.first else md5(localFile.read())
+        val remoteMd5 = remoteFile.md5Checksum
+
+        if (localMd5 == remoteMd5) {
+            recordSynced(stateKey, localMd5, localFile.lastModified)
+            return
         }
 
-        if (remoteFile.size.toLong() != localFile.size) {
-            return true
-        }
+        val localChanged = last == null || localMd5 != last.first
+        val remoteChanged = last == null || remoteMd5 != last.first
+        val upload =
+            when {
+                localChanged && !remoteChanged -> true
+                remoteChanged && !localChanged -> false
+                // Changed on both sides, or never synced: the newer one wins.
+                else -> remoteFile.modifiedTime.value < localFile.lastModified
+            }
 
-        return remoteFile.md5Checksum != md5(localFile.read())
+        if (upload) {
+            onLocalUpdated(localFile, drive, remoteFile)
+            recordSynced(stateKey, localMd5, localFile.lastModified)
+        } else {
+            downloadToLocal(drive, remoteFile, localTree, path)
+            recordSynced(stateKey, remoteMd5, UNKNOWN_DATE)
+        }
+    }
+
+    /** (md5, local date) after the last sync of a file, if it was synced before. */
+    private fun syncedState(key: String): Pair<String, Long>? {
+        val value = syncState.getString(key, null) ?: return null
+        val md5 = value.substringBefore('|')
+        val date = value.substringAfter('|').toLongOrNull() ?: UNKNOWN_DATE
+        return md5 to date
+    }
+
+    private fun recordSynced(
+        key: String,
+        md5: String?,
+        localDate: Long,
+    ) {
+        if (md5 == null) return
+        syncState.edit().putString(key, "$md5|$localDate").apply()
     }
 
     private fun onLocalUpdated(
@@ -218,6 +265,7 @@ class SaveSyncManagerImpl(
     private fun onLocalOnly(
         remoteParentFolderId: String,
         localFile: LocalTree.Entry,
+        data: ByteArray,
         drive: Drive,
     ) {
         Timber.i("Local-only file detected ${localFile.path}")
@@ -227,7 +275,7 @@ class SaveSyncManagerImpl(
         metadata.name = localFile.path.substringAfterLast('/')
         metadata.appProperties = mapOf(GDRIVE_PROPERTY_LOCAL_PATH to localFile.path)
         metadata.modifiedTime = DateTime(localFile.lastModified)
-        val mediaContent = ByteArrayContent(MIME_TYPE, localFile.read())
+        val mediaContent = ByteArrayContent(MIME_TYPE, data)
         drive.files().create(metadata, mediaContent)
             .setFields("id")
             .execute()
@@ -332,10 +380,10 @@ class SaveSyncManagerImpl(
             lastModified: Long,
         )
 
-        class Files(private val root: File) : LocalTree {
+        class Files(private val root: File, private val include: (File) -> Boolean = { true }) : LocalTree {
             override fun files(): Map<String, Entry> {
                 return root.walkBottomUp()
-                    .filter { it.isFile && it.length() > 0 }
+                    .filter { it.isFile && it.length() > 0 && include(it) }
                     .associate { file ->
                         val path = file.toRelativeString(root)
                         path to Entry(path, file.lastModified(), file.length()) { file.readBytes() }
@@ -399,6 +447,7 @@ class SaveSyncManagerImpl(
 
     companion object {
         private const val MIME_TYPE = "application/x-binary"
+        private const val UNKNOWN_DATE = -1L
         const val GDRIVE_PROPERTY_LOCAL_PATH = "localPath"
         private val SYNC_LOCK = Object()
     }

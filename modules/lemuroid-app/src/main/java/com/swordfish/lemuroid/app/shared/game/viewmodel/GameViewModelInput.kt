@@ -320,8 +320,10 @@ class GameViewModelInput(
 
                 // Turbo works for every player: it's held like a modifier, not triggered once.
                 val turboShortcut = shortcuts[device]?.firstOrNull { it.type == GameShortcutType.TURBO }
-                if (turboShortcut != null && turboShortcut.keys.isNotEmpty() && keyCode in turboShortcut.keys) {
-                    turbo.setTurboHeld(port, devicePressedKeys.containsAll(turboShortcut.keys))
+                val isTurboKey =
+                    turboShortcut != null && turboShortcut.keys.isNotEmpty() && keyCode in turboShortcut.keys
+                if (isTurboKey) {
+                    turbo.setTurboHeld(port, devicePressedKeys.containsAll(turboShortcut!!.keys))
                     // A single turbo key is the app's own; keys of a combo still reach the game.
                     if (turboShortcut.keys.size == 1) return@safeCollect
                 }
@@ -347,8 +349,10 @@ class GameViewModelInput(
                     }
                 }
 
+                // Keys of a turbo combo (e.g. L2+R2) go straight to the game: pressing the combo must not
+                // also turn turbo on for its own buttons.
                 val isButtonEvent = action == KeyEvent.ACTION_DOWN || action == KeyEvent.ACTION_UP
-                if (isButtonEvent && turbo.onButton(port, bindKeyCode, action == KeyEvent.ACTION_DOWN)) {
+                if (isButtonEvent && !isTurboKey && turbo.onButton(port, bindKeyCode, action == KeyEvent.ACTION_DOWN)) {
                     return@safeCollect
                 }
                 retroGameView.retroGameView?.sendKeyEvent(action, bindKeyCode, port)

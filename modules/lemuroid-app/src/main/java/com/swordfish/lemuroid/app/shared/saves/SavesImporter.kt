@@ -62,7 +62,8 @@ class SavesImporter(
     )
 
     private class Target(val folder: ExternalSavesStorage.SaveFolder) {
-        val existing: Map<String, Long> by lazy { folder.lastModifiedTimes() }
+        // Kept up to date while importing: two sources can map to one name (Game.srm and Game.sav).
+        val existing: MutableMap<String, Long> by lazy { folder.lastModifiedTimes().toMutableMap() }
     }
 
     /** Imports from a picked folder (tree uri) or a picked ZIP file (document uri). Null if nothing usable. */
@@ -240,6 +241,8 @@ class SavesImporter(
                 return
             }
             target.folder.write(targetName, converted)
+            // The written copy stands for the source's date, so an older source of the same name is skipped.
+            target.existing[targetName] = file.lastModified
             if (file.isState) counters.states++ else counters.saves++
         }.onFailure { Timber.w(it, "Could not import ${file.name}") }
     }

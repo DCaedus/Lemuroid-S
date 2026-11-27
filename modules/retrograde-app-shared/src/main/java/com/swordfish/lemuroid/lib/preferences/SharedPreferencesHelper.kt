@@ -12,6 +12,11 @@ object SharedPreferencesHelper {
         return context.getHarmonySharedPreferences(context.getString(R.string.pref_file_harmony_options))
     }
 
+    /** Lemuroid-S: what Google Drive save sync last agreed on for each file (multi-process safe). */
+    fun getSaveSyncStatePreferences(context: Context): SharedPreferences {
+        return context.getHarmonySharedPreferences("save_sync_state")
+    }
+
     fun getSharedPreferencesDataStore(context: Context): SharedPreferencesDataStore {
         return SharedPreferencesDataStore(getSharedPreferences(context))
     }

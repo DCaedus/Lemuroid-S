@@ -38,24 +38,25 @@ class SavesFallbackMover(
 
             val coreFolders = directoriesManager.getStatesDirectory().listFiles()?.filter { it.isDirectory }.orEmpty()
             for (coreFolder in coreFolders) {
-                val gameFileNames = coreFolder.listFiles()?.mapNotNull { gameFileName(it) }?.toSet().orEmpty()
-                for (fileName in gameFileNames) {
+                val stems = coreFolder.listFiles()?.mapNotNull { stateStem(it) }?.toSet().orEmpty()
+                for (stem in stems) {
                     runCatching {
-                        gameDao.selectByFileName(fileName)
+                        gameDao.selectByFileStem(stem)
+                            .filter { it.fileName.substringBeforeLast(".") == stem }
                             .forEach { statesManager.moveFallbackToFolder(it, coreFolder.name) }
-                    }.onFailure { Timber.w(it, "Could not move states of $fileName") }
+                    }.onFailure { Timber.w(it, "Could not move states of $stem") }
                 }
             }
         }
 
-    /** "Game.gba.slot2.metadata" / "Game.gba.state" -> "Game.gba". */
-    private fun gameFileName(file: File): String? {
+    /** "Game.state2.metadata" / "Game.state.auto" -> "Game" (the ROM's name without extension). */
+    private fun stateStem(file: File): String? {
         val name = file.name.removeSuffix(".metadata")
         return STATE_SUFFIX.find(name)?.let { name.substring(0, it.range.first) }
     }
 
     companion object {
         private const val SRM = ".srm"
-        private val STATE_SUFFIX = Regex("""\.(state|slot\d)$""")
+        private val STATE_SUFFIX = Regex("""\.state(\d|\.auto)$""")
     }
 }

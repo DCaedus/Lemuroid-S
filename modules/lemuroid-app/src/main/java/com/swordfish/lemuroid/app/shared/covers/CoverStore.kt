@@ -104,10 +104,15 @@ class CoverStore(private val appContext: Context) {
         val listing = mainFolderListing(target) ?: return null
         val folder = listing.folder ?: return null
         val fileName = "${target.exactName}.png"
-        return runCatching { folder.write(fileName, bytes, null) }
-            .onSuccess { listing.files[fileName] = it }
-            .onFailure { Timber.w(it, "Could not store artwork $fileName in the Lemuroid-S folder") }
-            .getOrNull()
+        // One write at a time per folder: two screens asking for the same cover at once would
+        // otherwise both create it ("Game.png" and "Game (1).png").
+        synchronized(listing) {
+            listing.files[fileName]?.let { return it }
+            return runCatching { folder.write(fileName, bytes, null) }
+                .onSuccess { listing.files[fileName] = it }
+                .onFailure { Timber.w(it, "Could not store artwork $fileName in the Lemuroid-S folder") }
+                .getOrNull()
+        }
     }
 
     private fun download(target: CoverTarget): Any? {

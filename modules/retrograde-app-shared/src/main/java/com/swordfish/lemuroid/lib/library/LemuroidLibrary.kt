@@ -60,14 +60,17 @@ class LemuroidLibrary(
     suspend fun indexLibrary() {
         val startedAtMs = System.currentTimeMillis()
 
+        // Lemuroid-S: games not seen by this scan are removed only when the scan went through. A
+        // failed or cancelled scan (e.g. the ROMs folder can't be read) used to remove them all,
+        // with their favorites and play time; now the library stays and the error reaches the caller.
         try {
             indexBiosFolder(startedAtMs)
             indexProviders(startedAtMs)
         } catch (e: Throwable) {
             Timber.e(e, "Library indexing stopped due to exception")
-        } finally {
-            cleanUp(startedAtMs)
+            throw e
         }
+        cleanUp(startedAtMs)
 
         val executionTime = System.currentTimeMillis() - startedAtMs
         Timber.i("Library indexing completed in: $executionTime ms")

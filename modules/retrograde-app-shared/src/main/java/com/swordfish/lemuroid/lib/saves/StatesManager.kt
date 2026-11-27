@@ -214,7 +214,7 @@ class StatesManager(
     }
 
     /**
-     * Moves [game]'s states left in app storage into [folder] (unless the folder has a newer copy),
+     * Moves [game]'s states left in app storage into [folder] (unless the folder's copy is clearly newer),
      * then deletes them from app storage.
      */
     private fun moveFallbackStates(
@@ -227,7 +227,9 @@ class StatesManager(
         val folderTimes = folder.lastModifiedTimes()
         for (file in files) {
             val folderTime = folderTimes[file.name]
-            if (file.length() > 0 && (folderTime == null || !isCurrent(folderTime, file.lastModified()))) {
+            // The copy in app storage exists because a write to the folder failed: it wins unless the
+            // folder's copy is clearly newer.
+            if (file.length() > 0 && (folderTime == null || folderTime <= file.lastModified() + SavesManager.SYNC_TOLERANCE_MS)) {
                 folder.write(file.name, file.readBytes())
             }
             file.delete()

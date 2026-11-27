@@ -114,7 +114,7 @@ class SavesManager(
         return read(fileName)?.takeIf { it.data.isNotEmpty() }
     }
 
-    /** Copies [file] into [folder] unless the folder's copy is as new, then deletes [file]. */
+    /** Copies [file] into [folder] unless the folder's copy is clearly newer, then deletes [file]. */
     private fun moveFallbackToFolder(
         file: File,
         folder: ExternalSavesStorage.SaveFolder,
@@ -122,7 +122,9 @@ class SavesManager(
         if (!file.exists()) return
         if (file.length() > 0) {
             val folderTime = folder.lastModifiedTimes()[file.name]
-            if (folderTime == null || file.lastModified() > folderTime + SYNC_TOLERANCE_MS) {
+            // The copy in app storage exists because a write to the folder failed, so it wins unless
+            // the folder's copy is clearly newer.
+            if (folderTime == null || folderTime <= file.lastModified() + SYNC_TOLERANCE_MS) {
                 folder.write(file.name, file.readBytes())
             }
         }

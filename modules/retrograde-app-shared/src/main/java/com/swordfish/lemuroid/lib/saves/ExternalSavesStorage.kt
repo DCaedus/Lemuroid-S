@@ -157,7 +157,12 @@ class ExternalSavesStorage(private val appContext: Context) {
             block: () -> T,
         ): T? {
             return runCatching(block)
-                .onFailure { Timber.w(it, "External saves: $what failed") }
+                .onFailure {
+                    Timber.w(it, "External saves: $what failed")
+                    // Lemuroid-S: a remembered folder may have been deleted or moved outside the app;
+                    // look folders up again next time instead of failing until the app restarts.
+                    com.swordfish.lemuroid.lib.storage.DocumentFolder.clearKnownFolders()
+                }
                 .getOrNull()
         }
     }

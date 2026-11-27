@@ -58,6 +58,8 @@ class StorageAccessFrameworkProvider(private val context: Context) : StorageProv
                     DocumentsContract.getTreeDocumentId(rootUri)
                 }
             rootDocumentId?.let { directoryDocumentIds.add(it) }
+            var failedFolders = 0
+            var firstError: Throwable? = null
 
             while (directoryDocumentIds.isNotEmpty()) {
                 val currentDirectoryDocumentId = directoryDocumentIds.removeAt(0)
@@ -68,6 +70,11 @@ class StorageAccessFrameworkProvider(private val context: Context) : StorageProv
                     }
                 if (result.isFailure) {
                     Timber.e(result.exceptionOrNull(), "Error while listing files")
+                    // Lemuroid-S: the ROMs folder itself can't be read (e.g. access was removed): stop,
+                    // so the library isn't emptied as if the folder had no games.
+                    if (currentDirectoryDocumentId == rootDocumentId) throw result.exceptionOrNull()!!
+                    failedFolders++
+                    firstError = firstError ?: result.exceptionOrNull()
                 }
 
                 val (files, directories) =
@@ -77,6 +84,11 @@ class StorageAccessFrameworkProvider(private val context: Context) : StorageProv
 
                 emit(files)
                 directoryDocumentIds.addAll(directories)
+            }
+
+            // Games in folders that couldn't be read must not be removed from the library.
+            if (failedFolders > 0) {
+                throw java.io.IOException("Could not read $failedFolders folder(s) of the ROMs folder", firstError)
             }
         }
 
