@@ -12,6 +12,15 @@ import androidx.core.view.WindowInsetsControllerCompat
  * portrait, where there's room for it (the screens lay themselves out below it).
  */
 object GameSystemBars {
+    /** The in-game menu (the game is paused): status and navigation bars are shown. */
+    fun showAll(activity: Activity) {
+        val window = activity.window
+        WindowCompat.setDecorFitsSystemWindows(window, false)
+        val controller = WindowCompat.getInsetsController(window, window.decorView)
+        controller.isAppearanceLightStatusBars = false
+        controller.show(WindowInsetsCompat.Type.systemBars())
+    }
+
     fun apply(activity: Activity) {
         val window = activity.window
         WindowCompat.setDecorFitsSystemWindows(window, false)

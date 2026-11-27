@@ -2,7 +2,6 @@
 
 package com.swordfish.lemuroid.app.mobile.feature.gamemenu
 
-import androidx.compose.ui.platform.LocalConfiguration
 import android.content.res.Configuration
 import android.content.Intent
 import android.graphics.Color
@@ -103,7 +102,7 @@ class GameMenuActivity : RetrogradeComponentActivity() {
             SystemBarStyle.dark(Color.TRANSPARENT),
             SystemBarStyle.dark(Color.TRANSPARENT),
         )
-        GameSystemBars.apply(this)
+        GameSystemBars.showAll(this)
 
         val extras = intent.extras
 
@@ -257,17 +256,11 @@ class GameMenuActivity : RetrogradeComponentActivity() {
                     minOf(maxWidth * 0.8f, 400f.dp)
                 }
 
-            // Lemuroid-S: the panel starts below the status bar when it shows (portrait).
+            // Lemuroid-S: the system bars show while the menu is open; the panel starts below the status bar.
             Surface(
                 modifier =
                     Modifier
-                        .then(
-                            if (LocalConfiguration.current.orientation == Configuration.ORIENTATION_LANDSCAPE) {
-                                Modifier
-                            } else {
-                                Modifier.windowInsetsPadding(WindowInsets.statusBars)
-                            },
-                        )
+                        .windowInsetsPadding(WindowInsets.statusBars)
                         .fillMaxHeight()
                         .width(panelWidth)
                         .clip(MaterialTheme.shapes.large),
@@ -290,12 +283,12 @@ class GameMenuActivity : RetrogradeComponentActivity() {
 
     override fun onWindowFocusChanged(hasFocus: Boolean) {
         super.onWindowFocusChanged(hasFocus)
-        if (hasFocus) GameSystemBars.apply(this)
+        if (hasFocus) GameSystemBars.showAll(this)
     }
 
     override fun onConfigurationChanged(newConfig: Configuration) {
         super.onConfigurationChanged(newConfig)
-        GameSystemBars.apply(this)
+        GameSystemBars.showAll(this)
     }
 
     private fun onResult(block: Intent.() -> Unit) {
