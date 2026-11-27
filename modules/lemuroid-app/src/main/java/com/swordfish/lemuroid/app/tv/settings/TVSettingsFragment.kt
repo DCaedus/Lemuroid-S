@@ -1,6 +1,10 @@
 package com.swordfish.lemuroid.app.tv.settings
 
 import android.content.Context
+import android.content.Intent
+import android.net.Uri
+import android.os.Build
+import android.provider.Settings
 import android.os.Bundle
 import android.view.InputDevice
 import android.view.View
@@ -8,7 +12,14 @@ import androidx.leanback.preference.LeanbackPreferenceFragmentCompat
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.preference.Preference
+import androidx.preference.PreferenceCategory
 import androidx.preference.PreferenceScreen
+import com.swordfish.lemuroid.app.mobile.feature.main.AppUpdateRequests
+import com.swordfish.lemuroid.app.shared.coreoptions.CoreOptionsCache
+import com.swordfish.lemuroid.app.shared.coreoptions.CoreOptionsPreferenceHelper
+import com.swordfish.lemuroid.app.tv.setup.TVSetupActivity
+import com.swordfish.lemuroid.ext.feature.update.AppUpdater
+import com.swordfish.lemuroid.lib.library.GameSystem
 import com.swordfish.lemuroid.R
 import com.swordfish.lemuroid.app.shared.input.InputDeviceManager
 import com.swordfish.lemuroid.app.shared.library.PendingOperationsMonitor
@@ -106,12 +117,57 @@ class TVSettingsFragment : LeanbackPreferenceFragmentCompat() {
         getAdvancedSettingsPreferenceScreen()?.let {
         }
 
+        // Lemuroid-S: newer settings.
+        findPreference<PreferenceScreen>(getString(R.string.pref_key_open_core_settings))?.let { addCoreSettings(it) }
+        findPreference<Preference>(getString(R.string.pref_key_tv_language))?.isVisible =
+            Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU
+        val updatesSupported = AppUpdater(requireContext().applicationContext).isSupported
+        findPreference<Preference>(AppUpdater.PREF_FREQUENCY)?.isVisible = updatesSupported
+        findPreference<Preference>(getString(R.string.pref_key_tv_check_updates))?.isVisible = updatesSupported
+
         getSaveSyncScreen()?.let {
             if (saveSyncManager.isSupported()) {
                 saveSyncPreferences.addSaveSyncPreferences(it)
             }
             it.isVisible = saveSyncManager.isSupported()
         }
+    }
+
+    /** One category per core, with the settings it reported the last time one of its games ran. */
+    private fun addCoreSettings(screen: PreferenceScreen) {
+        val context = screen.context
+        screen.removeAll()
+        GameSystem.all()
+            .flatMap { it.systemCoreConfigs }
+            .filter { it.exposedSettings.isNotEmpty() || it.exposedAdvancedSettings.isNotEmpty() }
+            .map { it.coreID }
+            .distinct()
+            .sortedBy { it.coreDisplayName.lowercase() }
+            .forEach { coreID ->
+                val systems =
+                    GameSystem.all()
+                        .filter { system -> system.systemCoreConfigs.any { it.coreID == coreID } }
+                        .joinToString(", ") { getString(it.shortTitleResId) }
+                val category = PreferenceCategory(context)
+                category.title = "${coreID.coreDisplayName} ($systems)"
+                category.isIconSpaceReserved = false
+                screen.addPreference(category)
+
+                val options = CoreOptionsCache.load(context, coreID)
+                if (options.isEmpty()) {
+                    category.addPreference(
+                        Preference(context).apply {
+                            summary = getString(R.string.core_settings_play_first)
+                            isSelectable = false
+                            isIconSpaceReserved = false
+                        },
+                    )
+                } else {
+                    options.forEach {
+                        category.addPreference(CoreOptionsPreferenceHelper.buildPreference(context, it, coreID.coreName))
+                    }
+                }
+            }
     }
 
     override fun onResume() {
@@ -177,6 +233,17 @@ class TVSettingsFragment : LeanbackPreferenceFragmentCompat() {
                     handleResetGamePadBindings()
                 }
             getString(R.string.pref_key_reset_settings) -> handleResetSettings()
+            getString(R.string.pref_key_tv_first_launch_setup) -> TVSetupActivity.start(requireContext())
+            getString(R.string.pref_key_tv_check_updates) -> AppUpdateRequests.manualCheck.tryEmit(Unit)
+            getString(R.string.pref_key_tv_language) ->
+                runCatching {
+                    startActivity(
+                        Intent(
+                            Settings.ACTION_APP_LOCALE_SETTINGS,
+                            Uri.fromParts("package", requireContext().packageName, null),
+                        ),
+                    )
+                }
         }
         return super.onPreferenceTreeClick(preference)
     }

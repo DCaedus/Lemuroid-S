@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import com.swordfish.lemuroid.app.shared.input.InputDeviceManager
 import com.swordfish.lemuroid.app.shared.settings.SettingsInteractor
 import com.swordfish.lemuroid.app.tv.shared.TVBaseSettingsActivity
+import com.swordfish.lemuroid.app.tv.shared.TVUpdateDialogs
 import com.swordfish.lemuroid.lib.injection.PerActivity
 import com.swordfish.lemuroid.lib.injection.PerFragment
 import com.swordfish.lemuroid.lib.storage.DirectoriesManager
@@ -18,6 +19,7 @@ class TVSettingsActivity : TVBaseSettingsActivity() {
             val fragment = TVSettingsFragmentWrapper()
             supportFragmentManager.beginTransaction().replace(android.R.id.content, fragment).commit()
         }
+        TVUpdateDialogs.attach(this)
     }
 
     class TVSettingsFragmentWrapper : BaseSettingsFragmentWrapper() {

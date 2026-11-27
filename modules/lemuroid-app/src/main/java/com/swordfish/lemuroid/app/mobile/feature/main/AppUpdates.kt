@@ -23,6 +23,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.compose.LocalLifecycleOwner
+import androidx.lifecycle.repeatOnLifecycle
 import com.swordfish.lemuroid.R
 import com.swordfish.lemuroid.ext.feature.update.AppUpdater
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -58,14 +61,19 @@ fun AppUpdateDialogs() {
     LaunchedEffect(Unit) {
         updater.checkIfDue()?.let { state = UpdateState.Available(it) }
     }
+    // Only the screen in front answers "Check for updates now" (on TV both the home and the settings
+    // screen show these dialogs).
+    val lifecycle = LocalLifecycleOwner.current.lifecycle
     LaunchedEffect(Unit) {
-        AppUpdateRequests.manualCheck.collect {
+        lifecycle.repeatOnLifecycle(Lifecycle.State.RESUMED) {
+            AppUpdateRequests.manualCheck.collect {
             Toast.makeText(context, R.string.update_checking, Toast.LENGTH_SHORT).show()
-            val release = updater.checkNow()
-            if (release != null) {
-                state = UpdateState.Available(release)
-            } else {
-                Toast.makeText(context, R.string.update_up_to_date, Toast.LENGTH_SHORT).show()
+                val release = updater.checkNow()
+                if (release != null) {
+                    state = UpdateState.Available(release)
+                } else {
+                    Toast.makeText(context, R.string.update_up_to_date, Toast.LENGTH_SHORT).show()
+                }
             }
         }
     }

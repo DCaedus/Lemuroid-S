@@ -29,6 +29,7 @@ import com.swordfish.lemuroid.app.tv.shared.BaseTVActivity
 import com.swordfish.lemuroid.app.mobile.feature.main.FirstLaunchSetup
 import com.swordfish.lemuroid.app.tv.setup.TVSetupActivity
 import com.swordfish.lemuroid.app.tv.shared.TVHelper
+import com.swordfish.lemuroid.app.tv.shared.TVUpdateDialogs
 import com.swordfish.lemuroid.common.coroutines.launchOnState
 import com.swordfish.lemuroid.common.coroutines.safeCollect
 import com.swordfish.lemuroid.common.coroutines.safeLaunch
@@ -67,6 +68,7 @@ class MainTVActivity : BaseTVActivity(), BusyActivity, GameLaunchHost {
         }
 
         ensureLegacyStoragePermissionsIfNeeded()
+        TVUpdateDialogs.attach(this)
 
         // Lemuroid-S: first launch on a TV opens the TV setup.
         if (savedInstanceState == null && !FirstLaunchSetup.isDone(applicationContext)) {

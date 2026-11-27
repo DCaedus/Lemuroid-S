@@ -110,6 +110,7 @@
     <string name="first_launch_setup_message">Set up a few things before you start. You can open this again from Settings > Advanced.</string>
     <string name="first_launch_setup_step_done">Done</string>
     <string name="first_launch_setup_not_now">Not now</string>
+    <string name="settings_description_tv_first_launch_setup">Open the setup again: Lemuroid-S folder, ROMs folder and Import Saves</string>
     <string name="tv_setup_title">Lemuroid-S on this TV</string>
     <string name="tv_setup_app_folder_message">This TV has no folder picker, so Lemuroid-S uses its own folder. Copy your games into the folder of each console:</string>
     <string name="tv_setup_console_folder">console</string>

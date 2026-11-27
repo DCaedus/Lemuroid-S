@@ -73,6 +73,13 @@ object CoreOptionsPreferenceHelper {
             .forEach { preferenceGroup.addPreference(it) }
     }
 
+    /** Lemuroid-S: a preference for [option], stored under the settings of [coreName]. */
+    fun buildPreference(
+        context: Context,
+        option: LemuroidCoreOption,
+        coreName: String,
+    ): Preference = convertToPreference(context, option, coreName)
+
     private fun convertToPreference(
         context: Context,
         it: LemuroidCoreOption,

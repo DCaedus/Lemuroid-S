@@ -14,6 +14,21 @@
             app:iconSpaceReserved="false"
             android:defaultValue="true"/>
 
+        <ListPreference
+            android:key="@string/pref_key_periodic_autosave_minutes"
+            android:title="@string/settings_title_periodic_autosave"
+            app:iconSpaceReserved="false"
+            app:useSimpleSummaryProvider="true"
+            android:entries="@array/pref_key_periodic_autosave_display_names"
+            app:entryValues="@array/pref_key_periodic_autosave_values"
+            android:defaultValue="30"/>
+
+        <PreferenceScreen
+            android:key="@string/pref_key_open_core_settings"
+            android:title="@string/settings_title_core_settings"
+            android:summary="@string/settings_description_core_settings"
+            app:iconSpaceReserved="false"/>
+
         <SwitchPreference
             android:key="@string/pref_key_enable_immersive_mode"
             android:title="@string/settings_title_immersive_mode"
@@ -123,6 +138,27 @@
             app:summary="@string/settings_description_save_sync"
             app:iconSpaceReserved="false"/>
 
+        <Preference
+            android:key="@string/pref_key_tv_language"
+            android:title="@string/settings_title_language"
+            android:summary="@string/settings_description_language"
+            app:iconSpaceReserved="false"/>
+
+        <ListPreference
+            android:key="update_check_frequency"
+            android:title="@string/settings_title_update_frequency"
+            app:iconSpaceReserved="false"
+            app:useSimpleSummaryProvider="true"
+            android:entries="@array/pref_key_update_frequency_display_names"
+            app:entryValues="@array/pref_key_update_frequency_values"
+            android:defaultValue="weekly"/>
+
+        <Preference
+            android:key="@string/pref_key_tv_check_updates"
+            android:title="@string/settings_title_check_updates"
+            android:summary="@string/settings_description_check_updates"
+            app:iconSpaceReserved="false"/>
+
         <PreferenceScreen
             android:key="@string/pref_key_display_bios_info"
             android:title="@string/settings_title_display_bios_info"
@@ -151,6 +187,19 @@
             <PreferenceCategory
                 android:title="@string/settings_category_general"
                 app:iconSpaceReserved="false">
+
+                <SwitchPreference
+                    android:key="@string/pref_key_show_framerate"
+                    android:title="@string/settings_title_show_framerate"
+                    android:summary="@string/settings_description_show_framerate"
+                    app:iconSpaceReserved="false"
+                    android:defaultValue="false"/>
+
+                <Preference
+                    android:key="@string/pref_key_tv_first_launch_setup"
+                    android:title="@string/settings_title_first_launch_setup"
+                    android:summary="@string/settings_description_tv_first_launch_setup"
+                    app:iconSpaceReserved="false"/>
 
                 <SwitchPreference
                     android:key="@string/pref_key_low_latency_audio"

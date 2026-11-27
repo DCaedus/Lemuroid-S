@@ -26,6 +26,10 @@
     <string name="pref_key_fast_forward_volume" translatable="false">fast_forward_volume</string>
     <string name="pref_key_fast_forward_button" translatable="false">fast_forward_button</string>
     <string name="pref_key_turbo_button" translatable="false">turbo_button</string>
+    <string name="pref_key_open_core_settings" translatable="false">open_core_settings</string>
+    <string name="pref_key_tv_language" translatable="false">tv_language</string>
+    <string name="pref_key_tv_check_updates" translatable="false">tv_check_updates</string>
+    <string name="pref_key_tv_first_launch_setup" translatable="false">tv_first_launch_setup</string>
     <string name="pref_key_fast_forward_button_system_prefix" translatable="false">fast_forward_button_system_</string>
     <string name="pref_key_start_screen" translatable="false">start_screen</string>
     <string name="pref_key_game_orientation" translatable="false">game_orientation</string>
