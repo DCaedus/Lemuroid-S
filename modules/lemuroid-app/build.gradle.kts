@@ -82,6 +82,7 @@ android {
     buildTypes {
         getByName("release") {
             isMinifyEnabled = true
+            isShrinkResources = true
             signingConfig = signingConfigs["release"]
             proguardFiles(getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro")
             resValue("string", "lemuroid_name", "Lemuroid-S")
@@ -91,6 +92,13 @@ android {
             versionNameSuffix = "-DEBUG"
             resValue("string", "lemuroid_name", "Lemuroid-S Debug")
         }
+    }
+
+    // Lemuroid-S: no Google-encrypted dependency list in the APK (IzzyOnDroid flags it as an unknown
+    // blob); the Play bundle keeps it, since Play uses it for dependency warnings.
+    dependenciesInfo {
+        includeInApk = false
+        includeInBundle = true
     }
 
     // Lemuroid-S: lists the app's languages so Android 13+ offers a per-app language

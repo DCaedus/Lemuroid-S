@@ -60,8 +60,25 @@ class GameService : DaggerService() {
         NotificationManagerCompat.from(this).cancel(NotificationsManager.GAME_RUNNING_NOTIFICATION_ID)
     }
 
+    /**
+     * Lemuroid-S: from Android 15 a data sync service may run 6 hours a day. Past that, Android asks
+     * it to stop and would crash the game if it didn't. The game keeps running without the
+     * notification, and its pending saves still run in this process.
+     */
+    override fun onTimeout(
+        startId: Int,
+        fgsType: Int,
+    ) {
+        Timber.w("GameService reached the foreground service time limit")
+        timedOut = true
+        ServiceCompat.stopForeground(this, ServiceCompat.STOP_FOREGROUND_REMOVE)
+        stopSelf()
+    }
+
+    private var timedOut = false
+
     override fun onDestroy() {
-        serviceScope.cancel()
+        if (!timedOut) serviceScope.cancel()
         ServiceCompat.stopForeground(this, ServiceCompat.STOP_FOREGROUND_REMOVE)
         hideNotification()
     }
