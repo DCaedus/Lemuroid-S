@@ -6,12 +6,13 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.widthIn
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
@@ -27,7 +28,9 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.Lifecycle
 import com.swordfish.lemuroid.R
@@ -86,13 +89,18 @@ private fun HomeScreen(
     onGameLongClick: (Game) -> Unit,
     onEnableMicrophoneClicked: () -> Unit,
 ) {
-    Column(
-        modifier =
-            modifier
-                .verticalScroll(rememberScrollState())
-                .padding(top = 8.dp, bottom = 8.dp),
-        verticalArrangement = Arrangement.spacedBy(4.dp),
-    ) {
+    val rows =
+        listOf(state.recentGames, state.frequentGames, state.favoritesGames, state.discoveryGames)
+            .count { it.isNotEmpty() }
+
+    BoxWithConstraints(modifier = modifier) {
+        val cardWidth = homeCardWidth(maxHeight, rows)
+        Column(
+            modifier =
+                Modifier
+                    .verticalScroll(rememberScrollState())
+                    .padding(vertical = HOME_VERTICAL_PADDING),
+        ) {
         AnimatedVisibility(state.showNoMicrophonePermissionCard) {
             HomeNotification(
                 titleId = R.string.home_microphone_title,
@@ -104,35 +112,66 @@ private fun HomeScreen(
         HomeRow(
             stringResource(id = R.string.recent),
             state.recentGames,
+            cardWidth,
             onGameClicked,
             onGameLongClick,
         )
         HomeRow(
             stringResource(id = R.string.home_frequently_played),
             state.frequentGames,
+            cardWidth,
             onGameClicked,
             onGameLongClick,
         )
         HomeRow(
             stringResource(id = R.string.favorites),
             state.favoritesGames,
+            cardWidth,
             onGameClicked,
             onGameLongClick,
         )
         HomeRow(
             stringResource(id = R.string.discover),
             state.discoveryGames,
+            cardWidth,
             onGameClicked,
             onGameLongClick,
         )
+        }
     }
 }
+
+/**
+ * Lemuroid-S: the cards shrink so every row fits on screen without scrolling (between
+ * [MIN_CARD_WIDTH] and Lemuroid's [MAX_CARD_WIDTH]). Text heights follow the font size setting.
+ */
+@Composable
+private fun homeCardWidth(
+    availableHeight: Dp,
+    rows: Int,
+): Dp {
+    if (rows == 0) return MAX_CARD_WIDTH
+    val fontScale = LocalDensity.current.fontScale
+    // Row title, the space around the cards and the card's two lines of text.
+    val rowExtra = ROW_PADDING * 2 + CARD_TEXT_PADDING * 2 + (ROW_TITLE_SP + CARD_TEXT_SP).dp * fontScale
+    val perRow = (availableHeight - HOME_VERTICAL_PADDING * 2) / rows
+    return (perRow - rowExtra).coerceIn(MIN_CARD_WIDTH, MAX_CARD_WIDTH)
+}
+
+private val HOME_VERTICAL_PADDING = 4.dp
+private val ROW_PADDING = 4.dp
+private val CARD_TEXT_PADDING = 6.dp
+private const val ROW_TITLE_SP = 16f
+private const val CARD_TEXT_SP = 20f + 16f
+private val MIN_CARD_WIDTH = 80.dp
+private val MAX_CARD_WIDTH = 144.dp
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 private fun HomeRow(
     title: String,
     games: List<Game>,
+    cardWidth: Dp,
     onGameClicked: (Game) -> Unit,
     onGameLongClick: (Game) -> Unit,
 ) {
@@ -151,14 +190,14 @@ private fun HomeRow(
                 Modifier
                     .fillMaxWidth(),
             horizontalArrangement = Arrangement.spacedBy(8.dp),
-            contentPadding = PaddingValues(horizontal = 12.dp, vertical = 8.dp),
+            contentPadding = PaddingValues(horizontal = 12.dp, vertical = ROW_PADDING),
         ) {
             items(games.size, key = { games[it].id }) { index ->
                 val game = games[index]
                 LemuroidGameCard(
                     modifier =
                         Modifier
-                            .widthIn(0.dp, 144.dp)
+                            .width(cardWidth)
                             .animateItem(),
                     game = game,
                     onClick = { onGameClicked(game) },

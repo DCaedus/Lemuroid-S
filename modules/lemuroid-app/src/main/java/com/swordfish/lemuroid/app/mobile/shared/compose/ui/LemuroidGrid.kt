@@ -10,12 +10,12 @@ import androidx.compose.ui.unit.dp
 
 /**
  * Lemuroid-S: grid used by Favorites and Systems. Portrait uses narrower tiles so phones show 3 columns
- * (tablets more); landscape keeps Lemuroid's tile size (5 columns on a phone). Tiles are closer together.
+ * (tablets more); landscape keeps Lemuroid's tile size (5 columns on a phone).
  */
 object LemuroidGrid {
     private val PORTRAIT_MIN_TILE = 104.dp
     private val LANDSCAPE_MIN_TILE = 144.dp
-    private val SPACING = 4.dp
+    private val SPACING = 8.dp
 
     @Composable
     fun columns(): GridCells {

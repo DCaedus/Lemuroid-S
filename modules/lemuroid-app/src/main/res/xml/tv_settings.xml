@@ -142,6 +142,12 @@
             android:summary="@string/settings_description_language"
             app:iconSpaceReserved="false"/>
 
+        <Preference
+            android:key="@string/pref_key_tv_check_updates"
+            android:title="@string/settings_title_check_updates"
+            android:summary="@string/settings_description_check_updates"
+            app:iconSpaceReserved="false"/>
+
         <ListPreference
             android:key="update_check_frequency"
             android:title="@string/settings_title_update_frequency"
@@ -150,12 +156,6 @@
             android:entries="@array/pref_key_update_frequency_display_names"
             app:entryValues="@array/pref_key_update_frequency_values"
             android:defaultValue="weekly"/>
-
-        <Preference
-            android:key="@string/pref_key_tv_check_updates"
-            android:title="@string/settings_title_check_updates"
-            android:summary="@string/settings_description_check_updates"
-            app:iconSpaceReserved="false"/>
 
         <PreferenceScreen
             android:key="@string/pref_key_display_bios_info"

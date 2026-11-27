@@ -89,6 +89,11 @@ private fun MiscSettings(
         // Lemuroid-S: GitHub version only (Google Play updates the app itself).
         val updater = remember { AppUpdater(context.applicationContext) }
         if (updater.isSupported) {
+            LemuroidSettingsMenuLink(
+                title = { Text(text = stringResource(id = R.string.settings_title_check_updates)) },
+                subtitle = { Text(text = stringResource(id = R.string.settings_description_check_updates)) },
+                onClick = { AppUpdateRequests.manualCheck.tryEmit(Unit) },
+            )
             LemuroidSettingsList(
                 state =
                     indexPreferenceState(
@@ -98,11 +103,6 @@ private fun MiscSettings(
                     ),
                 title = { Text(text = stringResource(id = R.string.settings_title_update_frequency)) },
                 items = stringListResource(R.array.pref_key_update_frequency_display_names),
-            )
-            LemuroidSettingsMenuLink(
-                title = { Text(text = stringResource(id = R.string.settings_title_check_updates)) },
-                subtitle = { Text(text = stringResource(id = R.string.settings_description_check_updates)) },
-                onClick = { AppUpdateRequests.manualCheck.tryEmit(Unit) },
             )
         }
         LemuroidSettingsMenuLink(
