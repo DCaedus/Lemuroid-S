@@ -1,4 +1,4 @@
-# Lemuroid-S: publishes a GitHub release when a version tag is pushed (e.g. "v1.2.0").
+# Lemuroid-S: publishes a GitHub release when a version tag is pushed (e.g. "v1.1.0").
 # Needs these repository secrets (Settings > Secrets and variables > Actions):
 #   RELEASE_KEYSTORE_BASE64   the release keystore file, base64-encoded
 #   RELEASE_KEYSTORE_PASSWORD, RELEASE_KEY_ALIAS, RELEASE_KEY_PASSWORD

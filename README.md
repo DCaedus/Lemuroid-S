@@ -7,7 +7,7 @@ No ads, no tracking, no "All files access".
 > Unofficial fork of Lemuroid by [Swordfish90](https://github.com/Swordfish90), not affiliated with the original project.
 > It has its own app ID, so it installs next to Lemuroid.
 
-**Download:** [GitHub Releases](https://github.com/DCaedus/Lemuroid-S/releases) (from version 1.2) · Google Play (coming soon)
+**Download:** [GitHub Releases](https://github.com/DCaedus/Lemuroid-S/releases) (from version 1.1) · Google Play (coming soon)
 
 On GitHub, `lemuroid-s-<version>.apk` downloads each emulator core the first time a game needs it. The **full**
 APKs have every core inside and work offline, one per processor type: `-full-arm64-v8a.apk` for most phones and

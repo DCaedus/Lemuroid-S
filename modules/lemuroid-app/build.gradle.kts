@@ -10,10 +10,10 @@ plugins {
 
 android {
     defaultConfig {
-        // Lemuroid-S: versionCode = major * 10000 + minor * 100 + patch (1.2.0 -> 10200); each
+        // Lemuroid-S: versionCode = major * 10000 + minor * 100 + patch (1.1.0 -> 10100); each
         // version has its changelog in fastlane/metadata/android/en-US/changelogs/<versionCode>.txt.
-        versionCode = 10200
-        versionName = "1.2.0"
+        versionCode = 10100
+        versionName = "1.1.0"
         applicationId = "com.dcaedus.lemuroids"
     }
     flavorDimensions += listOf("opensource", "cores")
