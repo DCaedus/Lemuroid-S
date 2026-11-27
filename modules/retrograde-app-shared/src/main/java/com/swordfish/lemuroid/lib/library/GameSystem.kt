@@ -99,6 +99,30 @@ data class GameSystem(
                             exposedSettings =
                                 listOf(
                                     ExposedSetting(
+                                        "fceumm_palette",
+                                        R.string.setting_fceumm_palette,
+                                        arrayListOf(
+                                            ExposedSetting.Value("default", R.string.value_fceumm_palette_default),
+                                            ExposedSetting.Value("asqrealc", R.string.value_fceumm_palette_asqrealc),
+                                            ExposedSetting.Value("nintendo-vc", R.string.value_fceumm_palette_nintendo_vc),
+                                            ExposedSetting.Value("rgb", R.string.value_fceumm_palette_rgb),
+                                            ExposedSetting.Value("yuv-v3", R.string.value_fceumm_palette_yuv_v3),
+                                            ExposedSetting.Value("unsaturated-final", R.string.value_fceumm_palette_unsaturated_final),
+                                            ExposedSetting.Value("sony-cxa2025as-us", R.string.value_fceumm_palette_sony),
+                                            ExposedSetting.Value("pal", R.string.value_fceumm_palette_pal),
+                                            ExposedSetting.Value("bmf-final2", R.string.value_fceumm_palette_bmf_final2),
+                                            ExposedSetting.Value("bmf-final3", R.string.value_fceumm_palette_bmf_final3),
+                                            ExposedSetting.Value("smooth-fbx", R.string.value_fceumm_palette_smooth_fbx),
+                                            ExposedSetting.Value("composite-direct-fbx", R.string.value_fceumm_palette_composite_direct_fbx),
+                                            ExposedSetting.Value("pvm-style-d93-fbx", R.string.value_fceumm_palette_pvm_fbx),
+                                            ExposedSetting.Value("ntsc-hardware-fbx", R.string.value_fceumm_palette_ntsc_hardware_fbx),
+                                            ExposedSetting.Value("nes-classic-fbx-fs", R.string.value_fceumm_palette_nes_classic),
+                                            ExposedSetting.Value("nescap", R.string.value_fceumm_palette_nescap),
+                                            ExposedSetting.Value("wavebeam", R.string.value_fceumm_palette_wavebeam),
+                                            ExposedSetting.Value("raw", R.string.value_fceumm_palette_raw),
+                                        ),
+                                    ),
+                                    ExposedSetting(
                                         "fceumm_overscan_h",
                                         R.string.setting_fceumm_overscan_h,
                                     ),
@@ -113,6 +137,10 @@ data class GameSystem(
                                         "fceumm_nospritelimit",
                                         R.string.setting_fceumm_nospritelimit,
                                     ),
+                                ),
+                            defaultSettings =
+                                listOf(
+                                    CoreVariable("fceumm_ntsc_filter", "disabled"),
                                 ),
                             controllerConfigs =
                                 hashMapOf(
@@ -130,6 +158,12 @@ data class GameSystem(
                     listOf(
                         SystemCoreConfig(
                             CoreID.SNES9X,
+                            defaultSettings =
+                                listOf(
+                                    CoreVariable("snes9x_reduce_sprite_flicker", "enabled"),
+                                    CoreVariable("snes9x_blargg", "s-video"),
+                                    CoreVariable("snes9x_overscan", "enabled"),
+                                ),
                             controllerConfigs =
                                 hashMapOf(
                                     0 to arrayListOf(ControllerConfigs.SNES),
@@ -651,6 +685,14 @@ data class GameSystem(
                                         R.string.setting_mupen64plus_43screensize,
                                     ),
                                     ExposedSetting(
+                                        "mupen64plus-aspect",
+                                        R.string.setting_mupen64plus_aspect,
+                                        arrayListOf(
+                                            ExposedSetting.Value("4:3", R.string.value_mupen64plus_aspect_original),
+                                            ExposedSetting.Value("16:9 adjusted", R.string.value_mupen64plus_aspect_wide),
+                                        ),
+                                    ),
+                                    ExposedSetting(
                                         "mupen64plus-cpucore",
                                         R.string.setting_mupen64plus_cpucore,
                                         arrayListOf(
@@ -718,6 +760,8 @@ data class GameSystem(
                             defaultSettings =
                                 listOf(
                                     CoreVariable("mupen64plus-43screensize", "320x240"),
+                                    // Widescreen uses its own resolution: the lowest, like 4:3.
+                                    CoreVariable("mupen64plus-169screensize", "640x360"),
                                     CoreVariable("mupen64plus-FrameDuping", "True"),
                                 ),
                             controllerConfigs =
@@ -764,20 +808,19 @@ data class GameSystem(
                             exposedSettings =
                                 listOf(
                                     ExposedSetting(
-                                        "pcsx_rearmed_frameskip",
-                                        R.string.setting_pcsx_rearmed_frameskip,
+                                        "pcsx_rearmed_dithering",
+                                        R.string.setting_pcsx_rearmed_dithering,
+                                        arrayListOf(
+                                            ExposedSetting.Value("disabled", R.string.value_disabled),
+                                            ExposedSetting.Value("enabled", R.string.value_enabled),
+                                        ),
                                     ),
                                 ),
-                            exposedAdvancedSettings =
-                                listOf(
-                                    ExposedSetting(
-                                        "pcsx_rearmed_drc",
-                                        R.string.setting_pcsx_rearmed_drc,
-                                    ),
-                                ),
+                            // Lemuroid-S: the fast CPU mode (dynamic recompiler) on, frame skipping off.
                             defaultSettings =
                                 listOf(
-                                    CoreVariable("pcsx_rearmed_drc", "disabled"),
+                                    CoreVariable("pcsx_rearmed_drc", "enabled"),
+                                    CoreVariable("pcsx_rearmed_frameskip_type", "disabled"),
                                 ),
                             rumbleSupported = true,
                             supportsLibretroVFS = true,
@@ -870,13 +913,17 @@ data class GameSystem(
                             exposedSettings =
                                 listOf(
                                     ExposedSetting(
-                                        "fbneo-frameskip",
+                                        "fbneo-frameskip-type",
                                         R.string.setting_fbneo_frameskip,
                                     ),
                                     ExposedSetting(
                                         "fbneo-cpu-speed-adjust",
                                         R.string.setting_fbneo_cpu_speed_adjust,
                                     ),
+                                ),
+                            defaultSettings =
+                                listOf(
+                                    CoreVariable("fbneo-frameskip-type", "disabled"),
                                 ),
                             controllerConfigs =
                                 hashMapOf(
@@ -1087,6 +1134,17 @@ data class GameSystem(
                     listOf(
                         SystemCoreConfig(
                             CoreID.MEDNAFEN_NGP,
+                            exposedSettings =
+                                listOf(
+                                    ExposedSetting(
+                                        "ngp_language",
+                                        R.string.setting_ngp_language,
+                                        arrayListOf(
+                                            ExposedSetting.Value("english", R.string.value_language_english),
+                                            ExposedSetting.Value("japanese", R.string.value_language_japanese),
+                                        ),
+                                    ),
+                                ),
                             controllerConfigs =
                                 hashMapOf(
                                     0 to arrayListOf(ControllerConfigs.NGP),
@@ -1103,6 +1161,17 @@ data class GameSystem(
                     listOf(
                         SystemCoreConfig(
                             CoreID.MEDNAFEN_NGP,
+                            exposedSettings =
+                                listOf(
+                                    ExposedSetting(
+                                        "ngp_language",
+                                        R.string.setting_ngp_language,
+                                        arrayListOf(
+                                            ExposedSetting.Value("english", R.string.value_language_english),
+                                            ExposedSetting.Value("japanese", R.string.value_language_japanese),
+                                        ),
+                                    ),
+                                ),
                             controllerConfigs =
                                 hashMapOf(
                                     0 to arrayListOf(ControllerConfigs.NGP),
@@ -1198,6 +1267,28 @@ data class GameSystem(
                     listOf(
                         SystemCoreConfig(
                             CoreID.DOSBOX_PURE,
+                            exposedSettings =
+                                listOf(
+                                    ExposedSetting(
+                                        "dosbox_pure_cycles",
+                                        R.string.setting_dosbox_pure_cycles,
+                                        arrayListOf(
+                                            ExposedSetting.Value("auto", R.string.value_dosbox_cycles_auto),
+                                            ExposedSetting.Value("max", R.string.value_dosbox_cycles_max),
+                                            ExposedSetting.Value("315", R.string.value_dosbox_cycles_315),
+                                            ExposedSetting.Value("1320", R.string.value_dosbox_cycles_1320),
+                                            ExposedSetting.Value("2750", R.string.value_dosbox_cycles_2750),
+                                            ExposedSetting.Value("4720", R.string.value_dosbox_cycles_4720),
+                                            ExposedSetting.Value("7800", R.string.value_dosbox_cycles_7800),
+                                            ExposedSetting.Value("13400", R.string.value_dosbox_cycles_13400),
+                                            ExposedSetting.Value("26800", R.string.value_dosbox_cycles_26800),
+                                            ExposedSetting.Value("77000", R.string.value_dosbox_cycles_77000),
+                                            ExposedSetting.Value("200000", R.string.value_dosbox_cycles_200000),
+                                            ExposedSetting.Value("500000", R.string.value_dosbox_cycles_500000),
+                                            ExposedSetting.Value("1000000", R.string.value_dosbox_cycles_1000000),
+                                        ),
+                                    ),
+                                ),
                             controllerConfigs =
                                 hashMapOf(
                                     0 to arrayListOf(ControllerConfigs.DOS_AUTO),
@@ -1279,6 +1370,17 @@ data class GameSystem(
                     listOf(
                         SystemCoreConfig(
                             CoreID.FLYCAST,
+                            exposedSettings =
+                                listOf(
+                                    ExposedSetting(
+                                        "reicast_widescreen_cheats",
+                                        R.string.setting_reicast_widescreen_cheats,
+                                    ),
+                                ),
+                            defaultSettings =
+                                listOf(
+                                    CoreVariable("reicast_frame_skipping", "disabled"),
+                                ),
                             controllerConfigs =
                                 hashMapOf(
                                     0 to arrayListOf(ControllerConfigs.PSX_DUALSHOCK),
@@ -1345,6 +1447,29 @@ data class GameSystem(
                     listOf(
                         SystemCoreConfig(
                             CoreID.POKEMINI,
+                            exposedSettings =
+                                listOf(
+                                    ExposedSetting(
+                                        "pokemini_palette",
+                                        R.string.setting_pokemini_palette,
+                                        arrayListOf(
+                                            ExposedSetting.Value("Default", R.string.value_pokemini_palette_default),
+                                            ExposedSetting.Value("Old", R.string.value_pokemini_palette_old),
+                                            ExposedSetting.Value("Monochrome", R.string.value_pokemini_palette_monochrome),
+                                            ExposedSetting.Value("Green", R.string.value_pokemini_palette_green),
+                                            ExposedSetting.Value("Green Vector", R.string.value_pokemini_palette_green_inverted),
+                                            ExposedSetting.Value("Red", R.string.value_pokemini_palette_red),
+                                            ExposedSetting.Value("Red Vector", R.string.value_pokemini_palette_red_inverted),
+                                            ExposedSetting.Value("Blue LCD", R.string.value_pokemini_palette_blue_lcd),
+                                            ExposedSetting.Value("LEDBacklight", R.string.value_pokemini_palette_led),
+                                            ExposedSetting.Value("Girl Power", R.string.value_pokemini_palette_girl_power),
+                                            ExposedSetting.Value("Blue", R.string.value_pokemini_palette_blue),
+                                            ExposedSetting.Value("Blue Vector", R.string.value_pokemini_palette_blue_inverted),
+                                            ExposedSetting.Value("Sepia", R.string.value_pokemini_palette_sepia),
+                                            ExposedSetting.Value("Monochrome Vector", R.string.value_pokemini_palette_monochrome_inverted),
+                                        ),
+                                    ),
+                                ),
                             controllerConfigs =
                                 hashMapOf(
                                     0 to arrayListOf(ControllerConfigs.GBA),

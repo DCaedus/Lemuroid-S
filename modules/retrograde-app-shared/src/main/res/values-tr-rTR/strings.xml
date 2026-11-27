@@ -35,8 +35,6 @@
     <string name="setting_mupen64plus_BilinearMode">Çift doğrusal modu</string>
     <string name="setting_mupen64plus_pak1">Pak Oyuncu 1</string>
     <string name="setting_mupen64plus_pak2">Pak Oyuncu 2</string>
-    <string name="setting_pcsx_rearmed_frameskip">Kare atlama</string>
-    <string name="setting_pcsx_rearmed_drc">Dinamik yeniden derleyici</string>
     <string name="setting_ppsspp_auto_frameskip">Otomatik kare atlama</string>
     <string name="setting_ppsspp_cpu_core">Dinamik yeniden derleyici</string>
     <string name="setting_ppsspp_internal_resolution">Çözünürlük</string>
@@ -106,4 +104,22 @@
     <string name="value_handy_rot_none">0</string>
     <string name="value_handy_rot_90">90</string>
     <string name="value_handy_rot_270">270</string>
+
+    <!-- Lemuroid-S core settings -->
+    <string name="setting_fceumm_palette">Renk paleti</string>
+    <string name="setting_pcsx_rearmed_dithering">Titreme (dithering)</string>
+    <string name="setting_mupen64plus_aspect">Geniş ekran</string>
+    <string name="value_mupen64plus_aspect_original">Orijinal (4:3)</string>
+    <string name="value_mupen64plus_aspect_wide">Geniş ekran (16:9)</string>
+    <string name="setting_ngp_language">Dil</string>
+    <string name="value_language_english">İngilizce</string>
+    <string name="value_language_japanese">Japonca</string>
+    <string name="setting_dosbox_pure_cycles">CPU hızı</string>
+    <string name="value_dosbox_cycles_auto">Otomatik</string>
+    <string name="value_dosbox_cycles_max">En yüksek</string>
+    <string name="setting_reicast_widescreen_cheats">Geniş ekran</string>
+    <string name="setting_pokemini_palette">Palet</string>
+    <string name="value_enabled">Açık</string>
+    <string name="value_disabled">Kapalı</string>
+    <string name="value_fceumm_palette_default">Varsayılan</string>
 </resources>

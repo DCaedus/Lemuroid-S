@@ -35,8 +35,6 @@
     <string name="setting_mupen64plus_BilinearMode">Білінійний режим</string>
     <string name="setting_mupen64plus_pak1">Набір гравця 1</string>
     <string name="setting_mupen64plus_pak2">Набір гравця 2</string>
-    <string name="setting_pcsx_rearmed_frameskip">Frameskip</string>
-    <string name="setting_pcsx_rearmed_drc">Динамічний рекомпілятор</string>
     <string name="setting_ppsspp_auto_frameskip">Авто frameskip</string>
     <string name="setting_ppsspp_cpu_core">Динамічний рекомпілятор</string>
     <string name="setting_ppsspp_internal_resolution">Роздільна здатність</string>
@@ -106,4 +104,22 @@
     <string name="value_handy_rot_none">0</string>
     <string name="value_handy_rot_90">90</string>
     <string name="value_handy_rot_270">270</string>
+
+    <!-- Lemuroid-S core settings -->
+    <string name="setting_fceumm_palette">Палітра кольорів</string>
+    <string name="setting_pcsx_rearmed_dithering">Дизеринг</string>
+    <string name="setting_mupen64plus_aspect">Широкий екран</string>
+    <string name="value_mupen64plus_aspect_original">Оригінал (4:3)</string>
+    <string name="value_mupen64plus_aspect_wide">Широкий екран (16:9)</string>
+    <string name="setting_ngp_language">Мова</string>
+    <string name="value_language_english">Англійська</string>
+    <string name="value_language_japanese">Японська</string>
+    <string name="setting_dosbox_pure_cycles">Швидкість процесора</string>
+    <string name="value_dosbox_cycles_auto">Авто</string>
+    <string name="value_dosbox_cycles_max">Максимум</string>
+    <string name="setting_reicast_widescreen_cheats">Широкий екран</string>
+    <string name="setting_pokemini_palette">Палітра</string>
+    <string name="value_enabled">Увімк.</string>
+    <string name="value_disabled">Вимк.</string>
+    <string name="value_fceumm_palette_default">За замовчуванням</string>
 </resources>
