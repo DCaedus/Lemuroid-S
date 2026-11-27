@@ -304,4 +304,6 @@
     <string name="viewport_alignment_names_top">Sus</string>
     <string name="viewport_alignment_names_center">Centru</string>
     <string name="viewport_alignment_names_bottom">Jos</string>
+    <string name="game_busy">Așteaptă…</string>
+    <string name="game_saving_previous">Se salvează ultimul joc…</string>
 </resources>

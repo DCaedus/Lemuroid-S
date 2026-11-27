@@ -316,4 +316,6 @@
     <string name="viewport_alignment_names_top">Горе</string>
     <string name="viewport_alignment_names_center">У средини</string>
     <string name="viewport_alignment_names_bottom">Доле</string>
+    <string name="game_busy">Сачекајте…</string>
+    <string name="game_saving_previous">Чување последње игре…</string>
 </resources>

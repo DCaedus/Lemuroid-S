@@ -306,4 +306,6 @@
     <string name="tilt_configuration_cross">מקשי כיוון</string>
     <string name="tilt_configuration_analog_left">סטיק שמאלי</string>
     <string name="tilt_configuration_analog_right">סטיק ימני</string>
+    <string name="game_busy">רק רגע…</string>
+    <string name="game_saving_previous">המשחק האחרון נשמר…</string>
 </resources>

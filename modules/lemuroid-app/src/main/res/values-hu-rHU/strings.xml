@@ -295,4 +295,6 @@
     <string name="tilt_configuration_cross">Irányítókereszt</string>
     <string name="tilt_configuration_analog_left">Bal analóg kar</string>
     <string name="tilt_configuration_analog_right">Jobb analóg kar</string>
+    <string name="game_busy">Kérlek, várj…</string>
+    <string name="game_saving_previous">Az utolsó játék mentése…</string>
 </resources>

@@ -315,4 +315,6 @@
     <string name="viewport_alignment_names_top">Угорі</string>
     <string name="viewport_alignment_names_center">По центру</string>
     <string name="viewport_alignment_names_bottom">Унизу</string>
+    <string name="game_busy">Зачекайте…</string>
+    <string name="game_saving_previous">Збереження останньої гри…</string>
 </resources>

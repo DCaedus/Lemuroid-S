@@ -316,4 +316,6 @@
     <string name="viewport_alignment_names_top">Arriba</string>
     <string name="viewport_alignment_names_center">Centro</string>
     <string name="viewport_alignment_names_bottom">Abajo</string>
+    <string name="game_busy">Espera un momento…</string>
+    <string name="game_saving_previous">Guardando tu última partida…</string>
 </resources>

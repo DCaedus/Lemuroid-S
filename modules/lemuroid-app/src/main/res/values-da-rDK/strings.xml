@@ -316,4 +316,6 @@
     <string name="viewport_alignment_names_top">Øverst</string>
     <string name="viewport_alignment_names_center">Midten</string>
     <string name="viewport_alignment_names_bottom">Nederst</string>
+    <string name="game_busy">Vent venligst…</string>
+    <string name="game_saving_previous">Gemmer dit seneste spil…</string>
 </resources>

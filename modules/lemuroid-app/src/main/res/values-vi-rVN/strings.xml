@@ -314,4 +314,6 @@
     <string name="tilt_configuration_disabled">Tắt</string>
     <string name="tilt_configuration_cross">Phím hướng</string>
     <string name="tilt_configuration_analog_right">Cần analog phải</string>
+    <string name="game_busy">Vui lòng đợi…</string>
+    <string name="game_saving_previous">Đang lưu trò chơi gần nhất…</string>
 </resources>

@@ -317,4 +317,6 @@ $SYSTEMS.
     <string name="viewport_alignment_names_top">Üst</string>
     <string name="viewport_alignment_names_center">Orta</string>
     <string name="viewport_alignment_names_bottom">Alt</string>
+    <string name="game_busy">Lütfen bekleyin…</string>
+    <string name="game_saving_previous">Son oyununuz kaydediliyor…</string>
 </resources>

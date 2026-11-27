@@ -316,4 +316,6 @@
     <string name="viewport_alignment_names_top">Boven</string>
     <string name="viewport_alignment_names_center">Midden</string>
     <string name="viewport_alignment_names_bottom">Onder</string>
+    <string name="game_busy">Even geduld…</string>
+    <string name="game_saving_previous">Je laatste game wordt opgeslagen…</string>
 </resources>

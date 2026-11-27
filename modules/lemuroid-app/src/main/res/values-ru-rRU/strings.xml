@@ -316,4 +316,6 @@
     <string name="viewport_alignment_names_top">Сверху</string>
     <string name="viewport_alignment_names_center">По центру</string>
     <string name="viewport_alignment_names_bottom">Снизу</string>
+    <string name="game_busy">Подождите…</string>
+    <string name="game_saving_previous">Сохранение последней игры…</string>
 </resources>

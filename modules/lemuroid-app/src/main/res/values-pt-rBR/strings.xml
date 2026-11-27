@@ -316,4 +316,6 @@
     <string name="viewport_alignment_names_top">Topo</string>
     <string name="viewport_alignment_names_center">Centro</string>
     <string name="viewport_alignment_names_bottom">Base</string>
+    <string name="game_busy">Aguarde…</string>
+    <string name="game_saving_previous">Salvando seu último jogo…</string>
 </resources>

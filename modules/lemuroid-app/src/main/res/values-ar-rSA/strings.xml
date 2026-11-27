@@ -315,4 +315,6 @@
     <string name="viewport_alignment_names_top">أعلى</string>
     <string name="viewport_alignment_names_center">الوسط</string>
     <string name="viewport_alignment_names_bottom">أسفل</string>
+    <string name="game_busy">يُرجى الانتظار…</string>
+    <string name="game_saving_previous">جارٍ حفظ آخر لعبة…</string>
 </resources>

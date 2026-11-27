@@ -360,8 +360,12 @@ class BaseGameScreenViewModel(
         if (loadingState.value) return
         viewModelScope.launch {
             withLoading {
+                // Lemuroid-S: only the game's state is taken here (the game must still be running).
+                // Compressing it and writing it to the Lemuroid-S folder can take seconds for large
+                // states (PSP, 3DS...), so it runs in the game process after the screen has closed;
+                // the process stays alive until it's done (see GameService).
                 val snapshot = saves.captureSaveSnapshot(true) ?: return@launch
-                saves.writeSaveSnapshot(snapshot)
+                GameService.schedule { saves.writeSaveSnapshot(snapshot) }
                 sideEffects.requestSuccessfulFinish()
             }
         }

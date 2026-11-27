@@ -313,4 +313,6 @@
     <string name="tilt_configuration_cross">方向鍵</string>
     <string name="tilt_configuration_analog_left">左類比搖桿</string>
     <string name="tilt_configuration_analog_right">右類比搖桿</string>
+    <string name="game_busy">請稍候…</string>
+    <string name="game_saving_previous">正在儲存你上一個遊戲…</string>
 </resources>

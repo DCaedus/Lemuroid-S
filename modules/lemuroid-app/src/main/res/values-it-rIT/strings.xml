@@ -316,4 +316,6 @@
     <string name="covers_import_notification_title">Importazione delle copertine</string>
     <string name="covers_import_notification_message">Copia delle copertine nella cartella Lemuroid-S</string>
     <string name="game_process_another_game_running">Chiudi il gioco in corso prima di avviarne un altro</string>
+    <string name="game_busy">Attendi…</string>
+    <string name="game_saving_previous">Salvataggio dell\'ultima partita…</string>
 </resources>

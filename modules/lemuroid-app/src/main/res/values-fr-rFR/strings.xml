@@ -316,4 +316,6 @@
     <string name="viewport_alignment_names_top">Haut</string>
     <string name="viewport_alignment_names_center">Centre</string>
     <string name="viewport_alignment_names_bottom">Bas</string>
+    <string name="game_busy">Veuillez patienter…</string>
+    <string name="game_saving_previous">Sauvegarde de votre dernière partie…</string>
 </resources>

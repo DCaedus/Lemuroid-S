@@ -316,4 +316,6 @@
     <string name="viewport_alignment_names_top">위</string>
     <string name="viewport_alignment_names_center">가운데</string>
     <string name="viewport_alignment_names_bottom">아래</string>
+    <string name="game_busy">잠시 기다려 주세요…</string>
+    <string name="game_saving_previous">마지막 게임을 저장하는 중…</string>
 </resources>

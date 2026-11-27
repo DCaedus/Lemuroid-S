@@ -316,4 +316,6 @@
     <string name="viewport_alignment_names_top">Πάνω</string>
     <string name="viewport_alignment_names_center">Κέντρο</string>
     <string name="viewport_alignment_names_bottom">Κάτω</string>
+    <string name="game_busy">Περιμένετε…</string>
+    <string name="game_saving_previous">Αποθήκευση του τελευταίου παιχνιδιού…</string>
 </resources>

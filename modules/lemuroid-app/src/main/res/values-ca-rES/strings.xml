@@ -295,4 +295,6 @@
     <string name="tilt_configuration_cross">Creueta</string>
     <string name="tilt_configuration_analog_left">Palanca esquerra</string>
     <string name="tilt_configuration_analog_right">Palanca dreta</string>
+    <string name="game_busy">Espera un moment…</string>
+    <string name="game_saving_previous">S\'està desant l\'última partida…</string>
 </resources>

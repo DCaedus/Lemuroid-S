@@ -315,4 +315,6 @@
     <string name="viewport_alignment_names_top">Nahoře</string>
     <string name="viewport_alignment_names_center">Uprostřed</string>
     <string name="viewport_alignment_names_bottom">Dole</string>
+    <string name="game_busy">Čekejte prosím…</string>
+    <string name="game_saving_previous">Ukládání poslední hry…</string>
 </resources>

@@ -312,4 +312,6 @@
     <string name="viewport_alignment_names_bottom">Alhaalla</string>
     <!-- Lemuroid-S -->
     <string name="game_loading_preparing_game">Peliä valmistellaan…</string>
+    <string name="game_busy">Odota…</string>
+    <string name="game_saving_previous">Viimeisintä peliä tallennetaan…</string>
 </resources>

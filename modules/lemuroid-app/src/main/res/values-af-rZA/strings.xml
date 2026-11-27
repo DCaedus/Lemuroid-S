@@ -295,4 +295,6 @@
     <string name="tilt_configuration_cross">Rigtingknoppies</string>
     <string name="tilt_configuration_analog_left">Linkerstok</string>
     <string name="tilt_configuration_analog_right">Regterstok</string>
+    <string name="game_busy">Wag asseblief…</string>
+    <string name="game_saving_previous">Stoor jou laaste speletjie…</string>
 </resources>

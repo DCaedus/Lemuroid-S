@@ -11,6 +11,10 @@ import com.swordfish.lemuroid.lib.storage.MainFolder
 import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withTimeoutOrNull
+import kotlinx.coroutines.withContext
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.Dispatchers
 
 class GameLauncher(
     private val coresSelection: CoresSelection,
@@ -29,12 +33,14 @@ class GameLauncher(
             return false
         }
 
-        if (GameProcessLock.isHeldByAnotherProcess(activity.applicationContext)) {
-            activity.displayToast(R.string.game_process_another_game_running)
-            return false
-        }
+        val previousGameRunning = GameProcessLock.isHeldByAnotherProcess(activity.applicationContext)
 
         GlobalScope.launch {
+            // Lemuroid-S: a game that was just closed may still be writing its saves; wait for it.
+            if (previousGameRunning && !waitForPreviousGame(activity)) {
+                withContext(Dispatchers.Main) { activity.displayToast(R.string.game_process_another_game_running) }
+                return@launch
+            }
             val system = GameSystem.findById(game.systemId)
             val coreConfig = coresSelection.getCoreConfigForSystem(system)
             gameLaunchTaskHandler.handleGameStart(activity.applicationContext)
@@ -42,5 +48,18 @@ class GameLauncher(
         }
 
         return true
+    }
+
+    private suspend fun waitForPreviousGame(activity: Activity): Boolean {
+        withContext(Dispatchers.Main) { activity.displayToast(R.string.game_saving_previous) }
+        return withTimeoutOrNull(PREVIOUS_GAME_TIMEOUT_MS) {
+            while (GameProcessLock.isHeldByAnotherProcess(activity.applicationContext)) delay(POLL_MS)
+            true
+        } ?: false
+    }
+
+    companion object {
+        private const val PREVIOUS_GAME_TIMEOUT_MS = 20_000L
+        private const val POLL_MS = 250L
     }
 }

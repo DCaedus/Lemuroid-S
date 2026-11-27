@@ -316,4 +316,6 @@
     <string name="viewport_alignment_names_top">顶部</string>
     <string name="viewport_alignment_names_center">居中</string>
     <string name="viewport_alignment_names_bottom">底部</string>
+    <string name="game_busy">请稍候…</string>
+    <string name="game_saving_previous">正在保存你上一个游戏…</string>
 </resources>

@@ -319,4 +319,6 @@
     <string name="viewport_alignment_names_bottom">下</string>
     <!-- Lemuroid-S -->
     <string name="game_loading_preparing_game">ゲームを準備しています…</string>
+    <string name="game_busy">お待ちください…</string>
+    <string name="game_saving_previous">前回のゲームを保存しています…</string>
 </resources>
