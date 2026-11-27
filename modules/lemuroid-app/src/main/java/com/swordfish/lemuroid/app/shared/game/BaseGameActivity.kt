@@ -93,6 +93,9 @@ abstract class BaseGameActivity : ImmersiveActivity() {
     /** Lemuroid-S: applies the in-game screen orientation setting (phones only; TV stays landscape). */
     protected open fun applyOrientationSetting() {}
 
+    // Lemuroid-S: status bar hidden in landscape, shown above the game in portrait.
+    override fun applySystemBars() = GameSystemBars.apply(this)
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setUpExceptionsHandler()

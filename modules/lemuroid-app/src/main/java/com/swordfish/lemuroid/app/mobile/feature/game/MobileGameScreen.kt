@@ -1,5 +1,7 @@
 package com.swordfish.lemuroid.app.mobile.feature.game
 
+import androidx.compose.ui.platform.LocalConfiguration
+import android.content.res.Configuration
 import android.graphics.RectF
 import android.os.SystemClock
 import androidx.compose.foundation.background
@@ -12,6 +14,7 @@ import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.WindowInsetsSides
 import androidx.compose.foundation.layout.displayCutout
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.statusBars
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.only
 import androidx.compose.foundation.layout.padding
@@ -77,7 +80,11 @@ import kotlin.math.roundToInt
 
 @Composable
 fun MobileGameScreen(viewModel: BaseGameScreenViewModel) {
-    BoxWithConstraints(modifier = Modifier.fillMaxSize()) {
+    // Lemuroid-S: below the status bar in portrait. In landscape it's hidden; swiping it in briefly
+    // must not move the game, so no space is kept for it there.
+    val portrait = LocalConfiguration.current.orientation != Configuration.ORIENTATION_LANDSCAPE
+    val statusBarSpace = if (portrait) Modifier.windowInsetsPadding(WindowInsets.statusBars) else Modifier
+    BoxWithConstraints(modifier = Modifier.fillMaxSize().then(statusBarSpace)) {
         val isLandscape = constraints.maxWidth > constraints.maxHeight
 
         LaunchedEffect(isLandscape) {

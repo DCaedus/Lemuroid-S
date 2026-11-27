@@ -2,6 +2,8 @@
 
 package com.swordfish.lemuroid.app.mobile.feature.gamemenu
 
+import androidx.compose.ui.platform.LocalConfiguration
+import android.content.res.Configuration
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
@@ -17,6 +19,10 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
+import com.swordfish.lemuroid.app.shared.game.GameSystemBars
+import androidx.compose.foundation.layout.union
+import androidx.compose.foundation.layout.displayCutout
+import androidx.compose.foundation.layout.statusBars
 import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.layout.safeDrawing
 import androidx.compose.foundation.layout.only
@@ -97,6 +103,7 @@ class GameMenuActivity : RetrogradeComponentActivity() {
             SystemBarStyle.dark(Color.TRANSPARENT),
             SystemBarStyle.dark(Color.TRANSPARENT),
         )
+        GameSystemBars.apply(this)
 
         val extras = intent.extras
 
@@ -250,10 +257,17 @@ class GameMenuActivity : RetrogradeComponentActivity() {
                     minOf(maxWidth * 0.8f, 400f.dp)
                 }
 
+            // Lemuroid-S: the panel starts below the status bar when it shows (portrait).
             Surface(
                 modifier =
                     Modifier
-                        .padding()
+                        .then(
+                            if (LocalConfiguration.current.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+                                Modifier
+                            } else {
+                                Modifier.windowInsetsPadding(WindowInsets.statusBars)
+                            },
+                        )
                         .fillMaxHeight()
                         .width(panelWidth)
                         .clip(MaterialTheme.shapes.large),
@@ -264,15 +278,24 @@ class GameMenuActivity : RetrogradeComponentActivity() {
                         Modifier
                             .fillMaxSize()
                             .windowInsetsPadding(
-                                WindowInsets.safeDrawing.only(
-                                    WindowInsetsSides.Top + WindowInsetsSides.Bottom + WindowInsetsSides.End,
-                                ),
+                                WindowInsets.safeDrawing.only(WindowInsetsSides.Bottom + WindowInsetsSides.End)
+                                    .union(WindowInsets.displayCutout.only(WindowInsetsSides.Top)),
                             ),
                 ) {
                     content()
                 }
             }
         }
+    }
+
+    override fun onWindowFocusChanged(hasFocus: Boolean) {
+        super.onWindowFocusChanged(hasFocus)
+        if (hasFocus) GameSystemBars.apply(this)
+    }
+
+    override fun onConfigurationChanged(newConfig: Configuration) {
+        super.onConfigurationChanged(newConfig)
+        GameSystemBars.apply(this)
     }
 
     private fun onResult(block: Intent.() -> Unit) {
