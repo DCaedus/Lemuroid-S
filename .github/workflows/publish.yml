@@ -1,67 +1,80 @@
+# Lemuroid-S: publishes a GitHub release when a version tag is pushed (e.g. "v1.2.0").
+# Needs these repository secrets (Settings > Secrets and variables > Actions):
+#   RELEASE_KEYSTORE_BASE64   the release keystore file, base64-encoded
+#   RELEASE_KEYSTORE_PASSWORD, RELEASE_KEY_ALIAS, RELEASE_KEY_PASSWORD
+# The release gets the regular APK and the full APKs (every core inside, one per processor type),
+# with the changelog of that version as its description. The Play bundle (.aab) is kept as a
+# workflow artifact for uploading to Google Play by hand.
 name: Publish
 
 on:
   push:
     tags:
-      - "*"
+      - "v*"
+
+permissions:
+  contents: write
 
 jobs:
-
-  build:
-    name: Build APK
+  publish:
+    name: Build and publish
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v2
-        with:
-          submodules: recursive
+      - uses: actions/checkout@v4
 
-      - name: set up JDK 17
+      - name: Fetch LibretroDroid dependencies
+        run: |
+          git submodule update --init --depth 1 \
+            modules/libretrodroid/src/main/cpp/oboe \
+            modules/libretrodroid/src/main/cpp/libretro/libretro-common
+
+      - name: Set up JDK 17
         uses: actions/setup-java@v4
         with:
           java-version: '17'
           distribution: 'temurin'
           cache: gradle
 
-      - name: Create release keystore
+      - name: Restore the release keystore
+        run: echo "${{ secrets.RELEASE_KEYSTORE_BASE64 }}" | base64 -d > "$RUNNER_TEMP/release.jks"
+
+      - name: Build
+        env:
+          LEMUROIDS_KEYSTORE: ${{ runner.temp }}/release.jks
+          LEMUROIDS_KEYSTORE_PASSWORD: ${{ secrets.RELEASE_KEYSTORE_PASSWORD }}
+          LEMUROIDS_KEY_ALIAS: ${{ secrets.RELEASE_KEY_ALIAS }}
+          LEMUROIDS_KEY_PASSWORD: ${{ secrets.RELEASE_KEY_PASSWORD }}
         run: |
-          echo "${{ secrets.RELEASE_KEYSTORE }}" > release.keystore.asc
-          gpg -d --passphrase "${{ secrets.RELEASE_KEYSTORE_PASSPHRASE }}" --batch release.keystore.asc > release.jks
+          chmod +x gradlew
+          ./gradlew assembleFreeDynamicRelease bundlePlayDynamicRelease
+          # Separate run: the full APKs turn on per-processor splits for the whole build.
+          ./gradlew assembleFreeBundleRelease
 
-      - name: Grant execute permission for gradlew
-        run: chmod +x gradlew
-
-      - name: Build APKs
-        # Regular APK (cores downloaded when needed) and full APK (every core inside, 64-bit ARM only).
-        run: ./gradlew assembleFreeDynamicRelease assembleFreeBundleRelease
-
-      - name: Rename APKs
+      - name: Collect files
+        id: files
         run: |
-          mkdir apk
-          cp modules/lemuroid-app/build/outputs/apk/freeDynamic/release/lemuroid-app-free-dynamic-release.apk "apk/lemuroid-s-${GITHUB_REF_NAME}.apk"
-          cp modules/lemuroid-app/build/outputs/apk/freeBundle/release/lemuroid-app-free-bundle-release.apk "apk/lemuroid-s-${GITHUB_REF_NAME}-full.apk"
+          version="${GITHUB_REF_NAME#v}"
+          code=$(grep -oP 'versionCode = \K[0-9]+' modules/lemuroid-app/build.gradle.kts)
+          out=modules/lemuroid-app/build/outputs
+          mkdir release
+          cp "$out/apk/freeDynamic/release/lemuroid-app-free-dynamic-release.apk" "release/lemuroid-s-$version.apk"
+          for abi in arm64-v8a armeabi-v7a x86_64; do
+            cp "$out/apk/freeBundle/release/lemuroid-app-free-bundle-$abi-release.apk" \
+              "release/lemuroid-s-$version-full-$abi.apk"
+          done
+          cp "$out/bundle/playDynamicRelease/lemuroid-app-play-dynamic-release.aab" "lemuroid-s-$version.aab"
+          echo "changelog=fastlane/metadata/android/en-US/changelogs/$code.txt" >> "$GITHUB_OUTPUT"
 
-      - name: Upload Artifact
+      - name: Keep the Play bundle
         uses: actions/upload-artifact@v4
         with:
-          name: apk
-          path: apk/*.apk
+          name: play-bundle
+          path: "*.aab"
 
-  publish_apk:
-    name: Publish APK on Github
-    needs: [ build ]
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Download Artifact
-        uses: actions/download-artifact@v4
+      - name: Create the release
+        uses: softprops/action-gh-release@v2
         with:
-          name: apk
-
-      - name: Create pre-release
-        uses: "marvinpinto/action-automatic-releases@latest"
-        with:
-          repo_token: "${{ secrets.GITHUB_TOKEN }}"
-          prerelease: true
-          title: "Pre-release"
-          files: "*.apk"
+          name: Lemuroid-S ${{ github.ref_name }}
+          body_path: ${{ steps.files.outputs.changelog }}
+          files: release/*.apk

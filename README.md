@@ -9,8 +9,9 @@ No ads, no tracking, no "All files access".
 
 **Download:** [GitHub Releases](https://github.com/DCaedus/Lemuroid-S/releases) (from version 1.2) · Google Play (coming soon)
 
-On GitHub there are two APKs: the regular one downloads each emulator core the first time a game needs it,
-the **full** one (`-full.apk`, 64-bit ARM only) has every core inside and works offline.
+On GitHub, `lemuroid-s-<version>.apk` downloads each emulator core the first time a game needs it. The **full**
+APKs have every core inside and work offline, one per processor type: `-full-arm64-v8a.apk` for most phones and
+TVs, `-full-armeabi-v7a.apk` for older 32-bit devices, `-full-x86_64.apk` for Chromebooks and emulators.
 
 ## New in Lemuroid-S
 

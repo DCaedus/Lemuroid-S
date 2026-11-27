@@ -10,8 +10,10 @@ plugins {
 
 android {
     defaultConfig {
-        versionCode = 252
-        versionName = "1.17.0"
+        // Lemuroid-S: versionCode = major * 10000 + minor * 100 + patch (1.2.0 -> 10200); each
+        // version has its changelog in fastlane/metadata/android/en-US/changelogs/<versionCode>.txt.
+        versionCode = 10200
+        versionName = "1.2.0"
         applicationId = "com.dcaedus.lemuroids"
     }
     flavorDimensions += listOf("opensource", "cores")
@@ -33,16 +35,27 @@ android {
             dimension = "opensource"
         }
 
-        // Lemuroid-S "full" GitHub APK: every core inside the app, no downloads. 64-bit ARM only (all cores
-        // for all processor types would make a ~250 MB APK); other devices use the regular APK.
+        // Lemuroid-S "full" GitHub APKs: every core inside the app, no downloads. One APK per processor
+        // type (see splits below), since all cores for all of them would make a ~250 MB APK.
         create("bundle") {
             dimension = "cores"
-            ndk { abiFilters += "arm64-v8a" }
         }
 
         // Cores ship in the app (5) or download on demand (Google Play modules or the "cores" branch on GitHub).
         create("dynamic") {
             dimension = "cores"
+        }
+    }
+
+    // Lemuroid-S: the full APKs are split by processor type (lemuroid-s-<version>-full-arm64-v8a.apk...).
+    // Splits apply to the whole module, so they're only turned on when building the full APKs; the
+    // regular APK stays a single one for every device.
+    splits {
+        abi {
+            isEnable = gradle.startParameter.taskNames.any { it.contains("FreeBundle") }
+            reset()
+            include("arm64-v8a", "armeabi-v7a", "x86_64")
+            isUniversalApk = false
         }
     }
 

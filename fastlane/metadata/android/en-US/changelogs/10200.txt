@@ -1,0 +1,7 @@
+First release of Lemuroid-S, a fork of Lemuroid.
+- One Lemuroid-S folder for ROMs, BIOS, saves, states and covers
+- RetroArch-compatible saves and states, plus Import Saves
+- Autosave slot, fast-forward and turbo buttons
+- Covers like RetroArch, new display filters
+- Up-to-date cores and 10 new systems, including Dreamcast, 3DS and Neo Geo CD
+- Core settings in Settings, new themes and setup screen

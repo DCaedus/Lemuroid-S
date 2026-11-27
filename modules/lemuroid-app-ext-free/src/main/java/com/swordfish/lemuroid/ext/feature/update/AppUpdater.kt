@@ -116,8 +116,19 @@ class AppUpdater(context: Context) {
             else -> null
         }
 
-    /** The "full" APK carries every core, e.g. PPSSPP, among the app's own libraries. */
-    private fun isFullBuild(): Boolean = File(appContext.applicationInfo.nativeLibraryDir, FULL_BUILD_MARKER).exists()
+    /** The "full" APKs carry every core among the app's own libraries; the regular one only a few. */
+    private fun isFullBuild(): Boolean =
+        (File(appContext.applicationInfo.nativeLibraryDir).list()?.count { it.endsWith(CORE_SUFFIX) } ?: 0) >
+            FULL_BUILD_MIN_CORES
+
+    /** The processor type of the installed full APK, from its libraries folder (lib/arm64, lib/arm...). */
+    private fun installedAbi(): String? =
+        when (File(appContext.applicationInfo.nativeLibraryDir).name) {
+            "arm64" -> "arm64-v8a"
+            "arm" -> "armeabi-v7a"
+            "x86_64" -> "x86_64"
+            else -> null
+        }
 
     private fun currentVersion(): String =
         runCatching {
@@ -130,8 +141,17 @@ class AppUpdater(context: Context) {
             (0 until (assets?.length() ?: 0))
                 .map { assets!!.getJSONObject(it) }
                 .filter { it.optString("name").endsWith(".apk", ignoreCase = true) }
-        // The release has a regular APK and a "full" one (all cores inside): update to the same kind.
-        val wanted = apks.firstOrNull { it.optString("name").contains("full", ignoreCase = true) == isFullBuild() }
+        // The release has a regular APK and "full" ones (all cores inside, one per processor type):
+        // update to the same kind, and for a full APK the same processor type.
+        val full = isFullBuild()
+        val sameKind = apks.filter { it.optString("name").contains("full", ignoreCase = true) == full }
+        val wanted =
+            if (full) {
+                val abi = installedAbi()
+                sameKind.firstOrNull { abi != null && it.optString("name").contains(abi) } ?: sameKind.firstOrNull()
+            } else {
+                sameKind.firstOrNull()
+            }
         val apkUrl = (wanted ?: apks.firstOrNull())?.optString("browser_download_url")
         return Release(
             version = json.optString("tag_name").removePrefix("v").removePrefix("V"),
@@ -146,7 +166,8 @@ class AppUpdater(context: Context) {
         const val DEFAULT_FREQUENCY = "weekly"
         private const val PREF_LAST_CHECK = "update_last_check"
         private const val UPDATE_FOLDER = "updates"
-        private const val FULL_BUILD_MARKER = "libppsspp_libretro_android.so"
+        private const val CORE_SUFFIX = "_libretro_android.so"
+        private const val FULL_BUILD_MIN_CORES = 10
         private const val MAX_NOTES_LENGTH = 800
         private const val LATEST_RELEASE_URL = "https://api.github.com/repos/DCaedus/Lemuroid-S/releases/latest"
         private const val RELEASES_PAGE_URL = "https://github.com/DCaedus/Lemuroid-S/releases"
