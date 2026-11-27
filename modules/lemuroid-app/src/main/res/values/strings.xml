@@ -110,6 +110,9 @@
     <string name="first_launch_setup_message">Set up a few things before you start. You can open this again from Settings > Advanced.</string>
     <string name="first_launch_setup_step_done">Done</string>
     <string name="first_launch_setup_not_now">Not now</string>
+    <string name="shader_filter_names_hd_low">HD (low)</string>
+    <string name="shader_filter_names_hd_medium">HD (medium)</string>
+    <string name="shader_filter_names_hd_high">HD (high)</string>
     <string name="settings_description_tv_first_launch_setup">Open the setup again: Lemuroid-S folder, ROMs folder and Import Saves</string>
     <string name="tv_setup_title">Lemuroid-S on this TV</string>
     <string name="tv_setup_app_folder_message">This TV has no folder picker, so Lemuroid-S uses its own folder. Copy your games into the folder of each console:</string>
@@ -129,11 +132,11 @@
     <string name="home_card_not_now">Not now</string>
     <string name="done">Done</string>
     <string name="settings_title_import_saves">Import Saves</string>
-    <string name="settings_description_import_saves">From RetroArch, Pizza Boy, Lemuroid or another emulator</string>
+    <string name="settings_description_import_saves">From RetroArch or other emulators</string>
     <string name="import_saves_result">Imported %1$d battery saves and %2$d save states. %3$d skipped (already up to date or not readable).</string>
     <string name="import_saves_failed">No saves found there, or the Lemuroid-S folder isn\'t set up.</string>
-    <string name="settings_title_show_framerate">Show framerate</string>
-    <string name="settings_description_show_framerate">Shows game fps, game speed (%) and new pictures per second in a corner while playing</string>
+    <string name="settings_title_show_framerate">Show FPS</string>
+    <string name="settings_description_show_framerate">Show game FPS and speed overlay</string>
     <string name="framerate_overlay">%1$d fps (%2$d%%)</string>
     <string name="settings_title_periodic_autosave">Autosave while playing</string>
     <string name="settings_description_periodic_autosave">Saves your game to the Autosave slot at this interval while you play</string>

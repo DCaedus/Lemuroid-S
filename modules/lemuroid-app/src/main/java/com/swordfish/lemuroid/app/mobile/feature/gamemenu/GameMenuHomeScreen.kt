@@ -169,24 +169,19 @@ fun GameMenuHomeScreen(
         )
 
         // Display filter: the general setting (same as Settings > Display filter), applied right away.
-        // Filters are only used while HD mode is off.
         val filterContext = LocalContext.current
         val filterKey = stringResource(id = R.string.pref_key_shader_filter)
         val filterValues = stringListResource(R.array.pref_key_shader_filter_values)
-        val hdMode = booleanPreferenceState(R.string.pref_key_hd_mode, SettingsManager.DEFAULT_HD_MODE)
         LemuroidSettingsList(
-            enabled = !hdMode.value,
             title = { Text(text = stringResource(id = R.string.display_filter)) },
             items = stringListResource(R.array.pref_key_shader_filter_display_names),
-            useSelectedValueAsSubtitle = !hdMode.value,
-            subtitle = { Text(text = stringResource(id = R.string.game_menu_display_filter_hd_mode)) },
             icon = {
                 Icon(
                     painterResource(R.drawable.ic_menu_image),
                     contentDescription = stringResource(id = R.string.display_filter),
                 )
             },
-            state = indexPreferenceState(filterKey, filterValues.first(), filterValues),
+            state = indexPreferenceState(filterKey, SettingsManager.DEFAULT_SHADER_FILTER, filterValues),
             onItemSelected = { index, _ ->
                 // Save right away: the menu closes immediately after this.
                 SharedPreferencesHelper.getSharedPreferences(filterContext).edit()
