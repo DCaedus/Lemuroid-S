@@ -20,12 +20,23 @@ class CoverFallbackInterceptor(private val coverStore: CoverStore) : Interceptor
                     throwable = IllegalStateException("No artwork found"),
                 )
 
+        // Only fade in artwork that was just downloaded; stored artwork shows right away. Compose
+        // images do the fade themselves (over the game's generic tile), so they're only told.
+        val fadesItself = chain.request.parameters.value<Boolean>(PARAM_FADES_ITSELF) == true
         val request =
             chain.request.newBuilder()
                 .data(resolved.data)
-                // Only fade in artwork that was just downloaded; stored artwork shows right away.
-                .crossfade(resolved.downloaded)
+                .crossfade(resolved.downloaded && !fadesItself)
+                .setParameter(PARAM_DOWNLOADED, resolved.downloaded, memoryCacheKey = null)
                 .build()
         return chain.proceed(request)
+    }
+
+    companion object {
+        /** Set on requests whose image fades in by itself; Coil's crossfade is then skipped. */
+        const val PARAM_FADES_ITSELF = "lemuroid.fades_itself"
+
+        /** Set by the interceptor on the result's request: whether the artwork was just downloaded. */
+        const val PARAM_DOWNLOADED = "lemuroid.downloaded"
     }
 }

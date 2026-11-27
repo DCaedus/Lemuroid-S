@@ -1,5 +1,6 @@
 package com.swordfish.lemuroid.app.shared.game
 
+import com.swordfish.lemuroid.R
 import android.app.Activity
 import android.content.Intent
 import android.content.SharedPreferences
@@ -226,7 +227,7 @@ abstract class BaseGameActivity : ImmersiveActivity() {
                 this.putExtra(GameMenuContract.EXTRA_TILT_ALL_CONFIGS, tiltConfigurations.toTypedArray())
             }
         gameMenuLauncher.launch(intent)
-        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
+        overridePendingTransition(R.anim.screen_fade_in, R.anim.screen_hold)
     }
 
     protected abstract fun getDialogClass(): Class<out Activity>
@@ -343,7 +344,7 @@ abstract class BaseGameActivity : ImmersiveActivity() {
             GameService.requestTermination()
         }
         finish()
-        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
+        overridePendingTransition(R.anim.screen_hold, R.anim.screen_fade_out)
     }
 
     open fun onFinishTriggered() {
@@ -465,7 +466,7 @@ abstract class BaseGameActivity : ImmersiveActivity() {
             // Called from a background coroutine: start the game screen on the main thread.
             activity.runOnUiThread {
                 (activity as GameLaunchHost).launchGameActivity(intent)
-                activity.overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
+                activity.overridePendingTransition(R.anim.screen_fade_in, R.anim.screen_hold)
             }
         }
     }

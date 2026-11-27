@@ -1,5 +1,6 @@
 package com.swordfish.lemuroid.app.tv.gamemenu
 
+import com.swordfish.lemuroid.R
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import com.swordfish.lemuroid.app.shared.GameMenuContract
@@ -90,7 +91,7 @@ class TVGameMenuActivity : TVBaseSettingsActivity() {
 
     override fun finish() {
         super.finish()
-        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
+        overridePendingTransition(R.anim.screen_hold, R.anim.screen_fade_out)
     }
 
     class TVGameMenuFragmentWrapper(

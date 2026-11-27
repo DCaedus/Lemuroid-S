@@ -33,6 +33,15 @@
         <item name="android:statusBarColor">?attr/colorSurface</item>
         <item name="android:navigationBarColor">?attr/colorSurface</item>
         <item name="elevationOverlayColor">?attr/colorOnSurface</item>
+        <item name="android:windowAnimationStyle">@style/LemuroidScreenFade</item>
+    </style>
+
+    <!-- Lemuroid-S: screens open and close with a quick fade instead of the system animation. -->
+    <style name="LemuroidScreenFade" parent="@android:style/Animation.Activity">
+        <item name="android:activityOpenEnterAnimation">@anim/screen_fade_in</item>
+        <item name="android:activityOpenExitAnimation">@anim/screen_hold</item>
+        <item name="android:activityCloseEnterAnimation">@anim/screen_hold</item>
+        <item name="android:activityCloseExitAnimation">@anim/screen_fade_out</item>
     </style>
 
     <style name="LemuroidMaterialTheme.Invisible" parent="LemuroidMaterialTheme">

@@ -327,6 +327,8 @@ class GameMenuActivity : RetrogradeComponentActivity() {
             setResult(RESULT_OK, Intent().putExtra(GameMenuContract.RESULT_SHADER_CHANGED, true))
         }
         super.finish()
+        // Lemuroid-S: the menu fades out over the game (a translucent screen otherwise just vanishes).
+        overridePendingTransition(R.anim.screen_hold, R.anim.screen_fade_out)
     }
 
     @dagger.Module
