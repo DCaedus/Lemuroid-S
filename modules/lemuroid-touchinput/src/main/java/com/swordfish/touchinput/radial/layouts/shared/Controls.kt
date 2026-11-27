@@ -107,7 +107,10 @@ fun SecondaryButtonMenu(settings: TouchControllerSettingsManager.Settings) {
 
 context(PadKitScope, LayoutRadialSecondaryDialsScope)
 @Composable
-fun SecondaryButtonMenuPlaceholder(settings: TouchControllerSettingsManager.Settings) {
+fun SecondaryButtonMenuPlaceholder(
+    settings: TouchControllerSettingsManager.Settings,
+    turboPosition: Float = TURBO_POSITION_FREE,
+) {
     val position =
         Modifier.radialPosition(
             -120f - 2f * settings.rotation * TouchControllerSettingsManager.MAX_ROTATION,
@@ -124,18 +127,30 @@ fun SecondaryButtonMenuPlaceholder(settings: TouchControllerSettingsManager.Sett
     } else {
         Box(modifier = position)
     }
-    SecondaryButtonTurbo(settings)
+    SecondaryButtonTurbo(settings, turboPosition)
 }
+
+/**
+ * Lemuroid-S: below-right of the d-pad, mirroring the right side's free spot, so the left controls
+ * stay as wide as the right ones and both dials get the same size.
+ */
+const val TURBO_POSITION_FREE = -60f
+
+/** Outside the d-pad, for layouts with an analog stick or other buttons below-right of it. */
+const val TURBO_POSITION_OUTER = -150f
 
 /** Lemuroid-S: hold it and press a button to turn turbo on or off for that button. */
 context(PadKitScope, LayoutRadialSecondaryDialsScope)
 @Composable
-fun SecondaryButtonTurbo(settings: TouchControllerSettingsManager.Settings) {
+fun SecondaryButtonTurbo(
+    settings: TouchControllerSettingsManager.Settings,
+    position: Float = TURBO_POSITION_OUTER,
+) {
     if (!LocalTurboButtonEnabled.current) return
     LemuroidControlButton(
         modifier =
             Modifier.radialPosition(
-                -150f - 2f * settings.rotation * TouchControllerSettingsManager.MAX_ROTATION,
+                position - 2f * settings.rotation * TouchControllerSettingsManager.MAX_ROTATION,
             ),
         id = Id.Key(ComposeTouchLayouts.KEYCODE_TURBO),
         icon = R.drawable.button_turbo,

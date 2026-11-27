@@ -12,6 +12,7 @@ import com.swordfish.touchinput.radial.layouts.shared.SecondaryAnalogLeft
 import com.swordfish.touchinput.radial.layouts.shared.SecondaryButtonL
 import com.swordfish.touchinput.radial.layouts.shared.SecondaryButtonMenu
 import com.swordfish.touchinput.radial.layouts.shared.SecondaryButtonMenuPlaceholder
+import com.swordfish.touchinput.radial.layouts.shared.TURBO_POSITION_OUTER
 import com.swordfish.touchinput.radial.layouts.shared.SecondaryButtonR
 import com.swordfish.touchinput.radial.layouts.shared.SecondaryButtonStart
 import com.swordfish.touchinput.radial.settings.TouchControllerSettingsManager
@@ -39,7 +40,7 @@ fun PadKitScope.N64Left(
                 id = Id.Key(KeyEvent.KEYCODE_BUTTON_L2),
                 label = "Z",
             )
-            SecondaryButtonMenuPlaceholder(settings)
+            SecondaryButtonMenuPlaceholder(settings, TURBO_POSITION_OUTER)
         },
     )
 }

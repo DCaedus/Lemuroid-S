@@ -14,6 +14,7 @@ import com.swordfish.touchinput.radial.layouts.shared.ComposeTouchLayouts
 import com.swordfish.touchinput.radial.layouts.shared.SecondaryButtonL
 import com.swordfish.touchinput.radial.layouts.shared.SecondaryButtonMenu
 import com.swordfish.touchinput.radial.layouts.shared.SecondaryButtonMenuPlaceholder
+import com.swordfish.touchinput.radial.layouts.shared.TURBO_POSITION_OUTER
 import com.swordfish.touchinput.radial.layouts.shared.SecondaryButtonR
 import com.swordfish.touchinput.radial.layouts.shared.SecondaryButtonSelect
 import com.swordfish.touchinput.radial.layouts.shared.SecondaryButtonStart
@@ -36,7 +37,7 @@ fun PadKitScope.MelonDSLeft(
         secondaryDials = {
             SecondaryButtonL()
             SecondaryButtonSelect(position = 2)
-            SecondaryButtonMenuPlaceholder(settings)
+            SecondaryButtonMenuPlaceholder(settings, TURBO_POSITION_OUTER)
             LemuroidControlButton(
                 // Lemuroid-S: -120 holds the fast-forward button, -150 the turbo button.
                 modifier = Modifier.radialPosition(-90f),

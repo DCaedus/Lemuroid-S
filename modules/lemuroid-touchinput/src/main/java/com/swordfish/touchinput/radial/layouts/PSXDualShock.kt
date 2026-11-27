@@ -14,6 +14,7 @@ import com.swordfish.touchinput.radial.layouts.shared.SecondaryButtonL1
 import com.swordfish.touchinput.radial.layouts.shared.SecondaryButtonL2
 import com.swordfish.touchinput.radial.layouts.shared.SecondaryButtonMenu
 import com.swordfish.touchinput.radial.layouts.shared.SecondaryButtonMenuPlaceholder
+import com.swordfish.touchinput.radial.layouts.shared.TURBO_POSITION_OUTER
 import com.swordfish.touchinput.radial.layouts.shared.SecondaryButtonR1
 import com.swordfish.touchinput.radial.layouts.shared.SecondaryButtonR2
 import com.swordfish.touchinput.radial.layouts.shared.SecondaryButtonSelect
@@ -38,7 +39,7 @@ fun PadKitScope.PSXDualShockLeft(
             SecondaryButtonL1()
             SecondaryButtonL2()
             SecondaryButtonSelect(position = 2)
-            SecondaryButtonMenuPlaceholder(settings)
+            SecondaryButtonMenuPlaceholder(settings, TURBO_POSITION_OUTER)
             SecondaryAnalogLeft()
         },
     )

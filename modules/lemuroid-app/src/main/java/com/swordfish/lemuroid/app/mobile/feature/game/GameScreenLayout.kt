@@ -34,13 +34,17 @@ object GameScreenLayout {
 
             val gamePadChain = createHorizontalChain(leftPad, rightPad, chainStyle = ChainStyle.SpreadInside)
 
+            // Lemuroid-S: the controls area starts at the taller of the two pads, so no button
+            // sticks out of its background.
+            val padsTop = createTopBarrier(leftPad, rightPad)
+
             constrain(gameView) {
                 width = Dimension.fillToConstraints
                 height = Dimension.fillToConstraints
                 top.linkTo(parent.top)
                 absoluteLeft.linkTo(parent.absoluteLeft)
                 absoluteRight.linkTo(parent.absoluteRight)
-                bottom.linkTo(leftPad.top)
+                bottom.linkTo(padsTop)
             }
 
             constrain(bottomContainer) {
@@ -48,7 +52,7 @@ object GameScreenLayout {
                 height = Dimension.fillToConstraints
                 absoluteLeft.linkTo(parent.absoluteLeft)
                 absoluteRight.linkTo(parent.absoluteRight)
-                top.linkTo(leftPad.top)
+                top.linkTo(padsTop)
                 bottom.linkTo(parent.bottom)
             }
 
