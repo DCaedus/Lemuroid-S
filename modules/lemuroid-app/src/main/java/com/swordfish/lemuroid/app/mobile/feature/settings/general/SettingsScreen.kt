@@ -353,15 +353,31 @@ private fun DisplaySettings() {
     LemuroidCardSettingsGroup(
         title = { Text(text = stringResource(id = R.string.settings_category_display)) },
     ) {
+        val filterValues = stringListResource(R.array.pref_key_shader_filter_values).toList()
+        val filter = indexPreferenceState(R.string.pref_key_shader_filter, SettingsManager.DEFAULT_SHADER_FILTER, filterValues)
         LemuroidSettingsList(
-            state =
-                indexPreferenceState(
-                    R.string.pref_key_shader_filter,
-                    SettingsManager.DEFAULT_SHADER_FILTER,
-                    stringListResource(R.array.pref_key_shader_filter_values).toList(),
-                ),
+            state = filter,
             title = { Text(text = stringResource(id = R.string.display_filter)) },
             items = stringListResource(R.array.pref_key_shader_filter_display_names),
+        )
+        // The HD mode quality is used (and can be changed) while HD mode is the chosen filter.
+        LemuroidSettingsSlider(
+            enabled = filterValues.getOrNull(filter.value) == SettingsManager.HD_FILTER,
+            state =
+                intPreferenceState(
+                    key = stringResource(id = R.string.pref_key_hd_mode_quality),
+                    default = SettingsManager.DEFAULT_HD_MODE_QUALITY,
+                ),
+            steps = 1,
+            valueRange = 0f..2f,
+            title = { Text(text = stringResource(R.string.settings_title_hd_quality)) },
+            subtitle = { Text(text = stringResource(id = R.string.settings_description_hd_quality)) },
+            valueLabels =
+                listOf(
+                    stringResource(R.string.settings_hd_quality_low),
+                    stringResource(R.string.settings_hd_quality_mid),
+                    stringResource(R.string.settings_hd_quality_high),
+                ),
         )
         LemuroidSettingsList(
             state =

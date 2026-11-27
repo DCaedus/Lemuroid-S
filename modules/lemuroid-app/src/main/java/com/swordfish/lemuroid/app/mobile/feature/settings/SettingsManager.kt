@@ -24,21 +24,17 @@ class SettingsManager(private val context: Context, sharedPreferences: Lazy<Shar
     suspend fun lowLatencyAudio() = booleanPreference(R.string.pref_key_low_latency_audio, false)
 
     /**
-     * Lemuroid-S: HD mode is one of the display filters ("hd_low", "hd_medium", "hd_high"), instead of
-     * a switch that hid the filters and a separate quality slider.
+     * Lemuroid-S: HD mode is one of the display filters ("hd"), instead of a switch that hid the
+     * filters; its quality slider is used while it's the chosen filter.
      */
     suspend fun screenFilter() = stringPreference(R.string.pref_key_shader_filter, DEFAULT_SHADER_FILTER)
 
-    suspend fun hdMode() = screenFilter().startsWith(HD_FILTER_PREFIX)
+    suspend fun hdMode() = screenFilter() == HD_FILTER
 
     suspend fun viewportAlignment() = stringPreference(R.string.pref_key_viewport_alignment, "center")
 
     suspend fun hdModeQuality() =
-        when (screenFilter()) {
-            "hd_high" -> HDModeQuality.HIGH
-            "hd_medium" -> HDModeQuality.MEDIUM
-            else -> HDModeQuality.LOW
-        }
+        HDModeQuality.parse(intPreference(R.string.pref_key_hd_mode_quality, DEFAULT_HD_MODE_QUALITY))
 
     suspend fun tiltSensitivity() = floatPreference(R.string.pref_key_tilt_sensitivity_index, 10, 6)
 
@@ -149,8 +145,9 @@ class SettingsManager(private val context: Context, sharedPreferences: Lazy<Shar
         const val DEFAULT_FAST_FORWARD_SPEED = "4"
         const val DEFAULT_FAST_FORWARD_VOLUME_STEPS = 2
         const val DEFAULT_FAST_FORWARD_AUDIO = "lower"
-        const val DEFAULT_SHADER_FILTER = "hd_low"
-        private const val HD_FILTER_PREFIX = "hd_"
+        const val HD_FILTER = "hd"
+        const val DEFAULT_SHADER_FILTER = HD_FILTER
+        const val DEFAULT_HD_MODE_QUALITY = 0
 
         const val FAST_FORWARD_BUTTON_DEFAULT = "default"
         const val FAST_FORWARD_BUTTON_SHOW = "show"

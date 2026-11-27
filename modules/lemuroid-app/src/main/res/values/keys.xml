@@ -68,9 +68,7 @@
 
     <string-array translatable="false" name="pref_key_shader_filter_values">
         <item>auto</item>
-        <item>hd_low</item>
-        <item>hd_medium</item>
-        <item>hd_high</item>
+        <item>hd</item>
         <item>sharp</item>
         <item>smooth</item>
         <item>crt</item>
@@ -84,9 +82,7 @@
 
     <string-array translatable="false" name="pref_key_shader_filter_display_names">
         <item>@string/shader_filter_names_auto</item>
-        <item>@string/shader_filter_names_hd_low</item>
-        <item>@string/shader_filter_names_hd_medium</item>
-        <item>@string/shader_filter_names_hd_high</item>
+        <item>@string/shader_filter_names_hd</item>
         <item>@string/shader_filter_names_sharp</item>
         <item>@string/shader_filter_names_smooth</item>
         <item>@string/shader_filter_names_crt</item>

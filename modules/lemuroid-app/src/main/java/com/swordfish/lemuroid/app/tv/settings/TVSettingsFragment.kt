@@ -15,6 +15,7 @@ import androidx.preference.Preference
 import androidx.preference.PreferenceCategory
 import androidx.preference.PreferenceScreen
 import com.swordfish.lemuroid.app.mobile.feature.main.AppUpdateRequests
+import com.swordfish.lemuroid.app.mobile.feature.settings.SettingsManager
 import com.swordfish.lemuroid.app.shared.coreoptions.CoreOptionsCache
 import com.swordfish.lemuroid.app.shared.coreoptions.CoreOptionsPreferenceHelper
 import com.swordfish.lemuroid.app.tv.setup.TVSetupActivity
@@ -115,6 +116,16 @@ class TVSettingsFragment : LeanbackPreferenceFragmentCompat() {
         }
 
         getAdvancedSettingsPreferenceScreen()?.let {
+        }
+
+        // Lemuroid-S: the HD mode quality is used while HD mode is the chosen display filter.
+        val hdQuality = findPreference<Preference>(getString(R.string.pref_key_hd_mode_quality))
+        findPreference<androidx.preference.ListPreference>(getString(R.string.pref_key_shader_filter))?.let { filter ->
+            hdQuality?.isEnabled = filter.value == SettingsManager.HD_FILTER
+            filter.setOnPreferenceChangeListener { _, value ->
+                hdQuality?.isEnabled = value == SettingsManager.HD_FILTER
+                true
+            }
         }
 
         // Lemuroid-S: newer settings.
