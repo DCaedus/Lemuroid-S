@@ -137,6 +137,7 @@ fun LemuroidSettingsSlider(
     valueRange: ClosedFloatingPointRange<Float>,
     title: @Composable () -> Unit,
     subtitle: @Composable () -> Unit = { },
+    icon: (@Composable () -> Unit)? = null,
     valueLabels: List<String> = emptyList(),
 ) {
     val defaultColors = ListItemDefaults.colors()
@@ -157,13 +158,20 @@ fun LemuroidSettingsSlider(
             valueRange = valueRange,
             title = title,
             subtitle = subtitle,
+            icon = icon,
             enabled = enabled,
             colors = colors,
         )
         // Lemuroid-S: optional labels under the slider, spread from the first to the last step.
         if (valueLabels.isNotEmpty()) {
             Row(
-                modifier = Modifier.fillMaxWidth().padding(start = 16.dp, end = 24.dp, bottom = 8.dp),
+                modifier =
+                    Modifier.fillMaxWidth().padding(
+                        // Lined up with the slider, which starts after the icon when there's one.
+                        start = if (icon != null) 56.dp else 16.dp,
+                        end = 24.dp,
+                        bottom = 8.dp,
+                    ),
                 horizontalArrangement = Arrangement.SpaceBetween,
             ) {
                 valueLabels.forEach {

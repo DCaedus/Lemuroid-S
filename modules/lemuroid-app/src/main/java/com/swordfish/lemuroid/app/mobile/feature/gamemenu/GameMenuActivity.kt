@@ -52,6 +52,8 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.swordfish.lemuroid.R
+import com.swordfish.lemuroid.app.mobile.feature.settings.SettingsManager
+import com.swordfish.lemuroid.lib.preferences.SharedPreferencesHelper
 import com.swordfish.lemuroid.app.mobile.feature.gamemenu.coreoptions.GameMenuCoreOptionsScreen
 import com.swordfish.lemuroid.app.mobile.feature.gamemenu.coreoptions.GameMenuCoreOptionsViewModel
 import com.swordfish.lemuroid.app.mobile.feature.gamemenu.states.GameMenuStatesScreen
@@ -97,6 +99,10 @@ class GameMenuActivity : RetrogradeComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        initialHdQuality =
+            savedInstanceState?.takeIf { it.containsKey(STATE_INITIAL_HD_QUALITY) }
+                ?.getInt(STATE_INITIAL_HD_QUALITY)
+                ?: hdQuality()
 
         enableEdgeToEdge(
             SystemBarStyle.dark(Color.TRANSPARENT),
@@ -294,10 +300,39 @@ class GameMenuActivity : RetrogradeComponentActivity() {
     private fun onResult(block: Intent.() -> Unit) {
         val resultIntent = Intent()
         resultIntent.block()
+        if (hdQualityChanged()) resultIntent.putExtra(GameMenuContract.RESULT_SHADER_CHANGED, true)
         setResult(RESULT_OK, resultIntent)
+        resultSet = true
         finish()
+    }
+
+    // Lemuroid-S: the HD mode quality slider changes the setting without closing the menu, so the
+    // game is told to reload its shader whenever the menu closes with a different quality.
+    private var initialHdQuality: Int? = null
+    private var resultSet = false
+
+    private fun hdQuality() =
+        SharedPreferencesHelper.getSharedPreferences(this)
+            .getInt(getString(R.string.pref_key_hd_mode_quality), SettingsManager.DEFAULT_HD_MODE_QUALITY)
+
+    private fun hdQualityChanged() = initialHdQuality != null && hdQuality() != initialHdQuality
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        initialHdQuality?.let { outState.putInt(STATE_INITIAL_HD_QUALITY, it) }
+    }
+
+    override fun finish() {
+        if (!resultSet && hdQualityChanged()) {
+            setResult(RESULT_OK, Intent().putExtra(GameMenuContract.RESULT_SHADER_CHANGED, true))
+        }
+        super.finish()
     }
 
     @dagger.Module
     abstract class Module
+
+    private companion object {
+        const val STATE_INITIAL_HD_QUALITY = "initial_hd_quality"
+    }
 }

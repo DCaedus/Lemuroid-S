@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.HighQuality
 import androidx.compose.material.icons.filled.ScreenRotation
 import androidx.compose.material.icons.filled.Sensors
 import androidx.compose.material3.Icon
@@ -23,9 +24,11 @@ import com.swordfish.lemuroid.app.mobile.feature.settings.SettingsManager
 import com.swordfish.lemuroid.app.shared.GameMenuContract
 import com.swordfish.lemuroid.app.utils.android.settings.LemuroidSettingsList
 import com.swordfish.lemuroid.app.utils.android.settings.LemuroidSettingsMenuLink
+import com.swordfish.lemuroid.app.utils.android.settings.LemuroidSettingsSlider
 import com.swordfish.lemuroid.app.utils.android.settings.LemuroidSettingsSwitch
 import com.swordfish.lemuroid.app.utils.android.settings.booleanPreferenceState
 import com.swordfish.lemuroid.app.utils.android.settings.indexPreferenceState
+import com.swordfish.lemuroid.app.utils.android.settings.intPreferenceState
 import com.swordfish.lemuroid.app.utils.android.stringListResource
 import com.swordfish.lemuroid.lib.preferences.SharedPreferencesHelper
 import kotlin.reflect.KFunction1
@@ -172,6 +175,8 @@ fun GameMenuHomeScreen(
         val filterContext = LocalContext.current
         val filterKey = stringResource(id = R.string.pref_key_shader_filter)
         val filterValues = stringListResource(R.array.pref_key_shader_filter_values)
+        val filterState = indexPreferenceState(filterKey, SettingsManager.DEFAULT_SHADER_FILTER, filterValues)
+        val hdQualityKey = stringResource(id = R.string.pref_key_hd_mode_quality)
         LemuroidSettingsList(
             title = { Text(text = stringResource(id = R.string.display_filter)) },
             items = stringListResource(R.array.pref_key_shader_filter_display_names),
@@ -181,7 +186,7 @@ fun GameMenuHomeScreen(
                     contentDescription = stringResource(id = R.string.display_filter),
                 )
             },
-            state = indexPreferenceState(filterKey, SettingsManager.DEFAULT_SHADER_FILTER, filterValues),
+            state = filterState,
             onItemSelected = { index, _ ->
                 // Save right away: the menu closes immediately after this.
                 SharedPreferencesHelper.getSharedPreferences(filterContext).edit()
@@ -189,6 +194,28 @@ fun GameMenuHomeScreen(
                     .apply()
                 onResult { putExtra(GameMenuContract.RESULT_SHADER_CHANGED, true) }
             },
+        )
+
+        // HD mode quality (same setting as in Settings), usable while HD mode is the filter. The
+        // game picks up the change when the menu closes (GameMenuActivity).
+        LemuroidSettingsSlider(
+            enabled = filterValues.getOrNull(filterState.value) == SettingsManager.HD_FILTER,
+            state = intPreferenceState(hdQualityKey, SettingsManager.DEFAULT_HD_MODE_QUALITY),
+            steps = 1,
+            valueRange = 0f..2f,
+            title = { Text(text = stringResource(R.string.settings_title_hd_quality)) },
+            icon = {
+                Icon(
+                    imageVector = Icons.Filled.HighQuality,
+                    contentDescription = stringResource(R.string.settings_title_hd_quality),
+                )
+            },
+            valueLabels =
+                listOf(
+                    stringResource(R.string.settings_hd_quality_low),
+                    stringResource(R.string.settings_hd_quality_mid),
+                    stringResource(R.string.settings_hd_quality_high),
+                ),
         )
 
         if (gameMenuRequest.numDisks > 1) {
