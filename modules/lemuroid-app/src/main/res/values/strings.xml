@@ -220,7 +220,6 @@
     <string name="home_notification_action">Enable</string>
 
     <string name="home_microphone_title">Enable microphone</string>
-    <string name="home_microphone_message">Nintendo DS games can use the microphone to provide some functionalities.</string>
     <string name="home_microphone_action">Enable</string>
 
     <string name="home_empty_title">Select ROMS folder</string>
@@ -376,4 +375,5 @@
     <string name="tilt_configuration_buttons_l2_r2">L2 - R2</string>
     <string name="game_busy">Please wait…</string>
     <string name="game_saving_previous">Saving your last game…</string>
+    <string name="setup_microphone_message">Some games use the microphone, such as Nintendo DS games and those of any other console that supports it, for example to blow or talk into it.</string>
 </resources>

@@ -73,7 +73,6 @@
     <string name="home_notification_message">Lemuroid, bir oyun veya işlemin arka planda çalıştığını size bildirmek için bildirimleri kullanır.</string>
     <string name="home_notification_action">Aç</string>
     <string name="home_microphone_title">Mikrofonu etkinleştir</string>
-    <string name="home_microphone_message">Nintendo DS oyunları, bazı işlevleri sağlamak için mikrofonu kullanabilir.</string>
     <string name="home_microphone_action">Etkinleştir</string>
     <string name="home_empty_title">ROMların konumunu seç</string>
     <string name="home_empty_message">Lemuroid\'in ROM dosyalarını içeren dizini taraması gerekiyor.\n Bu birkaç dakika sürebilir.</string>
@@ -319,4 +318,5 @@ $SYSTEMS.
     <string name="viewport_alignment_names_bottom">Alt</string>
     <string name="game_busy">Lütfen bekleyin…</string>
     <string name="game_saving_previous">Son oyununuz kaydediliyor…</string>
+    <string name="setup_microphone_message">Nintendo DS oyunları ve bunu destekleyen diğer konsolların oyunları gibi bazı oyunlar, örneğin üflemek ya da konuşmak için mikrofonu kullanır.</string>
 </resources>

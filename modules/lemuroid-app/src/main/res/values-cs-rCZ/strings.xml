@@ -73,7 +73,6 @@
     <string name="home_notification_message">Lemuroid používá oznámení, aby informoval, zda hra nebo operace běží v pozadí.</string>
     <string name="home_notification_action">Povolit</string>
     <string name="home_microphone_title">Povolit mikrofon</string>
-    <string name="home_microphone_message">Nintendo DS hry mohou používat mikrofon k poskytování některých funkcí.</string>
     <string name="home_microphone_action">Povolit</string>
     <string name="home_empty_title">Zvolit složku s ROMkami</string>
     <string name="home_empty_message">Lemuroid potřebuje naskenovat složku obsahující ROM soubory.\nTo může trvat až několik minut.</string>
@@ -317,4 +316,5 @@
     <string name="viewport_alignment_names_bottom">Dole</string>
     <string name="game_busy">Čekejte prosím…</string>
     <string name="game_saving_previous">Ukládání poslední hry…</string>
+    <string name="setup_microphone_message">Některé hry používají mikrofon, například hry pro Nintendo DS a pro jakoukoli další konzoli, která ho podporuje, třeba k foukání nebo mluvení do něj.</string>
 </resources>

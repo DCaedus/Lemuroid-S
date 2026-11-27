@@ -73,7 +73,6 @@
     <string name="home_notification_message">Lemuroid utilise des notifications pour vous informer lorsqu\'un jeu ou une opération est en cours d\'exécution en arrière-plan.</string>
     <string name="home_notification_action">Activer</string>
     <string name="home_microphone_title">Activer le microphone</string>
-    <string name="home_microphone_message">Les jeux Nintendo DS peuvent utiliser le microphone pour fournir certaines fonctionnalités.</string>
     <string name="home_microphone_action">Activer</string>
     <string name="home_empty_title">Sélectionnez le dossier contenant les ROMs</string>
     <string name="home_empty_message">Lemuroid a besoin de scanner un répertoire contenant des ROMs.\nCela peut prendre quelques minutes.</string>
@@ -318,4 +317,5 @@
     <string name="viewport_alignment_names_bottom">Bas</string>
     <string name="game_busy">Veuillez patienter…</string>
     <string name="game_saving_previous">Sauvegarde de votre dernière partie…</string>
+    <string name="setup_microphone_message">Certains jeux utilisent le micro, comme ceux de la Nintendo DS et de toute autre console qui le prend en charge, par exemple pour souffler ou parler dedans.</string>
 </resources>

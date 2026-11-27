@@ -73,7 +73,6 @@
     <string name="home_notification_message">Lemuroid は、ゲームや操作がバックグラウンドで実行されているときに通知を使用します。</string>
     <string name="home_notification_action">有効にする</string>
     <string name="home_microphone_title">マイクを有効化</string>
-    <string name="home_microphone_message">ニンテンドーDSゲームはマイクを使っていくつかの機能を提供することができます。</string>
     <string name="home_microphone_action">有効にする</string>
     <string name="home_empty_title">ROMディレクトリを選択</string>
     <string name="home_empty_message">LemuroidはROMファイルが入ったディレクトリをスキャンする必要があります。
@@ -321,4 +320,5 @@
     <string name="game_loading_preparing_game">ゲームを準備しています…</string>
     <string name="game_busy">お待ちください…</string>
     <string name="game_saving_previous">前回のゲームを保存しています…</string>
+    <string name="setup_microphone_message">ニンテンドーDSや、マイクに対応したその他のゲーム機のゲームでは、息を吹きかけたり話しかけたりするためにマイクを使うことがあります。</string>
 </resources>

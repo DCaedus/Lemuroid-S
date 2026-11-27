@@ -66,7 +66,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 
 /**
- * First-launch setup: the setup cards (Lemuroid-S folder, ROMs folder, notifications, Import Saves)
+ * First-launch setup: the setup cards (Lemuroid-S folder, ROMs folder, notifications, microphone, Import Saves)
  * on a layer above the app, shown until the user taps Done. Settings > Advanced opens it again.
  */
 object FirstLaunchSetup {
@@ -116,6 +116,7 @@ private data class SetupStatus(
     val mainFolder: Boolean = false,
     val romsFolder: Boolean = false,
     val notifications: Boolean = false,
+    val microphone: Boolean = false,
 )
 
 private fun readStatus(context: Context) =
@@ -126,6 +127,9 @@ private fun readStatus(context: Context) =
             Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU ||
                 ContextCompat.checkSelfPermission(context, Manifest.permission.POST_NOTIFICATIONS) ==
                 PackageManager.PERMISSION_GRANTED,
+        microphone =
+            ContextCompat.checkSelfPermission(context, Manifest.permission.RECORD_AUDIO) ==
+                PackageManager.PERMISSION_GRANTED,
     )
 
 @Composable
@@ -135,6 +139,7 @@ internal fun FirstLaunchSetupScreen(onDone: () -> Unit) {
     var status by remember { mutableStateOf(readStatus(context)) }
     var importStarted by remember { mutableStateOf(false) }
     var importSkipped by remember { mutableStateOf(false) }
+    var microphoneSkipped by remember { mutableStateOf(false) }
     var showImportDialog by remember { mutableStateOf(false) }
     val refresh = { status = readStatus(context) }
 
@@ -148,6 +153,12 @@ internal fun FirstLaunchSetupScreen(onDone: () -> Unit) {
     val permissionLauncher =
         rememberLauncherForActivityResult(ActivityResultContracts.RequestPermission()) { granted ->
             if (!granted) context.displayDetailsSettingsScreen()
+            refresh()
+        }
+    // The microphone is optional: saying no just closes its card.
+    val microphoneLauncher =
+        rememberLauncherForActivityResult(ActivityResultContracts.RequestPermission()) { granted ->
+            if (!granted) microphoneSkipped = true
             refresh()
         }
     ImportSavesDialog(
@@ -213,6 +224,15 @@ internal fun FirstLaunchSetupScreen(onDone: () -> Unit) {
                 )
             }
             SetupCard(
+                titleId = R.string.home_microphone_title,
+                messageId = R.string.setup_microphone_message,
+                actionId = R.string.home_microphone_action,
+                done = status.microphone || microphoneSkipped,
+                onAction = { microphoneLauncher.launch(Manifest.permission.RECORD_AUDIO) },
+                secondaryActionId = R.string.first_launch_setup_not_now,
+                onSecondaryAction = { microphoneSkipped = true },
+            )
+            SetupCard(
                 titleId = R.string.home_import_saves_title,
                 messageId = R.string.home_import_saves_message,
                 actionId = R.string.home_import_saves_action,
@@ -227,7 +247,7 @@ internal fun FirstLaunchSetupScreen(onDone: () -> Unit) {
 
     // Lemuroid-S: no Done button, setup closes by itself once every card is done or dismissed.
     val allDone = status.mainFolder && status.romsFolder && status.notifications &&
-        (importStarted || importSkipped)
+        (status.microphone || microphoneSkipped) && (importStarted || importSkipped)
     LaunchedEffect(allDone) {
         if (allDone) {
             delay(CARD_FADE_MS.toLong())

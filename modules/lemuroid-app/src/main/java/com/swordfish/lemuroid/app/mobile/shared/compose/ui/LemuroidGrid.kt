@@ -9,8 +9,9 @@ import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.unit.dp
 
 /**
- * Lemuroid-S: grid used by Favorites and Systems. Portrait uses narrower tiles so phones show 3 columns
- * (tablets more); landscape keeps Lemuroid's tile size (5 columns on a phone).
+ * Lemuroid-S: grid used by Favorites and Systems; its spacing is also used between Home cards.
+ * Portrait uses narrower tiles so phones show 3 columns (tablets more); landscape keeps Lemuroid's
+ * tile size (5 columns on a phone).
  */
 object LemuroidGrid {
     private val PORTRAIT_MIN_TILE = 104.dp

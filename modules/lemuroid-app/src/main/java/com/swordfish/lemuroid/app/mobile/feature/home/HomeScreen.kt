@@ -1,9 +1,5 @@
 package com.swordfish.lemuroid.app.mobile.feature.home
 
-import android.Manifest
-import androidx.activity.compose.rememberLauncherForActivityResult
-import androidx.activity.result.contract.ActivityResultContracts
-import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.BoxWithConstraints
@@ -16,16 +12,10 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.setValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
@@ -35,8 +25,8 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.Lifecycle
 import com.swordfish.lemuroid.R
 import com.swordfish.lemuroid.app.mobile.shared.compose.ui.LemuroidGameCard
+import com.swordfish.lemuroid.app.mobile.shared.compose.ui.LemuroidGrid
 import com.swordfish.lemuroid.app.utils.android.ComposableLifecycle
-import com.swordfish.lemuroid.common.displayDetailsSettingsScreen
 import com.swordfish.lemuroid.lib.library.db.entity.Game
 import kotlinx.coroutines.launch
 
@@ -59,25 +49,16 @@ fun HomeScreen(
         }
     }
 
-    val permissionsLauncher =
-        rememberLauncherForActivityResult(
-            ActivityResultContracts.RequestPermission(),
-        ) { isGranted: Boolean ->
-            if (!isGranted) {
-                context.displayDetailsSettingsScreen()
-            }
-        }
 
     val state = viewModel.getViewStates().collectAsState(HomeViewModel.UIState())
 
-    // Lemuroid-S: the setup cards (folders, notifications, Import Saves) are on the first-launch
-    // setup layer (FirstLaunchSetup.kt); only the microphone card stays here.
+    // Lemuroid-S: the setup cards (folders, notifications, microphone, Import Saves) are on the
+    // first-launch setup layer (FirstLaunchSetup.kt).
     HomeScreen(
         modifier,
         state.value,
         onGameClick,
         onGameLongClick,
-        { permissionsLauncher.launch(Manifest.permission.RECORD_AUDIO) },
     )
 }
 
@@ -87,7 +68,6 @@ private fun HomeScreen(
     state: HomeViewModel.UIState,
     onGameClicked: (Game) -> Unit,
     onGameLongClick: (Game) -> Unit,
-    onEnableMicrophoneClicked: () -> Unit,
 ) {
     val rows =
         listOf(state.recentGames, state.frequentGames, state.favoritesGames, state.discoveryGames)
@@ -101,14 +81,6 @@ private fun HomeScreen(
                     .verticalScroll(rememberScrollState())
                     .padding(vertical = HOME_VERTICAL_PADDING),
         ) {
-        AnimatedVisibility(state.showNoMicrophonePermissionCard) {
-            HomeNotification(
-                titleId = R.string.home_microphone_title,
-                messageId = R.string.home_microphone_message,
-                actionId = R.string.home_microphone_action,
-                onAction = onEnableMicrophoneClicked,
-            )
-        }
         HomeRow(
             stringResource(id = R.string.recent),
             state.recentGames,
@@ -189,7 +161,7 @@ private fun HomeRow(
             modifier =
                 Modifier
                     .fillMaxWidth(),
-            horizontalArrangement = Arrangement.spacedBy(8.dp),
+            horizontalArrangement = LemuroidGrid.arrangement,
             contentPadding = PaddingValues(horizontal = 12.dp, vertical = ROW_PADDING),
         ) {
             items(games.size, key = { games[it].id }) { index ->
@@ -203,57 +175,6 @@ private fun HomeRow(
                     onClick = { onGameClicked(game) },
                     onLongClick = { onGameLongClick(game) },
                 )
-            }
-        }
-    }
-}
-
-@Composable
-private fun HomeNotification(
-    titleId: Int,
-    messageId: Int,
-    actionId: Int,
-    enabled: Boolean = true,
-    onAction: () -> Unit = { },
-    secondaryActionId: Int? = null,
-    onSecondaryAction: () -> Unit = { },
-) {
-    ElevatedCard(
-        modifier =
-            Modifier
-                .fillMaxWidth()
-                .padding(start = 16.dp, end = 16.dp),
-    ) {
-        Column(
-            modifier =
-                Modifier
-                    .fillMaxWidth()
-                    .padding(16.dp),
-            verticalArrangement = Arrangement.spacedBy(16.dp),
-        ) {
-            Text(
-                text = stringResource(titleId),
-                style = MaterialTheme.typography.titleMedium,
-            )
-            Text(
-                text = stringResource(messageId),
-                style = MaterialTheme.typography.bodyMedium,
-            )
-            Row(
-                modifier = Modifier.align(Alignment.End),
-                horizontalArrangement = Arrangement.spacedBy(8.dp),
-            ) {
-                if (secondaryActionId != null) {
-                    TextButton(onClick = onSecondaryAction) {
-                        Text(stringResource(id = secondaryActionId))
-                    }
-                }
-                OutlinedButton(
-                    onClick = onAction,
-                    enabled = enabled,
-                ) {
-                    Text(stringResource(id = actionId))
-                }
             }
         }
     }

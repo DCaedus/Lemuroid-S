@@ -73,7 +73,6 @@
     <string name="home_notification_message">Lemuroid gebruikt meldingen om je te laten weten wanneer een spel of bewerking op de achtergrond draait.</string>
     <string name="home_notification_action">Inschakelen</string>
     <string name="home_microphone_title">Microfoon inschakelen</string>
-    <string name="home_microphone_message">Nintendo DS spellen kunnen de microfoon gebruiken om enkele functies te bieden.</string>
     <string name="home_microphone_action">Inschakelen</string>
     <string name="home_empty_title">Selecteer ROM-map</string>
     <string name="home_empty_message">Lemuroid moet een map met ROM-bestanden scannen.\nDit kan enkele minuten duren.</string>
@@ -318,4 +317,5 @@
     <string name="viewport_alignment_names_bottom">Onder</string>
     <string name="game_busy">Even geduld…</string>
     <string name="game_saving_previous">Je laatste game wordt opgeslagen…</string>
+    <string name="setup_microphone_message">Sommige games gebruiken de microfoon, zoals Nintendo DS-games en die van elke andere console die het ondersteunt, bijvoorbeeld om erin te blazen of te praten.</string>
 </resources>

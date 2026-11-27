@@ -275,7 +275,6 @@
     <string name="home_notification_message">Lemuroid משתמש בהתראות כדי לעדכן אותך כשמשחק או פעולה פועלים ברקע.</string>
     <string name="home_notification_action">הפעלה</string>
     <string name="home_microphone_title">הפעלת המיקרופון</string>
-    <string name="home_microphone_message">משחקי Nintendo DS יכולים להשתמש במיקרופון לחלק מהפונקציות.</string>
     <string name="home_microphone_action">הפעלה</string>
     <string name="game_menu_tilt_sensor">חיישן הטיה</string>
     <string name="game_toast_quick_save_loaded">נטען במהירות</string>
@@ -308,4 +307,5 @@
     <string name="tilt_configuration_analog_right">סטיק ימני</string>
     <string name="game_busy">רק רגע…</string>
     <string name="game_saving_previous">המשחק האחרון נשמר…</string>
+    <string name="setup_microphone_message">חלק מהמשחקים משתמשים במיקרופון, כמו משחקי Nintendo DS ומשחקים של כל קונסולה אחרת שתומכת בו, למשל כדי לנשוף או לדבר לתוכו.</string>
 </resources>

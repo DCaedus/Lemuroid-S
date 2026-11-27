@@ -73,7 +73,6 @@
     <string name="home_notification_message">Lemuroid käyttää ilmoituksia ilmoittaakseen sinulle, milloin peli tai operaatio on käynnissä taustalla.</string>
     <string name="home_notification_action">Aktivoi</string>
     <string name="home_microphone_title">Ota mikrofoni käyttöön</string>
-    <string name="home_microphone_message">Nintendo DS -pelit voivat käyttää mikrofonia tarjotakseen joitakin toimintoja.</string>
     <string name="home_microphone_action">Aktivoi</string>
     <string name="home_empty_title">Valitse ROMien hakemisto</string>
     <string name="home_empty_message">Lemuroid tarvitsee skannata ROM -tiedostoja sisältävän hakemiston.\nTämä saattaa kestää jopa muutaman minuutin.</string>
@@ -314,4 +313,5 @@
     <string name="game_loading_preparing_game">Peliä valmistellaan…</string>
     <string name="game_busy">Odota…</string>
     <string name="game_saving_previous">Viimeisintä peliä tallennetaan…</string>
+    <string name="setup_microphone_message">Jotkin pelit käyttävät mikrofonia, kuten Nintendo DS -pelit ja minkä tahansa muun sitä tukevan konsolin pelit, esimerkiksi siihen puhaltamiseen tai puhumiseen.</string>
 </resources>

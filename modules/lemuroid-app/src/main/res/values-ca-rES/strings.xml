@@ -256,7 +256,6 @@
     <string name="home_notification_message">Lemuroid fa servir notificacions per avisar-te quan un joc o una operació s\'executa en segon pla.</string>
     <string name="home_notification_action">Activa</string>
     <string name="home_microphone_title">Activa el micròfon</string>
-    <string name="home_microphone_message">Els jocs de Nintendo DS poden fer servir el micròfon per a algunes funcions.</string>
     <string name="home_microphone_action">Activa</string>
     <string name="home_empty_message">Fes servir la carpeta Lemuroid-S per defecte o tria la teva carpeta de ROM.</string>
     <string name="game_menu_tilt_sensor">Sensor d\'inclinació</string>
@@ -297,4 +296,5 @@
     <string name="tilt_configuration_analog_right">Palanca dreta</string>
     <string name="game_busy">Espera un moment…</string>
     <string name="game_saving_previous">S\'està desant l\'última partida…</string>
+    <string name="setup_microphone_message">Alguns jocs fan servir el micròfon, com els de Nintendo DS i els de qualsevol altra consola que ho admeti, per exemple per bufar o parlar-hi.</string>
 </resources>

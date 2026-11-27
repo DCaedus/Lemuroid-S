@@ -73,7 +73,6 @@
     <string name="home_notification_message">Lemuroid 使用通知让您知道游戏或操作正在后台运行。</string>
     <string name="home_notification_action">启用</string>
     <string name="home_microphone_title">启用麦克风</string>
-    <string name="home_microphone_message">Nintendo DS 游戏可以利用麦克风提供一些功能。</string>
     <string name="home_microphone_action">启用</string>
     <string name="home_empty_title">选择 ROM 目录</string>
     <string name="home_empty_message">Lemuroid 需要扫描一个包含 ROM 文件的目录。\n这可能需要几分钟的时间。</string>
@@ -318,4 +317,5 @@
     <string name="viewport_alignment_names_bottom">底部</string>
     <string name="game_busy">请稍候…</string>
     <string name="game_saving_previous">正在保存你上一个游戏…</string>
+    <string name="setup_microphone_message">部分游戏会使用麦克风，例如 Nintendo DS 游戏以及其他支持麦克风的主机游戏，比如对着麦克风吹气或说话。</string>
 </resources>

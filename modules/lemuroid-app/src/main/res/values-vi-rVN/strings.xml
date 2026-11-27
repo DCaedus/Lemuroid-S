@@ -303,7 +303,6 @@
     <string name="settings_title_immersive_mode">Chế độ đắm chìm</string>
     <string name="settings_description_immersive_mode">Tô màu nền trò chơi theo màu trên màn hình</string>
     <string name="home_microphone_title">Bật micrô</string>
-    <string name="home_microphone_message">Trò chơi Nintendo DS có thể dùng micrô cho một số chức năng.</string>
     <string name="home_microphone_action">Bật</string>
     <string name="game_menu_tilt_sensor">Cảm biến nghiêng</string>
     <string name="game_toast_quick_save_loaded">Đã tải nhanh</string>
@@ -316,4 +315,5 @@
     <string name="tilt_configuration_analog_right">Cần analog phải</string>
     <string name="game_busy">Vui lòng đợi…</string>
     <string name="game_saving_previous">Đang lưu trò chơi gần nhất…</string>
+    <string name="setup_microphone_message">Một số trò chơi dùng micrô, như trò chơi Nintendo DS và của bất kỳ máy chơi game nào khác hỗ trợ, ví dụ để thổi hoặc nói vào micrô.</string>
 </resources>

@@ -73,7 +73,6 @@
     <string name="home_notification_message">Lemuroid folosește notificări pentru a te anunța când un joc sau o activitate rulează în fundal.</string>
     <string name="home_notification_action">Activați</string>
     <string name="home_microphone_title">Activează microfonul</string>
-    <string name="home_microphone_message">Jocurile Nintendo DS pot folosi microfonul pentru a oferi unele funcționalități.</string>
     <string name="home_microphone_action">Activare</string>
     <string name="home_empty_title">Alege directorul de ROM-uri</string>
     <string name="home_empty_message">Lemuroid trebuie să scaneze un director care conține fișiere ROM.\nAcest lucru ar putea dura până la câteva minute.</string>
@@ -306,4 +305,5 @@
     <string name="viewport_alignment_names_bottom">Jos</string>
     <string name="game_busy">Așteaptă…</string>
     <string name="game_saving_previous">Se salvează ultimul joc…</string>
+    <string name="setup_microphone_message">Unele jocuri folosesc microfonul, cum ar fi jocurile Nintendo DS și cele ale oricărei alte console care îl acceptă, de exemplu pentru a sufla sau a vorbi în el.</string>
 </resources>

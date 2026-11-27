@@ -73,7 +73,6 @@
     <string name="home_notification_message">Lemuroid bruker varsler for å fortelle deg når et spill eller en operasjon kjører i bakgrunnen.</string>
     <string name="home_notification_action">Aktiver</string>
     <string name="home_microphone_title">Aktiver mikrofon</string>
-    <string name="home_microphone_message">Nintendo DS spill kan bruke mikrofonen til å gi funksjonalitet.</string>
     <string name="home_microphone_action">Aktiver</string>
     <string name="home_empty_title">Velg ROM-katalog</string>
     <string name="home_empty_message">Lemuroid trenger å skanne en mappe som inneholder ROM-filer.\nDette kan ta opptil noen få minutter.</string>
@@ -318,4 +317,5 @@
     <string name="viewport_alignment_names_bottom">Nederst</string>
     <string name="game_busy">Vent litt…</string>
     <string name="game_saving_previous">Lagrer det siste spillet ditt…</string>
+    <string name="setup_microphone_message">Noen spill bruker mikrofonen, for eksempel Nintendo DS-spill og spill til andre konsoller som støtter det, for eksempel for å blåse eller snakke i den.</string>
 </resources>

@@ -73,7 +73,6 @@
     <string name="home_notification_message">Lemuroid користи обавештења да бисте знали када игра или операције ради у позадини.</string>
     <string name="home_notification_action">Омогући</string>
     <string name="home_microphone_title">Омогући микрофон</string>
-    <string name="home_microphone_message">Nintendo DS игре могу користити микрофон да би пружиле одређене функционалности.</string>
     <string name="home_microphone_action">Омогући</string>
     <string name="home_empty_title">Изаберите директоријум са ROM-овима</string>
     <string name="home_empty_message">Lemuroid мора да скенира директоријум са ROM датотекама.\nОво може потрајати до неколико минута.</string>
@@ -318,4 +317,5 @@
     <string name="viewport_alignment_names_bottom">Доле</string>
     <string name="game_busy">Сачекајте…</string>
     <string name="game_saving_previous">Чување последње игре…</string>
+    <string name="setup_microphone_message">Неке игре користе микрофон, као што су игре за Nintendo DS и за сваку другу конзолу која га подржава, на пример да се у њега дува или говори.</string>
 </resources>

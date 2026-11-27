@@ -228,7 +228,6 @@
     <string name="home_notification_message">A Lemuroid értesítésekkel jelzi, ha egy játék vagy művelet fut a háttérben.</string>
     <string name="home_notification_action">Bekapcsolás</string>
     <string name="home_microphone_title">Mikrofon bekapcsolása</string>
-    <string name="home_microphone_message">A Nintendo DS játékok egyes funkciókhoz használhatják a mikrofont.</string>
     <string name="home_microphone_action">Bekapcsolás</string>
     <string name="home_empty_title">ROM-mappa kiválasztása</string>
     <string name="home_empty_message">Használd az alapértelmezett Lemuroid-S mappát, vagy válaszd ki a saját ROM-mappádat.</string>
@@ -297,4 +296,5 @@
     <string name="tilt_configuration_analog_right">Jobb analóg kar</string>
     <string name="game_busy">Kérlek, várj…</string>
     <string name="game_saving_previous">Az utolsó játék mentése…</string>
+    <string name="setup_microphone_message">Egyes játékok használják a mikrofont, például a Nintendo DS játékai és bármely más, ezt támogató konzol játékai, például belefújáshoz vagy beszédhez.</string>
 </resources>
