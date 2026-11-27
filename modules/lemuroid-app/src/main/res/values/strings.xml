@@ -110,6 +110,9 @@
     <string name="first_launch_setup_message">Set up a few things before you start. You can open this again from Settings > Advanced.</string>
     <string name="first_launch_setup_step_done">Done</string>
     <string name="first_launch_setup_not_now">Not now</string>
+    <string name="settings_title_core_settings">Core settings</string>
+    <string name="settings_description_core_settings">Settings of each emulator core, shared by the consoles that use it</string>
+    <string name="core_settings_play_first">Play a game with this core once to show its settings here.</string>
     <string name="settings_title_first_launch_setup">First-launch setup</string>
     <string name="settings_description_first_launch_setup">Open the setup cards again: Lemuroid-S folder, ROMs folder, notifications and Import Saves</string>
     <string name="home_import_saves_title">Import Saves</string>

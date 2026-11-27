@@ -79,7 +79,7 @@ class TVGameMenuFragment(
 
         CoreOptionsPreferenceHelper.addPreferences(
             coreOptionsScreen,
-            game.systemId,
+            systemCoreConfig.coreID.coreName,
             coreOptions.toList(),
             advancedCoreOptions.toList(),
         )

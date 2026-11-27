@@ -43,6 +43,7 @@ import com.swordfish.lemuroid.app.mobile.feature.settings.advanced.AdvancedSetti
 import com.swordfish.lemuroid.app.mobile.feature.settings.artwork.ArtworkSettingsScreen
 import com.swordfish.lemuroid.app.mobile.feature.settings.bios.BiosScreen
 import com.swordfish.lemuroid.app.mobile.feature.settings.bios.BiosSettingsViewModel
+import com.swordfish.lemuroid.app.mobile.feature.settings.cores.CoreSettingsScreen
 import com.swordfish.lemuroid.app.mobile.feature.settings.fastforward.FastForwardButtonSettingsScreen
 import com.swordfish.lemuroid.app.mobile.feature.settings.general.SettingsScreen
 import com.swordfish.lemuroid.app.mobile.feature.settings.general.SettingsViewModel
@@ -334,6 +335,9 @@ class MainActivity : RetrogradeComponentActivity(), BusyActivity, GameLaunchHost
                                 ),
                             navController = navController,
                         )
+                    }
+                    composable(MainRoute.SETTINGS_CORES) {
+                        CoreSettingsScreen(modifier = Modifier.padding(padding))
                     }
                     composable(MainRoute.SETTINGS_FAST_FORWARD_BUTTON) {
                         FastForwardButtonSettingsScreen(modifier = Modifier.padding(padding))

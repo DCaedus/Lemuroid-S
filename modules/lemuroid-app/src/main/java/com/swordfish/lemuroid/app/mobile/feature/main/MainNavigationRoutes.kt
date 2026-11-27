@@ -75,6 +75,12 @@ enum class MainRoute(
         parent = SETTINGS,
         showBottomNavigation = false,
     ),
+    SETTINGS_CORES(
+        route = "settings/cores",
+        titleId = R.string.settings_title_core_settings,
+        parent = SETTINGS,
+        showBottomNavigation = false,
+    ),
     SETTINGS_FAST_FORWARD_BUTTON(
         route = "settings/fastforwardbutton",
         titleId = R.string.settings_title_fast_forward_button_per_system,

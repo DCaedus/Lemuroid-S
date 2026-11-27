@@ -37,7 +37,7 @@ class CoreVariablesManager(private val sharedPreferences: Lazy<SharedPreferences
 
             val requestedKeys =
                 (exposedKeys + exposedAdvancedKeys).map { it.key }
-                    .map { computeSharedPreferenceKey(it, systemID.dbname) }
+                    .map { computeSharedPreferenceKey(it, systemCoreConfig.coreID.coreName) }
 
             sharedPreferences.get().all.filter { it.key in requestedKeys }
                 .map { (key, value) ->
@@ -47,29 +47,30 @@ class CoreVariablesManager(private val sharedPreferences: Lazy<SharedPreferences
                             is String -> value as String
                             else -> throw InvalidParameterException("Invalid setting in SharedPreferences")
                         }
-                    CoreVariable(computeOriginalKey(key, systemID.dbname), result)
+                    CoreVariable(computeOriginalKey(key, systemCoreConfig.coreID.coreName), result)
                 }
         }
 
     companion object {
         private const val RETRO_OPTION_PREFIX = "cv"
 
+        /** Lemuroid-S: core settings are kept per core (shared by its consoles), not per console. */
         fun computeSharedPreferenceKey(
             retroVariableName: String,
-            systemID: String,
+            coreName: String,
         ): String {
-            return "${computeSharedPreferencesPrefix(systemID)}$retroVariableName"
+            return "${computeSharedPreferencesPrefix(coreName)}$retroVariableName"
         }
 
         fun computeOriginalKey(
             sharedPreferencesKey: String,
-            systemID: String,
+            coreName: String,
         ): String {
-            return sharedPreferencesKey.replace(computeSharedPreferencesPrefix(systemID), "")
+            return sharedPreferencesKey.replace(computeSharedPreferencesPrefix(coreName), "")
         }
 
-        private fun computeSharedPreferencesPrefix(systemID: String): String {
-            return "${RETRO_OPTION_PREFIX}_${systemID}_"
+        private fun computeSharedPreferencesPrefix(coreName: String): String {
+            return "${RETRO_OPTION_PREFIX}_${coreName}_"
         }
     }
 }

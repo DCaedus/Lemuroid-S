@@ -9,6 +9,7 @@ import androidx.lifecycle.LifecycleOwner
 import com.swordfish.lemuroid.BuildConfig
 import com.swordfish.lemuroid.R
 import com.swordfish.lemuroid.app.mobile.feature.settings.SettingsManager
+import com.swordfish.lemuroid.app.shared.coreoptions.CoreOptionsCache
 import com.swordfish.lemuroid.app.shared.game.ShaderChooser
 import com.swordfish.lemuroid.app.shared.rumble.RumbleManager
 import com.swordfish.lemuroid.app.shared.settings.HDModeQuality
@@ -281,9 +282,11 @@ class GameViewModelRetroGameView(
         scope.launch {
             // Some cores do not immediately call SET_VARIABLES so we might need to wait a little bit
             delay(1.seconds)
-            retroGameView.getVariables().forEach {
+            val variables = retroGameView.getVariables()
+            variables.forEach {
                 Timber.i("Libretro variable: $it")
             }
+            CoreOptionsCache.save(appContext, systemCoreConfig, variables)
         }
     }
 
