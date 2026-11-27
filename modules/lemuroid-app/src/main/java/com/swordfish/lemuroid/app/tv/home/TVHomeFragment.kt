@@ -2,6 +2,7 @@ package com.swordfish.lemuroid.app.tv.home
 
 import android.content.Context
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -27,6 +28,7 @@ import com.swordfish.lemuroid.app.shared.systems.MetaSystemInfo
 import com.swordfish.lemuroid.app.tv.folderpicker.TVFolderPickerLauncher
 import com.swordfish.lemuroid.app.tv.settings.TVSettingsActivity
 import com.swordfish.lemuroid.app.tv.shared.GamePresenter
+import com.swordfish.lemuroid.app.tv.setup.TVSetupActivity
 import com.swordfish.lemuroid.app.tv.shared.TVHelper
 import com.swordfish.lemuroid.common.coroutines.launchOnState
 import com.swordfish.lemuroid.lib.library.db.RetrogradeDatabase
@@ -233,10 +235,12 @@ class TVHomeFragment : BrowseSupportFragment() {
     }
 
     private fun launchFolderPicker() {
-        if (TVHelper.isSAFSupported(requireContext())) {
-            StorageFrameworkPickerLauncher.pickFolder(requireContext())
-        } else {
-            TVFolderPickerLauncher.pickFolder(requireContext())
+        when {
+            TVHelper.isSAFSupported(requireContext()) -> StorageFrameworkPickerLauncher.pickFolder(requireContext())
+            // Lemuroid-S: Android 10 and older can still browse storage with the storage permission.
+            Build.VERSION.SDK_INT <= Build.VERSION_CODES.Q -> TVFolderPickerLauncher.pickFolder(requireContext())
+            // No folder picker: games go in the app's own folder.
+            else -> TVSetupActivity.showAppFolder(requireContext())
         }
     }
 

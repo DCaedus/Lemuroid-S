@@ -1,6 +1,7 @@
 package com.swordfish.lemuroid.app.tv.shared
 
 import android.content.Context
+import android.content.Intent
 import android.os.Build
 import android.os.Environment
 
@@ -18,7 +19,11 @@ object TVHelper {
         val isNotLegacyStorage =
             Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q && !Environment.isExternalStorageLegacy()
 
-        return isStandardHardware || isNotLegacyStorage
+        // Lemuroid-S: many TVs on Android 10+ have no folder picker at all; check that one exists.
+        val hasFolderPicker =
+            Intent(Intent.ACTION_OPEN_DOCUMENT_TREE).resolveActivity(packageManager) != null
+
+        return isStandardHardware || (isNotLegacyStorage && hasFolderPicker)
     }
 
     fun isTV(context: Context): Boolean {

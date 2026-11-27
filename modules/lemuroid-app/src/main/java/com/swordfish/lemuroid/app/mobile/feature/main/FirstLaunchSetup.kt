@@ -88,7 +88,7 @@ object FirstLaunchSetup {
         visibleState.value = false
     }
 
-    private fun isDone(context: Context) =
+    fun isDone(context: Context) =
         preferences(context).getBoolean(context.getString(R.string.pref_key_first_launch_setup_done), false)
 
     private fun preferences(context: Context) = SharedPreferencesHelper.getSharedPreferences(context)
@@ -129,7 +129,7 @@ private fun readStatus(context: Context) =
     )
 
 @Composable
-private fun FirstLaunchSetupScreen(onDone: () -> Unit) {
+internal fun FirstLaunchSetupScreen(onDone: () -> Unit) {
     val context = LocalContext.current
     val scope = rememberCoroutineScope()
     var status by remember { mutableStateOf(readStatus(context)) }
@@ -142,7 +142,7 @@ private fun FirstLaunchSetupScreen(onDone: () -> Unit) {
     ComposableLifecycle { _, event -> if (event == Lifecycle.Event.ON_RESUME) refresh() }
 
     // The setup layer covers the app: Back closes the app instead of acting on the screen below.
-    BackHandler { (context as? Activity)?.finish() }
+    BackHandler { (context as? Activity)?.finishAffinity() }
 
     val mainFolderPicker = rememberMainFolderPicker(onChosen = refresh)
     val permissionLauncher =

@@ -4,6 +4,7 @@ import android.Manifest
 import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.os.Build
 import android.os.Bundle
 import android.view.View
 import androidx.activity.result.contract.ActivityResultContracts
@@ -25,6 +26,8 @@ import com.swordfish.lemuroid.app.tv.games.TVGamesFragment
 import com.swordfish.lemuroid.app.tv.home.TVHomeFragment
 import com.swordfish.lemuroid.app.tv.search.TVSearchFragment
 import com.swordfish.lemuroid.app.tv.shared.BaseTVActivity
+import com.swordfish.lemuroid.app.mobile.feature.main.FirstLaunchSetup
+import com.swordfish.lemuroid.app.tv.setup.TVSetupActivity
 import com.swordfish.lemuroid.app.tv.shared.TVHelper
 import com.swordfish.lemuroid.common.coroutines.launchOnState
 import com.swordfish.lemuroid.common.coroutines.safeCollect
@@ -64,6 +67,11 @@ class MainTVActivity : BaseTVActivity(), BusyActivity, GameLaunchHost {
         }
 
         ensureLegacyStoragePermissionsIfNeeded()
+
+        // Lemuroid-S: first launch on a TV opens the TV setup.
+        if (savedInstanceState == null && !FirstLaunchSetup.isDone(applicationContext)) {
+            TVSetupActivity.start(this)
+        }
     }
 
     // Lemuroid-S: the game screen's result through the activity result API (was onActivityResult).
@@ -85,7 +93,9 @@ class MainTVActivity : BaseTVActivity(), BusyActivity, GameLaunchHost {
     }
 
     private fun ensureLegacyStoragePermissionsIfNeeded() {
-        if (TVHelper.isSAFSupported(this) || hasLegacyPermissions()) {
+        // Lemuroid-S: only Android 10 and older read a ROMs folder with the storage permission; newer
+        // TVs without a folder picker use the app's own folder, which needs no permission.
+        if (TVHelper.isSAFSupported(this) || Build.VERSION.SDK_INT > Build.VERSION_CODES.Q || hasLegacyPermissions()) {
             return
         }
 

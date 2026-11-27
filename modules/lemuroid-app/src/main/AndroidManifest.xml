@@ -28,6 +28,13 @@
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE_DATA_SYNC"/>
     <uses-permission android:name="android.permission.RECORD_AUDIO"/>
 
+    <!-- Lemuroid-S: to check whether the device (e.g. a TV) has a folder picker. -->
+    <queries>
+        <intent>
+            <action android:name="android.intent.action.OPEN_DOCUMENT_TREE" />
+        </intent>
+    </queries>
+
     <application
         android:name="com.swordfish.lemuroid.app.LemuroidApplication"
         android:allowBackup="true"
@@ -124,6 +131,9 @@
             android:name=".app.tv.folderpicker.TVFolderPickerActivity"
             android:theme="@style/Theme.Leanback.GuidedStep" />
         <activity android:name=".app.tv.folderpicker.TVFolderPickerLauncher" />
+        <activity
+            android:name=".app.tv.setup.TVSetupActivity"
+            android:theme="@style/LemuroidMaterialTheme" />
 
         <activity
             android:name=".app.tv.input.TVGamePadBindingActivity"

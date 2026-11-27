@@ -110,6 +110,13 @@
     <string name="first_launch_setup_message">Set up a few things before you start. You can open this again from Settings > Advanced.</string>
     <string name="first_launch_setup_step_done">Done</string>
     <string name="first_launch_setup_not_now">Not now</string>
+    <string name="tv_setup_title">Lemuroid-S on this TV</string>
+    <string name="tv_setup_app_folder_message">This TV has no folder picker, so Lemuroid-S uses its own folder. Copy your games into the folder of each console:</string>
+    <string name="tv_setup_console_folder">console</string>
+    <string name="tv_setup_app_folder_how">For example "snes" for Super Nintendo or "psx" for PlayStation. Copy them from a computer over USB, or with adb push. Put BIOS files in any of these folders. Saves and states are kept in the app\'s folder too, and are deleted if you uninstall the app.</string>
+    <string name="tv_setup_browse_message">This TV can also use a folder you choose elsewhere on its storage.</string>
+    <string name="tv_setup_scan">Scan for games</string>
+    <string name="tv_setup_browse">Choose a folder</string>
     <string name="settings_title_core_settings">Core settings</string>
     <string name="settings_description_core_settings">Settings of each emulator core, shared by the consoles that use it</string>
     <string name="core_settings_play_first">Play a game with this core once to show its settings here.</string>
