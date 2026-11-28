@@ -12,7 +12,7 @@ import com.swordfish.touchinput.radial.layouts.shared.SecondaryAnalogLeft
 import com.swordfish.touchinput.radial.layouts.shared.SecondaryButtonL
 import com.swordfish.touchinput.radial.layouts.shared.SecondaryButtonMenu
 import com.swordfish.touchinput.radial.layouts.shared.SecondaryButtonMenuPlaceholder
-import com.swordfish.touchinput.radial.layouts.shared.TURBO_POSITION_OUTER
+import com.swordfish.touchinput.radial.layouts.shared.TURBO_POSITION_TOP
 import com.swordfish.touchinput.radial.layouts.shared.SecondaryButtonR
 import com.swordfish.touchinput.radial.layouts.shared.SecondaryButtonSelect
 import com.swordfish.touchinput.radial.layouts.shared.SecondaryButtonStart
@@ -35,7 +35,7 @@ fun PadKitScope.Nintendo3DSLeft(
         secondaryDials = {
             SecondaryButtonL()
             SecondaryButtonSelect(position = 2)
-            SecondaryButtonMenuPlaceholder(settings, TURBO_POSITION_OUTER)
+            SecondaryButtonMenuPlaceholder(settings, TURBO_POSITION_TOP)
             SecondaryAnalogLeft()
         },
     )

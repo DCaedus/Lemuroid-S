@@ -1,5 +1,7 @@
 package com.swordfish.lemuroid.app.mobile.feature.game
 
+import com.swordfish.touchinput.radial.layouts.LocalDialSizeGroup
+import com.swordfish.touchinput.radial.layouts.DialSizeGroup
 import androidx.compose.ui.platform.LocalConfiguration
 import android.content.res.Configuration
 import android.graphics.RectF
@@ -193,7 +195,11 @@ fun MobileGameScreen(viewModel: BaseGameScreenViewModel) {
                         touchControlsVisibleState.value
 
                 if (isVisible) {
+                    // Lemuroid-S: both sides' main dials get the same size (see DialSizeGroup).
+                    val dialSizeGroup =
+                        remember(currentControllerConfig, touchControllerSettings, isLandscape) { DialSizeGroup() }
                     CompositionLocalProvider(
+                        LocalDialSizeGroup provides dialSizeGroup,
                         LocalLemuroidPadTheme provides LemuroidPadTheme(),
                         LocalFastForwardButtonEnabled provides fastForwardButtonVisible.value,
                         LocalFastForwardActive provides fastForwardActive.value,

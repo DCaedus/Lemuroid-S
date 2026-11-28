@@ -139,6 +139,12 @@ const val TURBO_POSITION_FREE = -60f
 /** Outside the d-pad, for layouts with an analog stick or other buttons below-right of it. */
 const val TURBO_POSITION_OUTER = -150f
 
+/**
+ * Above the d-pad, between L and Select: for layouts with an analog stick below the d-pad, where
+ * the outer spot would make the left side wider and so every dial smaller.
+ */
+const val TURBO_POSITION_TOP = 90f
+
 /** Lemuroid-S: hold it and press a button to turn turbo on or off for that button. */
 context(PadKitScope, LayoutRadialSecondaryDialsScope)
 @Composable
@@ -150,7 +156,13 @@ fun SecondaryButtonTurbo(
     LemuroidControlButton(
         modifier =
             Modifier.radialPosition(
-                position - 2f * settings.rotation * TouchControllerSettingsManager.MAX_ROTATION,
+                // Bottom spots move against the rotation like the fast-forward button; the top
+                // spot turns with the other top buttons.
+                if (position < 0f) {
+                    position - 2f * settings.rotation * TouchControllerSettingsManager.MAX_ROTATION
+                } else {
+                    position
+                },
             ),
         id = Id.Key(ComposeTouchLayouts.KEYCODE_TURBO),
         icon = R.drawable.button_turbo,
