@@ -11,7 +11,7 @@
     <string name="rescan">Herscannen</string>
     <string name="stop">Stop</string>
     <string name="directory">Map</string>
-    <string name="display_filter">Schermfilter</string>
+    <string name="display_filter">Videofilter</string>
     <string name="ok">OK</string>
     <string name="cancel">Annuleren</string>
     <string name="settings">Instellingen</string>
@@ -151,10 +151,10 @@
     </string>
     <string name="error_message_incompatible_state">Deze save state is niet compatibel met de huidige core-versie. Laad de laatste versie van het spel of gebruik een eerdere versie van Lemuroid.</string>
     <string name="shader_filter_names_auto">Automatisch</string>
-    <string name="shader_filter_names_sharp">Scherp</string>
-    <string name="shader_filter_names_smooth">Vloeiend</string>
-    <string name="shader_filter_names_crt">CRT</string>
-    <string name="shader_filter_names_lcd">LCD</string>
+    <string name="shader_filter_names_sharp">Scherp (Nearest)</string>
+    <string name="shader_filter_names_smooth">Zacht (Bilinear)</string>
+    <string name="shader_filter_names_crt">CRT (Scanlijnen)</string>
+    <string name="shader_filter_names_lcd">LCD (Pixelraster)</string>
     <string name="haptic_feedback_mode_names_none">Geen</string>
     <string name="haptic_feedback_mode_names_press">Drukken</string>
     <string name="haptic_feedback_mode_names_press_release">Drukken en loslaten</string>
@@ -348,7 +348,6 @@
     <string name="core_download_message_no_size">%1$s-games hebben de core %2$s nodig. Nu downloaden?</string>
     <string name="core_downloading">Core %1$s downloaden…</string>
     <string name="core_download_failed">Kan de core niet downloaden. Controleer je verbinding en probeer het opnieuw.</string>
-    <string name="shader_filter_names_scale2x">Afgeronde pixels (Scale2x)</string>
-    <string name="shader_filter_names_xbr">Gladde randen (xBR)</string>
-    <string name="shader_filter_names_sabr">Zachte randen (SABR)</string>
+    <string name="shader_filter_names_scale2x">Fijnere pixels (Scale2x)</string>
+    <string name="shader_filter_names_xbr">xBR (Zwaar)</string>
 </resources>

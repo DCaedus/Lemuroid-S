@@ -2,6 +2,11 @@
 
 package com.swordfish.lemuroid.app.mobile.feature.gamemenu
 
+import com.swordfish.lemuroid.app.utils.android.settings.SettingsChoicePage
+import com.swordfish.lemuroid.app.utils.android.settings.SettingsChoice
+import com.swordfish.lemuroid.app.utils.android.settings.LocalSettingsChoicePage
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.clickable
@@ -170,9 +175,19 @@ class GameMenuActivity : RetrogradeComponentActivity() {
                     ?.let { GameMenuRoute.findByRoute(it) }
                     ?: GameMenuRoute.HOME
 
+            // Lemuroid-S: the list setting whose choices the CHOICE page shows.
+            val pendingChoice = remember { mutableStateOf<SettingsChoice?>(null) }
+
             SideMenu {
                 TopAppBar(
-                    title = { Text(stringResource(currentRoute.titleId)) },
+                    title = {
+                        val choice = pendingChoice.value
+                        if (currentRoute == GameMenuRoute.CHOICE && choice != null) {
+                            choice.title()
+                        } else {
+                            Text(stringResource(currentRoute.titleId))
+                        }
+                    },
                     windowInsets = WindowInsets(0.dp),
                     // Lemuroid-S: no close button; tapping outside the menu (or Back) closes it.
                     navigationIcon = {
@@ -192,7 +207,13 @@ class GameMenuActivity : RetrogradeComponentActivity() {
                 )
                 Divider(modifier = Modifier.fillMaxWidth())
                 // Lemuroid-S: compact rows, all the same height, so the menu fits more on screen.
-                CompositionLocalProvider(LocalCompactSettingsRowHeight provides MENU_ROW_HEIGHT) {
+                CompositionLocalProvider(
+                    LocalCompactSettingsRowHeight provides MENU_ROW_HEIGHT,
+                    LocalSettingsChoicePage provides { choice ->
+                        pendingChoice.value = choice
+                        navController.navigate(GameMenuRoute.CHOICE.route)
+                    },
+                ) {
                 NavHost(
                     modifier =
                         Modifier
@@ -204,6 +225,14 @@ class GameMenuActivity : RetrogradeComponentActivity() {
                     popEnterTransition = { fadeIn(tween(SCREEN_FADE_MS)) },
                     popExitTransition = { fadeOut(tween(SCREEN_FADE_MS)) },
                 ) {
+                    composable(GameMenuRoute.CHOICE) {
+                        val choice = pendingChoice.value
+                        if (choice != null) {
+                            SettingsChoicePage(choice, onDone = { navController.popBackStack() })
+                        } else {
+                            LaunchedEffect(Unit) { navController.popBackStack() }
+                        }
+                    }
                     composable(GameMenuRoute.HOME) {
                         GameMenuHomeScreen(navController, gameMenuRequest, ::onResult)
                     }
@@ -278,23 +307,22 @@ class GameMenuActivity : RetrogradeComponentActivity() {
                         ),
             )
 
-            // Lemuroid-S: the system bars show while the menu is open; the panel starts below the status bar.
+            // Lemuroid-S: a plain side bar from the top to the bottom of the screen; its content
+            // stays clear of the status bar, navigation bar and display cutout.
             Surface(
                 modifier =
                     Modifier
-                        .windowInsetsPadding(WindowInsets.statusBars)
                         .fillMaxHeight()
-                        .width(panelWidth)
-                        .clip(MaterialTheme.shapes.large),
+                        .width(panelWidth),
             ) {
-                // Lemuroid-S: keep the menu clear of the status bar, navigation bar and display cutout.
                 Column(
                     modifier =
                         Modifier
                             .fillMaxSize()
                             .windowInsetsPadding(
-                                WindowInsets.safeDrawing.only(WindowInsetsSides.Bottom + WindowInsetsSides.End)
-                                    .union(WindowInsets.displayCutout.only(WindowInsetsSides.Top)),
+                                WindowInsets.safeDrawing.only(
+                                    WindowInsetsSides.Top + WindowInsetsSides.Bottom + WindowInsetsSides.End,
+                                ),
                             ),
                 ) {
                     content()

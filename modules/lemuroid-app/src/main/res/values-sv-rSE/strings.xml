@@ -11,7 +11,7 @@
     <string name="rescan">Sök på nytt</string>
     <string name="stop">Stopp</string>
     <string name="directory">Katalog</string>
-    <string name="display_filter">Skärmfilter</string>
+    <string name="display_filter">Videofilter</string>
     <string name="ok">OK</string>
     <string name="cancel">Avbryt</string>
     <string name="settings">Inställningar</string>
@@ -150,10 +150,10 @@
     </string>
     <string name="error_message_incompatible_state">Detta sparläge är inte kompatibelt med den aktuella kärnversionen. Ladda in den senaste sparningen i spelet eller använd en tidigare Lemuroidversion.</string>
     <string name="shader_filter_names_auto">Automatisk</string>
-    <string name="shader_filter_names_sharp">Skarp</string>
-    <string name="shader_filter_names_smooth">Mjuk</string>
-    <string name="shader_filter_names_crt">CRT</string>
-    <string name="shader_filter_names_lcd">LCD</string>
+    <string name="shader_filter_names_sharp">Skarp (Nearest)</string>
+    <string name="shader_filter_names_smooth">Mjuk (Bilinear)</string>
+    <string name="shader_filter_names_crt">CRT (Svepningslinjer)</string>
+    <string name="shader_filter_names_lcd">LCD (Pixelrutnät)</string>
     <string name="haptic_feedback_mode_names_none">Ingen</string>
     <string name="haptic_feedback_mode_names_press">Tryck</string>
     <string name="haptic_feedback_mode_names_press_release">Tryck &amp; släpp</string>
@@ -348,7 +348,6 @@
     <string name="core_download_message_no_size">%1$s-spel behöver kärnan %2$s. Vill du ladda ned den nu?</string>
     <string name="core_downloading">Laddar ned kärnan %1$s…</string>
     <string name="core_download_failed">Det gick inte att ladda ned kärnan. Kontrollera anslutningen och försök igen.</string>
-    <string name="shader_filter_names_scale2x">Rundade pixlar (Scale2x)</string>
-    <string name="shader_filter_names_xbr">Släta kanter (xBR)</string>
-    <string name="shader_filter_names_sabr">Mjuka kanter (SABR)</string>
+    <string name="shader_filter_names_scale2x">Finare pixlar (Scale2x)</string>
+    <string name="shader_filter_names_xbr">xBR (Krävande)</string>
 </resources>

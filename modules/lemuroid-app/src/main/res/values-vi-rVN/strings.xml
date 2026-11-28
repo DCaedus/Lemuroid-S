@@ -11,7 +11,7 @@
     <string name="rescan">Quét lại</string>
     <string name="stop">Dừng</string>
     <string name="directory">Thư mục</string>
-    <string name="display_filter">Bộ lọc màn hình</string>
+    <string name="display_filter">Bộ lọc video</string>
     <string name="ok">OK</string>
     <string name="cancel">Hủy</string>
     <string name="settings">Cài đặt</string>
@@ -139,10 +139,10 @@
     </string>
     <string name="error_message_incompatible_state">Trạng thái lưu này không tương thích với phiên bản lõi hiện tại. Vui lòng tải bản lưu trong trò chơi mới nhất hoặc sử dụng phiên bản Lemuroid trước đó.</string>
     <string name="shader_filter_names_auto">Tự động</string>
-    <string name="shader_filter_names_sharp">Sắc nét</string>
-    <string name="shader_filter_names_smooth">Mịn</string>
-    <string name="shader_filter_names_crt">CRT</string>
-    <string name="shader_filter_names_lcd">LCD</string>
+    <string name="shader_filter_names_sharp">Sắc nét (Nearest)</string>
+    <string name="shader_filter_names_smooth">Mượt (Bilinear)</string>
+    <string name="shader_filter_names_crt">CRT (Đường quét)</string>
+    <string name="shader_filter_names_lcd">LCD (Lưới điểm ảnh)</string>
     <string name="haptic_feedback_mode_names_none">Không</string>
     <string name="haptic_feedback_mode_names_press">Nhấn</string>
     <string name="haptic_feedback_mode_names_press_release">Nhấn &amp; thả</string>
@@ -346,7 +346,6 @@
     <string name="core_download_message_no_size">Trò chơi %1$s cần lõi %2$s. Tải ngay bây giờ?</string>
     <string name="core_downloading">Đang tải lõi %1$s…</string>
     <string name="core_download_failed">Không thể tải lõi. Hãy kiểm tra kết nối và thử lại.</string>
-    <string name="shader_filter_names_scale2x">Điểm ảnh bo tròn (Scale2x)</string>
-    <string name="shader_filter_names_xbr">Viền mượt (xBR)</string>
-    <string name="shader_filter_names_sabr">Viền mềm (SABR)</string>
+    <string name="shader_filter_names_scale2x">Điểm ảnh mịn hơn (Scale2x)</string>
+    <string name="shader_filter_names_xbr">xBR (Nặng)</string>
 </resources>

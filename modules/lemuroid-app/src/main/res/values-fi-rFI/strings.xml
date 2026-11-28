@@ -11,7 +11,7 @@
     <string name="rescan">Uudelleen</string>
     <string name="stop">Pysäytä</string>
     <string name="directory">Hakemisto</string>
-    <string name="display_filter">Näyttösuodatin</string>
+    <string name="display_filter">Videosuodatin</string>
     <string name="ok">Ok</string>
     <string name="cancel">Peruuta</string>
     <string name="settings">Asetukset</string>
@@ -143,10 +143,10 @@
     </string>
     <string name="error_message_incompatible_state">Tallennustila ei ole yhteensopiva nykyisen ydinversion kanssa. Lataa uusin pelin sisäinen tallennus tai käytä aiempaa Lemuroid-versiota.</string>
     <string name="shader_filter_names_auto">Automaattinen</string>
-    <string name="shader_filter_names_sharp">Terävä</string>
-    <string name="shader_filter_names_smooth">Pehmeä</string>
-    <string name="shader_filter_names_crt">CRT</string>
-    <string name="shader_filter_names_lcd">LCD</string>
+    <string name="shader_filter_names_sharp">Terävä (Nearest)</string>
+    <string name="shader_filter_names_smooth">Pehmeä (Bilinear)</string>
+    <string name="shader_filter_names_crt">CRT (Juovat)</string>
+    <string name="shader_filter_names_lcd">LCD (Pikseliruudukko)</string>
     <string name="haptic_feedback_mode_names_none">Ei Mitään</string>
     <string name="haptic_feedback_mode_names_press">Paina</string>
     <string name="haptic_feedback_mode_names_press_release">Paina &amp; julkaisu</string>
@@ -344,7 +344,6 @@
     <string name="core_download_message_no_size">%1$s-pelit tarvitsevat ytimen %2$s. Ladataanko se nyt?</string>
     <string name="core_downloading">Ladataan ydintä %1$s…</string>
     <string name="core_download_failed">Ydintä ei voitu ladata. Tarkista yhteys ja yritä uudelleen.</string>
-    <string name="shader_filter_names_scale2x">Pyöristetyt pikselit (Scale2x)</string>
-    <string name="shader_filter_names_xbr">Sileät reunat (xBR)</string>
-    <string name="shader_filter_names_sabr">Pehmeät reunat (SABR)</string>
+    <string name="shader_filter_names_scale2x">Hienommat pikselit (Scale2x)</string>
+    <string name="shader_filter_names_xbr">xBR (Raskas)</string>
 </resources>

@@ -11,7 +11,7 @@
     <string name="rescan">Verificar novamente</string>
     <string name="stop">Parar</string>
     <string name="directory">Diretório</string>
-    <string name="display_filter">Filtro de tela</string>
+    <string name="display_filter">Filtro de vídeo</string>
     <string name="ok">OK</string>
     <string name="cancel">Cancelar</string>
     <string name="settings">Configurações</string>
@@ -149,10 +149,10 @@
     </string>
     <string name="error_message_incompatible_state">Este estado de salvamento não é compatível com a versão principal atual. Por favor, carregue o último salvamento no jogo ou use uma versão anterior do Lemuroid.</string>
     <string name="shader_filter_names_auto">Automático</string>
-    <string name="shader_filter_names_sharp">Nítido</string>
-    <string name="shader_filter_names_smooth">Suavização</string>
-    <string name="shader_filter_names_crt">CRT</string>
-    <string name="shader_filter_names_lcd">LCD</string>
+    <string name="shader_filter_names_sharp">Nítido (Nearest)</string>
+    <string name="shader_filter_names_smooth">Suave (Bilinear)</string>
+    <string name="shader_filter_names_crt">CRT (Linhas de varredura)</string>
+    <string name="shader_filter_names_lcd">LCD (Grade de pixels)</string>
     <string name="haptic_feedback_mode_names_none">Nenhuma</string>
     <string name="haptic_feedback_mode_names_press">Pressione</string>
     <string name="haptic_feedback_mode_names_press_release">Pressione &amp; liberar</string>
@@ -348,7 +348,6 @@
     <string name="core_download_message_no_size">Jogos de %1$s precisam do núcleo %2$s. Baixar agora?</string>
     <string name="core_downloading">Baixando o núcleo %1$s…</string>
     <string name="core_download_failed">Não foi possível baixar o núcleo. Verifique sua conexão e tente novamente.</string>
-    <string name="shader_filter_names_scale2x">Pixels arredondados (Scale2x)</string>
-    <string name="shader_filter_names_xbr">Bordas suaves (xBR)</string>
-    <string name="shader_filter_names_sabr">Bordas difusas (SABR)</string>
+    <string name="shader_filter_names_scale2x">Pixels mais finos (Scale2x)</string>
+    <string name="shader_filter_names_xbr">xBR (Exigente)</string>
 </resources>

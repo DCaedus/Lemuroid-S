@@ -11,7 +11,7 @@
     <string name="rescan">再読み込み</string>
     <string name="stop">停止</string>
     <string name="directory">ディレクトリ</string>
-    <string name="display_filter">画面フィルター</string>
+    <string name="display_filter">ビデオフィルター</string>
     <string name="ok">OK</string>
     <string name="cancel">キャンセル</string>
     <string name="settings">設定</string>
@@ -150,10 +150,10 @@
     </string>
     <string name="error_message_incompatible_state">この一時保存データは現在のコアバージョンと互換性がありません。最新のゲーム内セーブを読み込むか、以前のLemuroidバージョンを使用してください。</string>
     <string name="shader_filter_names_auto">自動</string>
-    <string name="shader_filter_names_sharp">シャープ。</string>
-    <string name="shader_filter_names_smooth">スムース</string>
-    <string name="shader_filter_names_crt">CRT</string>
-    <string name="shader_filter_names_lcd">LCD</string>
+    <string name="shader_filter_names_sharp">シャープ（Nearest）</string>
+    <string name="shader_filter_names_smooth">スムーズ（Bilinear）</string>
+    <string name="shader_filter_names_crt">CRT（走査線）</string>
+    <string name="shader_filter_names_lcd">LCD（ピクセルグリッド）</string>
     <string name="haptic_feedback_mode_names_none">なし</string>
     <string name="haptic_feedback_mode_names_press">プレス</string>
     <string name="haptic_feedback_mode_names_press_release">&amp; リリース</string>
@@ -351,7 +351,6 @@
     <string name="core_download_message_no_size">%1$s のゲームには %2$s コアが必要です。今すぐダウンロードしますか？</string>
     <string name="core_downloading">%1$s コアをダウンロード中…</string>
     <string name="core_download_failed">コアをダウンロードできませんでした。接続を確認して、もう一度お試しください。</string>
-    <string name="shader_filter_names_scale2x">丸めたピクセル（Scale2x）</string>
-    <string name="shader_filter_names_xbr">なめらかな輪郭（xBR）</string>
-    <string name="shader_filter_names_sabr">やわらかい輪郭（SABR）</string>
+    <string name="shader_filter_names_scale2x">より細かいピクセル（Scale2x）</string>
+    <string name="shader_filter_names_xbr">xBR（高負荷）</string>
 </resources>

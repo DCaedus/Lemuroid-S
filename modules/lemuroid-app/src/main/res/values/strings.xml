@@ -11,7 +11,7 @@
     <string name="rescan">Rescan</string>
     <string name="stop">Stop</string>
     <string name="directory">Directory</string>
-    <string name="display_filter">Screen filter</string>
+    <string name="display_filter">Video filter</string>
     <string name="ok">OK</string>
     <string name="cancel">Cancel</string>
     <string name="settings">Settings</string>
@@ -348,13 +348,12 @@
     <string name="error_message_incompatible_state">This save state is not compatible with the current core version. Please load the latest in-game save or use a previous Lemuroid version.</string>
 
     <string name="shader_filter_names_auto">Auto</string>
-    <string name="shader_filter_names_sharp">Sharp</string>
-    <string name="shader_filter_names_smooth">Smooth</string>
-    <string name="shader_filter_names_crt">CRT</string>
-    <string name="shader_filter_names_lcd">LCD</string>
-    <string name="shader_filter_names_scale2x">Rounded pixels (Scale2x)</string>
-    <string name="shader_filter_names_xbr">Smooth edges (xBR)</string>
-    <string name="shader_filter_names_sabr">Soft edges (SABR)</string>
+    <string name="shader_filter_names_sharp">Sharp (Nearest)</string>
+    <string name="shader_filter_names_smooth">Smooth (Bilinear)</string>
+    <string name="shader_filter_names_crt">CRT (Scanlines)</string>
+    <string name="shader_filter_names_lcd">LCD (Pixel grid)</string>
+    <string name="shader_filter_names_scale2x">Finer pixels (Scale2x)</string>
+    <string name="shader_filter_names_xbr">xBR (Demanding)</string>
 
     <string name="viewport_alignment_names_top">Top</string>
     <string name="viewport_alignment_names_center">Center</string>

@@ -11,7 +11,7 @@
     <string name="rescan">Tekrar tara</string>
     <string name="stop">Dur</string>
     <string name="directory">Dizin</string>
-    <string name="display_filter">Ekran filtresi</string>
+    <string name="display_filter">Video filtresi</string>
     <string name="ok">Tamam</string>
     <string name="cancel">Vazgeç</string>
     <string name="settings">Ayarlar</string>
@@ -150,10 +150,10 @@ $SYSTEMS.
     </string>
     <string name="error_message_incompatible_state">Bu kayıt durumu mevcut çekirdek sürümüyle mevcut değil. Lütfen en son oyun içi kayıtı yükleyin veya önceki Lemuroid versiyonunu kullanın.</string>
     <string name="shader_filter_names_auto">Otomatik</string>
-    <string name="shader_filter_names_sharp">Keskin</string>
-    <string name="shader_filter_names_smooth">Yumuşak</string>
-    <string name="shader_filter_names_crt">CRT</string>
-    <string name="shader_filter_names_lcd">LCD</string>
+    <string name="shader_filter_names_sharp">Keskin (Nearest)</string>
+    <string name="shader_filter_names_smooth">Yumuşak (Bilinear)</string>
+    <string name="shader_filter_names_crt">CRT (Tarama çizgileri)</string>
+    <string name="shader_filter_names_lcd">LCD (Piksel ızgarası)</string>
     <string name="haptic_feedback_mode_names_none">Yok</string>
     <string name="haptic_feedback_mode_names_press">Bas</string>
     <string name="haptic_feedback_mode_names_press_release">Bas &amp; bırak</string>
@@ -349,7 +349,6 @@ $SYSTEMS.
     <string name="core_download_message_no_size">%1$s oyunları %2$s çekirdeğine ihtiyaç duyar. Şimdi indirilsin mi?</string>
     <string name="core_downloading">%1$s çekirdeği indiriliyor…</string>
     <string name="core_download_failed">Çekirdek indirilemedi. Bağlantınızı kontrol edip tekrar deneyin.</string>
-    <string name="shader_filter_names_scale2x">Yuvarlatılmış pikseller (Scale2x)</string>
-    <string name="shader_filter_names_xbr">Pürüzsüz kenarlar (xBR)</string>
-    <string name="shader_filter_names_sabr">Yumuşak kenarlar (SABR)</string>
+    <string name="shader_filter_names_scale2x">Daha ince pikseller (Scale2x)</string>
+    <string name="shader_filter_names_xbr">xBR (Zorlayıcı)</string>
 </resources>

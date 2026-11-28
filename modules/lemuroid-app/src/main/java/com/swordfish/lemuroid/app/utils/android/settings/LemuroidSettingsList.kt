@@ -1,5 +1,6 @@
 package com.swordfish.lemuroid.app.utils.android.settings
 
+import androidx.compose.runtime.compositionLocalOf
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -31,6 +32,60 @@ import com.alorma.compose.settings.storage.base.SettingValueState
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
+/** Lemuroid-S: a list setting's choices, shown on their own page instead of in a dialog. */
+class SettingsChoice(
+    val title: @Composable () -> Unit,
+    val items: List<String>,
+    val selected: Int,
+    val onSelect: (Int) -> Unit,
+)
+
+/** When set (the in-game menu), list settings open their choices with it instead of a dialog. */
+val LocalSettingsChoicePage = compositionLocalOf<((SettingsChoice) -> Unit)?> { null }
+
+/** The choices of a list setting as a page: one row each, the current one marked. */
+@Composable
+fun SettingsChoicePage(
+    choice: SettingsChoice,
+    onDone: () -> Unit,
+) {
+    Column(
+        modifier =
+            Modifier
+                .fillMaxWidth()
+                .verticalScroll(rememberScrollState())
+                .selectableGroup(),
+    ) {
+        choice.items.forEachIndexed { index, item ->
+            Row(
+                modifier =
+                    Modifier
+                        .fillMaxWidth()
+                        .height(56.dp)
+                        .selectable(
+                            role = Role.RadioButton,
+                            selected = index == choice.selected,
+                            onClick = {
+                                choice.onSelect(index)
+                                onDone()
+                            },
+                        )
+                        .padding(horizontal = 16.dp),
+                verticalAlignment = Alignment.CenterVertically,
+            ) {
+                RadioButton(selected = index == choice.selected, onClick = null)
+                Text(
+                    text = item,
+                    style = MaterialTheme.typography.bodyLarge,
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis,
+                    modifier = Modifier.padding(start = 16.dp),
+                )
+            }
+        }
+    }
+}
+
 @Composable
 fun LemuroidSettingsList(
     enabled: Boolean = true,
@@ -57,13 +112,25 @@ fun LemuroidSettingsList(
             subtitle
         }
 
+    val choicePage = LocalSettingsChoicePage.current
     LemuroidSettingsMenuLink(
         enabled = enabled,
         icon = icon,
         title = title,
         subtitle = safeSubtitle,
         action = action,
-        onClick = { showDialog = true },
+        onClick = {
+            if (choicePage != null) {
+                choicePage(
+                    SettingsChoice(title, items, state.value) { index ->
+                        if (index != state.value) state.value = index
+                        onItemSelected?.invoke(index, items[index])
+                    },
+                )
+            } else {
+                showDialog = true
+            }
+        },
     )
 
     if (!showDialog) return

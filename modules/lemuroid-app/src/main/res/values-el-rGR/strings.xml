@@ -11,7 +11,7 @@
     <string name="rescan">Επανασάρωση</string>
     <string name="stop">Διακοπή</string>
     <string name="directory">Κατάλογος</string>
-    <string name="display_filter">Φίλτρο οθόνης</string>
+    <string name="display_filter">Φίλτρο βίντεο</string>
     <string name="ok">Εντάξει</string>
     <string name="cancel">Ακύρωση</string>
     <string name="settings">Ρυθμίσεις</string>
@@ -149,10 +149,10 @@
     </string>
     <string name="error_message_incompatible_state">Αυτό το save state δεν είναι συμβατό με την τρέχουσα έκδοση του πυρήνα. Παρακαλώ φορτώστε προηγούμενο save του παιχνιδιού ή χρησιμοποιήστε μια προηγούμενη έκδοση Lemuroid.</string>
     <string name="shader_filter_names_auto">Αυτόματο</string>
-    <string name="shader_filter_names_sharp">Κοφτερό</string>
-    <string name="shader_filter_names_smooth">Ομαλό</string>
-    <string name="shader_filter_names_crt">CRT</string>
-    <string name="shader_filter_names_lcd">LCD</string>
+    <string name="shader_filter_names_sharp">Ευκρινές (Nearest)</string>
+    <string name="shader_filter_names_smooth">Ομαλό (Bilinear)</string>
+    <string name="shader_filter_names_crt">CRT (Γραμμές σάρωσης)</string>
+    <string name="shader_filter_names_lcd">LCD (Πλέγμα pixel)</string>
     <string name="haptic_feedback_mode_names_none">Κανένα</string>
     <string name="haptic_feedback_mode_names_press">Πιέστε</string>
     <string name="haptic_feedback_mode_names_press_release">Πίεστε &amp; αφήστε</string>
@@ -348,7 +348,6 @@
     <string name="core_download_message_no_size">Τα παιχνίδια %1$s χρειάζονται τον πυρήνα %2$s. Λήψη τώρα;</string>
     <string name="core_downloading">Λήψη του πυρήνα %1$s…</string>
     <string name="core_download_failed">Δεν ήταν δυνατή η λήψη του πυρήνα. Ελέγξτε τη σύνδεσή σας και δοκιμάστε ξανά.</string>
-    <string name="shader_filter_names_scale2x">Στρογγυλεμένα pixel (Scale2x)</string>
-    <string name="shader_filter_names_xbr">Λείες ακμές (xBR)</string>
-    <string name="shader_filter_names_sabr">Μαλακές ακμές (SABR)</string>
+    <string name="shader_filter_names_scale2x">Λεπτότερα pixel (Scale2x)</string>
+    <string name="shader_filter_names_xbr">xBR (Απαιτητικό)</string>
 </resources>

@@ -1590,8 +1590,7 @@ vec3 px(HIGHP vec2 base, float x, float y) {
   return texture2D(texture, base + vec2(x, y) / textureSize).rgb;
 }
 
-// xBR level 2 by Hyllian (MIT) and SABR v3.0 by Joshua Street (GPL), single pass.
-// SABR is defined for the SABR variant: same edge detection, smoother transitions.
+// xBR level 2 by Hyllian (MIT), single pass.
 const vec4 Ao = vec4(1.0, -1.0, -1.0, 1.0);
 const vec4 Bo = vec4(1.0, 1.0, -1.0, -1.0);
 const vec4 Co = vec4(1.5, 0.5, -0.5, 0.5);
@@ -1603,13 +1602,8 @@ const vec4 By = vec4(2.0, 0.5, -2.0, -0.5);
 const vec4 Cy = vec4(2.0, 0.0, -1.0, 0.5);
 const vec4 Ci = vec4(0.25, 0.25, 0.25, 0.25);
 const float coef = 2.0;
-#ifdef SABR
-const vec3 lumw = vec3(0.21, 0.72, 0.07);
-const vec4 eqThreshold = vec4(0.32, 0.32, 0.32, 0.32);
-#else
 const vec3 lumw = vec3(14.352, 28.176, 5.472);
 const vec4 eqThreshold = vec4(15.0, 15.0, 15.0, 15.0);
-#endif
 
 vec4 lum4(vec3 a, vec3 b, vec3 c, vec3 d) {
   return vec4(dot(a, lumw), dot(b, lumw), dot(c, lumw), dot(d, lumw));
@@ -1669,15 +1663,6 @@ void main() {
   vec4 lv2L = neq(e, g) * neq(d, g);
   vec4 lv2U = neq(e, c) * neq(b, c);
 
-#ifdef SABR
-  vec4 M45 = vec4(0.4, 0.4, 0.4, 0.4);
-  vec4 M30 = vec4(0.2, 0.4, 0.2, 0.4);
-  vec4 M60 = M30.yxwz;
-  vec4 fx45i = smoothstep(Co + Ci - M45, Co + Ci + M45, fx);
-  vec4 fx45 = smoothstep(Co - M45, Co + M45, fx);
-  vec4 fx30 = smoothstep(Cx - M30, Cx + M30, fxL);
-  vec4 fx60 = smoothstep(Cy - M60, Cy + M60, fxU);
-#else
   vec4 delta = vec4(1.0 / 3.0);
   vec4 deltaL = vec4(0.5 / 3.0, 1.0 / 3.0, 0.5 / 3.0, 1.0 / 3.0);
   vec4 deltaU = deltaL.yxwz;
@@ -1685,7 +1670,6 @@ void main() {
   vec4 fx45 = clamp((fx + delta - Co) / (2.0 * delta), 0.0, 1.0);
   vec4 fx30 = clamp((fxL + deltaL - Cx) / (2.0 * deltaL), 0.0, 1.0);
   vec4 fx60 = clamp((fxU + deltaU - Cy) / (2.0 * deltaU), 0.0, 1.0);
-#endif
 
   vec4 wd1 = wd(e, c, g, i, h5, f4, h, f);
   vec4 wd2 = wd(h, d, i5, f, i4, b, e, i);
@@ -1737,10 +1721,6 @@ ShaderManager::Chain ShaderManager::getShader(const ShaderManager::Config& confi
 
     case Type::SHADER_XBR: {
         return { { { defaultShaderVertex, xbrFragment, false, 1.0 } }, false };
-    }
-
-    case Type::SHADER_SABR: {
-        return { { { defaultShaderVertex, "#define SABR 1\n" + xbrFragment, false, 1.0 } }, false };
     }
 
     case Type::SHADER_UPSCALE_CUT: {

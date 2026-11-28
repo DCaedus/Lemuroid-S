@@ -11,7 +11,7 @@
     <string name="rescan">Beolvasás</string>
     <string name="stop">Megállítás</string>
     <string name="directory">Könyvtár</string>
-    <string name="display_filter">Képernyőszűrő</string>
+    <string name="display_filter">Videószűrő</string>
     <string name="ok">OK</string>
     <string name="cancel">Mégse</string>
     <string name="settings">Beállítások</string>
@@ -287,8 +287,8 @@
     <string name="mobile_settings_help">Súgó</string>
     <string name="error_message_incompatible_state">Ez az állapotmentés nem kompatibilis a mag jelenlegi verziójával. Töltsd be a legutóbbi játékon belüli mentést, vagy használj egy korábbi Lemuroid-verziót.</string>
     <string name="shader_filter_names_auto">Automatikus</string>
-    <string name="shader_filter_names_sharp">Éles</string>
-    <string name="shader_filter_names_smooth">Lágy</string>
+    <string name="shader_filter_names_sharp">Éles (Nearest)</string>
+    <string name="shader_filter_names_smooth">Lágy (Bilinear)</string>
     <string name="haptic_feedback_mode_names_press_release">Lenyomás és felengedés</string>
     <string name="tilt_configuration_disabled">Kikapcsolva</string>
     <string name="tilt_configuration_cross">Irányítókereszt</string>
@@ -327,7 +327,8 @@
     <string name="core_download_message_no_size">A(z) %1$s játékokhoz a(z) %2$s mag kell. Letöltöd most?</string>
     <string name="core_downloading">A(z) %1$s mag letöltése…</string>
     <string name="core_download_failed">Nem sikerült letölteni a magot. Ellenőrizd a kapcsolatot, és próbáld újra.</string>
-    <string name="shader_filter_names_scale2x">Lekerekített pixelek (Scale2x)</string>
-    <string name="shader_filter_names_xbr">Sima élek (xBR)</string>
-    <string name="shader_filter_names_sabr">Lágy élek (SABR)</string>
+    <string name="shader_filter_names_scale2x">Finomabb pixelek (Scale2x)</string>
+    <string name="shader_filter_names_xbr">xBR (Erőforrásigényes)</string>
+    <string name="shader_filter_names_crt">CRT (Pásztázó sorok)</string>
+    <string name="shader_filter_names_lcd">LCD (Pixelrács)</string>
 </resources>

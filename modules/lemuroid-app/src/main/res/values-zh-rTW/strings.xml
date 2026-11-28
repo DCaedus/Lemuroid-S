@@ -11,7 +11,7 @@
     <string name="rescan">重新掃描</string>
     <string name="stop">停止</string>
     <string name="directory">資料夾</string>
-    <string name="display_filter">螢幕濾鏡</string>
+    <string name="display_filter">視訊濾鏡</string>
     <string name="ok">確定</string>
     <string name="cancel">取消</string>
     <string name="settings">設定</string>
@@ -141,10 +141,10 @@
     </string>
     <string name="error_message_incompatible_state">此自動存檔與當前核心版本不兼容。請載入最新的遊戲內存檔或使用以前的 Lemuroid 版本。</string>
     <string name="shader_filter_names_auto">自動</string>
-    <string name="shader_filter_names_sharp">銳利</string>
-    <string name="shader_filter_names_smooth">平滑</string>
-    <string name="shader_filter_names_crt">CRT</string>
-    <string name="shader_filter_names_lcd">LCD</string>
+    <string name="shader_filter_names_sharp">銳利（Nearest）</string>
+    <string name="shader_filter_names_smooth">平滑（Bilinear）</string>
+    <string name="shader_filter_names_crt">CRT（掃描線）</string>
+    <string name="shader_filter_names_lcd">LCD（像素網格）</string>
     <string name="haptic_feedback_mode_names_none">無</string>
     <string name="haptic_feedback_mode_names_press">按下</string>
     <string name="haptic_feedback_mode_names_press_release">按下並鬆開</string>
@@ -345,7 +345,6 @@
     <string name="core_download_message_no_size">%1$s 遊戲需要 %2$s 核心。現在下載嗎？</string>
     <string name="core_downloading">正在下載 %1$s 核心…</string>
     <string name="core_download_failed">無法下載核心。請檢查網路連線後再試一次。</string>
-    <string name="shader_filter_names_scale2x">圓潤像素（Scale2x）</string>
-    <string name="shader_filter_names_xbr">平滑邊緣（xBR）</string>
-    <string name="shader_filter_names_sabr">柔和邊緣（SABR）</string>
+    <string name="shader_filter_names_scale2x">更細緻的像素（Scale2x）</string>
+    <string name="shader_filter_names_xbr">xBR（高負載）</string>
 </resources>

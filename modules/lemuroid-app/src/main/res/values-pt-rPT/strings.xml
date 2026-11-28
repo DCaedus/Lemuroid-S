@@ -11,7 +11,7 @@
     <string name="rescan">Reanalisar</string>
     <string name="stop">Parar</string>
     <string name="directory">Pasta</string>
-    <string name="display_filter">Filtro de ecrã</string>
+    <string name="display_filter">Filtro de vídeo</string>
     <string name="ok">OK</string>
     <string name="cancel">Cancelar</string>
     <string name="settings">Configurações</string>
@@ -149,10 +149,10 @@
     </string>
     <string name="error_message_incompatible_state">Este estado de gravação não é compatível com a versão actual do núcleo. Por favor, carregue a última gravação dentro do jogo ou use uma versão anterior do Lemuroid.</string>
     <string name="shader_filter_names_auto">Automático</string>
-    <string name="shader_filter_names_sharp">Afiado</string>
-    <string name="shader_filter_names_smooth">Suave</string>
-    <string name="shader_filter_names_crt">CRT</string>
-    <string name="shader_filter_names_lcd">LCD</string>
+    <string name="shader_filter_names_sharp">Nítido (Nearest)</string>
+    <string name="shader_filter_names_smooth">Suave (Bilinear)</string>
+    <string name="shader_filter_names_crt">CRT (Linhas de varrimento)</string>
+    <string name="shader_filter_names_lcd">LCD (Grelha de píxeis)</string>
     <string name="haptic_feedback_mode_names_none">Nenhum</string>
     <string name="haptic_feedback_mode_names_press">Pressionar</string>
     <string name="haptic_feedback_mode_names_press_release">Pressionar &amp; soltar</string>
@@ -348,7 +348,6 @@
     <string name="core_download_message_no_size">Os jogos de %1$s precisam do núcleo %2$s. Transferir agora?</string>
     <string name="core_downloading">A transferir o núcleo %1$s…</string>
     <string name="core_download_failed">Não foi possível transferir o núcleo. Verifique a ligação e tente novamente.</string>
-    <string name="shader_filter_names_scale2x">Píxeis arredondados (Scale2x)</string>
-    <string name="shader_filter_names_xbr">Contornos suaves (xBR)</string>
-    <string name="shader_filter_names_sabr">Contornos difusos (SABR)</string>
+    <string name="shader_filter_names_scale2x">Píxeis mais finos (Scale2x)</string>
+    <string name="shader_filter_names_xbr">xBR (Exigente)</string>
 </resources>

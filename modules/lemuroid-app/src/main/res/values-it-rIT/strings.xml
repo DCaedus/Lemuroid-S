@@ -11,7 +11,7 @@
     <string name="rescan">Scansiona</string>
     <string name="stop">Stop</string>
     <string name="directory">Cartella</string>
-    <string name="display_filter">Filtro schermo</string>
+    <string name="display_filter">Filtro video</string>
     <string name="ok">OK</string>
     <string name="cancel">Annulla</string>
     <string name="settings">Impostazioni</string>
@@ -151,10 +151,10 @@
     </string>
     <string name="error_message_incompatible_state">Questo stato di salvataggio non è compatibile con la versione corrente del Core. Carica il salvataggio in gioco più recente o usa una versione precedente di Lemuroid.</string>
     <string name="shader_filter_names_auto">Automatico</string>
-    <string name="shader_filter_names_sharp">Nitido</string>
-    <string name="shader_filter_names_smooth">Lineare</string>
-    <string name="shader_filter_names_crt">CRT</string>
-    <string name="shader_filter_names_lcd">LCD</string>
+    <string name="shader_filter_names_sharp">Nitido (Nearest)</string>
+    <string name="shader_filter_names_smooth">Morbido (Bilinear)</string>
+    <string name="shader_filter_names_crt">CRT (Linee di scansione)</string>
+    <string name="shader_filter_names_lcd">LCD (Griglia di pixel)</string>
     <string name="viewport_alignment_names_top">Alto</string>
     <string name="viewport_alignment_names_center">Centro</string>
     <string name="viewport_alignment_names_bottom">Basso</string>
@@ -348,7 +348,6 @@
     <string name="core_download_message_no_size">I giochi %1$s richiedono il core %2$s. Scaricarlo ora?</string>
     <string name="core_downloading">Download del core %1$s…</string>
     <string name="core_download_failed">Impossibile scaricare il core. Controlla la connessione e riprova.</string>
-    <string name="shader_filter_names_scale2x">Pixel arrotondati (Scale2x)</string>
-    <string name="shader_filter_names_xbr">Bordi lisci (xBR)</string>
-    <string name="shader_filter_names_sabr">Bordi morbidi (SABR)</string>
+    <string name="shader_filter_names_scale2x">Pixel più fini (Scale2x)</string>
+    <string name="shader_filter_names_xbr">xBR (Impegnativo)</string>
 </resources>

@@ -11,7 +11,7 @@
     <string name="rescan">Zeskanuj</string>
     <string name="stop">Wstrzymaj</string>
     <string name="directory">Folder z plikami</string>
-    <string name="display_filter">Filtr ekranu</string>
+    <string name="display_filter">Filtr wideo</string>
     <string name="ok">OK</string>
     <string name="cancel">Anuluj</string>
     <string name="settings">Ustawienia</string>
@@ -149,10 +149,10 @@
     </string>
     <string name="error_message_incompatible_state">Ten stan zapisu nie jest kompatybilny z aktualną wersją rdzenia. Załaduj najnowszy zapis w grze lub użyj poprzedniej wersji Lemuroid.</string>
     <string name="shader_filter_names_auto">Automatyczny</string>
-    <string name="shader_filter_names_sharp">Ostry</string>
-    <string name="shader_filter_names_smooth">Gładki</string>
-    <string name="shader_filter_names_crt">CRT</string>
-    <string name="shader_filter_names_lcd">LCD</string>
+    <string name="shader_filter_names_sharp">Ostry (Nearest)</string>
+    <string name="shader_filter_names_smooth">Gładki (Bilinear)</string>
+    <string name="shader_filter_names_crt">CRT (Linie skanowania)</string>
+    <string name="shader_filter_names_lcd">LCD (Siatka pikseli)</string>
     <string name="haptic_feedback_mode_names_none">Brak</string>
     <string name="haptic_feedback_mode_names_press">Naciśnij</string>
     <string name="haptic_feedback_mode_names_press_release">Naciśnij &amp; puść</string>
@@ -348,7 +348,6 @@
     <string name="core_download_message_no_size">Gry na %1$s wymagają rdzenia %2$s. Pobrać go teraz?</string>
     <string name="core_downloading">Pobieranie rdzenia %1$s…</string>
     <string name="core_download_failed">Nie udało się pobrać rdzenia. Sprawdź połączenie i spróbuj ponownie.</string>
-    <string name="shader_filter_names_scale2x">Zaokrąglone piksele (Scale2x)</string>
-    <string name="shader_filter_names_xbr">Gładkie krawędzie (xBR)</string>
-    <string name="shader_filter_names_sabr">Miękkie krawędzie (SABR)</string>
+    <string name="shader_filter_names_scale2x">Drobniejsze piksele (Scale2x)</string>
+    <string name="shader_filter_names_xbr">xBR (Wymagający)</string>
 </resources>

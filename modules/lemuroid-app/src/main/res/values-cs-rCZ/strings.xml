@@ -11,7 +11,7 @@
     <string name="rescan">Znovu prohledat</string>
     <string name="stop">Zastavit</string>
     <string name="directory">Složka</string>
-    <string name="display_filter">Filtr obrazovky</string>
+    <string name="display_filter">Filtr videa</string>
     <string name="ok">OK</string>
     <string name="cancel">Zrušit</string>
     <string name="settings">Nastavení</string>
@@ -148,10 +148,10 @@
         \n\u2022Pokud niz z výše uvedeného nepomůže, je možné, že tato hra/jádro není podporováno vaším zařízením.    </string>
     <string name="error_message_incompatible_state">Tento save state není kompatibilní se současnou verzí jádra. Prosím načtěte nejnovější save nebo použijte předchozí verzi Lemuroidu.</string>
     <string name="shader_filter_names_auto">Automatický</string>
-    <string name="shader_filter_names_sharp">Ostrý</string>
-    <string name="shader_filter_names_smooth">Hladký</string>
-    <string name="shader_filter_names_crt">CRT</string>
-    <string name="shader_filter_names_lcd">LCD</string>
+    <string name="shader_filter_names_sharp">Ostrý (Nearest)</string>
+    <string name="shader_filter_names_smooth">Hladký (Bilinear)</string>
+    <string name="shader_filter_names_crt">CRT (Řádkování)</string>
+    <string name="shader_filter_names_lcd">LCD (Mřížka pixelů)</string>
     <string name="haptic_feedback_mode_names_none">Žádný</string>
     <string name="haptic_feedback_mode_names_press">Stiskni</string>
     <string name="haptic_feedback_mode_names_press_release">Stiskni &amp; pusť</string>
@@ -347,7 +347,6 @@
     <string name="core_download_message_no_size">Hry pro %1$s potřebují jádro %2$s. Stáhnout ho teď?</string>
     <string name="core_downloading">Stahuje se jádro %1$s…</string>
     <string name="core_download_failed">Jádro se nepodařilo stáhnout. Zkontrolujte připojení a zkuste to znovu.</string>
-    <string name="shader_filter_names_scale2x">Zaoblené pixely (Scale2x)</string>
-    <string name="shader_filter_names_xbr">Hladké hrany (xBR)</string>
-    <string name="shader_filter_names_sabr">Měkké hrany (SABR)</string>
+    <string name="shader_filter_names_scale2x">Jemnější pixely (Scale2x)</string>
+    <string name="shader_filter_names_xbr">xBR (Náročný)</string>
 </resources>

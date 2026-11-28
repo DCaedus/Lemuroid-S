@@ -30,7 +30,9 @@ class LemuroidPadTheme {
     val level2Shadow = DefaultShadowColor.copy(0.05f)
     val level2ShadowWidth = 4.dp
 
-    val level1Fill = gray(1.0f, 0.10f)
+    // Lemuroid-S: dark, see-through backgrounds behind the controls (Lemuroid used white at 10%),
+    // so the light buttons stand out over bright and dark games alike.
+    val level1Fill = gray(0.08f, 0.45f)
     val level1Shadow = DefaultShadowColor.copy(0.10f)
     val level1ShadowWidth = 4.dp
 

@@ -11,7 +11,7 @@
     <string name="rescan">Skann</string>
     <string name="stop">Stopp</string>
     <string name="directory">Katalog</string>
-    <string name="display_filter">Skjermfilter</string>
+    <string name="display_filter">Videofilter</string>
     <string name="ok">OK</string>
     <string name="cancel">Avbryt</string>
     <string name="settings">Innstillinger</string>
@@ -149,10 +149,10 @@
     </string>
     <string name="error_message_incompatible_state">Denne lagrede tilstand er ikke kompatibel med gjeldende kjerneversjon. Vennligst last inn den nyeste lagringen inne i spillet, eller bruk en tidligere versjon av Lemuroid.</string>
     <string name="shader_filter_names_auto">Auto</string>
-    <string name="shader_filter_names_sharp">Skarp</string>
-    <string name="shader_filter_names_smooth">Jevn</string>
-    <string name="shader_filter_names_crt">CRT</string>
-    <string name="shader_filter_names_lcd">LCD</string>
+    <string name="shader_filter_names_sharp">Skarp (Nearest)</string>
+    <string name="shader_filter_names_smooth">Myk (Bilinear)</string>
+    <string name="shader_filter_names_crt">CRT (Skannelinjer)</string>
+    <string name="shader_filter_names_lcd">LCD (Pikselrutenett)</string>
     <string name="haptic_feedback_mode_names_none">Ingen</string>
     <string name="haptic_feedback_mode_names_press">Trykk</string>
     <string name="haptic_feedback_mode_names_press_release">Trykk &amp; slipp</string>
@@ -348,7 +348,6 @@
     <string name="core_download_message_no_size">%1$s-spill trenger kjernen %2$s. Vil du laste den ned nå?</string>
     <string name="core_downloading">Laster ned kjernen %1$s…</string>
     <string name="core_download_failed">Kunne ikke laste ned kjernen. Sjekk tilkoblingen og prøv igjen.</string>
-    <string name="shader_filter_names_scale2x">Avrundede piksler (Scale2x)</string>
-    <string name="shader_filter_names_xbr">Glatte kanter (xBR)</string>
-    <string name="shader_filter_names_sabr">Myke kanter (SABR)</string>
+    <string name="shader_filter_names_scale2x">Finere piksler (Scale2x)</string>
+    <string name="shader_filter_names_xbr">xBR (Krevende)</string>
 </resources>

@@ -11,7 +11,7 @@
     <string name="rescan">Rescanează</string>
     <string name="stop">Oprire</string>
     <string name="directory">Dosar</string>
-    <string name="display_filter">Filtru de ecran</string>
+    <string name="display_filter">Filtru video</string>
     <string name="ok">OK</string>
     <string name="cancel">Anulare</string>
     <string name="settings">Setări</string>
@@ -137,10 +137,10 @@
     ]]></string>
     <string name="error_message_incompatible_state">Această stare de salvare nu este compatibilă cu versiunea de bază curentă. Vă rugăm să încărcați ultima salvare din joc sau să folosiți o versiune Lemuroid anterioară.</string>
     <string name="shader_filter_names_auto">Auto</string>
-    <string name="shader_filter_names_sharp">Ascuţit</string>
-    <string name="shader_filter_names_smooth">Netezit</string>
-    <string name="shader_filter_names_crt">CRT</string>
-    <string name="shader_filter_names_lcd">LCD</string>
+    <string name="shader_filter_names_sharp">Clar (Nearest)</string>
+    <string name="shader_filter_names_smooth">Neted (Bilinear)</string>
+    <string name="shader_filter_names_crt">CRT (Linii de scanare)</string>
+    <string name="shader_filter_names_lcd">LCD (Grilă de pixeli)</string>
     <string name="haptic_feedback_mode_names_none">Niciunul</string>
     <string name="haptic_feedback_mode_names_press">Apăsați</string>
     <string name="haptic_feedback_mode_names_press_release">Apăsați &amp; lansare</string>
@@ -336,7 +336,6 @@
     <string name="core_download_message_no_size">Jocurile %1$s au nevoie de nucleul %2$s. Îl descarci acum?</string>
     <string name="core_downloading">Se descarcă nucleul %1$s…</string>
     <string name="core_download_failed">Nucleul nu a putut fi descărcat. Verifică conexiunea și încearcă din nou.</string>
-    <string name="shader_filter_names_scale2x">Pixeli rotunjiți (Scale2x)</string>
-    <string name="shader_filter_names_xbr">Margini netede (xBR)</string>
-    <string name="shader_filter_names_sabr">Margini moi (SABR)</string>
+    <string name="shader_filter_names_scale2x">Pixeli mai fini (Scale2x)</string>
+    <string name="shader_filter_names_xbr">xBR (Solicitant)</string>
 </resources>

@@ -11,7 +11,7 @@
     <string name="rescan">סריקה מחדש</string>
     <string name="stop">עצור</string>
     <string name="directory">ספריה</string>
-    <string name="display_filter">מסנן מסך</string>
+    <string name="display_filter">מסנן וידאו</string>
     <string name="ok">בסדר</string>
     <string name="cancel">ביטול</string>
     <string name="settings">הגדרות</string>
@@ -296,8 +296,8 @@
     <string name="tv_game_message_missing_gamepad">כדי לשחק צריך בקר. יש לחבר בקר.</string>
     <string name="game_interactory_busy">יש להמתין לסיום הפעולות הממתינות</string>
     <string name="shader_filter_names_auto">אוטומטי</string>
-    <string name="shader_filter_names_sharp">חד</string>
-    <string name="shader_filter_names_smooth">חלק</string>
+    <string name="shader_filter_names_sharp">חד (Nearest)</string>
+    <string name="shader_filter_names_smooth">חלק (Bilinear)</string>
     <string name="haptic_feedback_mode_names_none">ללא</string>
     <string name="haptic_feedback_mode_names_press">בלחיצה</string>
     <string name="haptic_feedback_mode_names_press_release">בלחיצה ובשחרור</string>
@@ -338,7 +338,8 @@
     <string name="core_download_message_no_size">משחקי %1$s צריכים את הליבה %2$s. להוריד אותה עכשיו?</string>
     <string name="core_downloading">מוריד את הליבה %1$s…</string>
     <string name="core_download_failed">לא ניתן היה להוריד את הליבה. בדקו את החיבור ונסו שוב.</string>
-    <string name="shader_filter_names_scale2x">פיקסלים מעוגלים (Scale2x)</string>
-    <string name="shader_filter_names_xbr">קצוות חלקים (xBR)</string>
-    <string name="shader_filter_names_sabr">קצוות רכים (SABR)</string>
+    <string name="shader_filter_names_scale2x">פיקסלים עדינים יותר (Scale2x)</string>
+    <string name="shader_filter_names_xbr">xBR (תובעני)</string>
+    <string name="shader_filter_names_crt">CRT (קווי סריקה)</string>
+    <string name="shader_filter_names_lcd">LCD (רשת פיקסלים)</string>
 </resources>

@@ -11,7 +11,7 @@
     <string name="rescan">Erneut scannen</string>
     <string name="stop">Stopp</string>
     <string name="directory">Verzeichnis</string>
-    <string name="display_filter">Bildschirmfilter</string>
+    <string name="display_filter">Videofilter</string>
     <string name="ok">OK</string>
     <string name="cancel">Abbrechen</string>
     <string name="settings">Einstellungen</string>
@@ -149,10 +149,10 @@
     </string>
     <string name="error_message_incompatible_state">Dieser Speicherstatus ist nicht mit der aktuellen Core-Version kompatibel. Bitte laden Sie den aktuellen Spielspeicher oder verwenden Sie eine vorherige Lemuroid-Version.</string>
     <string name="shader_filter_names_auto">Automatisch</string>
-    <string name="shader_filter_names_sharp">Scharf</string>
-    <string name="shader_filter_names_smooth">Weichzeichnen</string>
-    <string name="shader_filter_names_crt">CRT</string>
-    <string name="shader_filter_names_lcd">LCD</string>
+    <string name="shader_filter_names_sharp">Scharf (Nearest)</string>
+    <string name="shader_filter_names_smooth">Weich (Bilinear)</string>
+    <string name="shader_filter_names_crt">CRT (Scanlines)</string>
+    <string name="shader_filter_names_lcd">LCD (Pixelraster)</string>
     <string name="haptic_feedback_mode_names_none">Keine Vibration</string>
     <string name="haptic_feedback_mode_names_press">Drücken</string>
     <string name="haptic_feedback_mode_names_press_release">Drücken &amp; Loslassen</string>
@@ -348,7 +348,6 @@
     <string name="core_download_message_no_size">%1$s-Spiele brauchen den Core %2$s. Jetzt herunterladen?</string>
     <string name="core_downloading">Core %1$s wird heruntergeladen…</string>
     <string name="core_download_failed">Der Core konnte nicht heruntergeladen werden. Prüfe deine Verbindung und versuche es erneut.</string>
-    <string name="shader_filter_names_scale2x">Abgerundete Pixel (Scale2x)</string>
-    <string name="shader_filter_names_xbr">Glatte Kanten (xBR)</string>
-    <string name="shader_filter_names_sabr">Weiche Kanten (SABR)</string>
+    <string name="shader_filter_names_scale2x">Feinere Pixel (Scale2x)</string>
+    <string name="shader_filter_names_xbr">xBR (Anspruchsvoll)</string>
 </resources>

@@ -11,7 +11,7 @@
     <string name="rescan">Сканувати знову</string>
     <string name="stop">Зупинити</string>
     <string name="directory">Каталог</string>
-    <string name="display_filter">Фільтр екрана</string>
+    <string name="display_filter">Відеофільтр</string>
     <string name="ok">ОК</string>
     <string name="cancel">Скасувати</string>
     <string name="settings">Налаштування</string>
@@ -149,10 +149,10 @@
     </string>
     <string name="error_message_incompatible_state">Цей стан збереження несумісний з поточною версією ядра. Будь ласка, завантажте останню версію в грі, або використовуйте попередню версію Лемуроїд.</string>
     <string name="shader_filter_names_auto">Автоматично</string>
-    <string name="shader_filter_names_sharp">Різко</string>
-    <string name="shader_filter_names_smooth">Згладжений</string>
-    <string name="shader_filter_names_crt">Ефект \"старого\" телевізора</string>
-    <string name="shader_filter_names_lcd">LCD дисплей</string>
+    <string name="shader_filter_names_sharp">Чіткий (Nearest)</string>
+    <string name="shader_filter_names_smooth">Згладжений (Bilinear)</string>
+    <string name="shader_filter_names_crt">CRT (Рядки розгортки)</string>
+    <string name="shader_filter_names_lcd">LCD (Сітка пікселів)</string>
     <string name="haptic_feedback_mode_names_none">Відсутньо</string>
     <string name="haptic_feedback_mode_names_press">Натисніть</string>
     <string name="haptic_feedback_mode_names_press_release">Натисніть &amp; відпустіть</string>
@@ -347,7 +347,6 @@
     <string name="core_download_message_no_size">Для ігор %1$s потрібне ядро %2$s. Завантажити його зараз?</string>
     <string name="core_downloading">Завантаження ядра %1$s…</string>
     <string name="core_download_failed">Не вдалося завантажити ядро. Перевірте з\'єднання та спробуйте ще раз.</string>
-    <string name="shader_filter_names_scale2x">Заокруглені пікселі (Scale2x)</string>
-    <string name="shader_filter_names_xbr">Гладкі краї (xBR)</string>
-    <string name="shader_filter_names_sabr">М\'які краї (SABR)</string>
+    <string name="shader_filter_names_scale2x">Тонші пікселі (Scale2x)</string>
+    <string name="shader_filter_names_xbr">xBR (Вимогливий)</string>
 </resources>

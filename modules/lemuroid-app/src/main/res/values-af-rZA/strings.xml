@@ -164,7 +164,7 @@
     <string name="rescan">Skandeer weer</string>
     <string name="stop">Stop</string>
     <string name="directory">Vouer</string>
-    <string name="display_filter">Skermfilter</string>
+    <string name="display_filter">Videofilter</string>
     <string name="ok">Goed</string>
     <string name="cancel">Kanselleer</string>
     <string name="settings">Instellings</string>
@@ -285,8 +285,8 @@
     <string name="mobile_settings_help">Hulp</string>
     <string name="error_message_incompatible_state">Hierdie gestoorde toestand is nie versoenbaar met die huidige kernweergawe nie. Laai die nuutste stoor binne die speletjie of gebruik \'n vorige Lemuroid-weergawe.</string>
     <string name="shader_filter_names_auto">Outo</string>
-    <string name="shader_filter_names_sharp">Skerp</string>
-    <string name="shader_filter_names_smooth">Glad</string>
+    <string name="shader_filter_names_sharp">Skerp (Nearest)</string>
+    <string name="shader_filter_names_smooth">Glad (Bilinear)</string>
     <string name="haptic_feedback_mode_names_none">Geen</string>
     <string name="haptic_feedback_mode_names_press">Druk</string>
     <string name="haptic_feedback_mode_names_press_release">Druk &amp; los</string>
@@ -327,7 +327,8 @@
     <string name="core_download_message_no_size">%1$s-speletjies het die %2$s-kern nodig. Laai dit nou af?</string>
     <string name="core_downloading">Laai die %1$s-kern af…</string>
     <string name="core_download_failed">Kon nie die kern aflaai nie. Gaan jou verbinding na en probeer weer.</string>
-    <string name="shader_filter_names_scale2x">Geronde pieksels (Scale2x)</string>
-    <string name="shader_filter_names_xbr">Gladde rande (xBR)</string>
-    <string name="shader_filter_names_sabr">Sagte rande (SABR)</string>
+    <string name="shader_filter_names_scale2x">Fyner pieksels (Scale2x)</string>
+    <string name="shader_filter_names_xbr">xBR (Veeleisend)</string>
+    <string name="shader_filter_names_crt">CRT (Skandeerlyne)</string>
+    <string name="shader_filter_names_lcd">LCD (Pieksel-rooster)</string>
 </resources>

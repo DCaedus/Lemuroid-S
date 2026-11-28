@@ -11,7 +11,7 @@
     <string name="rescan">Поново скенирај</string>
     <string name="stop">Заустави</string>
     <string name="directory">Директоријум</string>
-    <string name="display_filter">Филтер екрана</string>
+    <string name="display_filter">Видео филтер</string>
     <string name="ok">У реду</string>
     <string name="cancel">Откажи</string>
     <string name="settings">Подешавања</string>
@@ -149,10 +149,10 @@
     </string>
     <string name="error_message_incompatible_state">Ово стање чувања није компатибилно са тренутном верзијом језгра. Молимо Вас да учитате последње чување унутар игре или да користите старију Lemuroid верзију.</string>
     <string name="shader_filter_names_auto">Аутоматско</string>
-    <string name="shader_filter_names_sharp">Оштро</string>
-    <string name="shader_filter_names_smooth">Глатко</string>
-    <string name="shader_filter_names_crt">CRT</string>
-    <string name="shader_filter_names_lcd">LCD</string>
+    <string name="shader_filter_names_sharp">Оштро (Nearest)</string>
+    <string name="shader_filter_names_smooth">Глатко (Bilinear)</string>
+    <string name="shader_filter_names_crt">CRT (Линије скенирања)</string>
+    <string name="shader_filter_names_lcd">LCD (Мрежа пиксела)</string>
     <string name="haptic_feedback_mode_names_none">Ништа</string>
     <string name="haptic_feedback_mode_names_press">Притисни</string>
     <string name="haptic_feedback_mode_names_press_release">Притисни и пусти</string>
@@ -348,7 +348,6 @@
     <string name="core_download_message_no_size">Игре за %1$s захтевају језгро %2$s. Преузети га сада?</string>
     <string name="core_downloading">Преузима се језгро %1$s…</string>
     <string name="core_download_failed">Језгро није могло да се преузме. Провери везу и покушај поново.</string>
-    <string name="shader_filter_names_scale2x">Заобљени пиксели (Scale2x)</string>
-    <string name="shader_filter_names_xbr">Глатке ивице (xBR)</string>
-    <string name="shader_filter_names_sabr">Меке ивице (SABR)</string>
+    <string name="shader_filter_names_scale2x">Финији пиксели (Scale2x)</string>
+    <string name="shader_filter_names_xbr">xBR (Захтевно)</string>
 </resources>

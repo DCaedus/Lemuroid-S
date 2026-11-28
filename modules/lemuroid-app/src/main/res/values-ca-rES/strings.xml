@@ -11,7 +11,7 @@
     <string name="rescan">Tornar a escanejar</string>
     <string name="stop">Aturar</string>
     <string name="directory">Directori</string>
-    <string name="display_filter">Filtre de pantalla</string>
+    <string name="display_filter">Filtre de vídeo</string>
     <string name="ok">D\'acord</string>
     <string name="cancel">Cancel·la</string>
     <string name="settings">Configuració</string>
@@ -285,8 +285,8 @@
     <string name="game_interactory_busy">Espera que acabin les operacions pendents</string>
     <string name="error_message_incompatible_state">Aquest estat desat no és compatible amb la versió actual del nucli. Carrega la darrera partida desada al joc o fes servir una versió anterior de Lemuroid.</string>
     <string name="shader_filter_names_auto">Automàtic</string>
-    <string name="shader_filter_names_sharp">Nítid</string>
-    <string name="shader_filter_names_smooth">Suau</string>
+    <string name="shader_filter_names_sharp">Nítid (Nearest)</string>
+    <string name="shader_filter_names_smooth">Suau (Bilinear)</string>
     <string name="haptic_feedback_mode_names_none">Cap</string>
     <string name="haptic_feedback_mode_names_press">En prémer</string>
     <string name="haptic_feedback_mode_names_press_release">En prémer i deixar anar</string>
@@ -327,7 +327,8 @@
     <string name="core_download_message_no_size">Els jocs de %1$s necessiten el nucli %2$s. Vols baixar-lo ara?</string>
     <string name="core_downloading">S\'està baixant el nucli %1$s…</string>
     <string name="core_download_failed">No s\'ha pogut baixar el nucli. Comprova la connexió i torna-ho a provar.</string>
-    <string name="shader_filter_names_scale2x">Píxels arrodonits (Scale2x)</string>
-    <string name="shader_filter_names_xbr">Vores suaus (xBR)</string>
-    <string name="shader_filter_names_sabr">Vores difuses (SABR)</string>
+    <string name="shader_filter_names_scale2x">Píxels més fins (Scale2x)</string>
+    <string name="shader_filter_names_xbr">xBR (Exigent)</string>
+    <string name="shader_filter_names_crt">CRT (Línies d\'escaneig)</string>
+    <string name="shader_filter_names_lcd">LCD (Graella de píxels)</string>
 </resources>

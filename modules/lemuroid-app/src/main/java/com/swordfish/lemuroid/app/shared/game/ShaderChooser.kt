@@ -35,12 +35,16 @@ object ShaderChooser {
                     "sharp" -> ShaderConfig.Sharp
                     "scale2x" -> ShaderConfig.Scale2x
                     "xbr" -> ShaderConfig.XBR
-                    "sabr" -> ShaderConfig.SABR
                     else -> getDefaultShaderForSystem(system)
                 }
         }
     }
 
+    /**
+     * The filter "Auto" uses. Lemuroid-S: home consoles of the CRT era get scanlines, handhelds the
+     * LCD pixel grid; Dreamcast's 480-line picture and Vectrex's vector lines look best smooth.
+     * The demanding xBR filter is never picked here.
+     */
     private fun getDefaultShaderForSystem(system: GameSystem): ShaderConfig {
         return when (system.id) {
             SystemID.GBA -> ShaderConfig.LCD
@@ -71,11 +75,11 @@ object ShaderChooser {
             SystemID.SG1000 -> ShaderConfig.CRT
             SystemID.SEGA32X -> ShaderConfig.CRT
             SystemID.ATARI5200 -> ShaderConfig.CRT
-            SystemID.DREAMCAST -> ShaderConfig.CRT
+            SystemID.DREAMCAST -> ShaderConfig.Default
             SystemID.NEOGEOCD -> ShaderConfig.CRT
             SystemID.VIRTUALBOY -> ShaderConfig.Sharp
             SystemID.POKEMINI -> ShaderConfig.LCD
-            SystemID.VECTREX -> ShaderConfig.Sharp
+            SystemID.VECTREX -> ShaderConfig.Default
             SystemID.COLECOVISION -> ShaderConfig.CRT
             SystemID.INTELLIVISION -> ShaderConfig.CRT
         }

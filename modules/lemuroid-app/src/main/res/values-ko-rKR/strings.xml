@@ -11,7 +11,7 @@
     <string name="rescan">다시 검색</string>
     <string name="stop">중단</string>
     <string name="directory">디렉토리</string>
-    <string name="display_filter">화면 필터</string>
+    <string name="display_filter">비디오 필터</string>
     <string name="ok">확인</string>
     <string name="cancel">취소</string>
     <string name="settings">설정</string>
@@ -151,10 +151,10 @@
     </string>
     <string name="error_message_incompatible_state">이 상태저장은 현재 코어 버전과 호환되지 않습니다. 가장 최근의 인게임 세이브 데이터를 사용하거나 이전 버전의 Lemuroid를 사용하세요.</string>
     <string name="shader_filter_names_auto">자동</string>
-    <string name="shader_filter_names_sharp">선명하게</string>
-    <string name="shader_filter_names_smooth">부드럽게</string>
-    <string name="shader_filter_names_crt">CRT</string>
-    <string name="shader_filter_names_lcd">LCD</string>
+    <string name="shader_filter_names_sharp">선명하게 (Nearest)</string>
+    <string name="shader_filter_names_smooth">부드럽게 (Bilinear)</string>
+    <string name="shader_filter_names_crt">CRT (주사선)</string>
+    <string name="shader_filter_names_lcd">LCD (픽셀 격자)</string>
     <string name="haptic_feedback_mode_names_none">없음</string>
     <string name="haptic_feedback_mode_names_press">누를 때</string>
     <string name="haptic_feedback_mode_names_press_release">누를 때 &amp; 뗄 때</string>
@@ -348,7 +348,6 @@
     <string name="core_download_message_no_size">%1$s 게임에는 %2$s 코어가 필요합니다. 지금 다운로드할까요?</string>
     <string name="core_downloading">%1$s 코어를 다운로드하는 중…</string>
     <string name="core_download_failed">코어를 다운로드하지 못했습니다. 연결을 확인하고 다시 시도하세요.</string>
-    <string name="shader_filter_names_scale2x">둥근 픽셀 (Scale2x)</string>
-    <string name="shader_filter_names_xbr">매끄러운 윤곽 (xBR)</string>
-    <string name="shader_filter_names_sabr">부드러운 윤곽 (SABR)</string>
+    <string name="shader_filter_names_scale2x">더 고운 픽셀 (Scale2x)</string>
+    <string name="shader_filter_names_xbr">xBR (고사양)</string>
 </resources>

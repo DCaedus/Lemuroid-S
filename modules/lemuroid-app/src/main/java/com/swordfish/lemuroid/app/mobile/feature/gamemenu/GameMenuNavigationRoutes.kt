@@ -47,6 +47,13 @@ enum class GameMenuRoute(
         titleId = R.string.game_menu_settings,
         parent = HOME,
     ),
+
+    /** Lemuroid-S: the choices of a list setting; its title comes from the setting. */
+    CHOICE(
+        route = "choice",
+        titleId = R.string.game_menu_title,
+        parent = HOME,
+    ),
     ;
 
     fun canGoBack(): Boolean {

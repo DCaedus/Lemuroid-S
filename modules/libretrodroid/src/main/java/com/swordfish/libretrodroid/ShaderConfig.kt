@@ -27,7 +27,6 @@ sealed interface ShaderConfig {
     /** Lemuroid-S: light pixel-art upscalers. */
     object Scale2x : ShaderConfig
     object XBR : ShaderConfig
-    object SABR : ShaderConfig
 
     data class CUT(
         val useDynamicBlend: Boolean = true,

@@ -11,7 +11,7 @@
     <string name="rescan">Rescanner</string>
     <string name="stop">Arrêter</string>
     <string name="directory">Dossier</string>
-    <string name="display_filter">Filtre d\'écran</string>
+    <string name="display_filter">Filtre vidéo</string>
     <string name="ok">OK</string>
     <string name="cancel">Annuler</string>
     <string name="settings">Paramètres</string>
@@ -149,10 +149,10 @@
     </string>
     <string name="error_message_incompatible_state">Cet état de mémoire n\'est pas compatible avec la version actuelle du noyau. Veuillez charger la dernière sauvegarde en jeu ou utiliser une version de Lemuroid antérieure.</string>
     <string name="shader_filter_names_auto">Auto</string>
-    <string name="shader_filter_names_sharp">Netteté</string>
-    <string name="shader_filter_names_smooth">Adoucir</string>
-    <string name="shader_filter_names_crt">Tube cathodique</string>
-    <string name="shader_filter_names_lcd">Écran LCD</string>
+    <string name="shader_filter_names_sharp">Net (Nearest)</string>
+    <string name="shader_filter_names_smooth">Lissé (Bilinear)</string>
+    <string name="shader_filter_names_crt">CRT (Lignes de balayage)</string>
+    <string name="shader_filter_names_lcd">LCD (Grille de pixels)</string>
     <string name="haptic_feedback_mode_names_none">Aucun élément</string>
     <string name="haptic_feedback_mode_names_press">Appuyer</string>
     <string name="haptic_feedback_mode_names_press_release">Appuyer et Relâcher</string>
@@ -348,7 +348,6 @@
     <string name="core_download_message_no_size">Les jeux %1$s ont besoin du cœur %2$s. Le télécharger maintenant ?</string>
     <string name="core_downloading">Téléchargement du cœur %1$s…</string>
     <string name="core_download_failed">Impossible de télécharger le cœur. Vérifiez votre connexion et réessayez.</string>
-    <string name="shader_filter_names_scale2x">Pixels arrondis (Scale2x)</string>
-    <string name="shader_filter_names_xbr">Contours lisses (xBR)</string>
-    <string name="shader_filter_names_sabr">Contours doux (SABR)</string>
+    <string name="shader_filter_names_scale2x">Pixels affinés (Scale2x)</string>
+    <string name="shader_filter_names_xbr">xBR (Exigeant)</string>
 </resources>

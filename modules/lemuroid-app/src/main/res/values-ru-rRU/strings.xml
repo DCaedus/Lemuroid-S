@@ -11,7 +11,7 @@
     <string name="rescan">Сканировать повторно</string>
     <string name="stop">Остановить</string>
     <string name="directory">Каталог</string>
-    <string name="display_filter">Фильтр экрана</string>
+    <string name="display_filter">Видеофильтр</string>
     <string name="ok">ОК</string>
     <string name="cancel">Отмена</string>
     <string name="settings">Настройки</string>
@@ -151,10 +151,10 @@
     </string>
     <string name="error_message_incompatible_state">Это сохранение не совместимо с текущей версией ядра. Пожалуйста, загрузите последнюю версию сохранения в игре или воспользуйтесь предыдущей версией Lemuroid.</string>
     <string name="shader_filter_names_auto">Автоматически</string>
-    <string name="shader_filter_names_sharp">Резкий</string>
-    <string name="shader_filter_names_smooth">Мягкий</string>
-    <string name="shader_filter_names_crt">ЭЛТ</string>
-    <string name="shader_filter_names_lcd">ЖК</string>
+    <string name="shader_filter_names_sharp">Чёткий (Nearest)</string>
+    <string name="shader_filter_names_smooth">Сглаженный (Bilinear)</string>
+    <string name="shader_filter_names_crt">CRT (Строки развёртки)</string>
+    <string name="shader_filter_names_lcd">LCD (Сетка пикселей)</string>
     <string name="haptic_feedback_mode_names_none">Нет</string>
     <string name="haptic_feedback_mode_names_press">Нажать</string>
     <string name="haptic_feedback_mode_names_press_release">Нажать и отпустить</string>
@@ -348,7 +348,6 @@
     <string name="core_download_message_no_size">Для игр %1$s нужно ядро %2$s. Загрузить его сейчас?</string>
     <string name="core_downloading">Загрузка ядра %1$s…</string>
     <string name="core_download_failed">Не удалось загрузить ядро. Проверьте подключение и повторите попытку.</string>
-    <string name="shader_filter_names_scale2x">Скруглённые пиксели (Scale2x)</string>
-    <string name="shader_filter_names_xbr">Гладкие края (xBR)</string>
-    <string name="shader_filter_names_sabr">Мягкие края (SABR)</string>
+    <string name="shader_filter_names_scale2x">Более тонкие пиксели (Scale2x)</string>
+    <string name="shader_filter_names_xbr">xBR (Требовательный)</string>
 </resources>

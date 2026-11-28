@@ -53,7 +53,6 @@ public:
         SHADER_UPSCALE_CUT3 = 6,
         SHADER_SCALE2X = 7,
         SHADER_XBR = 8,
-        SHADER_SABR = 9,
     };
 
     struct Config {
