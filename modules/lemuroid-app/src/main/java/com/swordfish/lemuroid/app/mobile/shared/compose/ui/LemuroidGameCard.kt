@@ -14,6 +14,7 @@ import com.swordfish.lemuroid.lib.library.db.entity.Game
 fun LemuroidGameCard(
     modifier: Modifier = Modifier,
     game: Game,
+    textSize: LemuroidTextSize = LemuroidTextSize.TILE,
     onClick: () -> Unit = { },
     onLongClick: () -> Unit = { },
 ) {
@@ -30,7 +31,7 @@ fun LemuroidGameCard(
                     ),
         ) {
             LemuroidGameImage(game = game)
-            LemuroidGameTexts(game = game)
+            LemuroidGameTexts(game = game, textSize = textSize)
         }
     }
 }

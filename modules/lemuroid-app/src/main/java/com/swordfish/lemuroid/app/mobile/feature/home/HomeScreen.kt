@@ -26,6 +26,9 @@ import androidx.lifecycle.Lifecycle
 import com.swordfish.lemuroid.R
 import com.swordfish.lemuroid.app.mobile.shared.compose.ui.LemuroidGameCard
 import com.swordfish.lemuroid.app.mobile.shared.compose.ui.LemuroidGrid
+import com.swordfish.lemuroid.app.mobile.shared.compose.ui.LemuroidLayout
+import com.swordfish.lemuroid.app.mobile.shared.compose.ui.LemuroidTextSize
+import com.swordfish.lemuroid.app.mobile.shared.compose.ui.LemuroidViewMode
 import com.swordfish.lemuroid.app.utils.android.ComposableLifecycle
 import com.swordfish.lemuroid.lib.library.db.entity.Game
 import kotlinx.coroutines.launch
@@ -74,7 +77,9 @@ private fun HomeScreen(
             .count { it.isNotEmpty() }
 
     BoxWithConstraints(modifier = modifier) {
-        val cardWidth = homeCardWidth(maxHeight, rows)
+        val small = LemuroidViewMode.HOME.rememberLayout().value == LemuroidLayout.TILES_SMALL
+        val textSize = if (small) LemuroidTextSize.TILE_SMALL else LemuroidTextSize.TILE
+        val cardWidth = homeCardWidth(maxHeight, rows, textSize) * (if (small) SMALL_CARD_SCALE else 1f)
         Column(
             modifier =
                 Modifier
@@ -85,6 +90,7 @@ private fun HomeScreen(
             stringResource(id = R.string.recent),
             state.recentGames,
             cardWidth,
+            textSize,
             onGameClicked,
             onGameLongClick,
         )
@@ -92,6 +98,7 @@ private fun HomeScreen(
             stringResource(id = R.string.home_frequently_played),
             state.frequentGames,
             cardWidth,
+            textSize,
             onGameClicked,
             onGameLongClick,
         )
@@ -99,6 +106,7 @@ private fun HomeScreen(
             stringResource(id = R.string.favorites),
             state.favoritesGames,
             cardWidth,
+            textSize,
             onGameClicked,
             onGameLongClick,
         )
@@ -106,6 +114,7 @@ private fun HomeScreen(
             stringResource(id = R.string.discover),
             state.discoveryGames,
             cardWidth,
+            textSize,
             onGameClicked,
             onGameLongClick,
         )
@@ -121,11 +130,12 @@ private fun HomeScreen(
 private fun homeCardWidth(
     availableHeight: Dp,
     rows: Int,
+    textSize: LemuroidTextSize,
 ): Dp {
     if (rows == 0) return MAX_CARD_WIDTH
     val fontScale = LocalDensity.current.fontScale
     // Row title, the space around the cards and the card's two lines of text.
-    val rowExtra = ROW_PADDING * 2 + CARD_TEXT_PADDING * 2 + (ROW_TITLE_SP + CARD_TEXT_SP).dp * fontScale
+    val rowExtra = ROW_PADDING * 2 + CARD_TEXT_PADDING * 2 + (ROW_TITLE_SP + textSize.titleLineHeight + textSize.subtitleLineHeight).dp * fontScale
     val perRow = (availableHeight - HOME_VERTICAL_PADDING * 2) / rows
     return (perRow - rowExtra).coerceIn(MIN_CARD_WIDTH, MAX_CARD_WIDTH)
 }
@@ -134,7 +144,9 @@ private val HOME_VERTICAL_PADDING = 4.dp
 private val ROW_PADDING = 4.dp
 private val CARD_TEXT_PADDING = 6.dp
 private const val ROW_TITLE_SP = 16f
-private const val CARD_TEXT_SP = 20f + 16f
+
+/** Small tiles: cards this much of the large ones, so more fit across the screen. */
+private const val SMALL_CARD_SCALE = 0.75f
 private val MIN_CARD_WIDTH = 80.dp
 private val MAX_CARD_WIDTH = 144.dp
 
@@ -144,6 +156,7 @@ private fun HomeRow(
     title: String,
     games: List<Game>,
     cardWidth: Dp,
+    textSize: LemuroidTextSize,
     onGameClicked: (Game) -> Unit,
     onGameLongClick: (Game) -> Unit,
 ) {
@@ -172,6 +185,7 @@ private fun HomeRow(
                             .width(cardWidth)
                             .animateItem(),
                     game = game,
+                    textSize = textSize,
                     onClick = { onGameClicked(game) },
                     onLongClick = { onGameLongClick(game) },
                 )

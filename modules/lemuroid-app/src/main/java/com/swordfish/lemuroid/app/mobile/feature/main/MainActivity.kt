@@ -1,5 +1,9 @@
 package com.swordfish.lemuroid.app.mobile.feature.main
 
+import com.swordfish.lemuroid.lib.core.CoreUpdater
+import com.swordfish.lemuroid.app.mobile.feature.settings.general.LocalCoreDownloads
+import com.swordfish.lemuroid.app.mobile.feature.settings.general.CoreDownloads
+import androidx.compose.runtime.CompositionLocalProvider
 import android.app.Activity
 import android.content.Intent
 import android.graphics.Color
@@ -113,6 +117,9 @@ class MainActivity : RetrogradeComponentActivity(), BusyActivity, GameLaunchHost
     @Inject
     lateinit var inputDeviceManager: InputDeviceManager
 
+    @Inject
+    lateinit var coreUpdater: CoreUpdater
+
     private val reviewManager = ReviewManager()
 
     private val mainViewModel: MainViewModel by viewModels {
@@ -133,12 +140,15 @@ class MainActivity : RetrogradeComponentActivity(), BusyActivity, GameLaunchHost
 
         setContent {
             val navController = rememberNavController()
+            val coreDownloads = remember { CoreDownloads(applicationContext, retrogradeDb, coreUpdater) }
             AppTheme {
-                MainFolderAccessGate {
-                    FirstLaunchSetupLayer {
-                        MainScreen(navController)
+                CompositionLocalProvider(LocalCoreDownloads provides coreDownloads) {
+                    MainFolderAccessGate {
+                        FirstLaunchSetupLayer {
+                            MainScreen(navController)
+                        }
+                        AppUpdateDialogs()
                     }
-                    AppUpdateDialogs()
                 }
             }
         }

@@ -60,6 +60,17 @@ class NotificationsManager(private val applicationContext: Context) {
             .build()
     }
 
+    fun coversDownloadNotification(): Notification {
+        createDefaultNotificationChannel()
+        return NotificationCompat.Builder(applicationContext, DEFAULT_CHANNEL_ID)
+            .setSmallIcon(R.drawable.ic_lemuroid_tiny)
+            .setContentTitle(applicationContext.getString(R.string.covers_download_notification_title))
+            .setContentText(applicationContext.getString(R.string.covers_download_notification_message))
+            .setProgress(100, 0, true)
+            .setPriority(NotificationCompat.PRIORITY_LOW)
+            .build()
+    }
+
     fun coversImportNotification(): Notification {
         createDefaultNotificationChannel()
         return NotificationCompat.Builder(applicationContext, DEFAULT_CHANNEL_ID)
@@ -210,5 +221,7 @@ class NotificationsManager(private val applicationContext: Context) {
         const val LIBRARY_RESULT_NOTIFICATION_ID = 7
         const val SAVES_IMPORT_RESULT_NOTIFICATION_ID = 8
         const val COVERS_IMPORT_RESULT_NOTIFICATION_ID = 9
+        const val COVERS_DOWNLOAD_NOTIFICATION_ID = 10
+        const val COVERS_DOWNLOAD_RESULT_NOTIFICATION_ID = 11
     }
 }

@@ -1,5 +1,9 @@
 package com.swordfish.lemuroid.app.shared.library
 
+import com.swordfish.lemuroid.lib.library.CoreID
+import androidx.work.workDataOf
+import androidx.work.NetworkType
+import androidx.work.Constraints
 import android.content.Context
 import androidx.work.ExistingWorkPolicy
 import androidx.work.OneTimeWorkRequestBuilder
@@ -28,6 +32,29 @@ object LibraryIndexScheduler {
             )
             .enqueue()
     }
+
+    /** Lemuroid-S: downloads [cores] now, or once on Wi-Fi when [wifiOnly]. */
+    fun scheduleCoreDownload(
+        applicationContext: Context,
+        cores: List<CoreID>,
+        wifiOnly: Boolean,
+    ) {
+        WorkManager.getInstance(applicationContext)
+            .beginUniqueWork(
+                CORE_UPDATE_WORK_ID,
+                ExistingWorkPolicy.APPEND_OR_REPLACE,
+                OneTimeWorkRequestBuilder<CoreUpdateWork>()
+                    .setInputData(workDataOf(CoreUpdateWork.KEY_CORES to cores.map { it.name }.toTypedArray()))
+                    .setConstraints(networkConstraints(wifiOnly))
+                    .build(),
+            )
+            .enqueue()
+    }
+
+    fun networkConstraints(wifiOnly: Boolean): Constraints =
+        Constraints.Builder()
+            .setRequiredNetworkType(if (wifiOnly) NetworkType.UNMETERED else NetworkType.CONNECTED)
+            .build()
 
     fun cancelLibrarySync(applicationContext: Context) {
         WorkManager.getInstance(applicationContext).cancelUniqueWork(LIBRARY_INDEX_WORK_ID)

@@ -41,7 +41,7 @@
     <string name="update_frequency_weekly">Weekly</string>
     <string name="update_frequency_monthly">Monthly</string>
     <string name="settings_title_check_updates">Check for updates now</string>
-    <string name="settings_description_check_updates">Look for a newer Lemuroid-S release on GitHub</string>
+    <string name="settings_description_check_updates">Look for a newer Lemuroid-S version</string>
     <string name="update_checking">Checking for updates…</string>
     <string name="update_up_to_date">Lemuroid-S is up to date</string>
     <string name="update_available_title">Lemuroid-S %1$s is available</string>
@@ -55,8 +55,8 @@
     <string name="settings_description_wallpaper_colors">Match the app\'s colors to your wallpaper (Android 12 and newer)</string>
     <string name="settings_title_pure_black">Pure black</string>
     <string name="settings_description_pure_black">Black backgrounds, for OLED screens</string>
-    <string name="settings_title_fast_forward_button_per_system">Fast-forward button per console</string>
-    <string name="settings_description_fast_forward_button_per_system">Show or hide the fast-forward button for specific consoles</string>
+    <string name="settings_title_fast_forward_button_per_system">Fast-forward button per system</string>
+    <string name="settings_description_fast_forward_button_per_system">Show or hide the fast-forward button for specific systems</string>
     <string name="fast_forward_button_names_show">Show</string>
     <string name="fast_forward_button_names_hide">Hide</string>
     <string name="fast_forward_button_not_supported">Not supported</string>
@@ -116,7 +116,7 @@
     <string name="settings_description_core_settings">Settings of each emulator core, shared by the consoles that use it</string>
     <string name="core_settings_play_first">Play a game with this core once to show its settings here.</string>
     <string name="settings_title_first_launch_setup">Run first-launch setup again</string>
-    <string name="settings_description_first_launch_setup">Open the setup cards again: Lemuroid-S folder, ROMs folder, notifications and Import Saves</string>
+    <string name="settings_description_first_launch_setup">Open the setup cards again: Lemuroid-S folder, ROMs folder, notifications, microphone, downloads and Import Saves</string>
     <string name="home_import_saves_title">Import Saves</string>
     <string name="home_import_saves_message">Import your saves from other emulators or folders.</string>
     <string name="home_import_saves_action">Import Saves</string>
@@ -136,8 +136,8 @@
     <string name="periodic_autosave_names_25">Every 25 minutes</string>
     <string name="periodic_autosave_names_30">Every 30 minutes</string>
     <string name="settings_title_artwork_type">Artwork type</string>
-    <string name="settings_title_artwork_per_system">Artwork per console</string>
-    <string name="settings_description_artwork_per_system">Choose a different artwork type for specific consoles</string>
+    <string name="settings_title_artwork_per_system">Artwork type per system</string>
+    <string name="settings_description_artwork_per_system">Choose a different artwork type for specific systems</string>
     <string name="artwork_type_names_boxart">Game cover</string>
     <string name="artwork_type_names_snap">In-game screenshot</string>
     <string name="artwork_type_names_title">Title screen</string>
@@ -153,7 +153,7 @@
     <string name="settings_hd_quality_mid">Mid</string>
     <string name="settings_hd_quality_high">High</string>
 
-    <string name="settings_title_viewport_alignment">Viewport alignment</string>
+    <string name="settings_title_viewport_alignment">Game screen position</string>
 
     <string name="settings_title_immersive_mode">Immersive mode</string>
     <string name="settings_description_immersive_mode">Dynamically colors the game\'s background with its on-screen colors</string>
@@ -237,11 +237,11 @@
     <string name="game_menu_orientation">Screen orientation</string>
     <string name="game_orientation_auto">System (follow device)</string>
     <string name="game_orientation_portrait">Portrait</string>
-    <string name="game_orientation_landscape">Landscape (top of device on the left)</string>
-    <string name="game_orientation_reverse_landscape">Landscape (top of device on the right)</string>
+    <string name="game_orientation_landscape">Landscape (Right on top)</string>
+    <string name="game_orientation_reverse_landscape">Landscape (Left on top)</string>
     <string name="settings_title_game_orientation">Game screen orientation</string>
     <string name="settings_title_menus_portrait">Menus always in portrait</string>
-    <string name="settings_description_menus_portrait">Keep the app\'s screens in portrait, even when the device is turned. Games and the in-game menu keep the game\'s orientation</string>
+    <string name="settings_description_menus_portrait">App\'s menus always in portrait mode, even when games are set to landscape</string>
     <string name="game_menu_state_autosave_automatic">Saved automatically</string>
     <string name="game_menu_change_disk_button">Change Disk</string>
     <string name="game_menu_edit_touch_controls">Edit Controls</string>
@@ -377,6 +377,26 @@
     <string name="game_saving_previous">Saving your last game…</string>
     <string name="setup_microphone_message">Some games use the microphone, such as Nintendo DS games and those of any other console that supports it, for example to blow or talk into it.</string>
     <string name="autosave_import_warning">Games will continue from their last autosave, which also holds their in-game save. If you copy saves from other emulators into Lemuroid-S yourself, you may need to turn this off so games use those saves instead. Import Saves takes care of this by itself.</string>
-    <string name="view_as_list">Show as list</string>
-    <string name="view_as_tiles">Show as tiles</string>
+    <string name="view_layout_large_tiles">Large tiles</string>
+    <string name="view_layout_small_tiles">Small tiles</string>
+    <string name="view_layout_list">List</string>
+    <string name="settings_category_emulation">Emulation</string>
+    <string name="downloads_title">Download cores and covers</string>
+    <string name="downloads_description">Get them now, for example over Wi-Fi, instead of when they\'re needed</string>
+    <string name="downloads_message">Lemuroid-S downloads emulator cores and game covers when they\'re needed. You can download them all now, over Wi-Fi so mobile data isn\'t used.</string>
+    <string name="downloads_covers">Covers for all games</string>
+    <string name="downloads_all_cores">All cores</string>
+    <string name="downloads_core_installed">Downloaded</string>
+    <string name="downloads_wifi_only">Only over Wi-Fi</string>
+    <string name="downloads_action">Download</string>
+    <string name="downloads_started">Downloading in the background. With \"Only over Wi-Fi\" it waits for a Wi-Fi connection.</string>
+    <string name="downloads_no_cores">No cores in use yet. Add games to your library first.</string>
+    <string name="covers_download_notification_title">Downloading game covers</string>
+    <string name="covers_download_notification_message">Downloading the covers of your games</string>
+    <string name="covers_download_result_title">Covers downloaded</string>
+    <string name="covers_download_result">Downloaded %1$d covers.</string>
+    <string name="reset_all_systems_title">Reset all systems</string>
+    <string name="reset_all_systems_description">Set every system back to Default</string>
+    <string name="reset_all_systems_message">This sets this setting back to Default for every system.</string>
+    <string name="reset_all_systems_action">Reset</string>
 </resources>

@@ -31,20 +31,22 @@ import com.swordfish.lemuroid.lib.library.GameSystem
 @Composable
 fun CoreSettingsScreen(modifier: Modifier = Modifier) {
     val context = LocalContext.current
+    // Lemuroid-S: sorted by the consoles each core runs: "Arcade (FBNeo)", "GB, GBC (Gambatte)"...
     val cores =
-        remember {
+        remember(context) {
             GameSystem.all()
                 .flatMap { it.systemCoreConfigs }
                 .filter { it.exposedSettings.isNotEmpty() || it.exposedAdvancedSettings.isNotEmpty() }
                 .map { it.coreID }
                 .distinct()
-                .sortedBy { it.coreDisplayName.lowercase() }
+                .map { it to coreTitle(context, it) }
+                .sortedBy { it.second.lowercase() }
         }
 
     LemuroidSettingsPage(modifier = modifier.fillMaxSize()) {
-        cores.forEach { coreID ->
+        cores.forEach { (coreID, title) ->
             val options = remember(coreID) { CoreOptionsCache.load(context, coreID) }
-            LemuroidCardSettingsGroup(title = { Text(text = coreTitle(coreID)) }) {
+            LemuroidCardSettingsGroup(title = { Text(text = title) }) {
                 if (options.isEmpty()) {
                     Text(
                         modifier = Modifier.padding(16.dp),
@@ -59,13 +61,16 @@ fun CoreSettingsScreen(modifier: Modifier = Modifier) {
     }
 }
 
-@Composable
-private fun coreTitle(coreID: CoreID): String {
+private fun coreTitle(
+    context: android.content.Context,
+    coreID: CoreID,
+): String {
     val systems =
         GameSystem.all()
             .filter { system -> system.systemCoreConfigs.any { it.coreID == coreID } }
-            .map { stringResource(it.shortTitleResId) }
-    return "${coreID.coreDisplayName} (${systems.joinToString(", ")})"
+            .map { context.getString(it.shortTitleResId) }
+            .sorted()
+    return "${systems.joinToString(", ")} (${coreID.coreDisplayName})"
 }
 
 @Composable

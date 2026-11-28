@@ -1,5 +1,11 @@
 package com.swordfish.lemuroid.app.utils.android.settings
 
+import androidx.compose.material3.Slider
+import androidx.compose.material3.ListItem
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.height
+import androidx.compose.ui.unit.Dp
+import androidx.compose.runtime.compositionLocalOf
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -44,6 +50,16 @@ fun LemuroidSettingsPage(
     }
 }
 
+/**
+ * Lemuroid-S: when set (the in-game menu), every settings row has this height, whether it shows a
+ * subtitle or not, and the slider becomes a single row.
+ */
+val LocalCompactSettingsRowHeight = compositionLocalOf<Dp?> { null }
+
+@Composable
+private fun compactRowModifier(): Modifier =
+    LocalCompactSettingsRowHeight.current?.let { Modifier.height(it) } ?: Modifier
+
 @Composable
 fun LemuroidSettingsSwitch(
     enabled: Boolean = true,
@@ -54,6 +70,7 @@ fun LemuroidSettingsSwitch(
     onCheckedChange: (Boolean) -> Unit = {},
 ) {
     SettingsSwitch(
+        modifier = compactRowModifier(),
         enabled = enabled,
         state = state.value,
         icon = icon,
@@ -77,6 +94,7 @@ fun LemuroidSettingsMenuLink(
     onClick: () -> Unit,
 ) {
     SettingsMenuLink(
+        modifier = compactRowModifier(),
         enabled = enabled,
         icon = icon,
         title = title,
@@ -150,6 +168,30 @@ fun LemuroidSettingsSlider(
         )
     val colors = if (enabled) defaultColors else disabledColors
 
+    val compactHeight = LocalCompactSettingsRowHeight.current
+    if (compactHeight != null) {
+        // One row: icon, title with the current value under it, and the slider on the right.
+        ListItem(
+            modifier = modifier.height(compactHeight),
+            colors = colors,
+            leadingContent = icon,
+            headlineContent = title,
+            supportingContent =
+                valueLabels.getOrNull(state.value)?.let { label -> { Text(text = label) } },
+            trailingContent = {
+                Slider(
+                    modifier = Modifier.width(COMPACT_SLIDER_WIDTH),
+                    value = state.value.toFloat(),
+                    onValueChange = { state.value = it.roundToInt() },
+                    valueRange = valueRange,
+                    steps = steps,
+                    enabled = enabled,
+                )
+            },
+        )
+        return
+    }
+
     Column(modifier = modifier) {
         SettingsSlider(
             steps = steps,
@@ -213,3 +255,5 @@ private fun lemuroidSettingsColor(enabled: Boolean): ListItemColors {
         supportingColor = defaultColors.supportingTextColor.copy(alpha = 0.3f),
     )
 }
+
+private val COMPACT_SLIDER_WIDTH = 140.dp

@@ -36,6 +36,9 @@ interface GameDao {
     @Query("SELECT * FROM games WHERE fileUri = :fileUri")
     fun selectByFileUri(fileUri: String): Game?
 
+    @Query("SELECT * FROM games")
+    suspend fun selectAll(): List<Game>
+
     @Query("SELECT COUNT(*) FROM games")
     suspend fun count(): Int
 

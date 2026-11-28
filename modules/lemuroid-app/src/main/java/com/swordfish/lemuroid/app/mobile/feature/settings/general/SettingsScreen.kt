@@ -68,14 +68,44 @@ fun SettingsScreen(
         )
         InterfaceSettings()
         DisplaySettings()
+        InputSettings(navController = navController)
         SavesSettings(isSaveSyncSupported = state.isSaveSyncSupported, navController = navController)
         FastForwardSettings(navController)
         ArtworkSettings(navController = navController)
-        InputSettings(navController = navController)
+        EmulationSettings(
+            indexingInProgress = indexingInProgress,
+            navController = navController,
+        )
         MiscSettings(
             indexingInProgress = indexingInProgress,
             navController = navController,
         )
+    }
+}
+
+/** Lemuroid-S: the emulator cores: their settings, BIOS files and downloads. */
+@Composable
+private fun EmulationSettings(
+    indexingInProgress: Boolean,
+    navController: NavController,
+) {
+    LemuroidCardSettingsGroup(
+        title = { Text(text = stringResource(id = R.string.settings_category_emulation)) },
+    ) {
+        LemuroidSettingsMenuLink(
+            title = { Text(text = stringResource(id = R.string.settings_title_core_settings)) },
+            subtitle = { Text(text = stringResource(id = R.string.settings_description_core_settings)) },
+            onClick = { navController.navigateToRoute(MainRoute.SETTINGS_CORES) },
+        )
+        LemuroidSettingsMenuLink(
+            title = { Text(text = stringResource(id = R.string.settings_title_display_bios_info)) },
+            subtitle = {
+                Text(text = stringResource(id = R.string.settings_description_display_bios_info))
+            },
+            enabled = !indexingInProgress,
+            onClick = { navController.navigateToRoute(MainRoute.SETTINGS_BIOS) },
+        )
+        DownloadsSetting()
     }
 }
 
@@ -107,19 +137,6 @@ private fun MiscSettings(
                 items = stringListResource(R.array.pref_key_update_frequency_display_names),
             )
         }
-        LemuroidSettingsMenuLink(
-            title = { Text(text = stringResource(id = R.string.settings_title_display_bios_info)) },
-            subtitle = {
-                Text(text = stringResource(id = R.string.settings_description_display_bios_info))
-            },
-            enabled = !indexingInProgress,
-            onClick = { navController.navigateToRoute(MainRoute.SETTINGS_BIOS) },
-        )
-        LemuroidSettingsMenuLink(
-            title = { Text(text = stringResource(id = R.string.settings_title_core_settings)) },
-            subtitle = { Text(text = stringResource(id = R.string.settings_description_core_settings)) },
-            onClick = { navController.navigateToRoute(MainRoute.SETTINGS_CORES) },
-        )
         LemuroidSettingsMenuLink(
             title = { Text(text = stringResource(id = R.string.settings_title_advanced_settings)) },
             subtitle = {
@@ -302,6 +319,30 @@ private fun InputSettings(navController: NavController) {
             },
             onClick = { navController.navigateToRoute(MainRoute.SETTINGS_INPUT_DEVICES) },
         )
+        // Lemuroid-S: moved here from Advanced settings.
+        val rumbleEnabled = booleanPreferenceState(R.string.pref_key_enable_rumble, false)
+        LemuroidSettingsSwitch(
+            state = rumbleEnabled,
+            title = { Text(text = stringResource(id = R.string.settings_title_enable_rumble)) },
+            subtitle = { Text(text = stringResource(id = R.string.settings_description_enable_rumble)) },
+        )
+        LemuroidSettingsSwitch(
+            enabled = rumbleEnabled.value,
+            state = booleanPreferenceState(R.string.pref_key_enable_device_rumble, false),
+            title = { Text(text = stringResource(id = R.string.settings_title_enable_device_rumble)) },
+            subtitle = { Text(text = stringResource(id = R.string.settings_description_enable_device_rumble)) },
+        )
+        LemuroidSettingsSlider(
+            state =
+                intPreferenceState(
+                    key = stringResource(id = R.string.pref_key_tilt_sensitivity_index),
+                    default = 6,
+                ),
+            steps = 10,
+            valueRange = 0f..10f,
+            enabled = true,
+            title = { Text(text = stringResource(R.string.settings_title_tilt_sensitivity)) },
+        )
     }
 }
 
@@ -462,4 +503,16 @@ private fun AutosaveWarningDialog(onDismiss: () -> Unit) {
             TextButton(onClick = onDismiss) { Text(text = stringResource(id = R.string.ok)) }
         },
     )
+}
+
+/** Lemuroid-S: opens "Download cores and covers". */
+@Composable
+private fun DownloadsSetting() {
+    var show by remember { mutableStateOf(false) }
+    LemuroidSettingsMenuLink(
+        title = { Text(text = stringResource(id = R.string.downloads_title)) },
+        subtitle = { Text(text = stringResource(id = R.string.downloads_description)) },
+        onClick = { show = true },
+    )
+    if (show) DownloadsDialog(onDismiss = { show = false })
 }

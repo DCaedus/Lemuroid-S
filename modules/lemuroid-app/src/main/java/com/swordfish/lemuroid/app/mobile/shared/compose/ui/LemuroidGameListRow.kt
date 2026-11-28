@@ -35,18 +35,13 @@ fun LemuroidGameListRow(
     ) {
         Row(
             modifier =
-                Modifier.padding(
-                    start = 16.dp,
-                    top = 8.dp,
-                    bottom = 8.dp,
-                    end = 16.dp,
-                ),
+                Modifier.padding(horizontal = 16.dp, vertical = LemuroidGrid.LIST_ROW_VERTICAL_PADDING),
         ) {
             LemuroidSmallGameImage(
                 modifier =
                     Modifier
-                        .width(40.dp)
-                        .height(40.dp)
+                        .width(LemuroidGrid.LIST_IMAGE_SIZE)
+                        .height(LemuroidGrid.LIST_IMAGE_SIZE)
                         .align(Alignment.CenterVertically),
                 game = game,
             )

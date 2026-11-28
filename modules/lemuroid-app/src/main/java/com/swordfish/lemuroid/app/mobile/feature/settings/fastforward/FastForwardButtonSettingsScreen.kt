@@ -1,5 +1,11 @@
 package com.swordfish.lemuroid.app.mobile.feature.settings.fastforward
 
+import com.swordfish.lemuroid.app.mobile.feature.settings.resetPreferencesWithPrefix
+import com.swordfish.lemuroid.app.mobile.feature.settings.ResetAllSystemsButton
+import androidx.compose.runtime.key
+import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.setValue
+import androidx.compose.runtime.getValue
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -38,10 +44,17 @@ fun FastForwardButtonSettingsScreen(modifier: Modifier = Modifier) {
         }
     val notSupported = stringResource(R.string.fast_forward_button_not_supported)
 
+    var resetCount by remember { mutableIntStateOf(0) }
+
     LemuroidSettingsPage(modifier = modifier.fillMaxSize()) {
         LemuroidCardSettingsGroup(
             title = { Text(text = stringResource(id = R.string.settings_title_fast_forward_button_per_system)) },
         ) {
+            ResetAllSystemsButton(onReset = {
+                resetPreferencesWithPrefix(context, context.getString(R.string.pref_key_fast_forward_button_system_prefix))
+                resetCount++
+            })
+            key(resetCount) {
             systems.forEach { system ->
                 // Consoles without fast-forward (e.g. 3DS) are listed greyed out.
                 val supported = system.fastForwardSupport
@@ -58,6 +71,7 @@ fun FastForwardButtonSettingsScreen(modifier: Modifier = Modifier) {
                     title = { Text(text = stringResource(id = system.titleResId)) },
                     items = names,
                 )
+            }
             }
         }
     }

@@ -2,6 +2,8 @@
 
 package com.swordfish.lemuroid.app.mobile.feature.gamemenu
 
+import com.swordfish.lemuroid.app.utils.android.settings.LocalCompactSettingsRowHeight
+import androidx.compose.runtime.CompositionLocalProvider
 import android.content.res.Configuration
 import android.content.Intent
 import android.graphics.Color
@@ -190,6 +192,8 @@ class GameMenuActivity : RetrogradeComponentActivity() {
                     },
                 )
                 Divider(modifier = Modifier.fillMaxWidth())
+                // Lemuroid-S: compact rows, all the same height, so the menu fits more on screen.
+                CompositionLocalProvider(LocalCompactSettingsRowHeight provides MENU_ROW_HEIGHT) {
                 NavHost(
                     modifier =
                         Modifier
@@ -246,6 +250,7 @@ class GameMenuActivity : RetrogradeComponentActivity() {
                             gameMenuRequest,
                         )
                     }
+                }
                 }
             }
         }
@@ -336,5 +341,6 @@ class GameMenuActivity : RetrogradeComponentActivity() {
 
     private companion object {
         const val STATE_INITIAL_HD_QUALITY = "initial_hd_quality"
+        val MENU_ROW_HEIGHT = 56.dp
     }
 }

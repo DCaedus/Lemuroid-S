@@ -53,6 +53,19 @@ class CoreUpdaterImpl(
         log("downloadCores has terminated")
     }
 
+    // Lemuroid-S: Google Play doesn't say how big a core is before installing it.
+    override suspend fun coreStatus(
+        context: Context,
+        coreIDs: List<CoreID>,
+    ): Map<CoreID, CoreUpdater.CoreStatus> {
+        val bundled = File(context.applicationInfo.nativeLibraryDir).list()?.toSet() ?: emptySet()
+        val installedModules = SplitInstallManagerFactory.create(context).installedModules
+        return coreIDs.associateWith {
+            val installed = it.libretroFileName in bundled || computePlayModuleName(it) in installedModules
+            CoreUpdater.CoreStatus(installed, null)
+        }
+    }
+
     private suspend fun installCores(
         installManager: SplitInstallManager,
         coreIDs: List<CoreID>,

@@ -57,8 +57,10 @@ class BiosManager(private val directoriesManager: DirectoriesManager) {
 
     @Deprecated("Use the suspend variant")
     fun getBiosInfo(): BiosInfo {
+        // Lemuroid-S: arcade BIOS sets (neogeo.zip...) are game files kept with the ROMs, as in
+        // Lemuroid; they're still picked up during scans but not listed with the other BIOS files.
         val bios =
-            SUPPORTED_BIOS.groupBy {
+            SUPPORTED_BIOS.filter { it.systemID !in ARCADE_SYSTEMS }.groupBy {
                 File(directoriesManager.getSystemDirectory(), it.libretroFileName).exists()
             }.withDefault { listOf() }
 
@@ -104,6 +106,8 @@ class BiosManager(private val directoriesManager: DirectoriesManager) {
     data class BiosInfo(val detected: List<Bios>, val notDetected: List<Bios>)
 
     companion object {
+        private val ARCADE_SYSTEMS = setOf(SystemID.FBNEO, SystemID.MAME2003PLUS)
+
         private val SUPPORTED_BIOS =
             listOf(
                 Bios(

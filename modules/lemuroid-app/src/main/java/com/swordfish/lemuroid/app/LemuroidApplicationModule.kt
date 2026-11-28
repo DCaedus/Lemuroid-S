@@ -265,7 +265,8 @@ abstract class LemuroidApplicationModule {
             externalSavesStorage: ExternalSavesStorage,
             directoriesManager: DirectoriesManager,
             libretroDBManager: LibretroDBManager,
-        ) = SavesImporter(context, externalSavesStorage, directoriesManager, libretroDBManager)
+            retrogradeDb: RetrogradeDatabase,
+        ) = SavesImporter(context, externalSavesStorage, directoriesManager, libretroDBManager, retrogradeDb)
 
         @Provides
         @PerApp

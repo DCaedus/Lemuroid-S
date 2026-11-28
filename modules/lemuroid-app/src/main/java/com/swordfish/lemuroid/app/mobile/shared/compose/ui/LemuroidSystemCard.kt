@@ -24,6 +24,7 @@ import com.swordfish.lemuroid.app.shared.systems.MetaSystemInfo
 fun LemuroidSystemCard(
     modifier: Modifier = Modifier,
     system: MetaSystemInfo,
+    textSize: LemuroidTextSize = LemuroidTextSize.TILE,
     onClick: () -> Unit,
 ) {
     val context = LocalContext.current
@@ -46,7 +47,7 @@ fun LemuroidSystemCard(
                     .fillMaxWidth(),
         ) {
             LemuroidSystemImage(system)
-            LemuroidTexts(title = title, subtitle = subtitle)
+            LemuroidTexts(title = title, subtitle = subtitle, textSize = textSize)
         }
     }
 }
@@ -64,13 +65,13 @@ fun LemuroidSystemListRow(
 
     Surface(modifier = modifier.fillMaxWidth(), onClick = onClick) {
         Row(
-            modifier = Modifier.padding(start = 16.dp, top = 8.dp, bottom = 8.dp, end = 16.dp),
+            modifier = Modifier.padding(horizontal = 16.dp, vertical = LemuroidGrid.LIST_ROW_VERTICAL_PADDING),
             verticalAlignment = Alignment.CenterVertically,
         ) {
             Box(
                 modifier =
                     Modifier
-                        .size(40.dp)
+                        .size(LemuroidGrid.LIST_IMAGE_SIZE)
                         .clip(RoundedCornerShape(4.dp)),
             ) {
                 LemuroidSystemImage(system)

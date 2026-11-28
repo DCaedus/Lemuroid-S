@@ -4,6 +4,8 @@ import android.content.Context
 import android.net.Uri
 import android.provider.DocumentsContract
 import com.swordfish.lemuroid.lib.library.GameSystem
+import com.swordfish.lemuroid.lib.library.db.entity.Game
+import com.swordfish.lemuroid.lib.library.db.RetrogradeDatabase
 import com.swordfish.lemuroid.lib.saves.ExternalSavesStorage
 import com.swordfish.lemuroid.lib.saves.RetroArchStates
 import com.swordfish.lemuroid.lib.storage.DirectoriesManager
@@ -24,9 +26,10 @@ import java.util.zip.ZipInputStream
  *    ("saves", "states/<core>"), Pizza Boy's "save" folder, or any folder with saves
  *  - a ZIP file, e.g. Pizza Boy's "export saves"
  *
- * No ROM matching: the system comes from folder names (RetroArch / Lemuroid core folders, system
- * folders), the ROM extension in the name ("Game.gba.state"), or the game database bundled with the
- * app ("Pokemon - Emerald Version (USA, Europe)" -> gba). Unknown files go to the top folder, where
+ * Saves are matched to the games in the library and renamed after their ROM (see LibraryMatcher).
+ * Otherwise the system comes from folder names (RetroArch / Lemuroid core folders, system folders),
+ * the ROM extension in the name ("Game.gba.state"), or the game database bundled with the app
+ * ("Pokemon - Emerald Version (USA, Europe)" -> gba). Unknown files go to the top folder, where
  * games still find them by name.
  *
  * Conversion happens here rather than when a game opens: RetroArch states are unpacked (rzip,
@@ -39,6 +42,7 @@ class SavesImporter(
     private val externalSavesStorage: ExternalSavesStorage,
     private val directoriesManager: DirectoriesManager,
     private val libretroDBManager: LibretroDBManager,
+    private val retrogradeDb: RetrogradeDatabase,
 ) {
     data class Result(
         val saves: Int,
@@ -82,6 +86,11 @@ class SavesImporter(
                     .onFailure { Timber.w(it, "Game database lookup failed") }
                     .getOrDefault(emptyMap())
 
+            // Lemuroid-S: saves are matched to the games in the library, so they get the ROM's name
+            // (other emulators often name them differently) and its console folder.
+            val library = runCatching { retrogradeDb.gameDao().selectAll() }.getOrDefault(emptyList())
+            val matcher = LibraryMatcher(library)
+
             val counters = Counters()
             val targets = mutableMapOf<Pair<Boolean, String?>, Target?>()
             val targetFor = { isState: Boolean, system: String? ->
@@ -91,9 +100,12 @@ class SavesImporter(
             }
             for (file in files) {
                 val databaseSystem = systemsByStem[gameStem(file.name)]?.let { MainFolder.systemFolderName(it) }
-                val system = quickSystem(file) ?: databaseSystem
+                val guessedSystem = quickSystem(file) ?: databaseSystem
+                val game = matcher.find(gameStem(file.name), guessedSystem)
+                val system = game?.let { MainFolder.systemFolderName(it.systemId) } ?: guessedSystem
                 val target = targetFor(file.isState, system) ?: continue
-                copy(file, target, system, counters) { targetFor(true, system) }
+                val targetName = targetName(file, game)
+                copy(file, targetName, target, system, counters) { targetFor(true, system) }
             }
             Result(counters.saves, counters.states, counters.skipped)
         }
@@ -211,12 +223,12 @@ class SavesImporter(
     /** Copies one file, converting it on the way (see class description). */
     private fun copy(
         file: SourceFile,
+        targetName: String,
         target: Target,
         system: String?,
         counters: Counters,
         statesTarget: () -> Target?,
     ) {
-        val targetName = if (file.isState) retroArchStateName(file.name) else file.name.substringBeforeLast('.') + ".srm"
         // Within one import the newest of two sources with the same name wins.
         val importedTime = target.imported[targetName]
         if (importedTime != null && importedTime >= file.lastModified) {
@@ -253,6 +265,70 @@ class SavesImporter(
             target.imported[targetName] = file.lastModified
             if (file.isState) counters.states++ else counters.saves++
         }.onFailure { Timber.w(it, "Could not import ${file.name}") }
+    }
+
+    /**
+     * The name in Lemuroid-S: the matched game's ROM name ("Game.srm", "Game.state1"...), or the
+     * source's own name when no game in the library matches.
+     */
+    private fun targetName(
+        file: SourceFile,
+        game: Game?,
+    ): String {
+        val name = if (file.isState) retroArchStateName(file.name) else file.name.substringBeforeLast('.') + ".srm"
+        if (game == null) return name
+        val stem = gameStem(name)
+        return game.fileName.substringBeforeLast('.') + name.substring(stem.length)
+    }
+
+    /**
+     * Finds the game a save belongs to: same name as the ROM, then the same name once regions,
+     * punctuation and the like are ignored (also against the game's title), then a name contained in
+     * the other one when only one game of that console matches.
+     */
+    private class LibraryMatcher(games: List<Game>) {
+        private val byStem = games.groupBy { it.fileName.substringBeforeLast('.').lowercase() }
+        private val normalized =
+            games.map { game ->
+                Triple(game, normalize(game.fileName.substringBeforeLast('.')), normalize(game.title))
+            }
+
+        fun find(
+            saveStem: String,
+            system: String?,
+        ): Game? {
+            fun List<Game>.pick(): Game? =
+                firstOrNull { system != null && MainFolder.systemFolderName(it.systemId) == system } ?: firstOrNull()
+
+            byStem[saveStem.lowercase()]?.pick()?.let { return it }
+
+            val name = normalize(saveStem)
+            if (name.length < MIN_MATCH_LENGTH) return null
+            normalized.filter { (_, file, title) -> name == file || name == title }
+                .map { it.first }
+                .pick()
+                ?.let { return it }
+
+            val contained =
+                normalized.filter { (game, file, title) ->
+                    (system == null || MainFolder.systemFolderName(game.systemId) == system) &&
+                        listOf(file, title).any { it.length >= MIN_MATCH_LENGTH && (it.contains(name) || name.contains(it)) }
+                }
+            return contained.singleOrNull()?.first
+        }
+
+        private fun normalize(name: String): String =
+            name.lowercase()
+                .replace(BRACKETS, " ")
+                .replace(NOISE_WORDS, " ")
+                .replace(NOT_ALPHANUMERIC, "")
+
+        companion object {
+            private const val MIN_MATCH_LENGTH = 4
+            private val BRACKETS = Regex("""[(\[][^)\]]*[)\]]""")
+            private val NOISE_WORDS = Regex("""\b(version|edition|the)\b""")
+            private val NOT_ALPHANUMERIC = Regex("[^a-z0-9]")
+        }
     }
 
     /**

@@ -11,6 +11,8 @@ import com.swordfish.lemuroid.app.mobile.shared.compose.ui.LemuroidEmptyView
 import com.swordfish.lemuroid.app.mobile.shared.compose.ui.LemuroidGrid
 import com.swordfish.lemuroid.app.mobile.shared.compose.ui.LemuroidSystemCard
 import com.swordfish.lemuroid.app.mobile.shared.compose.ui.LemuroidSystemListRow
+import com.swordfish.lemuroid.app.mobile.shared.compose.ui.LemuroidLayout
+import com.swordfish.lemuroid.app.mobile.shared.compose.ui.LemuroidTextSize
 import com.swordfish.lemuroid.app.mobile.shared.compose.ui.LemuroidViewMode
 import com.swordfish.lemuroid.app.shared.systems.MetaSystemInfo
 
@@ -39,8 +41,9 @@ private fun MetaSystemsScreen(
         return
     }
 
-    if (!LemuroidViewMode.SYSTEMS.rememberTiles().value) {
-        LazyColumn(modifier = modifier.fillMaxSize()) {
+    val layout = LemuroidViewMode.SYSTEMS.rememberLayout().value
+    if (layout == LemuroidLayout.LIST) {
+        LazyColumn(modifier = modifier.fillMaxSize(), contentPadding = LemuroidGrid.listPadding) {
             items(metaSystems.size, key = { metaSystems[it].metaSystem }) { index ->
                 val system = metaSystems[index]
                 LemuroidSystemListRow(
@@ -56,7 +59,7 @@ private fun MetaSystemsScreen(
     LazyVerticalGrid(
         modifier = modifier.fillMaxSize(),
         contentPadding = LemuroidGrid.contentPadding,
-        columns = LemuroidGrid.columns(),
+        columns = LemuroidGrid.columns(small = layout == LemuroidLayout.TILES_SMALL),
         horizontalArrangement = LemuroidGrid.arrangement,
         verticalArrangement = LemuroidGrid.arrangement,
     ) {
@@ -65,6 +68,7 @@ private fun MetaSystemsScreen(
             LemuroidSystemCard(
                 modifier = Modifier.animateItem(),
                 system = system,
+                textSize = if (layout == LemuroidLayout.TILES_SMALL) LemuroidTextSize.TILE_SMALL else LemuroidTextSize.TILE,
                 onClick = { onSystemClicked(system) },
             )
         }

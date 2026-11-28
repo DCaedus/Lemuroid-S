@@ -1,5 +1,7 @@
 package com.swordfish.lemuroid.app.mobile.feature.search
 
+import com.swordfish.lemuroid.app.mobile.shared.compose.ui.LemuroidGamesCollection
+import com.swordfish.lemuroid.app.mobile.shared.compose.ui.LemuroidViewMode
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
@@ -74,7 +76,6 @@ fun SearchScreen(
     }
 }
 
-@OptIn(ExperimentalFoundationApi::class)
 @Composable
 private fun SearchResultsView(
     modifier: Modifier,
@@ -83,21 +84,14 @@ private fun SearchResultsView(
     onGameLongClick: (Game) -> Unit,
     onGameFavoriteToggle: (Game, Boolean) -> Unit,
 ) {
-    LazyColumn(modifier = modifier) {
-        items(games.itemCount, key = { games[it]?.id ?: it }) { index ->
-            val game = games[index] ?: return@items
-
-            LemuroidGameListRow(
-                modifier = Modifier.animateItem(),
-                game = game,
-                onClick = { onGameClick(game) },
-                onLongClick = { onGameLongClick(game) },
-                onFavoriteToggle = { isFavorite ->
-                    onGameFavoriteToggle(game, isFavorite)
-                },
-            )
-        }
-    }
+    LemuroidGamesCollection(
+        modifier = modifier,
+        mode = LemuroidViewMode.SEARCH,
+        games = games,
+        onGameClick = onGameClick,
+        onGameLongClick = onGameLongClick,
+        onGameFavoriteToggle = onGameFavoriteToggle,
+    )
 }
 
 @Composable

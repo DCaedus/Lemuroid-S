@@ -1,5 +1,6 @@
 package com.swordfish.lemuroid.app.shared.library
 
+import com.swordfish.lemuroid.lib.library.CoreID
 import android.content.Context
 import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
@@ -47,8 +48,12 @@ class CoreUpdateWork(context: Context, workerParams: WorkerParameters) :
         setForegroundAsync(foregroundInfo)
 
         try {
+            // Lemuroid-S: "Download cores and covers" asks for specific cores.
+            val requested =
+                inputData.getStringArray(KEY_CORES)
+                    ?.mapNotNull { name -> runCatching { CoreID.valueOf(name) }.getOrNull() }
             val cores =
-                retrogradeDatabase.gameDao().selectSystems()
+                requested ?: retrogradeDatabase.gameDao().selectSystems()
                     .asFlow()
                     .map { GameSystem.findById(it) }
                     .map { coresSelection.getCoreConfigForSystem(it) }
@@ -61,6 +66,10 @@ class CoreUpdateWork(context: Context, workerParams: WorkerParameters) :
         }
 
         return Result.success()
+    }
+
+    companion object {
+        const val KEY_CORES = "cores"
     }
 
     @dagger.Module(subcomponents = [Subcomponent::class])

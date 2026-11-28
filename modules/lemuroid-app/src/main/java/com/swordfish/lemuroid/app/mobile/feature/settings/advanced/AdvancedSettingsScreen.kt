@@ -33,39 +33,7 @@ fun AdvancedSettingsScreen(
     LemuroidSettingsPage(
         modifier = modifier.fillMaxSize(),
     ) {
-        InputSettings()
         GeneralSettings(viewModel, navController)
-    }
-}
-
-@Composable
-private fun InputSettings() {
-    LemuroidCardSettingsGroup(
-        title = { Text(text = stringResource(id = R.string.settings_category_input)) },
-    ) {
-        val rumbleEnabled = booleanPreferenceState(R.string.pref_key_enable_rumble, false)
-        LemuroidSettingsSwitch(
-            state = rumbleEnabled,
-            title = { Text(text = stringResource(id = R.string.settings_title_enable_rumble)) },
-            subtitle = { Text(text = stringResource(id = R.string.settings_description_enable_rumble)) },
-        )
-        LemuroidSettingsSwitch(
-            enabled = rumbleEnabled.value,
-            state = booleanPreferenceState(R.string.pref_key_enable_device_rumble, false),
-            title = { Text(text = stringResource(id = R.string.settings_title_enable_device_rumble)) },
-            subtitle = { Text(text = stringResource(id = R.string.settings_description_enable_device_rumble)) },
-        )
-        LemuroidSettingsSlider(
-            state =
-                intPreferenceState(
-                    key = stringResource(id = R.string.pref_key_tilt_sensitivity_index),
-                    default = 6,
-                ),
-            steps = 10,
-            valueRange = 0f..10f,
-            enabled = true,
-            title = { Text(text = stringResource(R.string.settings_title_tilt_sensitivity)) },
-        )
     }
 }
 

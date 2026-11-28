@@ -51,6 +51,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.content.edit
 import androidx.lifecycle.Lifecycle
 import com.swordfish.lemuroid.R
+import com.swordfish.lemuroid.app.mobile.feature.settings.general.DownloadsDialog
 import com.swordfish.lemuroid.app.mobile.feature.settings.general.ImportSavesDialog
 import com.swordfish.lemuroid.app.mobile.feature.settings.general.rememberMainFolderPicker
 import com.swordfish.lemuroid.app.mobile.feature.settings.general.useMainRomsFolder
@@ -140,6 +141,8 @@ internal fun FirstLaunchSetupScreen(onDone: () -> Unit) {
     var importStarted by remember { mutableStateOf(false) }
     var importSkipped by remember { mutableStateOf(false) }
     var microphoneSkipped by remember { mutableStateOf(false) }
+    var downloadsDone by remember { mutableStateOf(false) }
+    var showDownloads by remember { mutableStateOf(false) }
     var showImportDialog by remember { mutableStateOf(false) }
     val refresh = { status = readStatus(context) }
 
@@ -161,6 +164,9 @@ internal fun FirstLaunchSetupScreen(onDone: () -> Unit) {
             if (!granted) microphoneSkipped = true
             refresh()
         }
+    if (showDownloads) {
+        DownloadsDialog(onDismiss = { showDownloads = false }, onStarted = { downloadsDone = true })
+    }
     ImportSavesDialog(
         show = showImportDialog,
         onDismiss = { showImportDialog = false },
@@ -233,6 +239,16 @@ internal fun FirstLaunchSetupScreen(onDone: () -> Unit) {
                 onSecondaryAction = { microphoneSkipped = true },
             )
             SetupCard(
+                titleId = R.string.downloads_title,
+                messageId = R.string.downloads_message,
+                actionId = R.string.downloads_action,
+                done = downloadsDone,
+                enabled = status.romsFolder,
+                onAction = { showDownloads = true },
+                secondaryActionId = R.string.first_launch_setup_not_now,
+                onSecondaryAction = { downloadsDone = true },
+            )
+            SetupCard(
                 titleId = R.string.home_import_saves_title,
                 messageId = R.string.home_import_saves_message,
                 actionId = R.string.home_import_saves_action,
@@ -247,7 +263,7 @@ internal fun FirstLaunchSetupScreen(onDone: () -> Unit) {
 
     // Lemuroid-S: no Done button, setup closes by itself once every card is done or dismissed.
     val allDone = status.mainFolder && status.romsFolder && status.notifications &&
-        (status.microphone || microphoneSkipped) && (importStarted || importSkipped)
+        (status.microphone || microphoneSkipped) && downloadsDone && (importStarted || importSkipped)
     LaunchedEffect(allDone) {
         if (allDone) {
             delay(CARD_FADE_MS.toLong())

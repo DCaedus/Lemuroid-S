@@ -1,5 +1,12 @@
 package com.swordfish.lemuroid.app.mobile.feature.settings.artwork
 
+import com.swordfish.lemuroid.app.shared.covers.CoverStore
+import com.swordfish.lemuroid.app.mobile.feature.settings.resetPreferencesWithPrefix
+import com.swordfish.lemuroid.app.mobile.feature.settings.ResetAllSystemsButton
+import androidx.compose.runtime.key
+import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.setValue
+import androidx.compose.runtime.getValue
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -42,10 +49,18 @@ fun ArtworkSettingsScreen(modifier: Modifier = Modifier) {
             GameSystem.all().sortedBy { resources.getString(it.titleResId) }
         }
 
+    var resetCount by remember { mutableIntStateOf(0) }
+
     LemuroidSettingsPage(modifier = modifier.fillMaxSize()) {
         LemuroidCardSettingsGroup(
             title = { Text(text = stringResource(id = R.string.settings_title_artwork_per_system)) },
         ) {
+            ResetAllSystemsButton(onReset = {
+                resetPreferencesWithPrefix(context, context.getString(R.string.pref_key_artwork_type_system_prefix))
+                CoverStore.get(context).forgetMainFolderListings()
+                resetCount++
+            })
+            key(resetCount) {
             systems.forEach { system ->
                 LemuroidSettingsList(
                     state =
@@ -57,6 +72,7 @@ fun ArtworkSettingsScreen(modifier: Modifier = Modifier) {
                     title = { Text(text = stringResource(id = system.titleResId)) },
                     items = systemNames,
                 )
+            }
             }
         }
     }
