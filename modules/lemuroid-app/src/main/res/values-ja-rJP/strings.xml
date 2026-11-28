@@ -344,4 +344,7 @@
     <string name="reset_all_systems_description">すべてのシステムをデフォルトに戻します</string>
     <string name="reset_all_systems_message">この設定をすべてのシステムでデフォルトに戻します。</string>
     <string name="reset_all_systems_action">リセット</string>
+    <string name="settings_title_downloads_wifi_only">自動ダウンロードは Wi-Fi のみ</string>
+    <string name="settings_description_downloads_wifi_only">コアとカバーは Wi-Fi 接続時のみ自動でダウンロードされます。ゲームを起動したときは、どの接続でもそのコアをダウンロードします。</string>
+    <string name="game_downloading_core">このゲームのコアをダウンロード中…</string>
 </resources>

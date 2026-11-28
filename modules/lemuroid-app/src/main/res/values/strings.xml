@@ -399,4 +399,7 @@
     <string name="reset_all_systems_description">Set every system back to Default</string>
     <string name="reset_all_systems_message">This sets this setting back to Default for every system.</string>
     <string name="reset_all_systems_action">Reset</string>
+    <string name="settings_title_downloads_wifi_only">Automatic downloads over Wi-Fi only</string>
+    <string name="settings_description_downloads_wifi_only">Cores and covers download by themselves only on Wi-Fi. Starting a game still downloads its core on any connection.</string>
+    <string name="game_downloading_core">Downloading the core for this game…</string>
 </resources>

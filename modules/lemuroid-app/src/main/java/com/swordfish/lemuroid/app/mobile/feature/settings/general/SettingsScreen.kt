@@ -1,5 +1,6 @@
 package com.swordfish.lemuroid.app.mobile.feature.settings.general
 
+import com.swordfish.lemuroid.app.shared.library.DownloadSettings
 import android.net.Uri
 import android.provider.Settings
 import android.content.Intent
@@ -106,6 +107,17 @@ private fun EmulationSettings(
             onClick = { navController.navigateToRoute(MainRoute.SETTINGS_BIOS) },
         )
         DownloadsSetting()
+        val context = LocalContext.current
+        LemuroidSettingsSwitch(
+            state = booleanPreferenceState(DownloadSettings.PREF_WIFI_ONLY, DownloadSettings.DEFAULT_WIFI_ONLY),
+            title = { Text(text = stringResource(id = R.string.settings_title_downloads_wifi_only)) },
+            subtitle = { Text(text = stringResource(id = R.string.settings_description_downloads_wifi_only)) },
+            onCheckedChange = {
+                // A core download waiting for Wi-Fi is scheduled again with the new choice.
+                LibraryIndexScheduler.cancelCoreUpdate(context.applicationContext)
+                LibraryIndexScheduler.scheduleCoreUpdate(context.applicationContext)
+            },
+        )
     }
 }
 

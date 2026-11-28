@@ -331,4 +331,7 @@
     <string name="reset_all_systems_description">החזרת כל מערכת לברירת המחדל</string>
     <string name="reset_all_systems_message">פעולה זו מחזירה את ההגדרה הזו לברירת המחדל עבור כל מערכת.</string>
     <string name="reset_all_systems_action">איפוס</string>
+    <string name="settings_title_downloads_wifi_only">הורדות אוטומטיות רק ב-Wi-Fi</string>
+    <string name="settings_description_downloads_wifi_only">ליבות ועטיפות יורדות מעצמן רק ב-Wi-Fi. הפעלת משחק עדיין מורידה את הליבה שלו בכל חיבור.</string>
+    <string name="game_downloading_core">מוריד את הליבה של המשחק הזה…</string>
 </resources>

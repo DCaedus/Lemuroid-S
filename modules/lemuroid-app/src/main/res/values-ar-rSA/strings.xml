@@ -340,4 +340,7 @@
     <string name="reset_all_systems_description">إرجاع كل نظام إلى الافتراضي</string>
     <string name="reset_all_systems_message">سيؤدي هذا إلى إرجاع هذا الإعداد إلى الافتراضي لكل نظام.</string>
     <string name="reset_all_systems_action">إعادة تعيين</string>
+    <string name="settings_title_downloads_wifi_only">التنزيلات التلقائية عبر Wi-Fi فقط</string>
+    <string name="settings_description_downloads_wifi_only">تُنزَّل النوى والأغلفة تلقائيًا عبر Wi-Fi فقط. بدء لعبة ما زال ينزّل نواتها على أي اتصال.</string>
+    <string name="game_downloading_core">جارٍ تنزيل نواة هذه اللعبة…</string>
 </resources>

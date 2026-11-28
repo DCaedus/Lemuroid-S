@@ -157,6 +157,13 @@
             app:entryValues="@array/pref_key_update_frequency_values"
             android:defaultValue="weekly"/>
 
+        <SwitchPreference
+            android:key="downloads_wifi_only"
+            android:title="@string/settings_title_downloads_wifi_only"
+            android:summary="@string/settings_description_downloads_wifi_only"
+            android:defaultValue="true"
+            app:iconSpaceReserved="false"/>
+
         <PreferenceScreen
             android:key="@string/pref_key_display_bios_info"
             android:title="@string/settings_title_display_bios_info"

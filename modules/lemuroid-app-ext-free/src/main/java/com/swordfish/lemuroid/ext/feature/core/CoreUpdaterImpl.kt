@@ -19,9 +19,6 @@
 
 package com.swordfish.lemuroid.ext.feature.core
 
-import kotlinx.coroutines.coroutineScope
-import kotlinx.coroutines.awaitAll
-import kotlinx.coroutines.async
 import android.content.Context
 import android.content.SharedPreferences
 import android.os.Build
@@ -63,28 +60,15 @@ class CoreUpdaterImpl(
         context: Context,
         coreIDs: List<CoreID>,
     ): Map<CoreID, CoreUpdater.CoreStatus> =
-        coroutineScope {
+        withContext(Dispatchers.IO) {
             val bundled = File(context.applicationInfo.nativeLibraryDir).list()?.toSet() ?: emptySet()
             val coresDirectory = File(directoriesManager.getCoresDirectory(), coresVersion)
-            coreIDs
-                .map { coreID ->
-                    async(Dispatchers.IO) {
-                        val fileName = coreID.libretroFileName
-                        val installed = fileName in bundled || File(coresDirectory, fileName).exists()
-                        val size =
-                            if (installed) {
-                                null
-                            } else {
-                                runCatching {
-                                    val url = CoresRelease.coreUrl(Build.SUPPORTED_ABIS.first(), fileName)
-                                    api.head(url).headers()["Content-Length"]?.toLongOrNull()
-                                }.getOrNull()
-                            }
-                        coreID to CoreUpdater.CoreStatus(installed, size)
-                    }
-                }
-                .awaitAll()
-                .toMap()
+            val abi = Build.SUPPORTED_ABIS.first()
+            coreIDs.associateWith { coreID ->
+                val fileName = coreID.libretroFileName
+                val installed = fileName in bundled || File(coresDirectory, fileName).exists()
+                CoreUpdater.CoreStatus(installed, CoresRelease.downloadSize(abi, fileName))
+            }
         }
 
     private suspend fun retrieveFile(

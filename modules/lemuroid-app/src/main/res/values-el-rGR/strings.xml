@@ -341,4 +341,7 @@
     <string name="reset_all_systems_description">Επαναφορά κάθε συστήματος στην Προεπιλογή</string>
     <string name="reset_all_systems_message">Αυτό επαναφέρει αυτή τη ρύθμιση στην Προεπιλογή για κάθε σύστημα.</string>
     <string name="reset_all_systems_action">Επαναφορά</string>
+    <string name="settings_title_downloads_wifi_only">Αυτόματες λήψεις μόνο μέσω Wi-Fi</string>
+    <string name="settings_description_downloads_wifi_only">Οι πυρήνες και τα εξώφυλλα κατεβαίνουν αυτόματα μόνο μέσω Wi-Fi. Η έναρξη ενός παιχνιδιού κατεβάζει τον πυρήνα του με οποιαδήποτε σύνδεση.</string>
+    <string name="game_downloading_core">Λήψη του πυρήνα για αυτό το παιχνίδι…</string>
 </resources>

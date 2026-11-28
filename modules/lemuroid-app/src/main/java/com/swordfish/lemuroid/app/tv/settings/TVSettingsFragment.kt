@@ -1,5 +1,7 @@
 package com.swordfish.lemuroid.app.tv.settings
 
+import com.swordfish.lemuroid.app.shared.library.LibraryIndexScheduler
+import com.swordfish.lemuroid.app.shared.library.DownloadSettings
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
@@ -133,6 +135,15 @@ class TVSettingsFragment : LeanbackPreferenceFragmentCompat() {
                     .setMessage(R.string.autosave_import_warning)
                     .setPositiveButton(R.string.ok, null)
                     .show()
+            }
+            true
+        }
+
+        // Lemuroid-S: a core download waiting for Wi-Fi is scheduled again with the new choice.
+        findPreference<Preference>(DownloadSettings.PREF_WIFI_ONLY)?.setOnPreferenceChangeListener { _, _ ->
+            view?.post {
+                LibraryIndexScheduler.cancelCoreUpdate(requireContext().applicationContext)
+                LibraryIndexScheduler.scheduleCoreUpdate(requireContext().applicationContext)
             }
             true
         }

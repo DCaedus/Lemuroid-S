@@ -35,6 +35,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.swordfish.lemuroid.R
 import com.swordfish.lemuroid.app.shared.covers.CoversDownloadWork
+import com.swordfish.lemuroid.app.shared.library.DownloadSettings
 import com.swordfish.lemuroid.app.shared.library.LibraryIndexScheduler
 import com.swordfish.lemuroid.lib.core.CoreUpdater
 import com.swordfish.lemuroid.lib.library.CoreID
@@ -90,7 +91,7 @@ fun DownloadsDialog(
     var choices by remember { mutableStateOf<List<CoreDownloads.Choice>?>(null) }
     val selectedCores = remember { mutableStateListOf<CoreID>() }
     var covers by remember { mutableStateOf(true) }
-    var wifiOnly by remember { mutableStateOf(true) }
+    var wifiOnly by remember { mutableStateOf(DownloadSettings.wifiOnly(context)) }
 
     LaunchedEffect(Unit) {
         val loaded = runCatching { downloads.choices() }.getOrDefault(emptyList())

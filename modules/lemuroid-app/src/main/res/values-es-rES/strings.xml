@@ -341,4 +341,7 @@
     <string name="reset_all_systems_description">Volver a poner cada sistema en Predeterminado</string>
     <string name="reset_all_systems_message">Esto vuelve a poner este ajuste en Predeterminado para todos los sistemas.</string>
     <string name="reset_all_systems_action">Restablecer</string>
+    <string name="settings_title_downloads_wifi_only">Descargas automáticas solo con Wi-Fi</string>
+    <string name="settings_description_downloads_wifi_only">Los núcleos y las portadas se descargan solos solo con Wi-Fi. Al iniciar un juego se descarga su núcleo con cualquier conexión.</string>
+    <string name="game_downloading_core">Descargando el núcleo de este juego…</string>
 </resources>

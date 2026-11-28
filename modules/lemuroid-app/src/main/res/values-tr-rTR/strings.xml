@@ -342,4 +342,7 @@ $SYSTEMS.
     <string name="reset_all_systems_description">Her sistemi Varsayılan\'a döndür</string>
     <string name="reset_all_systems_message">Bu, bu ayarı her sistem için Varsayılan\'a döndürür.</string>
     <string name="reset_all_systems_action">Sıfırla</string>
+    <string name="settings_title_downloads_wifi_only">Otomatik indirmeler yalnızca Wi-Fi ile</string>
+    <string name="settings_description_downloads_wifi_only">Çekirdekler ve kapaklar kendiliğinden yalnızca Wi-Fi ile indirilir. Bir oyun başlatıldığında çekirdeği yine her bağlantıda indirilir.</string>
+    <string name="game_downloading_core">Bu oyunun çekirdeği indiriliyor…</string>
 </resources>

@@ -1,5 +1,7 @@
 package com.swordfish.lemuroid.ext.feature.core
 
+import com.swordfish.lemuroid.lib.core.CoresRelease
+import android.os.Build
 import android.content.Context
 import android.util.Log
 import com.google.android.play.core.ktx.hasTerminalStatus
@@ -53,7 +55,8 @@ class CoreUpdaterImpl(
         log("downloadCores has terminated")
     }
 
-    // Lemuroid-S: Google Play doesn't say how big a core is before installing it.
+    // Lemuroid-S: Google Play doesn't say how big a core is before installing it, so the size is
+    // the one of the same core in the release (CoresRelease).
     override suspend fun coreStatus(
         context: Context,
         coreIDs: List<CoreID>,
@@ -62,7 +65,7 @@ class CoreUpdaterImpl(
         val installedModules = SplitInstallManagerFactory.create(context).installedModules
         return coreIDs.associateWith {
             val installed = it.libretroFileName in bundled || computePlayModuleName(it) in installedModules
-            CoreUpdater.CoreStatus(installed, null)
+            CoreUpdater.CoreStatus(installed, CoresRelease.downloadSize(Build.SUPPORTED_ABIS.first(), it.libretroFileName))
         }
     }
 

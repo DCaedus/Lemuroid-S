@@ -320,4 +320,7 @@
     <string name="reset_all_systems_description">Torna cada sistema a Predeterminat</string>
     <string name="reset_all_systems_message">Això torna aquesta opció a Predeterminat per a cada sistema.</string>
     <string name="reset_all_systems_action">Restableix</string>
+    <string name="settings_title_downloads_wifi_only">Baixades automàtiques només amb Wi-Fi</string>
+    <string name="settings_description_downloads_wifi_only">Els nuclis i les portades es baixen sols només amb Wi-Fi. En iniciar un joc, el seu nucli es baixa igualment amb qualsevol connexió.</string>
+    <string name="game_downloading_core">S\'està baixant el nucli d\'aquest joc…</string>
 </resources>

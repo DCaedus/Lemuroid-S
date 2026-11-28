@@ -341,4 +341,7 @@
     <string name="reset_all_systems_description">Przywróć każdy system do Domyślnych</string>
     <string name="reset_all_systems_message">To przywróci to ustawienie do Domyślnego dla każdego systemu.</string>
     <string name="reset_all_systems_action">Resetuj</string>
+    <string name="settings_title_downloads_wifi_only">Automatyczne pobieranie tylko przez Wi-Fi</string>
+    <string name="settings_description_downloads_wifi_only">Rdzenie i okładki pobierają się same tylko przez Wi-Fi. Uruchomienie gry nadal pobiera jej rdzeń przy każdym połączeniu.</string>
+    <string name="game_downloading_core">Pobieranie rdzenia dla tej gry…</string>
 </resources>

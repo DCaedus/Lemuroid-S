@@ -341,4 +341,7 @@
     <string name="reset_all_systems_description">Repor cada sistema em Predefinido</string>
     <string name="reset_all_systems_message">Isto repõe esta definição em Predefinido para todos os sistemas.</string>
     <string name="reset_all_systems_action">Repor</string>
+    <string name="settings_title_downloads_wifi_only">Transferências automáticas só por Wi-Fi</string>
+    <string name="settings_description_downloads_wifi_only">Os núcleos e as capas são transferidos automaticamente só por Wi-Fi. Ao iniciar um jogo, o núcleo é transferido na mesma em qualquer ligação.</string>
+    <string name="game_downloading_core">A transferir o núcleo deste jogo…</string>
 </resources>

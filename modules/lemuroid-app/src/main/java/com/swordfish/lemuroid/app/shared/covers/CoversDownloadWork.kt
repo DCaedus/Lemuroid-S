@@ -8,6 +8,7 @@ import androidx.work.WorkManager
 import androidx.work.WorkerParameters
 import com.swordfish.lemuroid.R
 import com.swordfish.lemuroid.app.mobile.shared.NotificationsManager
+import com.swordfish.lemuroid.app.shared.library.DownloadSettings
 import com.swordfish.lemuroid.app.shared.library.LibraryIndexScheduler
 import com.swordfish.lemuroid.app.utils.android.createSyncForegroundInfo
 import com.swordfish.lemuroid.lib.injection.AndroidWorkerInjection
@@ -46,7 +47,7 @@ class CoversDownloadWork(context: Context, workerParams: WorkerParameters) :
                 if (isStopped) break
                 if (game.customCoverUri != null) continue
                 val target = CoverUrls.target(applicationContext, game) ?: continue
-                if (coverStore.resolve(target)?.downloaded == true) downloaded++
+                if (coverStore.resolve(target, userRequested = true)?.downloaded == true) downloaded++
             }
         }.onFailure { Timber.e(it, "Covers download failed") }
 
@@ -81,12 +82,14 @@ class CoversDownloadWork(context: Context, workerParams: WorkerParameters) :
             context: Context,
             wifiOnly: Boolean,
         ) {
+            val request =
+                OneTimeWorkRequestBuilder<CoversDownloadWork>()
+                    .setConstraints(LibraryIndexScheduler.networkConstraints(wifiOnly))
+            if (wifiOnly) request.addTag(DownloadSettings.WAITS_FOR_WIFI_TAG)
             WorkManager.getInstance(context.applicationContext).enqueueUniqueWork(
                 UNIQUE_WORK_ID,
                 ExistingWorkPolicy.REPLACE,
-                OneTimeWorkRequestBuilder<CoversDownloadWork>()
-                    .setConstraints(LibraryIndexScheduler.networkConstraints(wifiOnly))
-                    .build(),
+                request.build(),
             )
         }
     }

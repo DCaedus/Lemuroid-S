@@ -320,4 +320,7 @@
     <string name="reset_all_systems_description">Stel elke stelsel terug na Verstek</string>
     <string name="reset_all_systems_message">Dit stel hierdie instelling terug na Verstek vir elke stelsel.</string>
     <string name="reset_all_systems_action">Stel terug</string>
+    <string name="settings_title_downloads_wifi_only">Outomatiese aflaaie slegs oor Wi-Fi</string>
+    <string name="settings_description_downloads_wifi_only">Kerne en omslae laai self net oor Wi-Fi af. \'n Speletjie begin laai steeds sy kern op enige verbinding af.</string>
+    <string name="game_downloading_core">Laai die kern vir hierdie speletjie af…</string>
 </resources>

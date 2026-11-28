@@ -320,4 +320,7 @@
     <string name="reset_all_systems_description">Minden rendszer visszaállítása Alapértelmezettre</string>
     <string name="reset_all_systems_message">Ez a beállítást minden rendszernél Alapértelmezettre állítja vissza.</string>
     <string name="reset_all_systems_action">Visszaállítás</string>
+    <string name="settings_title_downloads_wifi_only">Automatikus letöltés csak Wi-Fin</string>
+    <string name="settings_description_downloads_wifi_only">A magok és borítók maguktól csak Wi-Fin töltődnek le. Egy játék indítása bármilyen kapcsolaton letölti a magját.</string>
+    <string name="game_downloading_core">A játék magjának letöltése…</string>
 </resources>

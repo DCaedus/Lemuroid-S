@@ -341,4 +341,7 @@
     <string name="reset_all_systems_description">모든 시스템을 기본값으로 되돌립니다</string>
     <string name="reset_all_systems_message">모든 시스템에서 이 설정을 기본값으로 되돌립니다.</string>
     <string name="reset_all_systems_action">초기화</string>
+    <string name="settings_title_downloads_wifi_only">자동 다운로드는 Wi-Fi에서만</string>
+    <string name="settings_description_downloads_wifi_only">코어와 커버는 Wi-Fi에서만 자동으로 다운로드됩니다. 게임을 시작하면 연결 종류와 관계없이 해당 코어를 다운로드합니다.</string>
+    <string name="game_downloading_core">이 게임의 코어를 다운로드하는 중…</string>
 </resources>

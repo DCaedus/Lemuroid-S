@@ -6,6 +6,7 @@ import androidx.work.NetworkType
 import androidx.work.Constraints
 import android.content.Context
 import androidx.work.ExistingWorkPolicy
+import androidx.work.OneTimeWorkRequest
 import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkManager
 
@@ -28,7 +29,7 @@ object LibraryIndexScheduler {
             .beginUniqueWork(
                 CORE_UPDATE_WORK_ID,
                 ExistingWorkPolicy.APPEND_OR_REPLACE,
-                OneTimeWorkRequestBuilder<CoreUpdateWork>().build(),
+                coreWorkRequest(applicationContext, null, DownloadSettings.wifiOnly(applicationContext)),
             )
             .enqueue()
     }
@@ -43,12 +44,22 @@ object LibraryIndexScheduler {
             .beginUniqueWork(
                 CORE_UPDATE_WORK_ID,
                 ExistingWorkPolicy.APPEND_OR_REPLACE,
-                OneTimeWorkRequestBuilder<CoreUpdateWork>()
-                    .setInputData(workDataOf(CoreUpdateWork.KEY_CORES to cores.map { it.name }.toTypedArray()))
-                    .setConstraints(networkConstraints(wifiOnly))
-                    .build(),
+                coreWorkRequest(applicationContext, cores, wifiOnly),
             )
             .enqueue()
+    }
+
+    private fun coreWorkRequest(
+        applicationContext: Context,
+        cores: List<CoreID>?,
+        wifiOnly: Boolean,
+    ): OneTimeWorkRequest {
+        val builder =
+            OneTimeWorkRequestBuilder<CoreUpdateWork>()
+                .setConstraints(networkConstraints(wifiOnly))
+        if (cores != null) builder.setInputData(workDataOf(CoreUpdateWork.KEY_CORES to cores.map { it.name }.toTypedArray()))
+        if (wifiOnly) builder.addTag(DownloadSettings.WAITS_FOR_WIFI_TAG)
+        return builder.build()
     }
 
     fun networkConstraints(wifiOnly: Boolean): Constraints =

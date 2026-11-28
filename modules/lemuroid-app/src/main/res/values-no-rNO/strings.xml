@@ -341,4 +341,7 @@
     <string name="reset_all_systems_description">Sett alle systemer tilbake til Standard</string>
     <string name="reset_all_systems_message">Dette setter denne innstillingen tilbake til Standard for alle systemer.</string>
     <string name="reset_all_systems_action">Tilbakestill</string>
+    <string name="settings_title_downloads_wifi_only">Automatiske nedlastinger bare over Wi-Fi</string>
+    <string name="settings_description_downloads_wifi_only">Kjerner og omslag lastes ned av seg selv bare over Wi-Fi. Når du starter et spill, lastes kjernen likevel ned på hvilken som helst tilkobling.</string>
+    <string name="game_downloading_core">Laster ned kjernen for dette spillet…</string>
 </resources>

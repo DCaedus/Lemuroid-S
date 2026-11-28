@@ -341,4 +341,7 @@
     <string name="reset_all_systems_description">Jedes System wieder auf Standard setzen</string>
     <string name="reset_all_systems_message">Damit wird diese Einstellung für jedes System auf Standard zurückgesetzt.</string>
     <string name="reset_all_systems_action">Zurücksetzen</string>
+    <string name="settings_title_downloads_wifi_only">Automatische Downloads nur über WLAN</string>
+    <string name="settings_description_downloads_wifi_only">Cores und Cover werden von selbst nur über WLAN geladen. Beim Starten eines Spiels wird sein Core trotzdem über jede Verbindung geladen.</string>
+    <string name="game_downloading_core">Core für dieses Spiel wird heruntergeladen…</string>
 </resources>

@@ -4,7 +4,6 @@ import android.content.Context
 import com.swordfish.lemuroid.lib.library.CoreID
 import retrofit2.Response
 import retrofit2.http.GET
-import retrofit2.http.HEAD
 import retrofit2.http.Streaming
 import retrofit2.http.Url
 import java.io.InputStream
@@ -30,11 +29,6 @@ interface CoreUpdater {
         suspend fun downloadFile(
             @Url url: String,
         ): Response<InputStream>
-
-        @HEAD
-        suspend fun head(
-            @Url url: String,
-        ): Response<Void>
 
         @GET
         @Streaming

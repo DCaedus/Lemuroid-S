@@ -340,4 +340,7 @@
     <string name="reset_all_systems_description">Vrátit každý systém na Výchozí</string>
     <string name="reset_all_systems_message">Tímto se toto nastavení vrátí na Výchozí pro všechny systémy.</string>
     <string name="reset_all_systems_action">Obnovit</string>
+    <string name="settings_title_downloads_wifi_only">Automatické stahování jen přes Wi-Fi</string>
+    <string name="settings_description_downloads_wifi_only">Jádra a obaly se samy stahují jen přes Wi-Fi. Spuštění hry stáhne její jádro i přes jakékoli připojení.</string>
+    <string name="game_downloading_core">Stahuje se jádro pro tuto hru…</string>
 </resources>

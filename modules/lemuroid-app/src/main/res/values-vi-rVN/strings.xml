@@ -339,4 +339,7 @@
     <string name="reset_all_systems_description">Đưa mọi hệ máy về Mặc định</string>
     <string name="reset_all_systems_message">Thao tác này đưa cài đặt này về Mặc định cho mọi hệ máy.</string>
     <string name="reset_all_systems_action">Đặt lại</string>
+    <string name="settings_title_downloads_wifi_only">Chỉ tự động tải qua Wi-Fi</string>
+    <string name="settings_description_downloads_wifi_only">Lõi và ảnh bìa chỉ tự tải khi có Wi-Fi. Khi bắt đầu trò chơi, lõi của trò chơi vẫn được tải qua mọi kết nối.</string>
+    <string name="game_downloading_core">Đang tải lõi cho trò chơi này…</string>
 </resources>

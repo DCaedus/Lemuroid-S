@@ -1,5 +1,8 @@
 package com.swordfish.lemuroid.app.shared.game
 
+import timber.log.Timber
+import com.swordfish.lemuroid.lib.library.CoreID
+import com.swordfish.lemuroid.lib.core.CoreUpdater
 import android.app.Activity
 import com.swordfish.lemuroid.R
 import com.swordfish.lemuroid.app.shared.main.GameLaunchTaskHandler
@@ -19,6 +22,7 @@ import kotlinx.coroutines.Dispatchers
 class GameLauncher(
     private val coresSelection: CoresSelection,
     private val gameLaunchTaskHandler: GameLaunchTaskHandler,
+    private val coreUpdater: CoreUpdater,
 ) {
     @OptIn(DelicateCoroutinesApi::class)
     fun launchGameAsync(
@@ -43,11 +47,28 @@ class GameLauncher(
             }
             val system = GameSystem.findById(game.systemId)
             val coreConfig = coresSelection.getCoreConfigForSystem(system)
+            ensureCoreDownloaded(activity, coreConfig.coreID)
             gameLaunchTaskHandler.handleGameStart(activity.applicationContext)
             BaseGameActivity.launchGame(activity, coreConfig, game, loadSave, leanback)
         }
 
         return true
+    }
+
+    /**
+     * Lemuroid-S: automatic core downloads may be waiting for Wi-Fi; starting a game gets its core
+     * right away, on any connection.
+     */
+    private suspend fun ensureCoreDownloaded(
+        activity: Activity,
+        coreID: CoreID,
+    ) {
+        val context = activity.applicationContext
+        val installed = runCatching { coreUpdater.coreStatus(context, listOf(coreID))[coreID]?.installed }.getOrNull()
+        if (installed != false) return
+        withContext(Dispatchers.Main) { activity.displayToast(R.string.game_downloading_core) }
+        runCatching { coreUpdater.downloadCores(context, listOf(coreID)) }
+            .onFailure { Timber.e(it, "Could not download core $coreID") }
     }
 
     private suspend fun waitForPreviousGame(activity: Activity): Boolean {

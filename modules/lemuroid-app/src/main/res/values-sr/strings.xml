@@ -341,4 +341,7 @@
     <string name="reset_all_systems_description">Врати сваки систем на Подразумевано</string>
     <string name="reset_all_systems_message">Ово враћа ово подешавање на Подразумевано за сваки систем.</string>
     <string name="reset_all_systems_action">Ресетуј</string>
+    <string name="settings_title_downloads_wifi_only">Аутоматска преузимања само преко Wi-Fi мреже</string>
+    <string name="settings_description_downloads_wifi_only">Језгра и омоти се сами преузимају само преко Wi-Fi мреже. Покретање игре и даље преузима њено језгро преко било које везе.</string>
+    <string name="game_downloading_core">Преузима се језгро за ову игру…</string>
 </resources>

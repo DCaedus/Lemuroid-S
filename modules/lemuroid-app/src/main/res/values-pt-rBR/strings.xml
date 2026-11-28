@@ -341,4 +341,7 @@
     <string name="reset_all_systems_description">Voltar cada sistema para Padrão</string>
     <string name="reset_all_systems_message">Isto volta esta configuração para Padrão em todos os sistemas.</string>
     <string name="reset_all_systems_action">Redefinir</string>
+    <string name="settings_title_downloads_wifi_only">Downloads automáticos somente pelo Wi-Fi</string>
+    <string name="settings_description_downloads_wifi_only">Núcleos e capas são baixados sozinhos somente pelo Wi-Fi. Ao iniciar um jogo, o núcleo dele ainda é baixado em qualquer conexão.</string>
+    <string name="game_downloading_core">Baixando o núcleo deste jogo…</string>
 </resources>

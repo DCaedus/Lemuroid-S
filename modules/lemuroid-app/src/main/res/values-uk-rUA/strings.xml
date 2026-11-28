@@ -340,4 +340,7 @@
     <string name="reset_all_systems_description">Повернути для всіх систем значення за замовчуванням</string>
     <string name="reset_all_systems_message">Цей параметр буде повернуто до значення за замовчуванням для всіх систем.</string>
     <string name="reset_all_systems_action">Скинути</string>
+    <string name="settings_title_downloads_wifi_only">Автоматичні завантаження лише через Wi-Fi</string>
+    <string name="settings_description_downloads_wifi_only">Ядра й обкладинки завантажуються самі лише через Wi-Fi. Під час запуску гри її ядро все одно завантажується через будь-яке з\'єднання.</string>
+    <string name="game_downloading_core">Завантаження ядра для цієї гри…</string>
 </resources>

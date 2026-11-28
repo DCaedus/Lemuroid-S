@@ -329,4 +329,7 @@
     <string name="reset_all_systems_description">Readu fiecare sistem la Implicit</string>
     <string name="reset_all_systems_message">Această setare va reveni la Implicit pentru fiecare sistem.</string>
     <string name="reset_all_systems_action">Resetează</string>
+    <string name="settings_title_downloads_wifi_only">Descărcări automate doar prin Wi-Fi</string>
+    <string name="settings_description_downloads_wifi_only">Nucleele și copertele se descarcă singure doar prin Wi-Fi. Pornirea unui joc îi descarcă totuși nucleul pe orice conexiune.</string>
+    <string name="game_downloading_core">Se descarcă nucleul pentru acest joc…</string>
 </resources>

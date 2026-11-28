@@ -337,4 +337,7 @@
     <string name="reset_all_systems_description">Palauta jokainen järjestelmä oletukseksi</string>
     <string name="reset_all_systems_message">Tämä palauttaa asetuksen oletukseksi kaikille järjestelmille.</string>
     <string name="reset_all_systems_action">Palauta</string>
+    <string name="settings_title_downloads_wifi_only">Automaattiset lataukset vain Wi-Fin kautta</string>
+    <string name="settings_description_downloads_wifi_only">Ytimet ja kansikuvat latautuvat itsestään vain Wi-Fin kautta. Pelin käynnistys lataa silti sen ytimen millä tahansa yhteydellä.</string>
+    <string name="game_downloading_core">Ladataan tämän pelin ydintä…</string>
 </resources>

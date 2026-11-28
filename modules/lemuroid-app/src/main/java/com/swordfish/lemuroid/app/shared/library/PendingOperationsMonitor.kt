@@ -64,9 +64,11 @@ class PendingOperationsMonitor(private val appContext: Context) {
     }
 
     private fun isJobRunning(workInfos: List<WorkInfo>): Boolean {
-        return workInfos
-            .map { it.state }
-            .any { it in listOf(WorkInfo.State.RUNNING, WorkInfo.State.ENQUEUED) }
+        // Lemuroid-S: downloads waiting for Wi-Fi aren't running: they mustn't block games meanwhile.
+        return workInfos.any {
+            it.state == WorkInfo.State.RUNNING ||
+                (it.state == WorkInfo.State.ENQUEUED && DownloadSettings.WAITS_FOR_WIFI_TAG !in it.tags)
+        }
     }
 
     private fun isPeriodicJobRunning(workInfos: List<WorkInfo>): Boolean {

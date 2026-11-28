@@ -1,5 +1,6 @@
 package com.swordfish.lemuroid.app.shared.covers
 
+import com.swordfish.lemuroid.app.shared.library.DownloadSettings
 import android.content.Context
 import android.net.Uri
 import com.swordfish.lemuroid.common.kotlin.writeBytesAtomic
@@ -42,11 +43,19 @@ class CoverStore(private val appContext: Context) {
     val localCoversDirectory: File
         get() = File(appContext.getExternalFilesDir(null), "covers")
 
-    suspend fun resolve(target: CoverTarget): Resolved? =
+    /**
+     * Finds [target]'s artwork, downloading it if needed. Unless [userRequested], the download waits
+     * for Wi-Fi when "Automatic downloads over Wi-Fi only" is on (asked again later).
+     */
+    suspend fun resolve(
+        target: CoverTarget,
+        userRequested: Boolean = false,
+    ): Resolved? =
         withContext(Dispatchers.IO) {
             findInMainFolder(target)?.let { return@withContext Resolved(it, false) }
             findInLocalFolder(target)?.let { return@withContext Resolved(it, false) }
             if (target in missing) return@withContext null
+            if (!userRequested && !DownloadSettings.automaticDownloadsAllowed(appContext)) return@withContext null
 
             val downloaded = download(target)
             if (downloaded == null) missing.add(target)

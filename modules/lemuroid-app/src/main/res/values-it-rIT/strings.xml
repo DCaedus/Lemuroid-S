@@ -341,4 +341,7 @@
     <string name="reset_all_systems_description">Riporta ogni sistema a Predefinito</string>
     <string name="reset_all_systems_message">Questa impostazione tornerà a Predefinito per tutti i sistemi.</string>
     <string name="reset_all_systems_action">Ripristina</string>
+    <string name="settings_title_downloads_wifi_only">Download automatici solo in Wi-Fi</string>
+    <string name="settings_description_downloads_wifi_only">Core e copertine si scaricano da soli solo in Wi-Fi. Avviare un gioco scarica comunque il suo core con qualsiasi connessione.</string>
+    <string name="game_downloading_core">Download del core di questo gioco…</string>
 </resources>

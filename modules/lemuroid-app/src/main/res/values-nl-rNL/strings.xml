@@ -341,4 +341,7 @@
     <string name="reset_all_systems_description">Elk systeem terugzetten op Standaard</string>
     <string name="reset_all_systems_message">Hiermee wordt deze instelling voor elk systeem teruggezet op Standaard.</string>
     <string name="reset_all_systems_action">Resetten</string>
+    <string name="settings_title_downloads_wifi_only">Automatische downloads alleen via wifi</string>
+    <string name="settings_description_downloads_wifi_only">Cores en covers worden alleen via wifi vanzelf gedownload. Als je een game start, wordt de core ervan nog steeds via elke verbinding gedownload.</string>
+    <string name="game_downloading_core">Core voor deze game downloaden…</string>
 </resources>

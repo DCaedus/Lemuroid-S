@@ -341,4 +341,7 @@
     <string name="reset_all_systems_description">将每个系统恢复为默认</string>
     <string name="reset_all_systems_message">这会将此设置在所有系统上恢复为默认。</string>
     <string name="reset_all_systems_action">重置</string>
+    <string name="settings_title_downloads_wifi_only">自动下载仅限 Wi-Fi</string>
+    <string name="settings_description_downloads_wifi_only">核心和封面仅在 Wi-Fi 下自动下载。启动游戏时，仍会在任何网络下下载其核心。</string>
+    <string name="game_downloading_core">正在下载此游戏的核心…</string>
 </resources>
