@@ -350,6 +350,4 @@
     <string name="shader_filter_names_scale2x">Заокруглені пікселі (Scale2x)</string>
     <string name="shader_filter_names_xbr">Гладкі краї (xBR)</string>
     <string name="shader_filter_names_sabr">М\'які краї (SABR)</string>
-    <string name="shader_filter_names_mmpx">Піксель-арт (MMPX)</string>
-    <string name="shader_filter_names_zfast_crt">CRT полегшений (zfast)</string>
 </resources>

@@ -351,6 +351,4 @@
     <string name="shader_filter_names_scale2x">Заобљени пиксели (Scale2x)</string>
     <string name="shader_filter_names_xbr">Глатке ивице (xBR)</string>
     <string name="shader_filter_names_sabr">Меке ивице (SABR)</string>
-    <string name="shader_filter_names_mmpx">Пиксел арт (MMPX)</string>
-    <string name="shader_filter_names_zfast_crt">CRT лаки (zfast)</string>
 </resources>

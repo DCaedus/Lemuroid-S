@@ -341,6 +341,4 @@
     <string name="shader_filter_names_scale2x">פיקסלים מעוגלים (Scale2x)</string>
     <string name="shader_filter_names_xbr">קצוות חלקים (xBR)</string>
     <string name="shader_filter_names_sabr">קצוות רכים (SABR)</string>
-    <string name="shader_filter_names_mmpx">פיקסל ארט (MMPX)</string>
-    <string name="shader_filter_names_zfast_crt">CRT קל (zfast)</string>
 </resources>

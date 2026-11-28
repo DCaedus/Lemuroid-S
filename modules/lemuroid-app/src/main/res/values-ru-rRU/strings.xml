@@ -351,6 +351,4 @@
     <string name="shader_filter_names_scale2x">Скруглённые пиксели (Scale2x)</string>
     <string name="shader_filter_names_xbr">Гладкие края (xBR)</string>
     <string name="shader_filter_names_sabr">Мягкие края (SABR)</string>
-    <string name="shader_filter_names_mmpx">Пиксель-арт (MMPX)</string>
-    <string name="shader_filter_names_zfast_crt">CRT облегчённый (zfast)</string>
 </resources>

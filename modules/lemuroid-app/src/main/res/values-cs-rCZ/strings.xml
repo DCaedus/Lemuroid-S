@@ -350,6 +350,4 @@
     <string name="shader_filter_names_scale2x">Zaoblené pixely (Scale2x)</string>
     <string name="shader_filter_names_xbr">Hladké hrany (xBR)</string>
     <string name="shader_filter_names_sabr">Měkké hrany (SABR)</string>
-    <string name="shader_filter_names_mmpx">Pixel art (MMPX)</string>
-    <string name="shader_filter_names_zfast_crt">CRT lehký (zfast)</string>
 </resources>

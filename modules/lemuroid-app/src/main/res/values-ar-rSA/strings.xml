@@ -350,6 +350,4 @@
     <string name="shader_filter_names_scale2x">بكسلات مستديرة (Scale2x)</string>
     <string name="shader_filter_names_xbr">حواف ناعمة (xBR)</string>
     <string name="shader_filter_names_sabr">حواف لينة (SABR)</string>
-    <string name="shader_filter_names_mmpx">فن البكسل (MMPX)</string>
-    <string name="shader_filter_names_zfast_crt">CRT خفيف (zfast)</string>
 </resources>

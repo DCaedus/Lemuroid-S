@@ -351,6 +351,4 @@
     <string name="shader_filter_names_scale2x">Abgerundete Pixel (Scale2x)</string>
     <string name="shader_filter_names_xbr">Glatte Kanten (xBR)</string>
     <string name="shader_filter_names_sabr">Weiche Kanten (SABR)</string>
-    <string name="shader_filter_names_mmpx">Pixel-Art (MMPX)</string>
-    <string name="shader_filter_names_zfast_crt">CRT leicht (zfast)</string>
 </resources>

@@ -330,6 +330,4 @@
     <string name="shader_filter_names_scale2x">Geronde pieksels (Scale2x)</string>
     <string name="shader_filter_names_xbr">Gladde rande (xBR)</string>
     <string name="shader_filter_names_sabr">Sagte rande (SABR)</string>
-    <string name="shader_filter_names_mmpx">Piekselkuns (MMPX)</string>
-    <string name="shader_filter_names_zfast_crt">CRT lig (zfast)</string>
 </resources>

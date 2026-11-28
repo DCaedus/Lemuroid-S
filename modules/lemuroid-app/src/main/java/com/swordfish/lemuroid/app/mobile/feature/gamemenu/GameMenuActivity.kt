@@ -2,6 +2,10 @@
 
 package com.swordfish.lemuroid.app.mobile.feature.gamemenu
 
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.foundation.clickable
+import androidx.compose.animation.AnimatedVisibility
 import com.swordfish.lemuroid.app.utils.android.settings.LocalCompactSettingsRowHeight
 import androidx.compose.runtime.CompositionLocalProvider
 import android.content.res.Configuration
@@ -33,7 +37,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
-import androidx.compose.material.icons.filled.Close
 import androidx.compose.material3.Divider
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -171,22 +174,18 @@ class GameMenuActivity : RetrogradeComponentActivity() {
                 TopAppBar(
                     title = { Text(stringResource(currentRoute.titleId)) },
                     windowInsets = WindowInsets(0.dp),
+                    // Lemuroid-S: no close button; tapping outside the menu (or Back) closes it.
                     navigationIcon = {
-                        AnimatedContent(targetState = currentRoute.canGoBack(), label = "Back") { canGoBack ->
-                            if (canGoBack) {
-                                IconButton(onClick = { navController.popBackStack() }) {
-                                    Icon(
-                                        Icons.AutoMirrored.Filled.ArrowBack,
-                                        stringResource(R.string.back),
-                                    )
-                                }
-                            } else {
-                                IconButton(onClick = { onResult { } }) {
-                                    Icon(
-                                        Icons.Filled.Close,
-                                        stringResource(R.string.close),
-                                    )
-                                }
+                        AnimatedVisibility(
+                            visible = currentRoute.canGoBack(),
+                            enter = fadeIn(tween(SCREEN_FADE_MS)),
+                            exit = fadeOut(tween(SCREEN_FADE_MS)),
+                        ) {
+                            IconButton(onClick = { navController.popBackStack() }) {
+                                Icon(
+                                    Icons.AutoMirrored.Filled.ArrowBack,
+                                    stringResource(R.string.back),
+                                )
                             }
                         }
                     },
@@ -266,6 +265,18 @@ class GameMenuActivity : RetrogradeComponentActivity() {
                 remember(maxWidth) {
                     minOf(maxWidth * 0.8f, 400f.dp)
                 }
+
+            // Lemuroid-S: tapping the game around the menu closes it.
+            Box(
+                modifier =
+                    Modifier
+                        .fillMaxSize()
+                        .clickable(
+                            interactionSource = remember { MutableInteractionSource() },
+                            indication = null,
+                            onClick = { onResult { } },
+                        ),
+            )
 
             // Lemuroid-S: the system bars show while the menu is open; the panel starts below the status bar.
             Surface(

@@ -351,6 +351,4 @@
     <string name="shader_filter_names_scale2x">Píxeis arredondados (Scale2x)</string>
     <string name="shader_filter_names_xbr">Contornos suaves (xBR)</string>
     <string name="shader_filter_names_sabr">Contornos difusos (SABR)</string>
-    <string name="shader_filter_names_mmpx">Pixel art (MMPX)</string>
-    <string name="shader_filter_names_zfast_crt">CRT leve (zfast)</string>
 </resources>

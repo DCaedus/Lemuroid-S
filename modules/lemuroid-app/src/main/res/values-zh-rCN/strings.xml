@@ -351,6 +351,4 @@
     <string name="shader_filter_names_scale2x">圆润像素（Scale2x）</string>
     <string name="shader_filter_names_xbr">平滑边缘（xBR）</string>
     <string name="shader_filter_names_sabr">柔和边缘（SABR）</string>
-    <string name="shader_filter_names_mmpx">像素画（MMPX）</string>
-    <string name="shader_filter_names_zfast_crt">CRT 轻量（zfast）</string>
 </resources>

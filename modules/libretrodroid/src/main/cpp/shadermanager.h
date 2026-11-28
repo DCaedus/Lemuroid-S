@@ -54,8 +54,6 @@ public:
         SHADER_SCALE2X = 7,
         SHADER_XBR = 8,
         SHADER_SABR = 9,
-        SHADER_MMPX = 10,
-        SHADER_ZFAST_CRT = 11,
     };
 
     struct Config {
@@ -76,8 +74,6 @@ private:
     static const std::string lcdShaderFragment;
     static const std::string scale2xFragment;
     static const std::string xbrFragment;
-    static const std::string mmpxFragment;
-    static const std::string zfastCrtFragment;
 
     static const std::unordered_map<std::string, std::string> cutUpscaleParams;
     static const std::string cutUpscaleVertex;

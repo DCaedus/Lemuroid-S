@@ -351,6 +351,4 @@
     <string name="shader_filter_names_scale2x">Rundade pixlar (Scale2x)</string>
     <string name="shader_filter_names_xbr">Släta kanter (xBR)</string>
     <string name="shader_filter_names_sabr">Mjuka kanter (SABR)</string>
-    <string name="shader_filter_names_mmpx">Pixelkonst (MMPX)</string>
-    <string name="shader_filter_names_zfast_crt">CRT lätt (zfast)</string>
 </resources>

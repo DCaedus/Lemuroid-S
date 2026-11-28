@@ -354,6 +354,4 @@
     <string name="shader_filter_names_scale2x">丸めたピクセル（Scale2x）</string>
     <string name="shader_filter_names_xbr">なめらかな輪郭（xBR）</string>
     <string name="shader_filter_names_sabr">やわらかい輪郭（SABR）</string>
-    <string name="shader_filter_names_mmpx">ピクセルアート（MMPX）</string>
-    <string name="shader_filter_names_zfast_crt">CRT ライト（zfast）</string>
 </resources>

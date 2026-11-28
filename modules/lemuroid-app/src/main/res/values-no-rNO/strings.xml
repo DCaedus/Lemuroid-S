@@ -351,6 +351,4 @@
     <string name="shader_filter_names_scale2x">Avrundede piksler (Scale2x)</string>
     <string name="shader_filter_names_xbr">Glatte kanter (xBR)</string>
     <string name="shader_filter_names_sabr">Myke kanter (SABR)</string>
-    <string name="shader_filter_names_mmpx">Pikselkunst (MMPX)</string>
-    <string name="shader_filter_names_zfast_crt">CRT lett (zfast)</string>
 </resources>

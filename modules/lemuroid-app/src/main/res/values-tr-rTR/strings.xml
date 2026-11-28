@@ -352,6 +352,4 @@ $SYSTEMS.
     <string name="shader_filter_names_scale2x">Yuvarlatılmış pikseller (Scale2x)</string>
     <string name="shader_filter_names_xbr">Pürüzsüz kenarlar (xBR)</string>
     <string name="shader_filter_names_sabr">Yumuşak kenarlar (SABR)</string>
-    <string name="shader_filter_names_mmpx">Piksel sanatı (MMPX)</string>
-    <string name="shader_filter_names_zfast_crt">CRT hafif (zfast)</string>
 </resources>

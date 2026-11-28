@@ -351,6 +351,4 @@
     <string name="shader_filter_names_scale2x">Pixel arrotondati (Scale2x)</string>
     <string name="shader_filter_names_xbr">Bordi lisci (xBR)</string>
     <string name="shader_filter_names_sabr">Bordi morbidi (SABR)</string>
-    <string name="shader_filter_names_mmpx">Pixel art (MMPX)</string>
-    <string name="shader_filter_names_zfast_crt">CRT leggero (zfast)</string>
 </resources>

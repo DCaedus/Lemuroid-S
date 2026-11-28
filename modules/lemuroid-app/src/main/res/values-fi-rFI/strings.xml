@@ -347,6 +347,4 @@
     <string name="shader_filter_names_scale2x">Pyöristetyt pikselit (Scale2x)</string>
     <string name="shader_filter_names_xbr">Sileät reunat (xBR)</string>
     <string name="shader_filter_names_sabr">Pehmeät reunat (SABR)</string>
-    <string name="shader_filter_names_mmpx">Pikselitaide (MMPX)</string>
-    <string name="shader_filter_names_zfast_crt">CRT kevyt (zfast)</string>
 </resources>

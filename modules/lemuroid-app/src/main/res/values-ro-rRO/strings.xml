@@ -339,6 +339,4 @@
     <string name="shader_filter_names_scale2x">Pixeli rotunjiți (Scale2x)</string>
     <string name="shader_filter_names_xbr">Margini netede (xBR)</string>
     <string name="shader_filter_names_sabr">Margini moi (SABR)</string>
-    <string name="shader_filter_names_mmpx">Pixel art (MMPX)</string>
-    <string name="shader_filter_names_zfast_crt">CRT ușor (zfast)</string>
 </resources>

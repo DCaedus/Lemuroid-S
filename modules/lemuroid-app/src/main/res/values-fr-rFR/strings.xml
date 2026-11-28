@@ -351,6 +351,4 @@
     <string name="shader_filter_names_scale2x">Pixels arrondis (Scale2x)</string>
     <string name="shader_filter_names_xbr">Contours lisses (xBR)</string>
     <string name="shader_filter_names_sabr">Contours doux (SABR)</string>
-    <string name="shader_filter_names_mmpx">Pixel art (MMPX)</string>
-    <string name="shader_filter_names_zfast_crt">CRT léger (zfast)</string>
 </resources>

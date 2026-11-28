@@ -351,6 +351,4 @@
     <string name="shader_filter_names_scale2x">Afgeronde pixels (Scale2x)</string>
     <string name="shader_filter_names_xbr">Gladde randen (xBR)</string>
     <string name="shader_filter_names_sabr">Zachte randen (SABR)</string>
-    <string name="shader_filter_names_mmpx">Pixelart (MMPX)</string>
-    <string name="shader_filter_names_zfast_crt">CRT licht (zfast)</string>
 </resources>

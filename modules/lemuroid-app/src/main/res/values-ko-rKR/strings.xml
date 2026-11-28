@@ -351,6 +351,4 @@
     <string name="shader_filter_names_scale2x">둥근 픽셀 (Scale2x)</string>
     <string name="shader_filter_names_xbr">매끄러운 윤곽 (xBR)</string>
     <string name="shader_filter_names_sabr">부드러운 윤곽 (SABR)</string>
-    <string name="shader_filter_names_mmpx">픽셀 아트 (MMPX)</string>
-    <string name="shader_filter_names_zfast_crt">CRT 라이트 (zfast)</string>
 </resources>

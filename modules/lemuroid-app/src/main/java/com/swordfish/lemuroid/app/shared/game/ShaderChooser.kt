@@ -36,8 +36,6 @@ object ShaderChooser {
                     "scale2x" -> ShaderConfig.Scale2x
                     "xbr" -> ShaderConfig.XBR
                     "sabr" -> ShaderConfig.SABR
-                    "mmpx" -> ShaderConfig.MMPX
-                    "zfast_crt" -> ShaderConfig.ZfastCRT
                     else -> getDefaultShaderForSystem(system)
                 }
         }
