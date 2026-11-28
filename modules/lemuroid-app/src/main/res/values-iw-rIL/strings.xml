@@ -338,7 +338,7 @@
     <string name="core_downloading">מוריד את הליבה %1$s…</string>
     <string name="core_download_failed">לא ניתן היה להוריד את הליבה. בדקו את החיבור ונסו שוב.</string>
     <string name="shader_filter_names_scale2x">פיקסלים עדינים יותר (Scale2x)</string>
-    <string name="shader_filter_names_xbr">xBR (תובעני)</string>
+    <string name="shader_filter_names_xbr">xBR (תובעני!)</string>
     <string name="shader_filter_names_crt">CRT (קווי סריקה)</string>
     <string name="shader_filter_names_lcd">LCD (רשת פיקסלים)</string>
     <string name="downloads_section_library">בספרייה שלך</string>

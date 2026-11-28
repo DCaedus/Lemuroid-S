@@ -348,7 +348,7 @@
     <string name="core_downloading">Λήψη του πυρήνα %1$s…</string>
     <string name="core_download_failed">Δεν ήταν δυνατή η λήψη του πυρήνα. Ελέγξτε τη σύνδεσή σας και δοκιμάστε ξανά.</string>
     <string name="shader_filter_names_scale2x">Λεπτότερα pixel (Scale2x)</string>
-    <string name="shader_filter_names_xbr">xBR (Απαιτητικό)</string>
+    <string name="shader_filter_names_xbr">xBR (Απαιτητικό!)</string>
     <string name="downloads_section_library">Στη βιβλιοθήκη σας</string>
     <string name="downloads_section_other">Άλλα συστήματα</string>
     <string name="setup_data_saver_message">Το Lemuroid-S κατεβάζει εξώφυλλα παιχνιδιών και πυρήνες εξομοιωτών όταν χρειάζονται. Με την εξοικονόμηση δεδομένων ενεργή, τα κατεβάζει μόνο μέσω Wi-Fi, ώστε να μη χρησιμοποιούνται δεδομένα κινητής. Μπορείτε να το αλλάξετε αργότερα στις Ρυθμίσεις.</string>

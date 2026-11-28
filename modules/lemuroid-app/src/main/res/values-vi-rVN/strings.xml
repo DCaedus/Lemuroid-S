@@ -346,7 +346,7 @@
     <string name="core_downloading">Đang tải lõi %1$s…</string>
     <string name="core_download_failed">Không thể tải lõi. Hãy kiểm tra kết nối và thử lại.</string>
     <string name="shader_filter_names_scale2x">Điểm ảnh mịn hơn (Scale2x)</string>
-    <string name="shader_filter_names_xbr">xBR (Nặng)</string>
+    <string name="shader_filter_names_xbr">xBR (Nặng!)</string>
     <string name="downloads_section_library">Trong thư viện của bạn</string>
     <string name="downloads_section_other">Hệ máy khác</string>
     <string name="setup_data_saver_message">Lemuroid-S tải ảnh bìa trò chơi và lõi giả lập khi cần đến. Khi bật tiết kiệm dữ liệu, ứng dụng chỉ tải qua Wi-Fi để không dùng dữ liệu di động. Bạn có thể thay đổi sau trong Cài đặt.</string>

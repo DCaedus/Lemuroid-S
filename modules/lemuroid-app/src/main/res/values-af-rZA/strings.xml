@@ -327,7 +327,7 @@
     <string name="core_downloading">Laai die %1$s-kern af…</string>
     <string name="core_download_failed">Kon nie die kern aflaai nie. Gaan jou verbinding na en probeer weer.</string>
     <string name="shader_filter_names_scale2x">Fyner pieksels (Scale2x)</string>
-    <string name="shader_filter_names_xbr">xBR (Veeleisend)</string>
+    <string name="shader_filter_names_xbr">xBR (Veeleisend!)</string>
     <string name="shader_filter_names_crt">CRT (Skandeerlyne)</string>
     <string name="shader_filter_names_lcd">LCD (Pieksel-rooster)</string>
     <string name="downloads_section_library">In jou biblioteek</string>

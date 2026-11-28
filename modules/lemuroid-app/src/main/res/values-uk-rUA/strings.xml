@@ -347,7 +347,7 @@
     <string name="core_downloading">Завантаження ядра %1$s…</string>
     <string name="core_download_failed">Не вдалося завантажити ядро. Перевірте з\'єднання та спробуйте ще раз.</string>
     <string name="shader_filter_names_scale2x">Тонші пікселі (Scale2x)</string>
-    <string name="shader_filter_names_xbr">xBR (Вимогливий)</string>
+    <string name="shader_filter_names_xbr">xBR (Вимогливий!)</string>
     <string name="downloads_section_library">У вашій бібліотеці</string>
     <string name="downloads_section_other">Інші системи</string>
     <string name="setup_data_saver_message">Lemuroid-S завантажує обкладинки ігор і ядра емуляторів, коли вони потрібні. Коли заощадження трафіку ввімкнено, завантаження відбувається лише через Wi-Fi, щоб не витрачати мобільний трафік. Це можна змінити пізніше в налаштуваннях.</string>

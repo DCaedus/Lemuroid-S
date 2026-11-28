@@ -349,7 +349,7 @@ $SYSTEMS.
     <string name="core_downloading">%1$s çekirdeği indiriliyor…</string>
     <string name="core_download_failed">Çekirdek indirilemedi. Bağlantınızı kontrol edip tekrar deneyin.</string>
     <string name="shader_filter_names_scale2x">Daha ince pikseller (Scale2x)</string>
-    <string name="shader_filter_names_xbr">xBR (Zorlayıcı)</string>
+    <string name="shader_filter_names_xbr">xBR (Zorlayıcı!)</string>
     <string name="downloads_section_library">Kitaplığınızda</string>
     <string name="downloads_section_other">Diğer sistemler</string>
     <string name="setup_data_saver_message">Lemuroid-S oyun kapaklarını ve emülatör çekirdeklerini gerektiğinde indirir. Veri tasarrufu açıkken bunları yalnızca Wi-Fi ile indirir, böylece mobil veri kullanılmaz. Bunu daha sonra Ayarlar\'dan değiştirebilirsiniz.</string>

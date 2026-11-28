@@ -336,7 +336,7 @@
     <string name="core_downloading">Se descarcă nucleul %1$s…</string>
     <string name="core_download_failed">Nucleul nu a putut fi descărcat. Verifică conexiunea și încearcă din nou.</string>
     <string name="shader_filter_names_scale2x">Pixeli mai fini (Scale2x)</string>
-    <string name="shader_filter_names_xbr">xBR (Solicitant)</string>
+    <string name="shader_filter_names_xbr">xBR (Solicitant!)</string>
     <string name="downloads_section_library">În biblioteca ta</string>
     <string name="downloads_section_other">Alte sisteme</string>
     <string name="setup_data_saver_message">Lemuroid-S descarcă copertele jocurilor și nucleele emulatoarelor când sunt necesare. Cu economizorul de date activat, le descarcă doar prin Wi-Fi, ca să nu folosească datele mobile. Poți schimba asta mai târziu din Setări.</string>

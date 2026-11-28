@@ -348,7 +348,7 @@
     <string name="core_downloading">Descargando el núcleo %1$s…</string>
     <string name="core_download_failed">No se pudo descargar el núcleo. Comprueba la conexión e inténtalo de nuevo.</string>
     <string name="shader_filter_names_scale2x">Píxeles más finos (Scale2x)</string>
-    <string name="shader_filter_names_xbr">xBR (Exigente)</string>
+    <string name="shader_filter_names_xbr">xBR (Exigente!)</string>
     <string name="downloads_section_library">En tu biblioteca</string>
     <string name="downloads_section_other">Otros sistemas</string>
     <string name="setup_data_saver_message">Lemuroid-S descarga las portadas de los juegos y los núcleos de los emuladores cuando hacen falta. Con el ahorro de datos activado, solo los descarga con Wi-Fi para no usar datos móviles. Puedes cambiarlo más tarde en Ajustes.</string>

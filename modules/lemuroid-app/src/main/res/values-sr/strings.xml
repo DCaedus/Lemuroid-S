@@ -348,7 +348,7 @@
     <string name="core_downloading">Преузима се језгро %1$s…</string>
     <string name="core_download_failed">Језгро није могло да се преузме. Провери везу и покушај поново.</string>
     <string name="shader_filter_names_scale2x">Финији пиксели (Scale2x)</string>
-    <string name="shader_filter_names_xbr">xBR (Захтевно)</string>
+    <string name="shader_filter_names_xbr">xBR (Захтевно!)</string>
     <string name="downloads_section_library">У твојој библиотеци</string>
     <string name="downloads_section_other">Остали системи</string>
     <string name="setup_data_saver_message">Lemuroid-S преузима омоте игара и језгра емулатора када затребају. Са укљученом уштедом података преузима их само преко Wi-Fi мреже, да се не би трошили мобилни подаци. Ово можеш касније да промениш у Подешавањима.</string>

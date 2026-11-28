@@ -353,7 +353,7 @@
     <string name="shader_filter_names_crt">CRT (Scanlines)</string>
     <string name="shader_filter_names_lcd">LCD (Pixel grid)</string>
     <string name="shader_filter_names_scale2x">Finer pixels (Scale2x)</string>
-    <string name="shader_filter_names_xbr">xBR (Demanding)</string>
+    <string name="shader_filter_names_xbr">xBR (Demanding!)</string>
 
     <string name="viewport_alignment_names_top">Top</string>
     <string name="viewport_alignment_names_center">Center</string>

@@ -348,7 +348,7 @@
     <string name="core_downloading">A transferir o núcleo %1$s…</string>
     <string name="core_download_failed">Não foi possível transferir o núcleo. Verifique a ligação e tente novamente.</string>
     <string name="shader_filter_names_scale2x">Píxeis mais finos (Scale2x)</string>
-    <string name="shader_filter_names_xbr">xBR (Exigente)</string>
+    <string name="shader_filter_names_xbr">xBR (Exigente!)</string>
     <string name="downloads_section_library">Na sua biblioteca</string>
     <string name="downloads_section_other">Outros sistemas</string>
     <string name="setup_data_saver_message">O Lemuroid-S transfere capas dos jogos e núcleos dos emuladores quando são precisos. Com a poupança de dados ativada, só os transfere por Wi-Fi, para não usar dados móveis. Pode alterar isto mais tarde nas Definições.</string>

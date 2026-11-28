@@ -344,7 +344,7 @@
     <string name="core_downloading">Ladataan ydintä %1$s…</string>
     <string name="core_download_failed">Ydintä ei voitu ladata. Tarkista yhteys ja yritä uudelleen.</string>
     <string name="shader_filter_names_scale2x">Hienommat pikselit (Scale2x)</string>
-    <string name="shader_filter_names_xbr">xBR (Raskas)</string>
+    <string name="shader_filter_names_xbr">xBR (Raskas!)</string>
     <string name="downloads_section_library">Kirjastossasi</string>
     <string name="downloads_section_other">Muut järjestelmät</string>
     <string name="setup_data_saver_message">Lemuroid-S lataa pelien kansikuvat ja emulaattorien ytimet, kun niitä tarvitaan. Kun datansäästö on päällä, ne ladataan vain Wi-Fin kautta, jotta mobiilidataa ei kulu. Voit muuttaa tätä myöhemmin asetuksissa.</string>

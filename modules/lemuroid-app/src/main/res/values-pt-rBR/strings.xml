@@ -348,7 +348,7 @@
     <string name="core_downloading">Baixando o núcleo %1$s…</string>
     <string name="core_download_failed">Não foi possível baixar o núcleo. Verifique sua conexão e tente novamente.</string>
     <string name="shader_filter_names_scale2x">Pixels mais finos (Scale2x)</string>
-    <string name="shader_filter_names_xbr">xBR (Exigente)</string>
+    <string name="shader_filter_names_xbr">xBR (Exigente!)</string>
     <string name="downloads_section_library">Na sua biblioteca</string>
     <string name="downloads_section_other">Outros sistemas</string>
     <string name="setup_data_saver_message">O Lemuroid-S baixa capas dos jogos e núcleos dos emuladores quando são necessários. Com a economia de dados ativada, ele só baixa pelo Wi-Fi, para não usar dados móveis. Você pode mudar isso depois nas Configurações.</string>

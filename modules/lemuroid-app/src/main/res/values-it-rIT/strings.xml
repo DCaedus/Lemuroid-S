@@ -348,7 +348,7 @@
     <string name="core_downloading">Download del core %1$s…</string>
     <string name="core_download_failed">Impossibile scaricare il core. Controlla la connessione e riprova.</string>
     <string name="shader_filter_names_scale2x">Pixel più fini (Scale2x)</string>
-    <string name="shader_filter_names_xbr">xBR (Impegnativo)</string>
+    <string name="shader_filter_names_xbr">xBR (Impegnativo!)</string>
     <string name="downloads_section_library">Nella tua libreria</string>
     <string name="downloads_section_other">Altri sistemi</string>
     <string name="setup_data_saver_message">Lemuroid-S scarica le copertine dei giochi e i core degli emulatori quando servono. Con il risparmio dati attivo li scarica solo in Wi-Fi, così non usa i dati mobili. Puoi cambiarlo più tardi nelle Impostazioni.</string>

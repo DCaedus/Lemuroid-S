@@ -348,7 +348,7 @@
     <string name="core_downloading">Téléchargement du cœur %1$s…</string>
     <string name="core_download_failed">Impossible de télécharger le cœur. Vérifiez votre connexion et réessayez.</string>
     <string name="shader_filter_names_scale2x">Pixels affinés (Scale2x)</string>
-    <string name="shader_filter_names_xbr">xBR (Exigeant)</string>
+    <string name="shader_filter_names_xbr">xBR (Exigeant!)</string>
     <string name="downloads_section_library">Dans votre bibliothèque</string>
     <string name="downloads_section_other">Autres systèmes</string>
     <string name="setup_data_saver_message">Lemuroid-S télécharge les jaquettes des jeux et les cœurs d\'émulation quand ils sont nécessaires. Avec l\'économiseur de données, il ne les télécharge qu\'en Wi-Fi, pour ne pas utiliser vos données mobiles. Vous pourrez le modifier plus tard dans les Paramètres.</string>

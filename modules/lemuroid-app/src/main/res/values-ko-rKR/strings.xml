@@ -348,7 +348,7 @@
     <string name="core_downloading">%1$s 코어를 다운로드하는 중…</string>
     <string name="core_download_failed">코어를 다운로드하지 못했습니다. 연결을 확인하고 다시 시도하세요.</string>
     <string name="shader_filter_names_scale2x">더 고운 픽셀 (Scale2x)</string>
-    <string name="shader_filter_names_xbr">xBR (고사양)</string>
+    <string name="shader_filter_names_xbr">xBR (고사양!)</string>
     <string name="downloads_section_library">라이브러리에 있음</string>
     <string name="downloads_section_other">기타 시스템</string>
     <string name="setup_data_saver_message">Lemuroid-S는 게임 커버와 에뮬레이터 코어를 필요할 때 다운로드합니다. 데이터 절약을 켜면 Wi-Fi에서만 다운로드하므로 모바일 데이터를 쓰지 않습니다. 나중에 설정에서 바꿀 수 있습니다.</string>

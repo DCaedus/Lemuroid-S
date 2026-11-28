@@ -348,7 +348,7 @@
     <string name="core_downloading">Laddar ned kärnan %1$s…</string>
     <string name="core_download_failed">Det gick inte att ladda ned kärnan. Kontrollera anslutningen och försök igen.</string>
     <string name="shader_filter_names_scale2x">Finare pixlar (Scale2x)</string>
-    <string name="shader_filter_names_xbr">xBR (Krävande)</string>
+    <string name="shader_filter_names_xbr">xBR (Krävande!)</string>
     <string name="downloads_section_library">I ditt bibliotek</string>
     <string name="downloads_section_other">Andra system</string>
     <string name="setup_data_saver_message">Lemuroid-S laddar ned spelomslag och emulatorkärnor när de behövs. Med databesparing på sker det bara via wifi, så att mobildata inte används. Du kan ändra detta senare i Inställningar.</string>

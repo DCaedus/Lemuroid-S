@@ -347,7 +347,7 @@
     <string name="core_downloading">Stahuje se jádro %1$s…</string>
     <string name="core_download_failed">Jádro se nepodařilo stáhnout. Zkontrolujte připojení a zkuste to znovu.</string>
     <string name="shader_filter_names_scale2x">Jemnější pixely (Scale2x)</string>
-    <string name="shader_filter_names_xbr">xBR (Náročný)</string>
+    <string name="shader_filter_names_xbr">xBR (Náročný!)</string>
     <string name="downloads_section_library">Ve vaší knihovně</string>
     <string name="downloads_section_other">Další systémy</string>
     <string name="setup_data_saver_message">Lemuroid-S stahuje obaly her a jádra emulátorů, když jsou potřeba. Se zapnutým spořičem dat je stahuje jen přes Wi-Fi, aby se nespotřebovala mobilní data. Později to můžete změnit v Nastavení.</string>

@@ -327,7 +327,7 @@
     <string name="core_downloading">A(z) %1$s mag letöltése…</string>
     <string name="core_download_failed">Nem sikerült letölteni a magot. Ellenőrizd a kapcsolatot, és próbáld újra.</string>
     <string name="shader_filter_names_scale2x">Finomabb pixelek (Scale2x)</string>
-    <string name="shader_filter_names_xbr">xBR (Erőforrásigényes)</string>
+    <string name="shader_filter_names_xbr">xBR (Erőforrásigényes!)</string>
     <string name="shader_filter_names_crt">CRT (Pásztázó sorok)</string>
     <string name="shader_filter_names_lcd">LCD (Pixelrács)</string>
     <string name="downloads_section_library">A könyvtáradban</string>

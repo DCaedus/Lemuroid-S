@@ -351,7 +351,7 @@
     <string name="core_downloading">%1$s コアをダウンロード中…</string>
     <string name="core_download_failed">コアをダウンロードできませんでした。接続を確認して、もう一度お試しください。</string>
     <string name="shader_filter_names_scale2x">より細かいピクセル（Scale2x）</string>
-    <string name="shader_filter_names_xbr">xBR（高負荷）</string>
+    <string name="shader_filter_names_xbr">xBR（高負荷！）</string>
     <string name="downloads_section_library">ライブラリにあるもの</string>
     <string name="downloads_section_other">その他のシステム</string>
     <string name="setup_data_saver_message">Lemuroid-S はゲームのカバーとエミュレーターのコアを必要になったときにダウンロードします。データセーバーがオンの場合は Wi-Fi 接続時のみダウンロードするので、モバイルデータを使いません。あとで設定から変更できます。</string>

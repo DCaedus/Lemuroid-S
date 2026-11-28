@@ -327,7 +327,7 @@
     <string name="core_downloading">S\'està baixant el nucli %1$s…</string>
     <string name="core_download_failed">No s\'ha pogut baixar el nucli. Comprova la connexió i torna-ho a provar.</string>
     <string name="shader_filter_names_scale2x">Píxels més fins (Scale2x)</string>
-    <string name="shader_filter_names_xbr">xBR (Exigent)</string>
+    <string name="shader_filter_names_xbr">xBR (Exigent!)</string>
     <string name="shader_filter_names_crt">CRT (Línies d\'escaneig)</string>
     <string name="shader_filter_names_lcd">LCD (Graella de píxels)</string>
     <string name="downloads_section_library">A la biblioteca</string>

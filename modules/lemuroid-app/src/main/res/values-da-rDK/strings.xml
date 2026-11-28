@@ -348,7 +348,7 @@
     <string name="core_downloading">Downloader kernen %1$s…</string>
     <string name="core_download_failed">Kernen kunne ikke downloades. Tjek din forbindelse, og prøv igen.</string>
     <string name="shader_filter_names_scale2x">Finere pixels (Scale2x)</string>
-    <string name="shader_filter_names_xbr">xBR (Krævende)</string>
+    <string name="shader_filter_names_xbr">xBR (Krævende!)</string>
     <string name="downloads_section_library">I dit bibliotek</string>
     <string name="downloads_section_other">Andre systemer</string>
     <string name="setup_data_saver_message">Lemuroid-S downloader spilcovers og emulatorkerner, når der er brug for dem. Med datasparer slået til downloades de kun over Wi-Fi, så der ikke bruges mobildata. Du kan ændre det senere i Indstillinger.</string>

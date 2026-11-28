@@ -1,5 +1,8 @@
 package com.swordfish.lemuroid.app.mobile.feature.main
 
+import androidx.compose.runtime.compositionLocalOf
+import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.material3.Button
 import android.Manifest
 import android.app.Activity
 import android.content.Context
@@ -80,14 +83,21 @@ object FirstLaunchSetup {
         return visibleState
     }
 
+    private val reviewingState = MutableStateFlow(false)
+
+    /** Lemuroid-S: opened again from Settings: every card shows, done or not, and a Done button closes it. */
+    val reviewing: StateFlow<Boolean> = reviewingState
+
     /** Opens the setup again (Settings > Advanced). */
     fun show() {
+        reviewingState.value = true
         visibleState.value = true
     }
 
     fun finish(context: Context) {
         preferences(context).edit { putBoolean(context.getString(R.string.pref_key_first_launch_setup_done), true) }
         visibleState.value = false
+        reviewingState.value = false
     }
 
     fun isDone(context: Context) =
@@ -155,8 +165,11 @@ internal fun FirstLaunchSetupScreen(onDone: () -> Unit) {
     // Pickers and permission screens are other activities: re-read everything when coming back.
     ComposableLifecycle { _, event -> if (event == Lifecycle.Event.ON_RESUME) refresh() }
 
-    // The setup layer covers the app: Back closes the app instead of acting on the screen below.
-    BackHandler { (context as? Activity)?.finishAffinity() }
+    val reviewing by FirstLaunchSetup.reviewing.collectAsState()
+
+    // The setup layer covers the app: Back closes the app instead of acting on the screen below
+    // (or just the setup, when it was opened again from Settings).
+    BackHandler { if (reviewing) onDone() else (context as? Activity)?.finishAffinity() }
 
     val mainFolderPicker = rememberMainFolderPicker(onChosen = refresh)
     val permissionLauncher =
@@ -180,6 +193,7 @@ internal fun FirstLaunchSetupScreen(onDone: () -> Unit) {
     )
 
     Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.background) {
+    CompositionLocalProvider(LocalShowDoneSetupCards provides reviewing) {
         Column(
             modifier =
                 Modifier
@@ -279,19 +293,29 @@ internal fun FirstLaunchSetupScreen(onDone: () -> Unit) {
                 secondaryActionId = R.string.first_launch_setup_not_now,
                 onSecondaryAction = { importSkipped = true },
             )
+            if (reviewing) {
+                Button(
+                    modifier = Modifier.align(Alignment.End).padding(horizontal = 16.dp),
+                    onClick = onDone,
+                ) { Text(stringResource(R.string.first_launch_setup_step_done)) }
+            }
         }
     }
+    }
 
-    // Lemuroid-S: no Done button, setup closes by itself once every card is done or dismissed.
+    // Lemuroid-S: on first launch there's no Done button: the setup closes by itself once every card
+    // is done or dismissed. Opened again from Settings, everything is done already: Done closes it.
     val allDone = status.dataSaver && status.mainFolder && status.romsFolder && status.notifications &&
         (status.microphone || microphoneSkipped) && downloadsDone && (importStarted || importSkipped)
-    LaunchedEffect(allDone) {
-        if (allDone) {
+    LaunchedEffect(allDone, reviewing) {
+        if (allDone && !reviewing) {
             delay(CARD_FADE_MS.toLong())
             onDone()
         }
     }
 }
+
+private val LocalShowDoneSetupCards = compositionLocalOf { false }
 
 /** A setup card, like the ones Lemuroid shows on its home screen. */
 @Composable
@@ -305,8 +329,9 @@ private fun SetupCard(
     secondaryActionId: Int? = null,
     onSecondaryAction: () -> Unit = { },
 ) {
-    // Lemuroid-S: a card goes away once its step is done.
-    AnimatedVisibility(visible = !done, enter = fadeIn() + expandVertically(),
+    // Lemuroid-S: a card goes away once its step is done (but stays, marked done, when the setup is
+    // opened again from Settings).
+    AnimatedVisibility(visible = !done || LocalShowDoneSetupCards.current, enter = fadeIn() + expandVertically(),
         exit = fadeOut(tween(CARD_FADE_MS)) + shrinkVertically(tween(CARD_FADE_MS)),
     ) {
         SetupCardContent(titleId, messageId, actionId, done, enabled, onAction, secondaryActionId, onSecondaryAction)

@@ -348,7 +348,7 @@
     <string name="core_downloading">Core %1$s wird heruntergeladen…</string>
     <string name="core_download_failed">Der Core konnte nicht heruntergeladen werden. Prüfe deine Verbindung und versuche es erneut.</string>
     <string name="shader_filter_names_scale2x">Feinere Pixel (Scale2x)</string>
-    <string name="shader_filter_names_xbr">xBR (Anspruchsvoll)</string>
+    <string name="shader_filter_names_xbr">xBR (Anspruchsvoll!)</string>
     <string name="downloads_section_library">In deiner Bibliothek</string>
     <string name="downloads_section_other">Andere Systeme</string>
     <string name="setup_data_saver_message">Lemuroid-S lädt Spielcover und Emulator-Cores herunter, wenn sie gebraucht werden. Mit dem Datensparmodus geschieht das nur über WLAN, damit keine mobilen Daten verbraucht werden. Du kannst das später in den Einstellungen ändern.</string>

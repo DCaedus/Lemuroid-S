@@ -348,7 +348,7 @@
     <string name="core_downloading">Pobieranie rdzenia %1$s…</string>
     <string name="core_download_failed">Nie udało się pobrać rdzenia. Sprawdź połączenie i spróbuj ponownie.</string>
     <string name="shader_filter_names_scale2x">Drobniejsze piksele (Scale2x)</string>
-    <string name="shader_filter_names_xbr">xBR (Wymagający)</string>
+    <string name="shader_filter_names_xbr">xBR (Wymagający!)</string>
     <string name="downloads_section_library">W Twojej bibliotece</string>
     <string name="downloads_section_other">Inne systemy</string>
     <string name="setup_data_saver_message">Lemuroid-S pobiera okładki gier i rdzenie emulatorów, gdy są potrzebne. Przy włączonym oszczędzaniu danych pobiera je tylko przez Wi-Fi, aby nie zużywać danych komórkowych. Możesz to zmienić później w Ustawieniach.</string>

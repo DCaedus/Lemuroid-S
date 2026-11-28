@@ -345,7 +345,7 @@
     <string name="core_downloading">正在下載 %1$s 核心…</string>
     <string name="core_download_failed">無法下載核心。請檢查網路連線後再試一次。</string>
     <string name="shader_filter_names_scale2x">更細緻的像素（Scale2x）</string>
-    <string name="shader_filter_names_xbr">xBR（高負載）</string>
+    <string name="shader_filter_names_xbr">xBR（高負載！）</string>
     <string name="downloads_section_library">遊戲庫中的</string>
     <string name="downloads_section_other">其他系統</string>
     <string name="setup_data_saver_message">Lemuroid-S 會在需要時下載遊戲封面和模擬器核心。開啟數據節省後，僅在 Wi-Fi 下下載，不會使用行動數據。你可以稍後在設定中變更。</string>

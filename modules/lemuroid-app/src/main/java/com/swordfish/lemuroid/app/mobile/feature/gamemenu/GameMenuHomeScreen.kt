@@ -156,6 +156,8 @@ fun GameMenuHomeScreen(
         LemuroidSettingsList(
             title = { Text(text = stringResource(id = R.string.game_menu_orientation)) },
             items = stringListResource(R.array.pref_key_game_orientation_display_names),
+            // Lemuroid-S: no value under/next to the title, which doesn't fit the one-line menu row.
+            useSelectedValueAsSubtitle = false,
             icon = {
                 Icon(
                     imageVector = Icons.Filled.ScreenRotation,
@@ -203,7 +205,8 @@ fun GameMenuHomeScreen(
             state = intPreferenceState(hdQualityKey, SettingsManager.DEFAULT_HD_MODE_QUALITY),
             steps = 1,
             valueRange = 0f..2f,
-            title = { Text(text = stringResource(R.string.settings_title_hd_quality)) },
+            // Lemuroid-S: short title in the menu ("HD mode quality" in Settings).
+            title = { Text(text = stringResource(R.string.shader_filter_names_hd)) },
             icon = {
                 Icon(
                     imageVector = Icons.Filled.HighQuality,

@@ -347,7 +347,7 @@
     <string name="core_downloading">جارٍ تنزيل نواة %1$s…</string>
     <string name="core_download_failed">تعذّر تنزيل النواة. تحقّق من الاتصال وحاول مرة أخرى.</string>
     <string name="shader_filter_names_scale2x">بكسلات أدق (Scale2x)</string>
-    <string name="shader_filter_names_xbr">xBR (متطلب)</string>
+    <string name="shader_filter_names_xbr">xBR (متطلب!)</string>
     <string name="downloads_section_library">في مكتبتك</string>
     <string name="downloads_section_other">أنظمة أخرى</string>
     <string name="setup_data_saver_message">يقوم Lemuroid-S بتنزيل أغلفة الألعاب ونوى المحاكيات عند الحاجة إليها. عند تشغيل توفير البيانات، يتم تنزيلها عبر Wi-Fi فقط حتى لا تُستخدم بيانات الجوال. يمكنك تغيير ذلك لاحقًا من الإعدادات.</string>
