@@ -3,14 +3,17 @@
 //   PCSX ReARMed (PS1), libretro buildbot nightlies (buildbot.libretro.com/nightly/android) from 2026-11-24;
 // - fetched at build time from the cores release like the Play modules (buildSrc/PlayCores.kt): see
 //   FETCHED_CORES below.
-// The big ones (FBNeo, MAME, PPSSPP, Flycast, Azahar...) are downloaded on demand (Google Play in the
+// The big ones (Azahar, MAME 2003-Plus, PPSSPP, Flycast) are downloaded on demand (Google Play in the
 // Play build, GitHub otherwise).
 
 plugins {
     id("com.android.library")
 }
 
-/** Small cores also shipped in the app: Sega 8/16-bit, Nintendo DS and 64, and the tiny handheld/retro ones. */
+/**
+ * Cores also shipped in the app: every core under 2 MB (Sega, Nintendo DS and 64, the handheld and
+ * classic consoles, DOS) and FBNeo. Only Azahar, MAME 2003-Plus, PPSSPP and Flycast are downloaded.
+ */
 val FETCHED_CORES =
     listOf(
         "genesis_plus_gx",
@@ -24,6 +27,14 @@ val FETCHED_CORES =
         "pokemini",
         "prosystem",
         "vecx",
+        "dosbox_pure",
+        "stella",
+        "picodrive",
+        "neocd",
+        "freeintv",
+        "mednafen_pce_fast",
+        "gearcoleco",
+        "fbneo",
     )
 
 android {
