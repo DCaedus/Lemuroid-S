@@ -19,6 +19,7 @@
 
 package com.swordfish.lemuroid.ext.feature.core
 
+import com.swordfish.lemuroid.lib.core.NativeLibraries
 import android.content.Context
 import android.content.SharedPreferences
 import android.os.Build
@@ -61,7 +62,7 @@ class CoreUpdaterImpl(
         coreIDs: List<CoreID>,
     ): Map<CoreID, CoreUpdater.CoreStatus> =
         withContext(Dispatchers.IO) {
-            val bundled = File(context.applicationInfo.nativeLibraryDir).list()?.toSet() ?: emptySet()
+            val bundled = NativeLibraries.names(context)
             val coresDirectory = File(directoriesManager.getCoresDirectory(), coresVersion)
             val abi = Build.SUPPORTED_ABIS.first()
             coreIDs.associateWith { coreID ->
@@ -147,11 +148,9 @@ class CoreUpdaterImpl(
     private suspend fun findBundledLibrary(
         context: Context,
         coreID: CoreID,
-    ): File? =
+    ): String? =
         withContext(Dispatchers.IO) {
-            File(context.applicationInfo.nativeLibraryDir)
-                .walkBottomUp()
-                .firstOrNull { it.name == coreID.libretroFileName }
+            NativeLibraries.find(context, coreID.libretroFileName)
         }
 
     private fun deleteOutdatedCores(

@@ -1,9 +1,7 @@
 <manifest xmlns:dist="http://schemas.android.com/apk/distribution"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <application
-        android:hasCode="false"
-        android:extractNativeLibs="true" />
+    <application android:hasCode="false" />
 
     <!-- Downloaded when a game needs it; installed with the app on Android TV, like Lemuroid. -->
     <dist:module dist:title="@string/core_name_azahar">

@@ -63,7 +63,9 @@ android {
         jniLibs {
             // Stripping created some issues with some libretro cores such as ppsspp
             keepDebugSymbols += setOf("*/*/*_libretro_android.so")
-            useLegacyPackaging = true
+            // Lemuroid-S: libraries stay uncompressed in the APK and load from there (NativeLibraries),
+            // instead of also being unpacked: one copy on the device instead of two.
+            useLegacyPackaging = false
         }
         resources {
             excludes += setOf("META-INF/DEPENDENCIES", "META-INF/library_release.kotlin_module", "META-INF/INDEX.LIST")

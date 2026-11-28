@@ -1,5 +1,6 @@
 package com.swordfish.lemuroid.ext.feature.update
 
+import com.swordfish.lemuroid.lib.core.NativeLibraries
 import android.content.Context
 import android.content.Intent
 import android.content.pm.ApplicationInfo
@@ -116,19 +117,14 @@ class AppUpdater(context: Context) {
             else -> null
         }
 
-    /** The "full" APKs carry every core among the app's own libraries; the regular one only a few. */
-    private fun isFullBuild(): Boolean =
-        (File(appContext.applicationInfo.nativeLibraryDir).list()?.count { it.endsWith(CORE_SUFFIX) } ?: 0) >
-            FULL_BUILD_MIN_CORES
+    /**
+     * The "full" APKs carry every core among the app's own libraries; the regular one ships many but
+     * never the big ones, such as PPSSPP.
+     */
+    private fun isFullBuild(): Boolean = FULL_BUILD_MARKER in NativeLibraries.names(appContext)
 
-    /** The processor type of the installed full APK, from its libraries folder (lib/arm64, lib/arm...). */
-    private fun installedAbi(): String? =
-        when (File(appContext.applicationInfo.nativeLibraryDir).name) {
-            "arm64" -> "arm64-v8a"
-            "arm" -> "armeabi-v7a"
-            "x86_64" -> "x86_64"
-            else -> null
-        }
+    /** The processor type of the installed full APK, from its libraries (lib/arm64-v8a/...). */
+    private fun installedAbi(): String? = NativeLibraries.abi(appContext)
 
     private fun currentVersion(): String =
         runCatching {
@@ -166,8 +162,7 @@ class AppUpdater(context: Context) {
         const val DEFAULT_FREQUENCY = "weekly"
         private const val PREF_LAST_CHECK = "update_last_check"
         private const val UPDATE_FOLDER = "updates"
-        private const val CORE_SUFFIX = "_libretro_android.so"
-        private const val FULL_BUILD_MIN_CORES = 10
+        private const val FULL_BUILD_MARKER = "libppsspp_libretro_android.so"
         private const val MAX_NOTES_LENGTH = 800
         private const val LATEST_RELEASE_URL = "https://api.github.com/repos/DCaedus/Lemuroid-S/releases/latest"
         private const val RELEASES_PAGE_URL = "https://github.com/DCaedus/Lemuroid-S/releases"

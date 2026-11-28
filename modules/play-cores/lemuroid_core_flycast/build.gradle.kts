@@ -12,7 +12,8 @@ android {
     packaging {
         jniLibs {
             keepDebugSymbols += setOf("*/*/*_libretro_android.so")
-            useLegacyPackaging = true
+            // Like the app: uncompressed in the module's APK, loaded from there (NativeLibraries).
+            useLegacyPackaging = false
         }
     }
     sourceSets["main"].jniLibs.srcDir(PlayCores.libsDir(project))

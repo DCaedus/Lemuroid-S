@@ -1,5 +1,6 @@
 package com.swordfish.lemuroid.ext.feature.core
 
+import com.swordfish.lemuroid.lib.core.NativeLibraries
 import com.swordfish.lemuroid.lib.core.CoresRelease
 import android.os.Build
 import android.content.Context
@@ -40,7 +41,7 @@ class CoreUpdaterImpl(
         coreIDs: List<CoreID>,
     ) {
         // Lemuroid-S: cores shipped inside the app (see lemuroid-included-cores) need no download.
-        val includedLibraries = File(context.applicationInfo.nativeLibraryDir).list()?.toSet() ?: emptySet()
+        val includedLibraries = NativeLibraries.names(context)
         val coresToDownload = coreIDs.filter { it.libretroFileName !in includedLibraries }
 
         val installManager = SplitInstallManagerFactory.create(context)
@@ -61,7 +62,7 @@ class CoreUpdaterImpl(
         context: Context,
         coreIDs: List<CoreID>,
     ): Map<CoreID, CoreUpdater.CoreStatus> {
-        val bundled = File(context.applicationInfo.nativeLibraryDir).list()?.toSet() ?: emptySet()
+        val bundled = NativeLibraries.names(context)
         val installedModules = SplitInstallManagerFactory.create(context).installedModules
         return coreIDs.associateWith {
             val installed = it.libretroFileName in bundled || computePlayModuleName(it) in installedModules

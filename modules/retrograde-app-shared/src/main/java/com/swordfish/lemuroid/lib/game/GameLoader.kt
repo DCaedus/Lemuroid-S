@@ -19,6 +19,7 @@
 
 package com.swordfish.lemuroid.lib.game
 
+import com.swordfish.lemuroid.lib.core.NativeLibraries
 import android.content.Context
 import android.os.Build
 import com.swordfish.lemuroid.lib.bios.BiosManager
@@ -76,9 +77,8 @@ class GameLoader(
                 }
 
                 val coreLibrary =
-                    runCatching {
-                        findLibrary(appContext, systemCoreConfig.coreID)!!.absolutePath
-                    }.getOrElse { throw GameLoaderException(GameLoaderError.LoadCore) }
+                    NativeLibraries.find(appContext, systemCoreConfig.coreID.libretroFileName)
+                        ?: throw GameLoaderException(GameLoaderError.LoadCore)
 
                 emit(LoadingState.LoadingGame)
 
@@ -148,20 +148,6 @@ class GameLoader(
         return Build.SUPPORTED_ABIS.toSet().intersect(supportedOnlyArchitectures).isNotEmpty()
     }
 
-    private fun findLibrary(
-        context: Context,
-        coreID: CoreID,
-    ): File? {
-        val files =
-            sequenceOf(
-                File(context.applicationInfo.nativeLibraryDir),
-                context.filesDir,
-            )
-
-        return files
-            .flatMap { it.walkBottomUp() }
-            .firstOrNull { it.name == coreID.libretroFileName }
-    }
 
     @Suppress("ArrayInDataClass")
     data class GameData(

@@ -20,14 +20,6 @@ Emulator cores shipped inside Lemuroid-S (all other cores are downloaded when fi
 | PokeMini | Pokémon mini | GPL-3.0 |
 | ProSystem | Atari 7800 | GPL-2.0 |
 | vecx | Vectrex | GPL-3.0 |
-| DOSBox Pure | DOS | GPL-2.0 |
-| Stella | Atari 2600 | GPL-2.0 |
-| PicoDrive | Sega 32X | Non-commercial (see core) |
-| NeoCD | Neo Geo CD | LGPL-3.0 |
-| FreeIntv | Intellivision | GPL-3.0 |
-| PCE Fast | PC Engine | GPL-2.0 |
-| Gearcoleco | ColecoVision | GPL-3.0 |
-| FBNeo | Arcade | Non-commercial (see core) |
 
 The first five `.so` files are in `src/main/jniLibs`: unmodified libretro nightly builds from
 [buildbot.libretro.com](https://buildbot.libretro.com/nightly/android/) (2026-11-24), built by the libretro
