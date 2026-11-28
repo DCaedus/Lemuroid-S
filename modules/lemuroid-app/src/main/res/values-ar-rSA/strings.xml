@@ -31,7 +31,7 @@
     <string name="settings_description_hd_quality">ضبط جودة الوضع عالي الدِّقَّة</string>
     <string name="settings_title_immersive_mode">وضع الغمار</string>
     <string name="settings_description_immersive_mode">تلوين الخلفية بشكل ديناميكي استناداً إلى مرئيات اللعبة</string>
-    <string name="settings_title_gamepad_settings">أجهزة خارجية</string>
+    <string name="settings_title_gamepad_settings">تعيين أزرار وحدة التحكم</string>
     <string name="settings_description_gamepad_settings">تهيئة أجهزة التحكم ولوحات المفاتيح</string>
     <string name="settings_retropad_button_name">لوحة قديمة %1$s</string>
     <string name="settings_gamepad_category_enabled">الأجهزة المفعلة</string>
@@ -331,7 +331,6 @@
     <string name="downloads_wifi_only">عبر Wi-Fi فقط</string>
     <string name="downloads_action">تنزيل</string>
     <string name="downloads_started">جارٍ التنزيل في الخلفية. مع خيار \"عبر Wi-Fi فقط\" ينتظر الاتصال بشبكة Wi-Fi.</string>
-    <string name="downloads_no_cores">لا توجد نوى مستخدمة بعد. أضف ألعابًا إلى مكتبتك أولًا.</string>
     <string name="covers_download_notification_title">جارٍ تنزيل أغلفة الألعاب</string>
     <string name="covers_download_notification_message">جارٍ تنزيل أغلفة ألعابك</string>
     <string name="covers_download_result_title">تم تنزيل الأغلفة</string>
@@ -349,4 +348,6 @@
     <string name="core_download_failed">تعذّر تنزيل النواة. تحقّق من الاتصال وحاول مرة أخرى.</string>
     <string name="shader_filter_names_scale2x">بكسلات أدق (Scale2x)</string>
     <string name="shader_filter_names_xbr">xBR (متطلب)</string>
+    <string name="downloads_section_library">في مكتبتك</string>
+    <string name="downloads_section_other">أنظمة أخرى</string>
 </resources>

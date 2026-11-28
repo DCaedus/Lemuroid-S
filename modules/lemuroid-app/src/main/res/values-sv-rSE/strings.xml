@@ -31,7 +31,7 @@
     <string name="settings_description_hd_quality">Justera kvaliteten för HD-läget</string>
     <string name="settings_title_immersive_mode">Omslutande läge</string>
     <string name="settings_description_immersive_mode">Färgar bakgrunden dynamiskt baserat på spelets grafik</string>
-    <string name="settings_title_gamepad_settings">Externa enheter</string>
+    <string name="settings_title_gamepad_settings">Knappmappning för handkontroll</string>
     <string name="settings_description_gamepad_settings">Konfigurera externa handkontroller och tangentbord</string>
     <string name="settings_retropad_button_name">RetroPad %1$s</string>
     <string name="settings_gamepad_category_enabled">Aktiverade enheter</string>
@@ -332,7 +332,6 @@
     <string name="downloads_wifi_only">Endast via wifi</string>
     <string name="downloads_action">Ladda ned</string>
     <string name="downloads_started">Laddar ned i bakgrunden. Med \"Endast via wifi\" väntar den på en wifi-anslutning.</string>
-    <string name="downloads_no_cores">Inga kärnor används ännu. Lägg först till spel i biblioteket.</string>
     <string name="covers_download_notification_title">Laddar ned spelomslag</string>
     <string name="covers_download_notification_message">Laddar ned omslagen till dina spel</string>
     <string name="covers_download_result_title">Omslag nedladdade</string>
@@ -350,4 +349,6 @@
     <string name="core_download_failed">Det gick inte att ladda ned kärnan. Kontrollera anslutningen och försök igen.</string>
     <string name="shader_filter_names_scale2x">Finare pixlar (Scale2x)</string>
     <string name="shader_filter_names_xbr">xBR (Krävande)</string>
+    <string name="downloads_section_library">I ditt bibliotek</string>
+    <string name="downloads_section_other">Andra system</string>
 </resources>

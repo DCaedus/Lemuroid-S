@@ -31,7 +31,7 @@
     <string name="settings_description_hd_quality">Qualität des HD-Modus anpassen</string>
     <string name="settings_title_immersive_mode">Immersive-Modus</string>
     <string name="settings_description_immersive_mode">Dynamische Farben des Hintergrunds basierend auf Spielvisuellen</string>
-    <string name="settings_title_gamepad_settings">Externe Geräte</string>
+    <string name="settings_title_gamepad_settings">Controller-Tastenbelegung</string>
     <string name="settings_description_gamepad_settings">Konfiguriere externe Controller und Tastaturen</string>
     <string name="settings_retropad_button_name">RetroPad %1$s</string>
     <string name="settings_gamepad_category_enabled">Aktivierte Geräte</string>
@@ -332,7 +332,6 @@
     <string name="downloads_wifi_only">Nur über WLAN</string>
     <string name="downloads_action">Herunterladen</string>
     <string name="downloads_started">Wird im Hintergrund heruntergeladen. Mit \"Nur über WLAN\" wartet es auf eine WLAN-Verbindung.</string>
-    <string name="downloads_no_cores">Noch keine Cores in Verwendung. Füge zuerst Spiele zu deiner Bibliothek hinzu.</string>
     <string name="covers_download_notification_title">Spielcover werden heruntergeladen</string>
     <string name="covers_download_notification_message">Die Cover deiner Spiele werden heruntergeladen</string>
     <string name="covers_download_result_title">Cover heruntergeladen</string>
@@ -350,4 +349,6 @@
     <string name="core_download_failed">Der Core konnte nicht heruntergeladen werden. Prüfe deine Verbindung und versuche es erneut.</string>
     <string name="shader_filter_names_scale2x">Feinere Pixel (Scale2x)</string>
     <string name="shader_filter_names_xbr">xBR (Anspruchsvoll)</string>
+    <string name="downloads_section_library">In deiner Bibliothek</string>
+    <string name="downloads_section_other">Andere Systeme</string>
 </resources>

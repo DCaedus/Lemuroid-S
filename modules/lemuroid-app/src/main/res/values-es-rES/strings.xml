@@ -31,7 +31,7 @@
     <string name="settings_description_hd_quality">Ajustar la calidad del modo HD</string>
     <string name="settings_title_immersive_mode">Modo inmersivo</string>
     <string name="settings_description_immersive_mode">Dinámicamente colorea el fondo basado en visuales del juego</string>
-    <string name="settings_title_gamepad_settings">Dispositivos externos</string>
+    <string name="settings_title_gamepad_settings">Asignación de botones del mando</string>
     <string name="settings_description_gamepad_settings">Configurar Controles y teclados externos</string>
     <string name="settings_retropad_button_name">RetroPad %1$s</string>
     <string name="settings_gamepad_category_enabled">Dispositivos habilitados</string>
@@ -332,7 +332,6 @@
     <string name="downloads_wifi_only">Solo con Wi-Fi</string>
     <string name="downloads_action">Descargar</string>
     <string name="downloads_started">Descargando en segundo plano. Con \"Solo con Wi-Fi\" espera a una conexión Wi-Fi.</string>
-    <string name="downloads_no_cores">Aún no se usa ningún núcleo. Primero añade juegos a tu biblioteca.</string>
     <string name="covers_download_notification_title">Descargando portadas</string>
     <string name="covers_download_notification_message">Descargando las portadas de tus juegos</string>
     <string name="covers_download_result_title">Portadas descargadas</string>
@@ -350,4 +349,6 @@
     <string name="core_download_failed">No se pudo descargar el núcleo. Comprueba la conexión e inténtalo de nuevo.</string>
     <string name="shader_filter_names_scale2x">Píxeles más finos (Scale2x)</string>
     <string name="shader_filter_names_xbr">xBR (Exigente)</string>
+    <string name="downloads_section_library">En tu biblioteca</string>
+    <string name="downloads_section_other">Otros sistemas</string>
 </resources>

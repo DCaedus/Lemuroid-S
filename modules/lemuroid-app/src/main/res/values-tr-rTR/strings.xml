@@ -31,7 +31,7 @@
     <string name="settings_description_hd_quality">HD modun kalitesini ayarla</string>
     <string name="settings_title_immersive_mode">Sürükleyici mod</string>
     <string name="settings_description_immersive_mode">Oyun görsellerine göre arka planı dinamik olarak renklendirir</string>
-    <string name="settings_title_gamepad_settings">Harici cihazlar</string>
+    <string name="settings_title_gamepad_settings">Kumanda düğme eşleme</string>
     <string name="settings_description_gamepad_settings">Harici gamepadleri ve klavyeleri yönet</string>
     <string name="settings_retropad_button_name">RetroPad %1$s</string>
     <string name="settings_gamepad_category_enabled">Etkin cihazlar</string>
@@ -333,7 +333,6 @@ $SYSTEMS.
     <string name="downloads_wifi_only">Yalnızca Wi-Fi ile</string>
     <string name="downloads_action">İndir</string>
     <string name="downloads_started">Arka planda indiriliyor. \"Yalnızca Wi-Fi ile\" seçiliyse Wi-Fi bağlantısını bekler.</string>
-    <string name="downloads_no_cores">Henüz kullanılan çekirdek yok. Önce kitaplığınıza oyun ekleyin.</string>
     <string name="covers_download_notification_title">Oyun kapakları indiriliyor</string>
     <string name="covers_download_notification_message">Oyunlarınızın kapakları indiriliyor</string>
     <string name="covers_download_result_title">Kapaklar indirildi</string>
@@ -351,4 +350,6 @@ $SYSTEMS.
     <string name="core_download_failed">Çekirdek indirilemedi. Bağlantınızı kontrol edip tekrar deneyin.</string>
     <string name="shader_filter_names_scale2x">Daha ince pikseller (Scale2x)</string>
     <string name="shader_filter_names_xbr">xBR (Zorlayıcı)</string>
+    <string name="downloads_section_library">Kitaplığınızda</string>
+    <string name="downloads_section_other">Diğer sistemler</string>
 </resources>

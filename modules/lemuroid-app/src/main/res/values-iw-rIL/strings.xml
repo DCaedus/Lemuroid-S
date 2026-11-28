@@ -23,7 +23,7 @@
     <string name="settings_title_enable_autosave">מצב שמירה אוטומטית</string>
     <string name="settings_title_enable_touch_feedback">רטט במגע</string>
     <string name="settings_title_tilt_sensitivity">רגישות חיישן ההטייה</string>
-    <string name="settings_title_gamepad_settings">התקן חיצוני</string>
+    <string name="settings_title_gamepad_settings">מיפוי כפתורי בקר</string>
     <string name="settings_description_gamepad_settings">הגדר מקלדות ובקרים חיצוניים</string>
     <string name="settings_retropad_button_name">RetroPad %1$s</string>
     <string name="settings_gamepad_category_enabled">מכשירים מופעלים</string>
@@ -322,7 +322,6 @@
     <string name="downloads_wifi_only">רק ב-Wi-Fi</string>
     <string name="downloads_action">הורדה</string>
     <string name="downloads_started">מוריד ברקע. עם \"רק ב-Wi-Fi\" ההורדה ממתינה לחיבור Wi-Fi.</string>
-    <string name="downloads_no_cores">עדיין אין ליבות בשימוש. קודם הוסיפו משחקים לספרייה.</string>
     <string name="covers_download_notification_title">מוריד עטיפות משחקים</string>
     <string name="covers_download_notification_message">מוריד את העטיפות של המשחקים שלך</string>
     <string name="covers_download_result_title">העטיפות הורדו</string>
@@ -342,4 +341,6 @@
     <string name="shader_filter_names_xbr">xBR (תובעני)</string>
     <string name="shader_filter_names_crt">CRT (קווי סריקה)</string>
     <string name="shader_filter_names_lcd">LCD (רשת פיקסלים)</string>
+    <string name="downloads_section_library">בספרייה שלך</string>
+    <string name="downloads_section_other">מערכות אחרות</string>
 </resources>

@@ -69,22 +69,22 @@
     <string-array translatable="false" name="pref_key_shader_filter_values">
         <item>auto</item>
         <item>hd</item>
+        <item>scale2x</item>
         <item>sharp</item>
         <item>smooth</item>
         <item>crt</item>
         <item>lcd</item>
-        <item>scale2x</item>
         <item>xbr</item>
     </string-array>
 
     <string-array translatable="false" name="pref_key_shader_filter_display_names">
         <item>@string/shader_filter_names_auto</item>
         <item>@string/shader_filter_names_hd</item>
+        <item>@string/shader_filter_names_scale2x</item>
         <item>@string/shader_filter_names_sharp</item>
         <item>@string/shader_filter_names_smooth</item>
         <item>@string/shader_filter_names_crt</item>
         <item>@string/shader_filter_names_lcd</item>
-        <item>@string/shader_filter_names_scale2x</item>
         <item>@string/shader_filter_names_xbr</item>
     </string-array>
 

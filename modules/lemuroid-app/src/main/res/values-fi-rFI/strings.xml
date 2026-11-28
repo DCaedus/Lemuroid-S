@@ -31,7 +31,7 @@
     <string name="settings_description_hd_quality">Säädä HD-tilan laatua</string>
     <string name="settings_title_immersive_mode">Immersive mode</string>
     <string name="settings_description_immersive_mode">Dynaamisesti värittää pelin visuaalisiin kuviin perustuvan taustan</string>
-    <string name="settings_title_gamepad_settings">Ulkoiset laitteet</string>
+    <string name="settings_title_gamepad_settings">Ohjaimen painikkeiden määritys</string>
     <string name="settings_description_gamepad_settings">Määritä ulkoiset peliohjaimet ja näppäimistöt</string>
     <string name="settings_retropad_button_name">RetroPad %1$s</string>
     <string name="settings_gamepad_category_enabled">Käytössä olevat laitteet</string>
@@ -328,7 +328,6 @@
     <string name="downloads_wifi_only">Vain Wi-Fin kautta</string>
     <string name="downloads_action">Lataa</string>
     <string name="downloads_started">Ladataan taustalla. Asetuksella \"Vain Wi-Fin kautta\" odotetaan Wi-Fi-yhteyttä.</string>
-    <string name="downloads_no_cores">Ytimiä ei vielä käytetä. Lisää ensin pelejä kirjastoosi.</string>
     <string name="covers_download_notification_title">Ladataan kansikuvia</string>
     <string name="covers_download_notification_message">Ladataan pelien kansikuvia</string>
     <string name="covers_download_result_title">Kansikuvat ladattu</string>
@@ -346,4 +345,6 @@
     <string name="core_download_failed">Ydintä ei voitu ladata. Tarkista yhteys ja yritä uudelleen.</string>
     <string name="shader_filter_names_scale2x">Hienommat pikselit (Scale2x)</string>
     <string name="shader_filter_names_xbr">xBR (Raskas)</string>
+    <string name="downloads_section_library">Kirjastossasi</string>
+    <string name="downloads_section_other">Muut järjestelmät</string>
 </resources>

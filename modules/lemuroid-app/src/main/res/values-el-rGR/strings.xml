@@ -31,7 +31,7 @@
     <string name="settings_description_hd_quality">Προσαρμογή της ποιότητας της HD λειτουργίας</string>
     <string name="settings_title_immersive_mode">Immersive λειτουργία</string>
     <string name="settings_description_immersive_mode">Δυναμικά χρωματίζει το φόντο που βασίζεται σε οπτικά παιχνίδια</string>
-    <string name="settings_title_gamepad_settings">Εξωτερικές συσκευές</string>
+    <string name="settings_title_gamepad_settings">Αντιστοίχιση κουμπιών χειριστηρίου</string>
     <string name="settings_description_gamepad_settings">Ρύθμιση εξωτερικών gamepads και πληκτρολογίων</string>
     <string name="settings_retropad_button_name">RetroPad %1$s</string>
     <string name="settings_gamepad_category_enabled">Ενεργοποιημένες συσκευές</string>
@@ -332,7 +332,6 @@
     <string name="downloads_wifi_only">Μόνο μέσω Wi-Fi</string>
     <string name="downloads_action">Λήψη</string>
     <string name="downloads_started">Γίνεται λήψη στο παρασκήνιο. Με το \"Μόνο μέσω Wi-Fi\" περιμένει σύνδεση Wi-Fi.</string>
-    <string name="downloads_no_cores">Δεν χρησιμοποιούνται ακόμα πυρήνες. Προσθέστε πρώτα παιχνίδια στη βιβλιοθήκη σας.</string>
     <string name="covers_download_notification_title">Λήψη εξωφύλλων παιχνιδιών</string>
     <string name="covers_download_notification_message">Λήψη των εξωφύλλων των παιχνιδιών σας</string>
     <string name="covers_download_result_title">Τα εξώφυλλα ελήφθησαν</string>
@@ -350,4 +349,6 @@
     <string name="core_download_failed">Δεν ήταν δυνατή η λήψη του πυρήνα. Ελέγξτε τη σύνδεσή σας και δοκιμάστε ξανά.</string>
     <string name="shader_filter_names_scale2x">Λεπτότερα pixel (Scale2x)</string>
     <string name="shader_filter_names_xbr">xBR (Απαιτητικό)</string>
+    <string name="downloads_section_library">Στη βιβλιοθήκη σας</string>
+    <string name="downloads_section_other">Άλλα συστήματα</string>
 </resources>

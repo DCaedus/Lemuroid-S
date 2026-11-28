@@ -31,7 +31,7 @@
     <string name="settings_description_hd_quality">Juster kvaliteten til HD-modus</string>
     <string name="settings_title_immersive_mode">Fullskjermsmodus</string>
     <string name="settings_description_immersive_mode">Dynamisk farger bakgrunnen basert på spillbilder</string>
-    <string name="settings_title_gamepad_settings">Eksterne enheter</string>
+    <string name="settings_title_gamepad_settings">Knappetilordning for kontroller</string>
     <string name="settings_description_gamepad_settings">Konfigurer ekstern spillkontroller eller tastatur</string>
     <string name="settings_retropad_button_name">RetroPad %1$s</string>
     <string name="settings_gamepad_category_enabled">Aktiverte enheter</string>
@@ -332,7 +332,6 @@
     <string name="downloads_wifi_only">Bare over Wi-Fi</string>
     <string name="downloads_action">Last ned</string>
     <string name="downloads_started">Laster ned i bakgrunnen. Med \"Bare over Wi-Fi\" venter den på en Wi-Fi-tilkobling.</string>
-    <string name="downloads_no_cores">Ingen kjerner i bruk ennå. Legg først til spill i biblioteket.</string>
     <string name="covers_download_notification_title">Laster ned spillomslag</string>
     <string name="covers_download_notification_message">Laster ned omslagene til spillene dine</string>
     <string name="covers_download_result_title">Omslag lastet ned</string>
@@ -350,4 +349,6 @@
     <string name="core_download_failed">Kunne ikke laste ned kjernen. Sjekk tilkoblingen og prøv igjen.</string>
     <string name="shader_filter_names_scale2x">Finere piksler (Scale2x)</string>
     <string name="shader_filter_names_xbr">xBR (Krevende)</string>
+    <string name="downloads_section_library">I biblioteket ditt</string>
+    <string name="downloads_section_other">Andre systemer</string>
 </resources>

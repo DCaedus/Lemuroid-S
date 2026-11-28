@@ -23,7 +23,7 @@
     <string name="settings_title_enable_autosave">Automatikus mentés</string>
     <string name="settings_title_enable_touch_feedback">Érintéskor vibrálás</string>
     <string name="settings_title_tilt_sensitivity">Döntés-szenzor érzékenység</string>
-    <string name="settings_title_gamepad_settings">Külső eszközök</string>
+    <string name="settings_title_gamepad_settings">Kontroller gombkiosztása</string>
     <string name="settings_description_gamepad_settings">Külső eszközök konfigurálása</string>
     <string name="settings_retropad_button_name">RetroPad %1$s</string>
     <string name="settings_gamepad_category_enabled">Eszközök engedélyezése</string>
@@ -311,7 +311,6 @@
     <string name="downloads_wifi_only">Csak Wi-Fin</string>
     <string name="downloads_action">Letöltés</string>
     <string name="downloads_started">Letöltés a háttérben. A \"Csak Wi-Fin\" beállítással Wi-Fi-kapcsolatra vár.</string>
-    <string name="downloads_no_cores">Még nincs használatban mag. Előbb adj játékokat a könyvtáradhoz.</string>
     <string name="covers_download_notification_title">Játékborítók letöltése</string>
     <string name="covers_download_notification_message">A játékaid borítóinak letöltése</string>
     <string name="covers_download_result_title">Borítók letöltve</string>
@@ -331,4 +330,6 @@
     <string name="shader_filter_names_xbr">xBR (Erőforrásigényes)</string>
     <string name="shader_filter_names_crt">CRT (Pásztázó sorok)</string>
     <string name="shader_filter_names_lcd">LCD (Pixelrács)</string>
+    <string name="downloads_section_library">A könyvtáradban</string>
+    <string name="downloads_section_other">Egyéb rendszerek</string>
 </resources>

@@ -31,7 +31,7 @@
     <string name="settings_description_hd_quality">Прилагодите квалитет HD режима</string>
     <string name="settings_title_immersive_mode">Имерзивни режим</string>
     <string name="settings_description_immersive_mode">Динамично боји позадину на основу визуала игре</string>
-    <string name="settings_title_gamepad_settings">Спољни уређаји</string>
+    <string name="settings_title_gamepad_settings">Мапирање дугмади контролера</string>
     <string name="settings_description_gamepad_settings">Подесите спољне гејмпаде и тастатуре</string>
     <string name="settings_retropad_button_name">RetroPad %1$s</string>
     <string name="settings_gamepad_category_enabled">Омогућени уређаји</string>
@@ -332,7 +332,6 @@
     <string name="downloads_wifi_only">Само преко Wi-Fi мреже</string>
     <string name="downloads_action">Преузми</string>
     <string name="downloads_started">Преузимање у позадини. Са опцијом \"Само преко Wi-Fi мреже\" чека Wi-Fi везу.</string>
-    <string name="downloads_no_cores">Још се не користи ниједно језгро. Прво додај игре у библиотеку.</string>
     <string name="covers_download_notification_title">Преузимање омота игара</string>
     <string name="covers_download_notification_message">Преузимају се омоти твојих игара</string>
     <string name="covers_download_result_title">Омоти су преузети</string>
@@ -350,4 +349,6 @@
     <string name="core_download_failed">Језгро није могло да се преузме. Провери везу и покушај поново.</string>
     <string name="shader_filter_names_scale2x">Финији пиксели (Scale2x)</string>
     <string name="shader_filter_names_xbr">xBR (Захтевно)</string>
+    <string name="downloads_section_library">У твојој библиотеци</string>
+    <string name="downloads_section_other">Остали системи</string>
 </resources>

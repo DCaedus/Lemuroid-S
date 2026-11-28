@@ -1,5 +1,14 @@
 package com.swordfish.lemuroid.app.utils.android.settings
 
+import androidx.compose.ui.unit.DpSize
+import androidx.compose.runtime.remember
+import androidx.compose.material3.SliderDefaults
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.material3.Switch
+import androidx.compose.material3.LocalContentColor
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.clickable
 import androidx.compose.material3.Slider
@@ -30,9 +39,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.alorma.compose.settings.storage.base.SettingValueState
-import com.alorma.compose.settings.ui.SettingsMenuLink
-import com.alorma.compose.settings.ui.SettingsSlider
-import com.alorma.compose.settings.ui.SettingsSwitch
 import kotlin.math.roundToInt
 
 @Composable
@@ -45,8 +51,8 @@ fun LemuroidSettingsPage(
             modifier
                 .fillMaxWidth()
                 .verticalScroll(rememberScrollState())
-                .padding(top = 16.dp, bottom = 16.dp),
-        verticalArrangement = Arrangement.spacedBy(16.dp),
+                .padding(top = 12.dp, bottom = 12.dp),
+        verticalArrangement = Arrangement.spacedBy(12.dp),
     ) {
         content()
     }
@@ -71,18 +77,18 @@ fun LemuroidSettingsSwitch(
     subtitle: @Composable (() -> Unit)? = null,
     onCheckedChange: (Boolean) -> Unit = {},
 ) {
-    SettingsSwitch(
+    val toggle = {
+        state.value = !state.value
+        onCheckedChange(state.value)
+    }
+    SettingsRow(
         modifier = compactRowModifier(),
         enabled = enabled,
-        state = state.value,
         icon = icon,
         title = title,
-        subtitle = subtitle,
-        onCheckedChange = {
-            state.value = it
-            onCheckedChange(it)
-        },
-        colors = lemuroidSettingsColor(enabled),
+        subtitle = if (LocalCompactSettingsRowHeight.current != null) null else subtitle,
+        trailing = { Switch(checked = state.value, onCheckedChange = null, enabled = enabled) },
+        onClick = toggle,
     )
 }
 
@@ -115,16 +121,57 @@ fun LemuroidSettingsMenuLink(
         )
         return
     }
-    SettingsMenuLink(
-        modifier = compactRowModifier(),
+    SettingsRow(
         enabled = enabled,
         icon = icon,
         title = title,
         subtitle = subtitle,
-        action = action,
+        trailing = action,
         onClick = onClick,
-        colors = lemuroidSettingsColor(enabled),
     )
+}
+
+/**
+ * Lemuroid-S: a settings row: icon, title with an optional description under it, and something on
+ * the right. Less padding than Material's list items (at least 72dp for two lines), so more
+ * settings fit on screen; it still grows with long descriptions and the font size.
+ */
+@Composable
+private fun SettingsRow(
+    modifier: Modifier = Modifier,
+    enabled: Boolean,
+    icon: (@Composable () -> Unit)?,
+    title: @Composable () -> Unit,
+    subtitle: (@Composable () -> Unit)?,
+    trailing: (@Composable () -> Unit)?,
+    onClick: (() -> Unit)?,
+) {
+    val colors = lemuroidSettingsColor(enabled)
+    Row(
+        modifier =
+            modifier
+                .fillMaxWidth()
+                .heightIn(min = ROW_MIN_HEIGHT)
+                .then(if (onClick != null) Modifier.clickable(enabled = enabled, onClick = onClick) else Modifier)
+                .padding(horizontal = 16.dp, vertical = ROW_VERTICAL_PADDING),
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.spacedBy(16.dp),
+    ) {
+        if (icon != null) {
+            CompositionLocalProvider(LocalContentColor provides colors.leadingIconColor) { icon() }
+        }
+        Column(modifier = Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(2.dp)) {
+            ProvideTextStyle(MaterialTheme.typography.bodyLarge.copy(color = colors.headlineColor)) { title() }
+            if (subtitle != null) {
+                ProvideTextStyle(MaterialTheme.typography.bodyMedium.copy(color = colors.supportingTextColor)) {
+                    subtitle()
+                }
+            }
+        }
+        if (trailing != null) {
+            CompositionLocalProvider(LocalContentColor provides colors.trailingIconColor) { trailing() }
+        }
+    }
 }
 
 @Composable
@@ -201,7 +248,7 @@ fun LemuroidSettingsSlider(
             supportingContent =
                 valueLabels.getOrNull(state.value)?.let { label -> { Text(text = label) } },
             trailingContent = {
-                Slider(
+                SlimSlider(
                     modifier = Modifier.width(COMPACT_SLIDER_WIDTH),
                     value = state.value.toFloat(),
                     onValueChange = { state.value = it.roundToInt() },
@@ -214,36 +261,73 @@ fun LemuroidSettingsSlider(
         return
     }
 
-    Column(modifier = modifier) {
-        SettingsSlider(
-            steps = steps,
+    // Title with the current value on the right, the slider under them.
+    Column(
+        modifier =
+            modifier
+                .fillMaxWidth()
+                .padding(start = 16.dp, end = 16.dp, top = ROW_VERTICAL_PADDING),
+    ) {
+        Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(16.dp)) {
+            if (icon != null) {
+                CompositionLocalProvider(LocalContentColor provides colors.leadingIconColor) { icon() }
+            }
+            Box(modifier = Modifier.weight(1f)) {
+                ProvideTextStyle(MaterialTheme.typography.bodyLarge.copy(color = colors.headlineColor)) { title() }
+            }
+            valueLabels.getOrNull(state.value)?.let {
+                Text(text = it, style = MaterialTheme.typography.bodyMedium, color = colors.supportingTextColor)
+            }
+        }
+        ProvideTextStyle(MaterialTheme.typography.bodyMedium.copy(color = colors.supportingTextColor)) { subtitle() }
+        SlimSlider(
+            modifier = Modifier.fillMaxWidth(),
             value = state.value.toFloat(),
             onValueChange = { state.value = it.roundToInt() },
             valueRange = valueRange,
-            title = title,
-            subtitle = subtitle,
-            icon = icon,
+            steps = steps,
             enabled = enabled,
-            colors = colors,
         )
-        // Lemuroid-S: optional labels under the slider, spread from the first to the last step.
-        if (valueLabels.isNotEmpty()) {
-            Row(
-                modifier =
-                    Modifier.fillMaxWidth().padding(
-                        // Lined up with the slider, which starts after the icon when there's one.
-                        start = if (icon != null) 56.dp else 16.dp,
-                        end = 24.dp,
-                        bottom = 8.dp,
-                    ),
-                horizontalArrangement = Arrangement.SpaceBetween,
-            ) {
-                valueLabels.forEach {
-                    Text(text = it, style = MaterialTheme.typography.labelSmall, color = colors.supportingTextColor)
-                }
-            }
-        }
     }
+}
+
+/** Lemuroid-S: a slim slider (thin track, round handle) instead of Material's thick one. */
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+private fun SlimSlider(
+    modifier: Modifier,
+    value: Float,
+    onValueChange: (Float) -> Unit,
+    valueRange: ClosedFloatingPointRange<Float>,
+    steps: Int,
+    enabled: Boolean,
+) {
+    val interactionSource = remember { MutableInteractionSource() }
+    Slider(
+        modifier = modifier.height(SLIDER_HEIGHT),
+        value = value,
+        onValueChange = onValueChange,
+        valueRange = valueRange,
+        steps = steps,
+        enabled = enabled,
+        interactionSource = interactionSource,
+        thumb = {
+            SliderDefaults.Thumb(
+                interactionSource = interactionSource,
+                enabled = enabled,
+                thumbSize = DpSize(SLIDER_THUMB_SIZE, SLIDER_THUMB_SIZE),
+            )
+        },
+        track = { sliderState ->
+            SliderDefaults.Track(
+                sliderState = sliderState,
+                modifier = Modifier.height(SLIDER_TRACK_HEIGHT),
+                enabled = enabled,
+                thumbTrackGapSize = 0.dp,
+                drawStopIndicator = null,
+            )
+        },
+    )
 }
 
 @Composable
@@ -253,7 +337,7 @@ private fun SettingsGroupTitleSmall(title: @Composable () -> Unit) {
             Modifier
                 .fillMaxWidth()
                 .wrapContentHeight()
-                .padding(16.dp),
+                .padding(start = 16.dp, end = 16.dp, top = 12.dp, bottom = 4.dp),
         contentAlignment = Alignment.CenterStart,
     ) {
         val primary = MaterialTheme.colorScheme.primary
@@ -279,4 +363,9 @@ private fun lemuroidSettingsColor(enabled: Boolean): ListItemColors {
 }
 
 private val COMPACT_SLIDER_WIDTH = 140.dp
+private val ROW_MIN_HEIGHT = 48.dp
+private val SLIDER_HEIGHT = 32.dp
+private val SLIDER_THUMB_SIZE = 18.dp
+private val SLIDER_TRACK_HEIGHT = 4.dp
+private val ROW_VERTICAL_PADDING = 10.dp
 private val COMPACT_VALUE_MAX_WIDTH = 160.dp

@@ -31,7 +31,7 @@
     <string name="settings_description_hd_quality">Dostosuj jakość trybu HD</string>
     <string name="settings_title_immersive_mode">Tryb pełnoekranowy</string>
     <string name="settings_description_immersive_mode">Dynamicznie koloryzuje tło na podstawie wizualizacji gry</string>
-    <string name="settings_title_gamepad_settings">Urządzenia zewnętrzne</string>
+    <string name="settings_title_gamepad_settings">Mapowanie przycisków kontrolera</string>
     <string name="settings_description_gamepad_settings">Konfiguruj zewnętrzne gamepady i klawiatury</string>
     <string name="settings_retropad_button_name">RetroPad %1$s</string>
     <string name="settings_gamepad_category_enabled">Aktywne urządzenia</string>
@@ -332,7 +332,6 @@
     <string name="downloads_wifi_only">Tylko przez Wi-Fi</string>
     <string name="downloads_action">Pobierz</string>
     <string name="downloads_started">Pobieranie w tle. Przy opcji \"Tylko przez Wi-Fi\" czeka na połączenie Wi-Fi.</string>
-    <string name="downloads_no_cores">Żadne rdzenie nie są jeszcze używane. Najpierw dodaj gry do biblioteki.</string>
     <string name="covers_download_notification_title">Pobieranie okładek gier</string>
     <string name="covers_download_notification_message">Pobieranie okładek Twoich gier</string>
     <string name="covers_download_result_title">Pobrano okładki</string>
@@ -350,4 +349,6 @@
     <string name="core_download_failed">Nie udało się pobrać rdzenia. Sprawdź połączenie i spróbuj ponownie.</string>
     <string name="shader_filter_names_scale2x">Drobniejsze piksele (Scale2x)</string>
     <string name="shader_filter_names_xbr">xBR (Wymagający)</string>
+    <string name="downloads_section_library">W Twojej bibliotece</string>
+    <string name="downloads_section_other">Inne systemy</string>
 </resources>

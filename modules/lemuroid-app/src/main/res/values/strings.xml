@@ -158,7 +158,7 @@
     <string name="settings_title_immersive_mode">Immersive mode</string>
     <string name="settings_description_immersive_mode">Dynamically colors the game\'s background with its on-screen colors</string>
 
-    <string name="settings_title_gamepad_settings">External devices</string>
+    <string name="settings_title_gamepad_settings">Controller button mapping</string>
     <string name="settings_description_gamepad_settings">Configure external gamepads and keyboards</string>
 
     <string name="settings_retropad_button_name">RetroPad %1$s</string>
@@ -387,7 +387,6 @@
     <string name="downloads_wifi_only">Only over Wi-Fi</string>
     <string name="downloads_action">Download</string>
     <string name="downloads_started">Downloading in the background. With \"Only over Wi-Fi\" it waits for a Wi-Fi connection.</string>
-    <string name="downloads_no_cores">No cores in use yet. Add games to your library first.</string>
     <string name="covers_download_notification_title">Downloading game covers</string>
     <string name="covers_download_notification_message">Downloading the covers of your games</string>
     <string name="covers_download_result_title">Covers downloaded</string>
@@ -403,4 +402,6 @@
     <string name="core_download_message_no_size">%1$s games need the %2$s core. Download it now?</string>
     <string name="core_downloading">Downloading the %1$s core…</string>
     <string name="core_download_failed">Couldn\'t download the core. Check your connection and try again.</string>
+    <string name="downloads_section_library">In your library</string>
+    <string name="downloads_section_other">Other systems</string>
 </resources>

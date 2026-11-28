@@ -31,7 +31,7 @@
     <string name="settings_description_hd_quality">Reglaţi calitatea modului HD</string>
     <string name="settings_title_immersive_mode">Mod imersiv</string>
     <string name="settings_description_immersive_mode">Culoare dinamic fundalul bazat pe vizualizarea jocului</string>
-    <string name="settings_title_gamepad_settings">Dispozitive externe</string>
+    <string name="settings_title_gamepad_settings">Maparea butoanelor controlerului</string>
     <string name="settings_description_gamepad_settings">Configurați gamepad-urile externe și tastaturile</string>
     <string name="settings_retropad_button_name">RetroPad %1$s</string>
     <string name="settings_gamepad_category_enabled">Dispozitive activate</string>
@@ -320,7 +320,6 @@
     <string name="downloads_wifi_only">Doar prin Wi-Fi</string>
     <string name="downloads_action">Descarcă</string>
     <string name="downloads_started">Se descarcă în fundal. Cu \"Doar prin Wi-Fi\" așteaptă o conexiune Wi-Fi.</string>
-    <string name="downloads_no_cores">Niciun nucleu folosit încă. Adaugă mai întâi jocuri în bibliotecă.</string>
     <string name="covers_download_notification_title">Se descarcă copertele jocurilor</string>
     <string name="covers_download_notification_message">Se descarcă copertele jocurilor tale</string>
     <string name="covers_download_result_title">Coperte descărcate</string>
@@ -338,4 +337,6 @@
     <string name="core_download_failed">Nucleul nu a putut fi descărcat. Verifică conexiunea și încearcă din nou.</string>
     <string name="shader_filter_names_scale2x">Pixeli mai fini (Scale2x)</string>
     <string name="shader_filter_names_xbr">xBR (Solicitant)</string>
+    <string name="downloads_section_library">În biblioteca ta</string>
+    <string name="downloads_section_other">Alte sisteme</string>
 </resources>

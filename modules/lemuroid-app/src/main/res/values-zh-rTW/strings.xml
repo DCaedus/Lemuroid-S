@@ -29,7 +29,7 @@
     <string name="settings_title_tilt_sensitivity">傾斜感應器敏感度</string>
     <string name="settings_title_hd_quality">高清質量模式</string>
     <string name="settings_description_hd_quality">調整高清模式的質量</string>
-    <string name="settings_title_gamepad_settings">外部設備</string>
+    <string name="settings_title_gamepad_settings">控制器按鍵對應</string>
     <string name="settings_description_gamepad_settings">配置外接遊戲手把和鍵盤 </string>
     <string name="settings_retropad_button_name">%1$s 鍵</string>
     <string name="settings_gamepad_category_enabled">啟用的設備</string>
@@ -329,7 +329,6 @@
     <string name="downloads_wifi_only">僅透過 Wi-Fi</string>
     <string name="downloads_action">下載</string>
     <string name="downloads_started">正在背景下載。選擇「僅透過 Wi-Fi」時會等待 Wi-Fi 連線。</string>
-    <string name="downloads_no_cores">尚未使用任何核心。請先將遊戲加入遊戲庫。</string>
     <string name="covers_download_notification_title">正在下載遊戲封面</string>
     <string name="covers_download_notification_message">正在下載你的遊戲封面</string>
     <string name="covers_download_result_title">封面已下載</string>
@@ -347,4 +346,6 @@
     <string name="core_download_failed">無法下載核心。請檢查網路連線後再試一次。</string>
     <string name="shader_filter_names_scale2x">更細緻的像素（Scale2x）</string>
     <string name="shader_filter_names_xbr">xBR（高負載）</string>
+    <string name="downloads_section_library">遊戲庫中的</string>
+    <string name="downloads_section_other">其他系統</string>
 </resources>

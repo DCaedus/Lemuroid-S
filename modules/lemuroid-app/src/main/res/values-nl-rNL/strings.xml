@@ -31,7 +31,7 @@
     <string name="settings_description_hd_quality">De kwaliteit van HD-modus aanpassen</string>
     <string name="settings_title_immersive_mode">Meeslepende modus</string>
     <string name="settings_description_immersive_mode">Dynamisch kleuren van de achtergrond gebaseerd op de spelvisuals</string>
-    <string name="settings_title_gamepad_settings">Externe apparaten</string>
+    <string name="settings_title_gamepad_settings">Knoptoewijzing van controller</string>
     <string name="settings_description_gamepad_settings">Configureer externe gamepads en toetsenborden</string>
     <string name="settings_retropad_button_name">RetroPad %1$s</string>
     <string name="settings_gamepad_category_enabled">Ingeschakelde apparaten</string>
@@ -332,7 +332,6 @@
     <string name="downloads_wifi_only">Alleen via wifi</string>
     <string name="downloads_action">Downloaden</string>
     <string name="downloads_started">Wordt op de achtergrond gedownload. Met \"Alleen via wifi\" wacht het op een wifiverbinding.</string>
-    <string name="downloads_no_cores">Nog geen cores in gebruik. Voeg eerst games toe aan je bibliotheek.</string>
     <string name="covers_download_notification_title">Gamecovers downloaden</string>
     <string name="covers_download_notification_message">De covers van je games worden gedownload</string>
     <string name="covers_download_result_title">Covers gedownload</string>
@@ -350,4 +349,6 @@
     <string name="core_download_failed">Kan de core niet downloaden. Controleer je verbinding en probeer het opnieuw.</string>
     <string name="shader_filter_names_scale2x">Fijnere pixels (Scale2x)</string>
     <string name="shader_filter_names_xbr">xBR (Zwaar)</string>
+    <string name="downloads_section_library">In je bibliotheek</string>
+    <string name="downloads_section_other">Andere systemen</string>
 </resources>

@@ -29,7 +29,7 @@
     <string name="settings_title_tilt_sensitivity">Độ nhạy cảm biến nghiêng</string>
     <string name="settings_title_hd_quality">Chất lượng chế độ HD</string>
     <string name="settings_description_hd_quality">Điều chỉnh chất lượng của chế độ HD</string>
-    <string name="settings_title_gamepad_settings">Thiết bị bên ngoài</string>
+    <string name="settings_title_gamepad_settings">Gán nút tay cầm</string>
     <string name="settings_description_gamepad_settings">Thiết lập gamepad và bàn phím bên ngoài</string>
     <string name="settings_retropad_button_name">RetroPad %1$s</string>
     <string name="settings_gamepad_category_enabled">Thiết bị đã bật</string>
@@ -330,7 +330,6 @@
     <string name="downloads_wifi_only">Chỉ qua Wi-Fi</string>
     <string name="downloads_action">Tải xuống</string>
     <string name="downloads_started">Đang tải trong nền. Với \"Chỉ qua Wi-Fi\", việc tải sẽ chờ kết nối Wi-Fi.</string>
-    <string name="downloads_no_cores">Chưa có lõi nào được dùng. Hãy thêm trò chơi vào thư viện trước.</string>
     <string name="covers_download_notification_title">Đang tải ảnh bìa trò chơi</string>
     <string name="covers_download_notification_message">Đang tải ảnh bìa các trò chơi của bạn</string>
     <string name="covers_download_result_title">Đã tải ảnh bìa</string>
@@ -348,4 +347,6 @@
     <string name="core_download_failed">Không thể tải lõi. Hãy kiểm tra kết nối và thử lại.</string>
     <string name="shader_filter_names_scale2x">Điểm ảnh mịn hơn (Scale2x)</string>
     <string name="shader_filter_names_xbr">xBR (Nặng)</string>
+    <string name="downloads_section_library">Trong thư viện của bạn</string>
+    <string name="downloads_section_other">Hệ máy khác</string>
 </resources>

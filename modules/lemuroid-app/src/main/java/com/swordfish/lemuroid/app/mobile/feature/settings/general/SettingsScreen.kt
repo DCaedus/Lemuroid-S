@@ -431,7 +431,6 @@ private fun DisplaySettings() {
             steps = 1,
             valueRange = 0f..2f,
             title = { Text(text = stringResource(R.string.settings_title_hd_quality)) },
-            subtitle = { Text(text = stringResource(id = R.string.settings_description_hd_quality)) },
             valueLabels =
                 listOf(
                     stringResource(R.string.settings_hd_quality_low),

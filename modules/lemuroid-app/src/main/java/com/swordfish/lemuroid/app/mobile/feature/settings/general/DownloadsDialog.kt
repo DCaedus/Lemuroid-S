@@ -51,22 +51,33 @@ class CoreDownloads(
     private val retrogradeDb: RetrogradeDatabase,
     private val coreUpdater: CoreUpdater,
 ) {
-    /** A core in use, labelled "NES (FCEUmm)" after the consoles it runs. */
-    data class Choice(val coreID: CoreID, val label: String, val status: CoreUpdater.CoreStatus)
+    /**
+     * A core, labelled "NES (FCEUmm)" after the consoles it runs; [inLibrary] when one of those
+     * consoles has games in the library.
+     */
+    data class Choice(
+        val coreID: CoreID,
+        val label: String,
+        val status: CoreUpdater.CoreStatus,
+        val inLibrary: Boolean,
+    )
 
+    /** Every core Lemuroid-S can use: those for consoles in the library first, then the others. */
     suspend fun choices(): List<Choice> {
-        val systems =
-            retrogradeDb.gameDao().selectSystems()
-                .mapNotNull { runCatching { GameSystem.findById(it) }.getOrNull() }
-        val byCore = systems.groupBy { it.systemCoreConfigs.first().coreID }
+        val librarySystems = retrogradeDb.gameDao().selectSystems().toSet()
+        val byCore = GameSystem.all().groupBy { it.systemCoreConfigs.first().coreID }
         val statuses = coreUpdater.coreStatus(appContext, byCore.keys.toList())
         return byCore
             .map { (coreID, coreSystems) ->
                 val names = coreSystems.map { appContext.getString(it.shortTitleResId) }.sorted()
-                val label = "${names.joinToString(", ")} (${coreID.coreDisplayName})"
-                Choice(coreID, label, statuses[coreID] ?: CoreUpdater.CoreStatus(false, null))
+                Choice(
+                    coreID = coreID,
+                    label = "${names.joinToString(", ")} (${coreID.coreDisplayName})",
+                    status = statuses[coreID] ?: CoreUpdater.CoreStatus(false, null),
+                    inLibrary = coreSystems.any { it.id.dbname in librarySystems },
+                )
             }
-            .sortedBy { it.label.lowercase() }
+            .sortedWith(compareBy<Choice> { !it.inLibrary }.thenBy { it.label.lowercase() })
     }
 
     fun start(
@@ -95,7 +106,8 @@ fun DownloadsDialog(
 
     LaunchedEffect(Unit) {
         val loaded = runCatching { downloads.choices() }.getOrDefault(emptyList())
-        selectedCores.addAll(loaded.filter { !it.status.installed }.map { it.coreID })
+        // Cores for the consoles in the library are ticked; the others can be added.
+        selectedCores.addAll(loaded.filter { it.inLibrary && !it.status.installed }.map { it.coreID })
         choices = loaded
     }
 
@@ -118,12 +130,6 @@ fun DownloadsDialog(
                         Box(modifier = Modifier.fillMaxWidth().heightIn(min = 64.dp), contentAlignment = Alignment.Center) {
                             CircularProgressIndicator()
                         }
-                    loaded.isEmpty() ->
-                        Text(
-                            modifier = Modifier.padding(vertical = 8.dp),
-                            text = stringResource(R.string.downloads_no_cores),
-                            style = MaterialTheme.typography.bodySmall,
-                        )
                     else -> {
                         val available = loaded.filter { !it.status.installed }.map { it.coreID }
                         CheckRow(
@@ -135,7 +141,18 @@ fun DownloadsDialog(
                             selectedCores.clear()
                             if (all) selectedCores.addAll(available)
                         }
-                        loaded.forEach { choice ->
+                        loaded.forEachIndexed { index, choice ->
+                            if (index == 0 || loaded[index - 1].inLibrary != choice.inLibrary) {
+                                Text(
+                                    modifier = Modifier.padding(top = 8.dp, bottom = 2.dp),
+                                    text =
+                                        stringResource(
+                                            if (choice.inLibrary) R.string.downloads_section_library else R.string.downloads_section_other,
+                                        ),
+                                    style = MaterialTheme.typography.labelLarge,
+                                    color = MaterialTheme.colorScheme.primary,
+                                )
+                            }
                             val size = choice.status.sizeBytes
                             val detail =
                                 when {

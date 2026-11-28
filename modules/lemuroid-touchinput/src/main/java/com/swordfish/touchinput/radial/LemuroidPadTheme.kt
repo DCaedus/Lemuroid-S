@@ -37,7 +37,9 @@ class LemuroidPadTheme {
     val level1ShadowWidth = 4.dp
 
     val level0CornerRadius = 0.dp
-    val level0Fill = gray(1.0f, 0.05f)
+    // Lemuroid-S: the panel behind all the controls (portrait, and landscape beside the game) is
+    // darker than Lemuroid's white at 5%, still see-through.
+    val level0Fill = gray(0.0f, 0.35f)
     val level0Shadow = DefaultShadowColor.copy(0.10f)
     val level0ShadowWidth = 2.dp
 

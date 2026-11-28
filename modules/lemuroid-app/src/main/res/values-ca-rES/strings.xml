@@ -24,7 +24,7 @@
     <string name="settings_category_misc">Altres</string>
     <string name="settings_title_enable_autosave">Estat de desat automàtic</string>
     <string name="settings_title_enable_touch_feedback">Vibrar en tocar</string>
-    <string name="settings_title_gamepad_settings">Dispositius externs</string>
+    <string name="settings_title_gamepad_settings">Assignació de botons del comandament</string>
     <string name="settings_description_gamepad_settings">Configura gamepads i teclats externs</string>
     <string name="settings_retropad_button_name">RetroPad %1$s</string>
     <string name="settings_gamepad_category_enabled">Dispositius habilitats</string>
@@ -311,7 +311,6 @@
     <string name="downloads_wifi_only">Només amb Wi-Fi</string>
     <string name="downloads_action">Baixa</string>
     <string name="downloads_started">S\'està baixant en segon pla. Amb \"Només amb Wi-Fi\" espera una connexió Wi-Fi.</string>
-    <string name="downloads_no_cores">Encara no s\'utilitza cap nucli. Primer afegeix jocs a la biblioteca.</string>
     <string name="covers_download_notification_title">S\'estan baixant portades</string>
     <string name="covers_download_notification_message">S\'estan baixant les portades dels teus jocs</string>
     <string name="covers_download_result_title">Portades baixades</string>
@@ -331,4 +330,6 @@
     <string name="shader_filter_names_xbr">xBR (Exigent)</string>
     <string name="shader_filter_names_crt">CRT (Línies d\'escaneig)</string>
     <string name="shader_filter_names_lcd">LCD (Graella de píxels)</string>
+    <string name="downloads_section_library">A la biblioteca</string>
+    <string name="downloads_section_other">Altres sistemes</string>
 </resources>

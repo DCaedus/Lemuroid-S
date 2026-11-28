@@ -32,7 +32,7 @@
     <string name="settings_title_viewport_alignment">Posizione dello schermo di gioco</string>
     <string name="settings_title_immersive_mode">Modalità immersiva</string>
     <string name="settings_description_immersive_mode">Colora dinamicamente lo sfondo in base alle immagini del gioco</string>
-    <string name="settings_title_gamepad_settings">Dispositivi esterni</string>
+    <string name="settings_title_gamepad_settings">Mappatura pulsanti del controller</string>
     <string name="settings_description_gamepad_settings">Configura controller e tastiere collegati</string>
     <string name="settings_retropad_button_name">RetroPad %1$s</string>
     <string name="settings_gamepad_category_enabled">Dispositivi abilitati</string>
@@ -332,7 +332,6 @@
     <string name="downloads_wifi_only">Solo in Wi-Fi</string>
     <string name="downloads_action">Scarica</string>
     <string name="downloads_started">Download in background. Con \"Solo in Wi-Fi\" attende una connessione Wi-Fi.</string>
-    <string name="downloads_no_cores">Nessun core ancora in uso. Aggiungi prima dei giochi alla libreria.</string>
     <string name="covers_download_notification_title">Download delle copertine</string>
     <string name="covers_download_notification_message">Download delle copertine dei tuoi giochi</string>
     <string name="covers_download_result_title">Copertine scaricate</string>
@@ -350,4 +349,6 @@
     <string name="core_download_failed">Impossibile scaricare il core. Controlla la connessione e riprova.</string>
     <string name="shader_filter_names_scale2x">Pixel più fini (Scale2x)</string>
     <string name="shader_filter_names_xbr">xBR (Impegnativo)</string>
+    <string name="downloads_section_library">Nella tua libreria</string>
+    <string name="downloads_section_other">Altri sistemi</string>
 </resources>

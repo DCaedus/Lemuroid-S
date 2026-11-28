@@ -31,7 +31,7 @@
     <string name="settings_description_hd_quality">Ajuster la qualité du mode HD</string>
     <string name="settings_title_immersive_mode">Mode immersif</string>
     <string name="settings_description_immersive_mode">Couleurs dynamiquement l\'arrière-plan en fonction des visuels du jeu</string>
-    <string name="settings_title_gamepad_settings">Périphériques externes</string>
+    <string name="settings_title_gamepad_settings">Attribution des boutons de la manette</string>
     <string name="settings_description_gamepad_settings">Configurer les manettes et claviers externes</string>
     <string name="settings_retropad_button_name">RétroPad %1$s</string>
     <string name="settings_gamepad_category_enabled">Périphériques activés</string>
@@ -332,7 +332,6 @@
     <string name="downloads_wifi_only">Uniquement en Wi-Fi</string>
     <string name="downloads_action">Télécharger</string>
     <string name="downloads_started">Téléchargement en arrière-plan. Avec \"Uniquement en Wi-Fi\", il attend une connexion Wi-Fi.</string>
-    <string name="downloads_no_cores">Aucun cœur utilisé pour l\'instant. Ajoutez d\'abord des jeux à votre bibliothèque.</string>
     <string name="covers_download_notification_title">Téléchargement des jaquettes</string>
     <string name="covers_download_notification_message">Téléchargement des jaquettes de vos jeux</string>
     <string name="covers_download_result_title">Jaquettes téléchargées</string>
@@ -350,4 +349,6 @@
     <string name="core_download_failed">Impossible de télécharger le cœur. Vérifiez votre connexion et réessayez.</string>
     <string name="shader_filter_names_scale2x">Pixels affinés (Scale2x)</string>
     <string name="shader_filter_names_xbr">xBR (Exigeant)</string>
+    <string name="downloads_section_library">Dans votre bibliothèque</string>
+    <string name="downloads_section_other">Autres systèmes</string>
 </resources>

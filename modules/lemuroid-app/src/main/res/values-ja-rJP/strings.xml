@@ -31,7 +31,7 @@
     <string name="settings_description_hd_quality">HDモードの画質を調整する</string>
     <string name="settings_title_immersive_mode">没入モード</string>
     <string name="settings_description_immersive_mode">ゲームのビジュアルに基づいて背景を動的に色付けします</string>
-    <string name="settings_title_gamepad_settings">外部デバイス</string>
+    <string name="settings_title_gamepad_settings">コントローラーのボタン割り当て</string>
     <string name="settings_description_gamepad_settings">外部のゲームパッドとキーボードを設定</string>
     <string name="settings_retropad_button_name">RetroPad %1$s</string>
     <string name="settings_gamepad_category_enabled">有効なデバイス</string>
@@ -335,7 +335,6 @@
     <string name="downloads_wifi_only">Wi-Fi のみ</string>
     <string name="downloads_action">ダウンロード</string>
     <string name="downloads_started">バックグラウンドでダウンロードしています。「Wi-Fi のみ」の場合は Wi-Fi 接続を待ちます。</string>
-    <string name="downloads_no_cores">使用中のコアはまだありません。先にライブラリにゲームを追加してください。</string>
     <string name="covers_download_notification_title">ゲームのカバーをダウンロード中</string>
     <string name="covers_download_notification_message">ゲームのカバーをダウンロードしています</string>
     <string name="covers_download_result_title">カバーをダウンロードしました</string>
@@ -353,4 +352,6 @@
     <string name="core_download_failed">コアをダウンロードできませんでした。接続を確認して、もう一度お試しください。</string>
     <string name="shader_filter_names_scale2x">より細かいピクセル（Scale2x）</string>
     <string name="shader_filter_names_xbr">xBR（高負荷）</string>
+    <string name="downloads_section_library">ライブラリにあるもの</string>
+    <string name="downloads_section_other">その他のシステム</string>
 </resources>

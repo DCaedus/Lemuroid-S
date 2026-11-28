@@ -184,7 +184,7 @@
     <string name="settings_description_hd_quality">Stel die kwaliteit van HD-modus in</string>
     <string name="settings_title_immersive_mode">Meesleurende modus</string>
     <string name="settings_description_immersive_mode">Kleur die speletjie se agtergrond dinamies met die kleure op die skerm</string>
-    <string name="settings_title_gamepad_settings">Eksterne toestelle</string>
+    <string name="settings_title_gamepad_settings">Beheerder-knoppie-toewysing</string>
     <string name="settings_description_gamepad_settings">Stel eksterne beheerders en sleutelborde op</string>
     <string name="settings_retropad_button_name">RetroPad %1$s</string>
     <string name="settings_gamepad_category_enabled">Geaktiveerde toestelle</string>
@@ -311,7 +311,6 @@
     <string name="downloads_wifi_only">Slegs oor Wi-Fi</string>
     <string name="downloads_action">Laai af</string>
     <string name="downloads_started">Laai in die agtergrond af. Met \"Slegs oor Wi-Fi\" wag dit vir \'n Wi-Fi-verbinding.</string>
-    <string name="downloads_no_cores">Nog geen kerne in gebruik nie. Voeg eers speletjies by jou biblioteek.</string>
     <string name="covers_download_notification_title">Laai speletjie-omslae af</string>
     <string name="covers_download_notification_message">Laai die omslae van jou speletjies af</string>
     <string name="covers_download_result_title">Omslae afgelaai</string>
@@ -331,4 +330,6 @@
     <string name="shader_filter_names_xbr">xBR (Veeleisend)</string>
     <string name="shader_filter_names_crt">CRT (Skandeerlyne)</string>
     <string name="shader_filter_names_lcd">LCD (Pieksel-rooster)</string>
+    <string name="downloads_section_library">In jou biblioteek</string>
+    <string name="downloads_section_other">Ander stelsels</string>
 </resources>

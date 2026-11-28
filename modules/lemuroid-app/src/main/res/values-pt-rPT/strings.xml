@@ -31,7 +31,7 @@
     <string name="settings_description_hd_quality">Ajustar a qualidade do HD</string>
     <string name="settings_title_immersive_mode">Modo imersivo</string>
     <string name="settings_description_immersive_mode">Colore o fundo dinamicamente com base no visual do jogo</string>
-    <string name="settings_title_gamepad_settings">Dispositivos externos</string>
+    <string name="settings_title_gamepad_settings">Mapeamento de botões do comando</string>
     <string name="settings_description_gamepad_settings">Configurar comandos externos e teclados</string>
     <string name="settings_retropad_button_name">RetroPad %1$s</string>
     <string name="settings_gamepad_category_enabled">Dispositivos habilitados</string>
@@ -332,7 +332,6 @@
     <string name="downloads_wifi_only">Só por Wi-Fi</string>
     <string name="downloads_action">Transferir</string>
     <string name="downloads_started">A transferir em segundo plano. Com \"Só por Wi-Fi\" aguarda uma ligação Wi-Fi.</string>
-    <string name="downloads_no_cores">Ainda não há núcleos em uso. Adicione primeiro jogos à biblioteca.</string>
     <string name="covers_download_notification_title">A transferir capas dos jogos</string>
     <string name="covers_download_notification_message">A transferir as capas dos seus jogos</string>
     <string name="covers_download_result_title">Capas transferidas</string>
@@ -350,4 +349,6 @@
     <string name="core_download_failed">Não foi possível transferir o núcleo. Verifique a ligação e tente novamente.</string>
     <string name="shader_filter_names_scale2x">Píxeis mais finos (Scale2x)</string>
     <string name="shader_filter_names_xbr">xBR (Exigente)</string>
+    <string name="downloads_section_library">Na sua biblioteca</string>
+    <string name="downloads_section_other">Outros sistemas</string>
 </resources>
