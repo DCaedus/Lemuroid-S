@@ -176,7 +176,12 @@ object PlayCores {
             ZipInputStream(data.inputStream()).use { zip ->
                 generateSequence { zip.nextEntry }
                     .filter { !it.isDirectory && it.name.endsWith(".so") }
-                    .forEach { entry -> File(target, File(entry.name).name).outputStream().use { zip.copyTo(it) } }
+                    .forEach { entry ->
+                        // The release zips hold "<core>_libretro_android.so"; Android only unpacks native
+                        // libraries named "lib*.so", and the app looks for "lib<core>_libretro_android.so".
+                        val name = File(entry.name).name.let { if (it.startsWith("lib")) it else "lib$it" }
+                        File(target, name).outputStream().use { zip.copyTo(it) }
+                    }
             }
         }
     }
