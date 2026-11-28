@@ -348,4 +348,9 @@
     <string name="core_download_message_no_size">Les jeux %1$s ont besoin du cœur %2$s. Le télécharger maintenant ?</string>
     <string name="core_downloading">Téléchargement du cœur %1$s…</string>
     <string name="core_download_failed">Impossible de télécharger le cœur. Vérifiez votre connexion et réessayez.</string>
+    <string name="shader_filter_names_scale2x">Pixels arrondis (Scale2x)</string>
+    <string name="shader_filter_names_xbr">Contours lisses (xBR)</string>
+    <string name="shader_filter_names_sabr">Contours doux (SABR)</string>
+    <string name="shader_filter_names_mmpx">Pixel art (MMPX)</string>
+    <string name="shader_filter_names_zfast_crt">CRT léger (zfast)</string>
 </resources>

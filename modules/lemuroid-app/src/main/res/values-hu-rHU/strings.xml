@@ -327,4 +327,9 @@
     <string name="core_download_message_no_size">A(z) %1$s játékokhoz a(z) %2$s mag kell. Letöltöd most?</string>
     <string name="core_downloading">A(z) %1$s mag letöltése…</string>
     <string name="core_download_failed">Nem sikerült letölteni a magot. Ellenőrizd a kapcsolatot, és próbáld újra.</string>
+    <string name="shader_filter_names_scale2x">Lekerekített pixelek (Scale2x)</string>
+    <string name="shader_filter_names_xbr">Sima élek (xBR)</string>
+    <string name="shader_filter_names_sabr">Lágy élek (SABR)</string>
+    <string name="shader_filter_names_mmpx">Pixel art (MMPX)</string>
+    <string name="shader_filter_names_zfast_crt">CRT könnyű (zfast)</string>
 </resources>

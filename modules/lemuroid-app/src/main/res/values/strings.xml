@@ -352,11 +352,11 @@
     <string name="shader_filter_names_smooth">Smooth</string>
     <string name="shader_filter_names_crt">CRT</string>
     <string name="shader_filter_names_lcd">LCD</string>
-    <string name="shader_filter_names_scale2x">Scale2x (EPX)</string>
-    <string name="shader_filter_names_xbr">xBR</string>
-    <string name="shader_filter_names_sabr">SABR</string>
-    <string name="shader_filter_names_mmpx">MMPX</string>
-    <string name="shader_filter_names_zfast_crt">CRT (zfast)</string>
+    <string name="shader_filter_names_scale2x">Rounded pixels (Scale2x)</string>
+    <string name="shader_filter_names_xbr">Smooth edges (xBR)</string>
+    <string name="shader_filter_names_sabr">Soft edges (SABR)</string>
+    <string name="shader_filter_names_mmpx">Pixel art (MMPX)</string>
+    <string name="shader_filter_names_zfast_crt">CRT lite (zfast)</string>
 
     <string name="viewport_alignment_names_top">Top</string>
     <string name="viewport_alignment_names_center">Center</string>

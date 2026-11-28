@@ -347,4 +347,9 @@
     <string name="core_download_message_no_size">Для ігор %1$s потрібне ядро %2$s. Завантажити його зараз?</string>
     <string name="core_downloading">Завантаження ядра %1$s…</string>
     <string name="core_download_failed">Не вдалося завантажити ядро. Перевірте з\'єднання та спробуйте ще раз.</string>
+    <string name="shader_filter_names_scale2x">Заокруглені пікселі (Scale2x)</string>
+    <string name="shader_filter_names_xbr">Гладкі краї (xBR)</string>
+    <string name="shader_filter_names_sabr">М\'які краї (SABR)</string>
+    <string name="shader_filter_names_mmpx">Піксель-арт (MMPX)</string>
+    <string name="shader_filter_names_zfast_crt">CRT полегшений (zfast)</string>
 </resources>

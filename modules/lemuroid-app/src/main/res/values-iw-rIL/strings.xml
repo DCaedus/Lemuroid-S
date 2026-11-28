@@ -338,4 +338,9 @@
     <string name="core_download_message_no_size">משחקי %1$s צריכים את הליבה %2$s. להוריד אותה עכשיו?</string>
     <string name="core_downloading">מוריד את הליבה %1$s…</string>
     <string name="core_download_failed">לא ניתן היה להוריד את הליבה. בדקו את החיבור ונסו שוב.</string>
+    <string name="shader_filter_names_scale2x">פיקסלים מעוגלים (Scale2x)</string>
+    <string name="shader_filter_names_xbr">קצוות חלקים (xBR)</string>
+    <string name="shader_filter_names_sabr">קצוות רכים (SABR)</string>
+    <string name="shader_filter_names_mmpx">פיקסל ארט (MMPX)</string>
+    <string name="shader_filter_names_zfast_crt">CRT קל (zfast)</string>
 </resources>

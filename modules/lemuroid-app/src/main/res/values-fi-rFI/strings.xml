@@ -344,4 +344,9 @@
     <string name="core_download_message_no_size">%1$s-pelit tarvitsevat ytimen %2$s. Ladataanko se nyt?</string>
     <string name="core_downloading">Ladataan ydintä %1$s…</string>
     <string name="core_download_failed">Ydintä ei voitu ladata. Tarkista yhteys ja yritä uudelleen.</string>
+    <string name="shader_filter_names_scale2x">Pyöristetyt pikselit (Scale2x)</string>
+    <string name="shader_filter_names_xbr">Sileät reunat (xBR)</string>
+    <string name="shader_filter_names_sabr">Pehmeät reunat (SABR)</string>
+    <string name="shader_filter_names_mmpx">Pikselitaide (MMPX)</string>
+    <string name="shader_filter_names_zfast_crt">CRT kevyt (zfast)</string>
 </resources>

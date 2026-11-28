@@ -348,4 +348,9 @@
     <string name="core_download_message_no_size">Jogos de %1$s precisam do núcleo %2$s. Baixar agora?</string>
     <string name="core_downloading">Baixando o núcleo %1$s…</string>
     <string name="core_download_failed">Não foi possível baixar o núcleo. Verifique sua conexão e tente novamente.</string>
+    <string name="shader_filter_names_scale2x">Pixels arredondados (Scale2x)</string>
+    <string name="shader_filter_names_xbr">Bordas suaves (xBR)</string>
+    <string name="shader_filter_names_sabr">Bordas difusas (SABR)</string>
+    <string name="shader_filter_names_mmpx">Pixel art (MMPX)</string>
+    <string name="shader_filter_names_zfast_crt">CRT leve (zfast)</string>
 </resources>

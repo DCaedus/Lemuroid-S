@@ -348,4 +348,9 @@
     <string name="core_download_message_no_size">Os jogos de %1$s precisam do núcleo %2$s. Transferir agora?</string>
     <string name="core_downloading">A transferir o núcleo %1$s…</string>
     <string name="core_download_failed">Não foi possível transferir o núcleo. Verifique a ligação e tente novamente.</string>
+    <string name="shader_filter_names_scale2x">Píxeis arredondados (Scale2x)</string>
+    <string name="shader_filter_names_xbr">Contornos suaves (xBR)</string>
+    <string name="shader_filter_names_sabr">Contornos difusos (SABR)</string>
+    <string name="shader_filter_names_mmpx">Pixel art (MMPX)</string>
+    <string name="shader_filter_names_zfast_crt">CRT leve (zfast)</string>
 </resources>

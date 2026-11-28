@@ -122,10 +122,10 @@ fun LemuroidGamesCollection(
     val small = layout == LemuroidLayout.TILES_SMALL
     LazyVerticalGrid(
         modifier = modifier.fillMaxSize(),
-        contentPadding = LemuroidGrid.contentPadding,
+        contentPadding = LemuroidGrid.contentPadding(small),
         columns = LemuroidGrid.columns(small),
-        horizontalArrangement = LemuroidGrid.arrangement,
-        verticalArrangement = LemuroidGrid.arrangement,
+        horizontalArrangement = LemuroidGrid.arrangement(small),
+        verticalArrangement = LemuroidGrid.arrangement(small),
     ) {
         items(games.itemCount, key = { games[it]?.id ?: it }) { index ->
             val game = games[index] ?: return@items

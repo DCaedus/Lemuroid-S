@@ -348,4 +348,9 @@
     <string name="core_download_message_no_size">%1$s-games hebben de core %2$s nodig. Nu downloaden?</string>
     <string name="core_downloading">Core %1$s downloaden…</string>
     <string name="core_download_failed">Kan de core niet downloaden. Controleer je verbinding en probeer het opnieuw.</string>
+    <string name="shader_filter_names_scale2x">Afgeronde pixels (Scale2x)</string>
+    <string name="shader_filter_names_xbr">Gladde randen (xBR)</string>
+    <string name="shader_filter_names_sabr">Zachte randen (SABR)</string>
+    <string name="shader_filter_names_mmpx">Pixelart (MMPX)</string>
+    <string name="shader_filter_names_zfast_crt">CRT licht (zfast)</string>
 </resources>

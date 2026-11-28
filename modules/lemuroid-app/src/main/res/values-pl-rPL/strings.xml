@@ -348,4 +348,9 @@
     <string name="core_download_message_no_size">Gry na %1$s wymagają rdzenia %2$s. Pobrać go teraz?</string>
     <string name="core_downloading">Pobieranie rdzenia %1$s…</string>
     <string name="core_download_failed">Nie udało się pobrać rdzenia. Sprawdź połączenie i spróbuj ponownie.</string>
+    <string name="shader_filter_names_scale2x">Zaokrąglone piksele (Scale2x)</string>
+    <string name="shader_filter_names_xbr">Gładkie krawędzie (xBR)</string>
+    <string name="shader_filter_names_sabr">Miękkie krawędzie (SABR)</string>
+    <string name="shader_filter_names_mmpx">Pixel art (MMPX)</string>
+    <string name="shader_filter_names_zfast_crt">CRT lekki (zfast)</string>
 </resources>

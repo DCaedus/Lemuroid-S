@@ -174,7 +174,7 @@ private fun HomeRow(
             modifier =
                 Modifier
                     .fillMaxWidth(),
-            horizontalArrangement = LemuroidGrid.arrangement,
+            horizontalArrangement = LemuroidGrid.arrangement(textSize == LemuroidTextSize.TILE_SMALL),
             contentPadding = PaddingValues(horizontal = 12.dp, vertical = ROW_PADDING),
         ) {
             items(games.size, key = { games[it].id }) { index ->

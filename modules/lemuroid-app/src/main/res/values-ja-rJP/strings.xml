@@ -351,4 +351,9 @@
     <string name="core_download_message_no_size">%1$s のゲームには %2$s コアが必要です。今すぐダウンロードしますか？</string>
     <string name="core_downloading">%1$s コアをダウンロード中…</string>
     <string name="core_download_failed">コアをダウンロードできませんでした。接続を確認して、もう一度お試しください。</string>
+    <string name="shader_filter_names_scale2x">丸めたピクセル（Scale2x）</string>
+    <string name="shader_filter_names_xbr">なめらかな輪郭（xBR）</string>
+    <string name="shader_filter_names_sabr">やわらかい輪郭（SABR）</string>
+    <string name="shader_filter_names_mmpx">ピクセルアート（MMPX）</string>
+    <string name="shader_filter_names_zfast_crt">CRT ライト（zfast）</string>
 </resources>

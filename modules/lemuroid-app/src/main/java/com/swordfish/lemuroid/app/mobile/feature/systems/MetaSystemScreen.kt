@@ -58,10 +58,10 @@ private fun MetaSystemsScreen(
 
     LazyVerticalGrid(
         modifier = modifier.fillMaxSize(),
-        contentPadding = LemuroidGrid.contentPadding,
+        contentPadding = LemuroidGrid.contentPadding(layout == LemuroidLayout.TILES_SMALL),
         columns = LemuroidGrid.columns(small = layout == LemuroidLayout.TILES_SMALL),
-        horizontalArrangement = LemuroidGrid.arrangement,
-        verticalArrangement = LemuroidGrid.arrangement,
+        horizontalArrangement = LemuroidGrid.arrangement(layout == LemuroidLayout.TILES_SMALL),
+        verticalArrangement = LemuroidGrid.arrangement(layout == LemuroidLayout.TILES_SMALL),
     ) {
         items(metaSystems.size, key = { metaSystems[it].metaSystem }) { index ->
             val system = metaSystems[index]

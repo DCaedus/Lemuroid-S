@@ -348,4 +348,9 @@
     <string name="core_download_message_no_size">%1$s 게임에는 %2$s 코어가 필요합니다. 지금 다운로드할까요?</string>
     <string name="core_downloading">%1$s 코어를 다운로드하는 중…</string>
     <string name="core_download_failed">코어를 다운로드하지 못했습니다. 연결을 확인하고 다시 시도하세요.</string>
+    <string name="shader_filter_names_scale2x">둥근 픽셀 (Scale2x)</string>
+    <string name="shader_filter_names_xbr">매끄러운 윤곽 (xBR)</string>
+    <string name="shader_filter_names_sabr">부드러운 윤곽 (SABR)</string>
+    <string name="shader_filter_names_mmpx">픽셀 아트 (MMPX)</string>
+    <string name="shader_filter_names_zfast_crt">CRT 라이트 (zfast)</string>
 </resources>

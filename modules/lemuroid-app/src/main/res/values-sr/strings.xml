@@ -348,4 +348,9 @@
     <string name="core_download_message_no_size">Игре за %1$s захтевају језгро %2$s. Преузети га сада?</string>
     <string name="core_downloading">Преузима се језгро %1$s…</string>
     <string name="core_download_failed">Језгро није могло да се преузме. Провери везу и покушај поново.</string>
+    <string name="shader_filter_names_scale2x">Заобљени пиксели (Scale2x)</string>
+    <string name="shader_filter_names_xbr">Глатке ивице (xBR)</string>
+    <string name="shader_filter_names_sabr">Меке ивице (SABR)</string>
+    <string name="shader_filter_names_mmpx">Пиксел арт (MMPX)</string>
+    <string name="shader_filter_names_zfast_crt">CRT лаки (zfast)</string>
 </resources>

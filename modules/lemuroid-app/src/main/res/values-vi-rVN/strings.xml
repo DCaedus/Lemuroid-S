@@ -346,4 +346,9 @@
     <string name="core_download_message_no_size">Trò chơi %1$s cần lõi %2$s. Tải ngay bây giờ?</string>
     <string name="core_downloading">Đang tải lõi %1$s…</string>
     <string name="core_download_failed">Không thể tải lõi. Hãy kiểm tra kết nối và thử lại.</string>
+    <string name="shader_filter_names_scale2x">Điểm ảnh bo tròn (Scale2x)</string>
+    <string name="shader_filter_names_xbr">Viền mượt (xBR)</string>
+    <string name="shader_filter_names_sabr">Viền mềm (SABR)</string>
+    <string name="shader_filter_names_mmpx">Pixel art (MMPX)</string>
+    <string name="shader_filter_names_zfast_crt">CRT nhẹ (zfast)</string>
 </resources>

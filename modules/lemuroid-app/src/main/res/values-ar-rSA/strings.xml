@@ -347,4 +347,9 @@
     <string name="core_download_message_no_size">تحتاج ألعاب %1$s إلى نواة %2$s. هل تريد تنزيلها الآن؟</string>
     <string name="core_downloading">جارٍ تنزيل نواة %1$s…</string>
     <string name="core_download_failed">تعذّر تنزيل النواة. تحقّق من الاتصال وحاول مرة أخرى.</string>
+    <string name="shader_filter_names_scale2x">بكسلات مستديرة (Scale2x)</string>
+    <string name="shader_filter_names_xbr">حواف ناعمة (xBR)</string>
+    <string name="shader_filter_names_sabr">حواف لينة (SABR)</string>
+    <string name="shader_filter_names_mmpx">فن البكسل (MMPX)</string>
+    <string name="shader_filter_names_zfast_crt">CRT خفيف (zfast)</string>
 </resources>

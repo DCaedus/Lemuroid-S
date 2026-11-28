@@ -348,4 +348,9 @@
     <string name="core_download_message_no_size">Τα παιχνίδια %1$s χρειάζονται τον πυρήνα %2$s. Λήψη τώρα;</string>
     <string name="core_downloading">Λήψη του πυρήνα %1$s…</string>
     <string name="core_download_failed">Δεν ήταν δυνατή η λήψη του πυρήνα. Ελέγξτε τη σύνδεσή σας και δοκιμάστε ξανά.</string>
+    <string name="shader_filter_names_scale2x">Στρογγυλεμένα pixel (Scale2x)</string>
+    <string name="shader_filter_names_xbr">Λείες ακμές (xBR)</string>
+    <string name="shader_filter_names_sabr">Μαλακές ακμές (SABR)</string>
+    <string name="shader_filter_names_mmpx">Pixel art (MMPX)</string>
+    <string name="shader_filter_names_zfast_crt">CRT ελαφρύ (zfast)</string>
 </resources>

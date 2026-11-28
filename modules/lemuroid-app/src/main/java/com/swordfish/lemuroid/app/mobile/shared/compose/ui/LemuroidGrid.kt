@@ -19,6 +19,7 @@ object LemuroidGrid {
     private val LANDSCAPE_MIN_TILE = 144.dp
     private val LANDSCAPE_MIN_SMALL_TILE = 112.dp
     private val SPACING = 6.dp
+    private val SMALL_SPACING = 3.dp
 
     @Composable
     fun columns(small: Boolean = false): GridCells {
@@ -38,6 +39,14 @@ object LemuroidGrid {
     val LIST_ROW_VERTICAL_PADDING = 3.dp
 
     val contentPadding = PaddingValues(8.dp)
+    val smallContentPadding = PaddingValues(6.dp)
     val listPadding = PaddingValues(vertical = 4.dp)
     val arrangement = Arrangement.spacedBy(SPACING)
+
+    /** Small tiles sit closer together, so the gaps don't look heavy next to them. */
+    val smallArrangement = Arrangement.spacedBy(SMALL_SPACING)
+
+    fun arrangement(small: Boolean) = if (small) smallArrangement else arrangement
+
+    fun contentPadding(small: Boolean) = if (small) smallContentPadding else contentPadding
 }

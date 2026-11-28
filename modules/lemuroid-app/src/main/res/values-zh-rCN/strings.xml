@@ -348,4 +348,9 @@
     <string name="core_download_message_no_size">%1$s 游戏需要 %2$s 核心。现在下载吗？</string>
     <string name="core_downloading">正在下载 %1$s 核心…</string>
     <string name="core_download_failed">无法下载核心。请检查网络连接后重试。</string>
+    <string name="shader_filter_names_scale2x">圆润像素（Scale2x）</string>
+    <string name="shader_filter_names_xbr">平滑边缘（xBR）</string>
+    <string name="shader_filter_names_sabr">柔和边缘（SABR）</string>
+    <string name="shader_filter_names_mmpx">像素画（MMPX）</string>
+    <string name="shader_filter_names_zfast_crt">CRT 轻量（zfast）</string>
 </resources>

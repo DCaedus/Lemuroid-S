@@ -336,4 +336,9 @@
     <string name="core_download_message_no_size">Jocurile %1$s au nevoie de nucleul %2$s. Îl descarci acum?</string>
     <string name="core_downloading">Se descarcă nucleul %1$s…</string>
     <string name="core_download_failed">Nucleul nu a putut fi descărcat. Verifică conexiunea și încearcă din nou.</string>
+    <string name="shader_filter_names_scale2x">Pixeli rotunjiți (Scale2x)</string>
+    <string name="shader_filter_names_xbr">Margini netede (xBR)</string>
+    <string name="shader_filter_names_sabr">Margini moi (SABR)</string>
+    <string name="shader_filter_names_mmpx">Pixel art (MMPX)</string>
+    <string name="shader_filter_names_zfast_crt">CRT ușor (zfast)</string>
 </resources>

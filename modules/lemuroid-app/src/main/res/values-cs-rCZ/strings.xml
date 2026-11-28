@@ -347,4 +347,9 @@
     <string name="core_download_message_no_size">Hry pro %1$s potřebují jádro %2$s. Stáhnout ho teď?</string>
     <string name="core_downloading">Stahuje se jádro %1$s…</string>
     <string name="core_download_failed">Jádro se nepodařilo stáhnout. Zkontrolujte připojení a zkuste to znovu.</string>
+    <string name="shader_filter_names_scale2x">Zaoblené pixely (Scale2x)</string>
+    <string name="shader_filter_names_xbr">Hladké hrany (xBR)</string>
+    <string name="shader_filter_names_sabr">Měkké hrany (SABR)</string>
+    <string name="shader_filter_names_mmpx">Pixel art (MMPX)</string>
+    <string name="shader_filter_names_zfast_crt">CRT lehký (zfast)</string>
 </resources>

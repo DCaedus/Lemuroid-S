@@ -348,4 +348,9 @@
     <string name="core_download_message_no_size">%1$s-spel behöver kärnan %2$s. Vill du ladda ned den nu?</string>
     <string name="core_downloading">Laddar ned kärnan %1$s…</string>
     <string name="core_download_failed">Det gick inte att ladda ned kärnan. Kontrollera anslutningen och försök igen.</string>
+    <string name="shader_filter_names_scale2x">Rundade pixlar (Scale2x)</string>
+    <string name="shader_filter_names_xbr">Släta kanter (xBR)</string>
+    <string name="shader_filter_names_sabr">Mjuka kanter (SABR)</string>
+    <string name="shader_filter_names_mmpx">Pixelkonst (MMPX)</string>
+    <string name="shader_filter_names_zfast_crt">CRT lätt (zfast)</string>
 </resources>

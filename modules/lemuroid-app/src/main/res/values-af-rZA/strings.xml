@@ -327,4 +327,9 @@
     <string name="core_download_message_no_size">%1$s-speletjies het die %2$s-kern nodig. Laai dit nou af?</string>
     <string name="core_downloading">Laai die %1$s-kern af…</string>
     <string name="core_download_failed">Kon nie die kern aflaai nie. Gaan jou verbinding na en probeer weer.</string>
+    <string name="shader_filter_names_scale2x">Geronde pieksels (Scale2x)</string>
+    <string name="shader_filter_names_xbr">Gladde rande (xBR)</string>
+    <string name="shader_filter_names_sabr">Sagte rande (SABR)</string>
+    <string name="shader_filter_names_mmpx">Piekselkuns (MMPX)</string>
+    <string name="shader_filter_names_zfast_crt">CRT lig (zfast)</string>
 </resources>
