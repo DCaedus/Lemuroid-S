@@ -91,7 +91,7 @@
     <string name="settings_description_core_settings">Instellings van elke emulatorkern, gedeel deur die konsoles wat dit gebruik</string>
     <string name="core_settings_play_first">Speel een keer \'n speletjie met hierdie kern om sy instellings hier te sien.</string>
     <string name="settings_title_first_launch_setup">Voer die eerste opstelling weer uit</string>
-    <string name="settings_description_first_launch_setup">Maak die opstelkaarte weer oop: Lemuroid-S-vouer, ROMs-vouer, kennisgewings, mikrofoon, aflaaie en Voer stoorlêers in</string>
+    <string name="settings_description_first_launch_setup">Maak die opstelkaarte weer oop: databespaarder, Lemuroid-S-vouer, ROMs-vouer, kennisgewings, mikrofoon, aflaaie en Voer stoorlêers in</string>
     <string name="home_import_saves_title">Voer gestoorde speletjies in</string>
     <string name="home_import_saves_message">Voer jou gestoorde speletjies van ander emulators of vouers in.</string>
     <string name="home_import_saves_action">Voer gestoorde speletjies in</string>
@@ -319,8 +319,8 @@
     <string name="reset_all_systems_description">Stel elke stelsel terug na Verstek</string>
     <string name="reset_all_systems_message">Dit stel hierdie instelling terug na Verstek vir elke stelsel.</string>
     <string name="reset_all_systems_action">Stel terug</string>
-    <string name="settings_title_downloads_wifi_only">Outomatiese aflaaie slegs oor Wi-Fi</string>
-    <string name="settings_description_downloads_wifi_only">Kerne en omslae laai self net oor Wi-Fi af. As \'n speletjie se kern ontbreek, vra dit of jy dit nou wil aflaai.</string>
+    <string name="settings_title_downloads_wifi_only">Databespaarder</string>
+    <string name="settings_description_downloads_wifi_only">Laai speletjie-omslae en emulatorkerne net oor Wi-Fi af</string>
     <string name="core_download_title">Laai kern af?</string>
     <string name="core_download_message">%1$s-speletjies het die %2$s-kern nodig (%3$s). Laai dit nou af?</string>
     <string name="core_download_message_no_size">%1$s-speletjies het die %2$s-kern nodig. Laai dit nou af?</string>
@@ -332,4 +332,7 @@
     <string name="shader_filter_names_lcd">LCD (Pieksel-rooster)</string>
     <string name="downloads_section_library">In jou biblioteek</string>
     <string name="downloads_section_other">Ander stelsels</string>
+    <string name="setup_data_saver_message">Lemuroid-S laai speletjie-omslae en emulatorkerne af wanneer hulle nodig is. Met databespaarder aan laai dit hulle net oor Wi-Fi af, sodat jou mobiele data nie gebruik word nie. Jy kan dit later in Instellings verander.</string>
+    <string name="data_saver_turn_on">Skakel aan</string>
+    <string name="data_saver_turn_off">Skakel af</string>
 </resources>

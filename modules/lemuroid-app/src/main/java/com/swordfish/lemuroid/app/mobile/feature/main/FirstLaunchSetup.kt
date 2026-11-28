@@ -55,6 +55,7 @@ import com.swordfish.lemuroid.app.mobile.feature.settings.general.DownloadsDialo
 import com.swordfish.lemuroid.app.mobile.feature.settings.general.ImportSavesDialog
 import com.swordfish.lemuroid.app.mobile.feature.settings.general.rememberMainFolderPicker
 import com.swordfish.lemuroid.app.mobile.feature.settings.general.useMainRomsFolder
+import com.swordfish.lemuroid.app.shared.library.DownloadSettings
 import com.swordfish.lemuroid.app.shared.settings.RomsFolder
 import com.swordfish.lemuroid.app.shared.settings.StorageFrameworkPickerLauncher
 import com.swordfish.lemuroid.app.utils.android.ComposableLifecycle
@@ -118,6 +119,7 @@ private data class SetupStatus(
     val romsFolder: Boolean = false,
     val notifications: Boolean = false,
     val microphone: Boolean = false,
+    val dataSaver: Boolean = false,
 )
 
 private fun readStatus(context: Context) =
@@ -131,6 +133,7 @@ private fun readStatus(context: Context) =
         microphone =
             ContextCompat.checkSelfPermission(context, Manifest.permission.RECORD_AUDIO) ==
                 PackageManager.PERMISSION_GRANTED,
+        dataSaver = DownloadSettings.isChosen(context),
     )
 
 @Composable
@@ -145,6 +148,9 @@ internal fun FirstLaunchSetupScreen(onDone: () -> Unit) {
     var showDownloads by remember { mutableStateOf(false) }
     var showImportDialog by remember { mutableStateOf(false) }
     val refresh = { status = readStatus(context) }
+
+    // Lemuroid-S: no scanning or downloading until the Data saver card is answered.
+    LaunchedEffect(Unit) { DownloadSettings.holdUntilChosen(context.applicationContext) }
 
     // Pickers and permission screens are other activities: re-read everything when coming back.
     ComposableLifecycle { _, event -> if (event == Lifecycle.Event.ON_RESUME) refresh() }
@@ -197,6 +203,21 @@ internal fun FirstLaunchSetupScreen(onDone: () -> Unit) {
                 )
             }
 
+            SetupCard(
+                titleId = R.string.settings_title_downloads_wifi_only,
+                messageId = R.string.setup_data_saver_message,
+                actionId = R.string.data_saver_turn_on,
+                done = status.dataSaver,
+                onAction = {
+                    DownloadSettings.choose(context, wifiOnly = true)
+                    refresh()
+                },
+                secondaryActionId = R.string.data_saver_turn_off,
+                onSecondaryAction = {
+                    DownloadSettings.choose(context, wifiOnly = false)
+                    refresh()
+                },
+            )
             SetupCard(
                 titleId = R.string.main_folder_card_title,
                 messageId = R.string.main_folder_card_message,
@@ -262,7 +283,7 @@ internal fun FirstLaunchSetupScreen(onDone: () -> Unit) {
     }
 
     // Lemuroid-S: no Done button, setup closes by itself once every card is done or dismissed.
-    val allDone = status.mainFolder && status.romsFolder && status.notifications &&
+    val allDone = status.dataSaver && status.mainFolder && status.romsFolder && status.notifications &&
         (status.microphone || microphoneSkipped) && downloadsDone && (importStarted || importSkipped)
     LaunchedEffect(allDone) {
         if (allDone) {

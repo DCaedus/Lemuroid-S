@@ -123,7 +123,7 @@
     <string name="settings_description_core_settings">Az egyes emulátormagok beállításai, közösek az őket használó konzoloknál</string>
     <string name="core_settings_play_first">Indíts el egyszer egy játékot ezzel a maggal, hogy itt megjelenjenek a beállításai.</string>
     <string name="settings_title_first_launch_setup">Első beállítás újrafuttatása</string>
-    <string name="settings_description_first_launch_setup">A beállítási kártyák újbóli megnyitása: Lemuroid-S mappa, ROM mappa, értesítések, mikrofon, letöltések és Mentések importálása</string>
+    <string name="settings_description_first_launch_setup">A beállítási kártyák újbóli megnyitása: adatforgalom-csökkentő, Lemuroid-S mappa, ROM mappa, értesítések, mikrofon, letöltések és Mentések importálása</string>
     <string name="home_import_saves_title">Mentések importálása</string>
     <string name="home_import_saves_message">Importáld a mentéseidet más emulátorokból vagy mappákból.</string>
     <string name="home_import_saves_action">Mentések importálása</string>
@@ -319,8 +319,8 @@
     <string name="reset_all_systems_description">Minden rendszer visszaállítása Alapértelmezettre</string>
     <string name="reset_all_systems_message">Ez a beállítást minden rendszernél Alapértelmezettre állítja vissza.</string>
     <string name="reset_all_systems_action">Visszaállítás</string>
-    <string name="settings_title_downloads_wifi_only">Automatikus letöltés csak Wi-Fin</string>
-    <string name="settings_description_downloads_wifi_only">A magok és borítók maguktól csak Wi-Fin töltődnek le. Ha egy játék indításakor hiányzik a magja, megkérdezi, hogy letöltse-e most.</string>
+    <string name="settings_title_downloads_wifi_only">Adatforgalom-csökkentő</string>
+    <string name="settings_description_downloads_wifi_only">Játékborítók és emulátormagok letöltése csak Wi-Fin</string>
     <string name="core_download_title">Letöltöd a magot?</string>
     <string name="core_download_message">A(z) %1$s játékokhoz a(z) %2$s mag kell (%3$s). Letöltöd most?</string>
     <string name="core_download_message_no_size">A(z) %1$s játékokhoz a(z) %2$s mag kell. Letöltöd most?</string>
@@ -332,4 +332,7 @@
     <string name="shader_filter_names_lcd">LCD (Pixelrács)</string>
     <string name="downloads_section_library">A könyvtáradban</string>
     <string name="downloads_section_other">Egyéb rendszerek</string>
+    <string name="setup_data_saver_message">A Lemuroid-S akkor tölti le a játékborítókat és emulátormagokat, amikor szükség van rájuk. Bekapcsolt adatforgalom-csökkentővel csak Wi-Fin tölti le őket, így nem fogy a mobiladat. Később a Beállításokban módosíthatod.</string>
+    <string name="data_saver_turn_on">Bekapcsolás</string>
+    <string name="data_saver_turn_off">Kikapcsolás</string>
 </resources>

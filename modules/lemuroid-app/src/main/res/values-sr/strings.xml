@@ -254,7 +254,7 @@
     <string name="settings_description_core_settings">Подешавања сваког језгра емулатора, заједничка за конзоле које га користе</string>
     <string name="core_settings_play_first">Покрените једном игру са овим језгром да бисте овде видели његова подешавања.</string>
     <string name="settings_title_first_launch_setup">Поново покрени почетно подешавање</string>
-    <string name="settings_description_first_launch_setup">Поново отвори картице подешавања: Lemuroid-S фасцикла, ROM фасцикла, обавештења, микрофон, преузимања и увоз сачуваних позиција</string>
+    <string name="settings_description_first_launch_setup">Поново отвори картице подешавања: уштеда података, Lemuroid-S фасцикла, ROM фасцикла, обавештења, микрофон, преузимања и увоз сачуваних позиција</string>
     <string name="home_import_saves_title">Увоз сачуваних игара</string>
     <string name="home_import_saves_message">Увезите сачуване игре из других емулатора или фасцикли.</string>
     <string name="home_import_saves_action">Увези сачуване игре</string>
@@ -340,8 +340,8 @@
     <string name="reset_all_systems_description">Врати сваки систем на Подразумевано</string>
     <string name="reset_all_systems_message">Ово враћа ово подешавање на Подразумевано за сваки систем.</string>
     <string name="reset_all_systems_action">Ресетуј</string>
-    <string name="settings_title_downloads_wifi_only">Аутоматска преузимања само преко Wi-Fi мреже</string>
-    <string name="settings_description_downloads_wifi_only">Језгра и омоти се сами преузимају само преко Wi-Fi мреже. Ако при покретању игре недостаје њено језгро, бићеш упитан да ли да се преузме сада.</string>
+    <string name="settings_title_downloads_wifi_only">Уштеда података</string>
+    <string name="settings_description_downloads_wifi_only">Преузимај омоте игара и језгра емулатора само преко Wi-Fi мреже</string>
     <string name="core_download_title">Преузети језгро?</string>
     <string name="core_download_message">Игре за %1$s захтевају језгро %2$s (%3$s). Преузети га сада?</string>
     <string name="core_download_message_no_size">Игре за %1$s захтевају језгро %2$s. Преузети га сада?</string>
@@ -351,4 +351,7 @@
     <string name="shader_filter_names_xbr">xBR (Захтевно)</string>
     <string name="downloads_section_library">У твојој библиотеци</string>
     <string name="downloads_section_other">Остали системи</string>
+    <string name="setup_data_saver_message">Lemuroid-S преузима омоте игара и језгра емулатора када затребају. Са укљученом уштедом података преузима их само преко Wi-Fi мреже, да се не би трошили мобилни подаци. Ово можеш касније да промениш у Подешавањима.</string>
+    <string name="data_saver_turn_on">Укључи</string>
+    <string name="data_saver_turn_off">Искључи</string>
 </resources>

@@ -256,7 +256,7 @@
     <string name="settings_description_core_settings">Instellingen van elke emulatorcore, gedeeld door de consoles die hem gebruiken</string>
     <string name="core_settings_play_first">Speel één keer een game met deze core om de instellingen hier te zien.</string>
     <string name="settings_title_first_launch_setup">Eerste installatie opnieuw uitvoeren</string>
-    <string name="settings_description_first_launch_setup">De installatiekaarten opnieuw openen: Lemuroid-S-map, ROM-map, meldingen, microfoon, downloads en Opslagbestanden importeren</string>
+    <string name="settings_description_first_launch_setup">De installatiekaarten opnieuw openen: databesparing, Lemuroid-S-map, ROM-map, meldingen, microfoon, downloads en Opslagbestanden importeren</string>
     <string name="home_import_saves_title">Opslagbestanden importeren</string>
     <string name="home_import_saves_message">Importeer je opslagbestanden uit andere emulators of mappen.</string>
     <string name="home_import_saves_action">Opslagbestanden importeren</string>
@@ -340,8 +340,8 @@
     <string name="reset_all_systems_description">Elk systeem terugzetten op Standaard</string>
     <string name="reset_all_systems_message">Hiermee wordt deze instelling voor elk systeem teruggezet op Standaard.</string>
     <string name="reset_all_systems_action">Resetten</string>
-    <string name="settings_title_downloads_wifi_only">Automatische downloads alleen via wifi</string>
-    <string name="settings_description_downloads_wifi_only">Cores en covers worden alleen via wifi vanzelf gedownload. Ontbreekt de core van een game bij het starten, dan wordt gevraagd of je die nu wilt downloaden.</string>
+    <string name="settings_title_downloads_wifi_only">Databesparing</string>
+    <string name="settings_description_downloads_wifi_only">Gamecovers en emulatorcores alleen via wifi downloaden</string>
     <string name="core_download_title">Core downloaden?</string>
     <string name="core_download_message">%1$s-games hebben de core %2$s nodig (%3$s). Nu downloaden?</string>
     <string name="core_download_message_no_size">%1$s-games hebben de core %2$s nodig. Nu downloaden?</string>
@@ -351,4 +351,7 @@
     <string name="shader_filter_names_xbr">xBR (Zwaar)</string>
     <string name="downloads_section_library">In je bibliotheek</string>
     <string name="downloads_section_other">Andere systemen</string>
+    <string name="setup_data_saver_message">Lemuroid-S downloadt gamecovers en emulatorcores wanneer ze nodig zijn. Met databesparing aan gebeurt dat alleen via wifi, zodat je geen mobiele data gebruikt. Je kunt dit later wijzigen in Instellingen.</string>
+    <string name="data_saver_turn_on">Aanzetten</string>
+    <string name="data_saver_turn_off">Uitzetten</string>
 </resources>

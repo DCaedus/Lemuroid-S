@@ -169,7 +169,7 @@
     <string name="settings_description_core_settings">Configuració de cada nucli d\'emulació, compartida per les consoles que el fan servir</string>
     <string name="core_settings_play_first">Juga un cop a un joc amb aquest nucli per veure aquí la seva configuració.</string>
     <string name="settings_title_first_launch_setup">Torna a executar la configuració inicial</string>
-    <string name="settings_description_first_launch_setup">Torna a obrir les targetes de configuració: carpeta Lemuroid-S, carpeta de ROMs, notificacions, micròfon, baixades i Importa partides</string>
+    <string name="settings_description_first_launch_setup">Torna a obrir les targetes de configuració: estalvi de dades, carpeta Lemuroid-S, carpeta de ROMs, notificacions, micròfon, baixades i Importa partides</string>
     <string name="home_import_saves_title">Importa partides</string>
     <string name="home_import_saves_message">Importa les teves partides desades d\'altres emuladors o carpetes.</string>
     <string name="home_import_saves_action">Importa partides</string>
@@ -319,8 +319,8 @@
     <string name="reset_all_systems_description">Torna cada sistema a Predeterminat</string>
     <string name="reset_all_systems_message">Això torna aquesta opció a Predeterminat per a cada sistema.</string>
     <string name="reset_all_systems_action">Restableix</string>
-    <string name="settings_title_downloads_wifi_only">Baixades automàtiques només amb Wi-Fi</string>
-    <string name="settings_description_downloads_wifi_only">Els nuclis i les portades es baixen sols només amb Wi-Fi. Si en iniciar un joc falta el seu nucli, es pregunta si el vols baixar ara.</string>
+    <string name="settings_title_downloads_wifi_only">Estalvi de dades</string>
+    <string name="settings_description_downloads_wifi_only">Baixa les portades dels jocs i els nuclis dels emuladors només amb Wi-Fi</string>
     <string name="core_download_title">Vols baixar el nucli?</string>
     <string name="core_download_message">Els jocs de %1$s necessiten el nucli %2$s (%3$s). Vols baixar-lo ara?</string>
     <string name="core_download_message_no_size">Els jocs de %1$s necessiten el nucli %2$s. Vols baixar-lo ara?</string>
@@ -332,4 +332,7 @@
     <string name="shader_filter_names_lcd">LCD (Graella de píxels)</string>
     <string name="downloads_section_library">A la biblioteca</string>
     <string name="downloads_section_other">Altres sistemes</string>
+    <string name="setup_data_saver_message">Lemuroid-S baixa les portades dels jocs i els nuclis dels emuladors quan calen. Amb l\'estalvi de dades activat, només els baixa amb Wi-Fi, per no fer servir dades mòbils. Ho pots canviar més endavant a Configuració.</string>
+    <string name="data_saver_turn_on">Activa</string>
+    <string name="data_saver_turn_off">Desactiva</string>
 </resources>

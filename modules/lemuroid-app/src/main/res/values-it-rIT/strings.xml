@@ -259,7 +259,7 @@
     <string name="settings_description_core_settings">Impostazioni di ogni core di emulazione, condivise dalle console che lo usano</string>
     <string name="core_settings_play_first">Avvia una volta un gioco con questo core per vederne qui le impostazioni.</string>
     <string name="settings_title_first_launch_setup">Riavvia la configurazione iniziale</string>
-    <string name="settings_description_first_launch_setup">Riapri le schede di configurazione: cartella Lemuroid-S, cartella ROM, notifiche, microfono, download e Importa salvataggi</string>
+    <string name="settings_description_first_launch_setup">Riapri le schede di configurazione: risparmio dati, cartella Lemuroid-S, cartella ROM, notifiche, microfono, download e Importa salvataggi</string>
     <string name="home_import_saves_title">Importa salvataggi</string>
     <string name="home_import_saves_message">Importa i tuoi salvataggi da altri emulatori o cartelle.</string>
     <string name="home_import_saves_action">Importa salvataggi</string>
@@ -340,8 +340,8 @@
     <string name="reset_all_systems_description">Riporta ogni sistema a Predefinito</string>
     <string name="reset_all_systems_message">Questa impostazione tornerà a Predefinito per tutti i sistemi.</string>
     <string name="reset_all_systems_action">Ripristina</string>
-    <string name="settings_title_downloads_wifi_only">Download automatici solo in Wi-Fi</string>
-    <string name="settings_description_downloads_wifi_only">Core e copertine si scaricano da soli solo in Wi-Fi. Se all\'avvio di un gioco manca il suo core, viene chiesto se scaricarlo ora.</string>
+    <string name="settings_title_downloads_wifi_only">Risparmio dati</string>
+    <string name="settings_description_downloads_wifi_only">Scarica copertine dei giochi e core degli emulatori solo in Wi-Fi</string>
     <string name="core_download_title">Scaricare il core?</string>
     <string name="core_download_message">I giochi %1$s richiedono il core %2$s (%3$s). Scaricarlo ora?</string>
     <string name="core_download_message_no_size">I giochi %1$s richiedono il core %2$s. Scaricarlo ora?</string>
@@ -351,4 +351,7 @@
     <string name="shader_filter_names_xbr">xBR (Impegnativo)</string>
     <string name="downloads_section_library">Nella tua libreria</string>
     <string name="downloads_section_other">Altri sistemi</string>
+    <string name="setup_data_saver_message">Lemuroid-S scarica le copertine dei giochi e i core degli emulatori quando servono. Con il risparmio dati attivo li scarica solo in Wi-Fi, così non usa i dati mobili. Puoi cambiarlo più tardi nelle Impostazioni.</string>
+    <string name="data_saver_turn_on">Attiva</string>
+    <string name="data_saver_turn_off">Disattiva</string>
 </resources>

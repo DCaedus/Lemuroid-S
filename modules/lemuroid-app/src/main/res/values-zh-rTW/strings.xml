@@ -239,7 +239,7 @@
     <string name="settings_description_core_settings">各個模擬器核心的設定，由使用該核心的主機共用</string>
     <string name="core_settings_play_first">使用此核心執行一次遊戲後，這裡就會顯示它的設定。</string>
     <string name="settings_title_first_launch_setup">重新執行首次設定</string>
-    <string name="settings_description_first_launch_setup">重新開啟設定卡片：Lemuroid-S 資料夾、ROM 資料夾、通知、麥克風、下載和匯入存檔</string>
+    <string name="settings_description_first_launch_setup">重新開啟設定卡片：數據節省、Lemuroid-S 資料夾、ROM 資料夾、通知、麥克風、下載和匯入存檔</string>
     <string name="home_import_saves_title">匯入存檔</string>
     <string name="home_import_saves_message">從其他模擬器或資料夾匯入你的存檔。</string>
     <string name="home_import_saves_action">匯入存檔</string>
@@ -337,8 +337,8 @@
     <string name="reset_all_systems_description">將每個系統恢復為預設</string>
     <string name="reset_all_systems_message">這會將此設定在所有系統上恢復為預設。</string>
     <string name="reset_all_systems_action">重設</string>
-    <string name="settings_title_downloads_wifi_only">自動下載僅限 Wi-Fi</string>
-    <string name="settings_description_downloads_wifi_only">核心和封面僅在 Wi-Fi 下自動下載。啟動遊戲時如果缺少其核心，會詢問是否立即下載。</string>
+    <string name="settings_title_downloads_wifi_only">數據節省</string>
+    <string name="settings_description_downloads_wifi_only">僅在 Wi-Fi 下下載遊戲封面和模擬器核心</string>
     <string name="core_download_title">下載核心？</string>
     <string name="core_download_message">%1$s 遊戲需要 %2$s 核心（%3$s）。現在下載嗎？</string>
     <string name="core_download_message_no_size">%1$s 遊戲需要 %2$s 核心。現在下載嗎？</string>
@@ -348,4 +348,7 @@
     <string name="shader_filter_names_xbr">xBR（高負載）</string>
     <string name="downloads_section_library">遊戲庫中的</string>
     <string name="downloads_section_other">其他系統</string>
+    <string name="setup_data_saver_message">Lemuroid-S 會在需要時下載遊戲封面和模擬器核心。開啟數據節省後，僅在 Wi-Fi 下下載，不會使用行動數據。你可以稍後在設定中變更。</string>
+    <string name="data_saver_turn_on">開啟</string>
+    <string name="data_saver_turn_off">關閉</string>
 </resources>

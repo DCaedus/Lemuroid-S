@@ -254,7 +254,7 @@
     <string name="settings_description_core_settings">Налаштування кожного ядра емуляції, спільні для консолей, які його використовують</string>
     <string name="core_settings_play_first">Запустіть гру з цим ядром хоча б раз, щоб тут з’явилися його налаштування.</string>
     <string name="settings_title_first_launch_setup">Повторити початкове налаштування</string>
-    <string name="settings_description_first_launch_setup">Знову відкрити картки налаштування: папка Lemuroid-S, папка ROM, сповіщення, мікрофон, завантаження та «Імпорт збережень»</string>
+    <string name="settings_description_first_launch_setup">Знову відкрити картки налаштування: заощадження трафіку, папка Lemuroid-S, папка ROM, сповіщення, мікрофон, завантаження та «Імпорт збережень»</string>
     <string name="home_import_saves_title">Імпорт збережень</string>
     <string name="home_import_saves_message">Імпортуйте збереження з інших емуляторів або папок.</string>
     <string name="home_import_saves_action">Імпортувати збереження</string>
@@ -339,8 +339,8 @@
     <string name="reset_all_systems_description">Повернути для всіх систем значення за замовчуванням</string>
     <string name="reset_all_systems_message">Цей параметр буде повернуто до значення за замовчуванням для всіх систем.</string>
     <string name="reset_all_systems_action">Скинути</string>
-    <string name="settings_title_downloads_wifi_only">Автоматичні завантаження лише через Wi-Fi</string>
-    <string name="settings_description_downloads_wifi_only">Ядра й обкладинки завантажуються самі лише через Wi-Fi. Якщо під час запуску гри її ядра немає, з\'явиться запитання, чи завантажити його зараз.</string>
+    <string name="settings_title_downloads_wifi_only">Заощадження трафіку</string>
+    <string name="settings_description_downloads_wifi_only">Завантажувати обкладинки ігор і ядра емуляторів лише через Wi-Fi</string>
     <string name="core_download_title">Завантажити ядро?</string>
     <string name="core_download_message">Для ігор %1$s потрібне ядро %2$s (%3$s). Завантажити його зараз?</string>
     <string name="core_download_message_no_size">Для ігор %1$s потрібне ядро %2$s. Завантажити його зараз?</string>
@@ -350,4 +350,7 @@
     <string name="shader_filter_names_xbr">xBR (Вимогливий)</string>
     <string name="downloads_section_library">У вашій бібліотеці</string>
     <string name="downloads_section_other">Інші системи</string>
+    <string name="setup_data_saver_message">Lemuroid-S завантажує обкладинки ігор і ядра емуляторів, коли вони потрібні. Коли заощадження трафіку ввімкнено, завантаження відбувається лише через Wi-Fi, щоб не витрачати мобільний трафік. Це можна змінити пізніше в налаштуваннях.</string>
+    <string name="data_saver_turn_on">Увімкнути</string>
+    <string name="data_saver_turn_off">Вимкнути</string>
 </resources>

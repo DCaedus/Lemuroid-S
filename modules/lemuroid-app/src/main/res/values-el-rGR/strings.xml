@@ -254,7 +254,7 @@
     <string name="settings_description_core_settings">Ρυθμίσεις κάθε πυρήνα εξομοίωσης, κοινές για τις κονσόλες που τον χρησιμοποιούν</string>
     <string name="core_settings_play_first">Ξεκινήστε μία φορά ένα παιχνίδι με αυτόν τον πυρήνα για να δείτε εδώ τις ρυθμίσεις του.</string>
     <string name="settings_title_first_launch_setup">Επανάληψη της αρχικής ρύθμισης</string>
-    <string name="settings_description_first_launch_setup">Ανοίξτε ξανά τις κάρτες ρύθμισης: φάκελος Lemuroid-S, φάκελος ROM, ειδοποιήσεις, μικρόφωνο, λήψεις και Εισαγωγή αποθηκεύσεων</string>
+    <string name="settings_description_first_launch_setup">Ανοίξτε ξανά τις κάρτες ρύθμισης: εξοικονόμηση δεδομένων, φάκελος Lemuroid-S, φάκελος ROM, ειδοποιήσεις, μικρόφωνο, λήψεις και Εισαγωγή αποθηκεύσεων</string>
     <string name="home_import_saves_title">Εισαγωγή αποθηκεύσεων</string>
     <string name="home_import_saves_message">Εισαγάγετε τις αποθηκεύσεις σας από άλλους εξομοιωτές ή φακέλους.</string>
     <string name="home_import_saves_action">Εισαγωγή αποθηκεύσεων</string>
@@ -340,8 +340,8 @@
     <string name="reset_all_systems_description">Επαναφορά κάθε συστήματος στην Προεπιλογή</string>
     <string name="reset_all_systems_message">Αυτό επαναφέρει αυτή τη ρύθμιση στην Προεπιλογή για κάθε σύστημα.</string>
     <string name="reset_all_systems_action">Επαναφορά</string>
-    <string name="settings_title_downloads_wifi_only">Αυτόματες λήψεις μόνο μέσω Wi-Fi</string>
-    <string name="settings_description_downloads_wifi_only">Οι πυρήνες και τα εξώφυλλα κατεβαίνουν αυτόματα μόνο μέσω Wi-Fi. Αν λείπει ο πυρήνας ενός παιχνιδιού κατά την έναρξη, θα ερωτηθείτε αν θέλετε λήψη τώρα.</string>
+    <string name="settings_title_downloads_wifi_only">Εξοικονόμηση δεδομένων</string>
+    <string name="settings_description_downloads_wifi_only">Λήψη εξωφύλλων παιχνιδιών και πυρήνων εξομοιωτών μόνο μέσω Wi-Fi</string>
     <string name="core_download_title">Λήψη πυρήνα;</string>
     <string name="core_download_message">Τα παιχνίδια %1$s χρειάζονται τον πυρήνα %2$s (%3$s). Λήψη τώρα;</string>
     <string name="core_download_message_no_size">Τα παιχνίδια %1$s χρειάζονται τον πυρήνα %2$s. Λήψη τώρα;</string>
@@ -351,4 +351,7 @@
     <string name="shader_filter_names_xbr">xBR (Απαιτητικό)</string>
     <string name="downloads_section_library">Στη βιβλιοθήκη σας</string>
     <string name="downloads_section_other">Άλλα συστήματα</string>
+    <string name="setup_data_saver_message">Το Lemuroid-S κατεβάζει εξώφυλλα παιχνιδιών και πυρήνες εξομοιωτών όταν χρειάζονται. Με την εξοικονόμηση δεδομένων ενεργή, τα κατεβάζει μόνο μέσω Wi-Fi, ώστε να μη χρησιμοποιούνται δεδομένα κινητής. Μπορείτε να το αλλάξετε αργότερα στις Ρυθμίσεις.</string>
+    <string name="data_saver_turn_on">Ενεργοποίηση</string>
+    <string name="data_saver_turn_off">Απενεργοποίηση</string>
 </resources>

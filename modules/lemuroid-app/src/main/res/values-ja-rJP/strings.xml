@@ -255,7 +255,7 @@
     <string name="settings_description_core_settings">各エミュレーターコアの設定。そのコアを使う機種で共通です</string>
     <string name="core_settings_play_first">このコアでゲームを一度起動すると、ここに設定が表示されます。</string>
     <string name="settings_title_first_launch_setup">初回セットアップをやり直す</string>
-    <string name="settings_description_first_launch_setup">セットアップカードを再表示します: Lemuroid-S フォルダー、ROM フォルダー、通知、マイク、ダウンロード、セーブデータのインポート</string>
+    <string name="settings_description_first_launch_setup">セットアップカードを再表示します: データセーバー、Lemuroid-S フォルダー、ROM フォルダー、通知、マイク、ダウンロード、セーブデータのインポート</string>
     <string name="home_import_saves_title">セーブデータのインポート</string>
     <string name="home_import_saves_message">他のエミュレーターやフォルダからセーブデータをインポートします。</string>
     <string name="home_import_saves_action">セーブデータをインポート</string>
@@ -343,8 +343,8 @@
     <string name="reset_all_systems_description">すべてのシステムをデフォルトに戻します</string>
     <string name="reset_all_systems_message">この設定をすべてのシステムでデフォルトに戻します。</string>
     <string name="reset_all_systems_action">リセット</string>
-    <string name="settings_title_downloads_wifi_only">自動ダウンロードは Wi-Fi のみ</string>
-    <string name="settings_description_downloads_wifi_only">コアとカバーは Wi-Fi 接続時のみ自動でダウンロードされます。ゲームの起動時にコアがない場合は、今ダウンロードするか確認します。</string>
+    <string name="settings_title_downloads_wifi_only">データセーバー</string>
+    <string name="settings_description_downloads_wifi_only">ゲームのカバーとエミュレーターのコアを Wi-Fi 接続時のみダウンロード</string>
     <string name="core_download_title">コアをダウンロードしますか？</string>
     <string name="core_download_message">%1$s のゲームには %2$s コア（%3$s）が必要です。今すぐダウンロードしますか？</string>
     <string name="core_download_message_no_size">%1$s のゲームには %2$s コアが必要です。今すぐダウンロードしますか？</string>
@@ -354,4 +354,7 @@
     <string name="shader_filter_names_xbr">xBR（高負荷）</string>
     <string name="downloads_section_library">ライブラリにあるもの</string>
     <string name="downloads_section_other">その他のシステム</string>
+    <string name="setup_data_saver_message">Lemuroid-S はゲームのカバーとエミュレーターのコアを必要になったときにダウンロードします。データセーバーがオンの場合は Wi-Fi 接続時のみダウンロードするので、モバイルデータを使いません。あとで設定から変更できます。</string>
+    <string name="data_saver_turn_on">オンにする</string>
+    <string name="data_saver_turn_off">オフにする</string>
 </resources>

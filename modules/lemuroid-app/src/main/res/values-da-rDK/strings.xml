@@ -254,7 +254,7 @@
     <string name="settings_description_core_settings">Indstillinger for hver emulator-core, delt af de konsoller, der bruger den</string>
     <string name="core_settings_play_first">Spil et spil med denne core én gang for at se dens indstillinger her.</string>
     <string name="settings_title_first_launch_setup">Kør den første opsætning igen</string>
-    <string name="settings_description_first_launch_setup">Åbn opsætningskortene igen: Lemuroid-S-mappe, ROM-mappe, notifikationer, mikrofon, downloads og Importér gem</string>
+    <string name="settings_description_first_launch_setup">Åbn opsætningskortene igen: datasparer, Lemuroid-S-mappe, ROM-mappe, notifikationer, mikrofon, downloads og Importér gem</string>
     <string name="home_import_saves_title">Importér gemte spil</string>
     <string name="home_import_saves_message">Importér dine gemte spil fra andre emulatorer eller mapper.</string>
     <string name="home_import_saves_action">Importér gemte spil</string>
@@ -340,8 +340,8 @@
     <string name="reset_all_systems_description">Sæt alle systemer tilbage til Standard</string>
     <string name="reset_all_systems_message">Dette sætter denne indstilling tilbage til Standard for alle systemer.</string>
     <string name="reset_all_systems_action">Nulstil</string>
-    <string name="settings_title_downloads_wifi_only">Automatiske downloads kun over Wi-Fi</string>
-    <string name="settings_description_downloads_wifi_only">Kerner og covers downloades kun af sig selv over Wi-Fi. Mangler et spils kerne, når det startes, bliver du spurgt, om den skal downloades nu.</string>
+    <string name="settings_title_downloads_wifi_only">Datasparer</string>
+    <string name="settings_description_downloads_wifi_only">Download spilcovers og emulatorkerner kun over Wi-Fi</string>
     <string name="core_download_title">Download kerne?</string>
     <string name="core_download_message">%1$s-spil kræver kernen %2$s (%3$s). Vil du downloade den nu?</string>
     <string name="core_download_message_no_size">%1$s-spil kræver kernen %2$s. Vil du downloade den nu?</string>
@@ -351,4 +351,7 @@
     <string name="shader_filter_names_xbr">xBR (Krævende)</string>
     <string name="downloads_section_library">I dit bibliotek</string>
     <string name="downloads_section_other">Andre systemer</string>
+    <string name="setup_data_saver_message">Lemuroid-S downloader spilcovers og emulatorkerner, når der er brug for dem. Med datasparer slået til downloades de kun over Wi-Fi, så der ikke bruges mobildata. Du kan ændre det senere i Indstillinger.</string>
+    <string name="data_saver_turn_on">Slå til</string>
+    <string name="data_saver_turn_off">Slå fra</string>
 </resources>

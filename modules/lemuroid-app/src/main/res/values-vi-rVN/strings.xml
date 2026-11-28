@@ -238,7 +238,7 @@
     <string name="settings_description_core_settings">Cài đặt của từng lõi giả lập, dùng chung cho các hệ máy sử dụng lõi đó</string>
     <string name="core_settings_play_first">Hãy chạy một trò chơi bằng lõi này một lần để thấy cài đặt của nó tại đây.</string>
     <string name="settings_title_first_launch_setup">Chạy lại thiết lập ban đầu</string>
-    <string name="settings_description_first_launch_setup">Mở lại các thẻ thiết lập: thư mục Lemuroid-S, thư mục ROM, thông báo, micrô, tải xuống và Nhập bản lưu</string>
+    <string name="settings_description_first_launch_setup">Mở lại các thẻ thiết lập: tiết kiệm dữ liệu, thư mục Lemuroid-S, thư mục ROM, thông báo, micrô, tải xuống và Nhập bản lưu</string>
     <string name="home_import_saves_title">Nhập dữ liệu lưu</string>
     <string name="home_import_saves_message">Nhập dữ liệu lưu từ trình giả lập hoặc thư mục khác.</string>
     <string name="home_import_saves_action">Nhập dữ liệu lưu</string>
@@ -338,8 +338,8 @@
     <string name="reset_all_systems_description">Đưa mọi hệ máy về Mặc định</string>
     <string name="reset_all_systems_message">Thao tác này đưa cài đặt này về Mặc định cho mọi hệ máy.</string>
     <string name="reset_all_systems_action">Đặt lại</string>
-    <string name="settings_title_downloads_wifi_only">Chỉ tự động tải qua Wi-Fi</string>
-    <string name="settings_description_downloads_wifi_only">Lõi và ảnh bìa chỉ tự tải khi có Wi-Fi. Nếu khi bắt đầu trò chơi mà thiếu lõi, ứng dụng sẽ hỏi bạn có muốn tải ngay không.</string>
+    <string name="settings_title_downloads_wifi_only">Tiết kiệm dữ liệu</string>
+    <string name="settings_description_downloads_wifi_only">Chỉ tải ảnh bìa trò chơi và lõi giả lập qua Wi-Fi</string>
     <string name="core_download_title">Tải lõi?</string>
     <string name="core_download_message">Trò chơi %1$s cần lõi %2$s (%3$s). Tải ngay bây giờ?</string>
     <string name="core_download_message_no_size">Trò chơi %1$s cần lõi %2$s. Tải ngay bây giờ?</string>
@@ -349,4 +349,7 @@
     <string name="shader_filter_names_xbr">xBR (Nặng)</string>
     <string name="downloads_section_library">Trong thư viện của bạn</string>
     <string name="downloads_section_other">Hệ máy khác</string>
+    <string name="setup_data_saver_message">Lemuroid-S tải ảnh bìa trò chơi và lõi giả lập khi cần đến. Khi bật tiết kiệm dữ liệu, ứng dụng chỉ tải qua Wi-Fi để không dùng dữ liệu di động. Bạn có thể thay đổi sau trong Cài đặt.</string>
+    <string name="data_saver_turn_on">Bật</string>
+    <string name="data_saver_turn_off">Tắt</string>
 </resources>

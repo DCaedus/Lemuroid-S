@@ -255,7 +255,7 @@ $SYSTEMS.
     <string name="settings_description_core_settings">Her emülatör çekirdeğinin ayarları; onu kullanan konsollar tarafından paylaşılır</string>
     <string name="core_settings_play_first">Ayarlarını burada görmek için bu çekirdekle bir oyunu bir kez açın.</string>
     <string name="settings_title_first_launch_setup">İlk kurulumu yeniden çalıştır</string>
-    <string name="settings_description_first_launch_setup">Kurulum kartlarını yeniden aç: Lemuroid-S klasörü, ROM klasörü, bildirimler, mikrofon, indirmeler ve Kayıtları içe aktar</string>
+    <string name="settings_description_first_launch_setup">Kurulum kartlarını yeniden aç: veri tasarrufu, Lemuroid-S klasörü, ROM klasörü, bildirimler, mikrofon, indirmeler ve Kayıtları içe aktar</string>
     <string name="home_import_saves_title">Kayıtları içe aktar</string>
     <string name="home_import_saves_message">Kayıtlarınızı diğer emülatörlerden veya klasörlerden içe aktarın.</string>
     <string name="home_import_saves_action">Kayıtları içe aktar</string>
@@ -341,8 +341,8 @@ $SYSTEMS.
     <string name="reset_all_systems_description">Her sistemi Varsayılan\'a döndür</string>
     <string name="reset_all_systems_message">Bu, bu ayarı her sistem için Varsayılan\'a döndürür.</string>
     <string name="reset_all_systems_action">Sıfırla</string>
-    <string name="settings_title_downloads_wifi_only">Otomatik indirmeler yalnızca Wi-Fi ile</string>
-    <string name="settings_description_downloads_wifi_only">Çekirdekler ve kapaklar kendiliğinden yalnızca Wi-Fi ile indirilir. Bir oyunu başlatırken çekirdeği yoksa şimdi indirilip indirilmeyeceği sorulur.</string>
+    <string name="settings_title_downloads_wifi_only">Veri tasarrufu</string>
+    <string name="settings_description_downloads_wifi_only">Oyun kapaklarını ve emülatör çekirdeklerini yalnızca Wi-Fi ile indir</string>
     <string name="core_download_title">Çekirdek indirilsin mi?</string>
     <string name="core_download_message">%1$s oyunları %2$s çekirdeğine ihtiyaç duyar (%3$s). Şimdi indirilsin mi?</string>
     <string name="core_download_message_no_size">%1$s oyunları %2$s çekirdeğine ihtiyaç duyar. Şimdi indirilsin mi?</string>
@@ -352,4 +352,7 @@ $SYSTEMS.
     <string name="shader_filter_names_xbr">xBR (Zorlayıcı)</string>
     <string name="downloads_section_library">Kitaplığınızda</string>
     <string name="downloads_section_other">Diğer sistemler</string>
+    <string name="setup_data_saver_message">Lemuroid-S oyun kapaklarını ve emülatör çekirdeklerini gerektiğinde indirir. Veri tasarrufu açıkken bunları yalnızca Wi-Fi ile indirir, böylece mobil veri kullanılmaz. Bunu daha sonra Ayarlar\'dan değiştirebilirsiniz.</string>
+    <string name="data_saver_turn_on">Aç</string>
+    <string name="data_saver_turn_off">Kapat</string>
 </resources>

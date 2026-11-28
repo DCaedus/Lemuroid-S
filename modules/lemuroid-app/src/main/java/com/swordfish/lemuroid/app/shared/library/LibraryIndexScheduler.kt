@@ -15,6 +15,11 @@ object LibraryIndexScheduler {
     val LIBRARY_INDEX_WORK_ID: String = LibraryIndexWork::class.java.simpleName
 
     fun scheduleLibrarySync(applicationContext: Context) {
+        // Lemuroid-S: waits for the first-launch setup's Data saver card (see DownloadSettings).
+        if (DownloadSettings.isChoicePending(applicationContext)) {
+            DownloadSettings.deferScan(applicationContext)
+            return
+        }
         WorkManager.getInstance(applicationContext)
             .beginUniqueWork(
                 LIBRARY_INDEX_WORK_ID,
@@ -25,6 +30,7 @@ object LibraryIndexScheduler {
     }
 
     fun scheduleCoreUpdate(applicationContext: Context) {
+        if (DownloadSettings.isChoicePending(applicationContext)) return
         WorkManager.getInstance(applicationContext)
             .beginUniqueWork(
                 CORE_UPDATE_WORK_ID,

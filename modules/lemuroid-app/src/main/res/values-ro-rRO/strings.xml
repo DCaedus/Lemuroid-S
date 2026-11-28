@@ -242,7 +242,7 @@
     <string name="settings_description_core_settings">Setările fiecărui nucleu de emulare, comune consolelor care îl folosesc</string>
     <string name="core_settings_play_first">Pornește o dată un joc cu acest nucleu pentru a-i vedea aici setările.</string>
     <string name="settings_title_first_launch_setup">Rulează din nou configurarea inițială</string>
-    <string name="settings_description_first_launch_setup">Redeschide cardurile de configurare: dosarul Lemuroid-S, dosarul ROM, notificări, microfon, descărcări și Importă salvări</string>
+    <string name="settings_description_first_launch_setup">Redeschide cardurile de configurare: economizor de date, dosarul Lemuroid-S, dosarul ROM, notificări, microfon, descărcări și Importă salvări</string>
     <string name="home_import_saves_title">Importă salvări</string>
     <string name="home_import_saves_message">Importă salvările din alte emulatoare sau dosare.</string>
     <string name="home_import_saves_action">Importă salvări</string>
@@ -328,8 +328,8 @@
     <string name="reset_all_systems_description">Readu fiecare sistem la Implicit</string>
     <string name="reset_all_systems_message">Această setare va reveni la Implicit pentru fiecare sistem.</string>
     <string name="reset_all_systems_action">Resetează</string>
-    <string name="settings_title_downloads_wifi_only">Descărcări automate doar prin Wi-Fi</string>
-    <string name="settings_description_downloads_wifi_only">Nucleele și copertele se descarcă singure doar prin Wi-Fi. Dacă la pornirea unui joc îi lipsește nucleul, ești întrebat dacă vrei să-l descarci acum.</string>
+    <string name="settings_title_downloads_wifi_only">Economizor de date</string>
+    <string name="settings_description_downloads_wifi_only">Descarcă copertele jocurilor și nucleele emulatoarelor doar prin Wi-Fi</string>
     <string name="core_download_title">Descarci nucleul?</string>
     <string name="core_download_message">Jocurile %1$s au nevoie de nucleul %2$s (%3$s). Îl descarci acum?</string>
     <string name="core_download_message_no_size">Jocurile %1$s au nevoie de nucleul %2$s. Îl descarci acum?</string>
@@ -339,4 +339,7 @@
     <string name="shader_filter_names_xbr">xBR (Solicitant)</string>
     <string name="downloads_section_library">În biblioteca ta</string>
     <string name="downloads_section_other">Alte sisteme</string>
+    <string name="setup_data_saver_message">Lemuroid-S descarcă copertele jocurilor și nucleele emulatoarelor când sunt necesare. Cu economizorul de date activat, le descarcă doar prin Wi-Fi, ca să nu folosească datele mobile. Poți schimba asta mai târziu din Setări.</string>
+    <string name="data_saver_turn_on">Activează</string>
+    <string name="data_saver_turn_off">Dezactivează</string>
 </resources>

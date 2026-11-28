@@ -253,7 +253,7 @@
     <string name="settings_description_core_settings">Nastavení každého jádra emulátoru, společná pro konzole, které ho používají</string>
     <string name="core_settings_play_first">Spusťte s tímto jádrem jednou hru, aby se tu zobrazilo jeho nastavení.</string>
     <string name="settings_title_first_launch_setup">Znovu spustit úvodní nastavení</string>
-    <string name="settings_description_first_launch_setup">Znovu otevřít karty nastavení: složka Lemuroid-S, složka ROM, oznámení, mikrofon, stahování a import uložených pozic</string>
+    <string name="settings_description_first_launch_setup">Znovu otevřít karty nastavení: spořič dat, složka Lemuroid-S, složka ROM, oznámení, mikrofon, stahování a import uložených pozic</string>
     <string name="home_import_saves_title">Importovat uložené hry</string>
     <string name="home_import_saves_message">Importujte uložené hry z jiných emulátorů nebo složek.</string>
     <string name="home_import_saves_action">Importovat uložené hry</string>
@@ -339,8 +339,8 @@
     <string name="reset_all_systems_description">Vrátit každý systém na Výchozí</string>
     <string name="reset_all_systems_message">Tímto se toto nastavení vrátí na Výchozí pro všechny systémy.</string>
     <string name="reset_all_systems_action">Obnovit</string>
-    <string name="settings_title_downloads_wifi_only">Automatické stahování jen přes Wi-Fi</string>
-    <string name="settings_description_downloads_wifi_only">Jádra a obaly se samy stahují jen přes Wi-Fi. Když při spuštění hry chybí její jádro, zeptá se, zda ho stáhnout hned.</string>
+    <string name="settings_title_downloads_wifi_only">Spořič dat</string>
+    <string name="settings_description_downloads_wifi_only">Stahovat obaly her a jádra emulátorů jen přes Wi-Fi</string>
     <string name="core_download_title">Stáhnout jádro?</string>
     <string name="core_download_message">Hry pro %1$s potřebují jádro %2$s (%3$s). Stáhnout ho teď?</string>
     <string name="core_download_message_no_size">Hry pro %1$s potřebují jádro %2$s. Stáhnout ho teď?</string>
@@ -350,4 +350,7 @@
     <string name="shader_filter_names_xbr">xBR (Náročný)</string>
     <string name="downloads_section_library">Ve vaší knihovně</string>
     <string name="downloads_section_other">Další systémy</string>
+    <string name="setup_data_saver_message">Lemuroid-S stahuje obaly her a jádra emulátorů, když jsou potřeba. Se zapnutým spořičem dat je stahuje jen přes Wi-Fi, aby se nespotřebovala mobilní data. Později to můžete změnit v Nastavení.</string>
+    <string name="data_saver_turn_on">Zapnout</string>
+    <string name="data_saver_turn_off">Vypnout</string>
 </resources>

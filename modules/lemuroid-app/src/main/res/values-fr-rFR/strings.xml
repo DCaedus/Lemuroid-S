@@ -254,7 +254,7 @@
     <string name="settings_description_core_settings">Paramètres de chaque cœur d’émulation, partagés par les consoles qui l’utilisent</string>
     <string name="core_settings_play_first">Lancez une fois un jeu avec ce cœur pour afficher ses paramètres ici.</string>
     <string name="settings_title_first_launch_setup">Relancer la configuration initiale</string>
-    <string name="settings_description_first_launch_setup">Rouvrir les cartes de configuration : dossier Lemuroid-S, dossier des ROMs, notifications, micro, téléchargements et Importer des sauvegardes</string>
+    <string name="settings_description_first_launch_setup">Rouvrir les cartes de configuration : économiseur de données, dossier Lemuroid-S, dossier des ROMs, notifications, micro, téléchargements et Importer des sauvegardes</string>
     <string name="home_import_saves_title">Importer des sauvegardes</string>
     <string name="home_import_saves_message">Importez vos sauvegardes depuis d’autres émulateurs ou dossiers.</string>
     <string name="home_import_saves_action">Importer des sauvegardes</string>
@@ -340,8 +340,8 @@
     <string name="reset_all_systems_description">Remettre chaque système sur Par défaut</string>
     <string name="reset_all_systems_message">Ce réglage sera remis sur Par défaut pour tous les systèmes.</string>
     <string name="reset_all_systems_action">Réinitialiser</string>
-    <string name="settings_title_downloads_wifi_only">Téléchargements automatiques en Wi-Fi uniquement</string>
-    <string name="settings_description_downloads_wifi_only">Les cœurs et les jaquettes se téléchargent d\'eux-mêmes uniquement en Wi-Fi. Si le cœur d\'un jeu manque au lancement, l\'app demande s\'il faut le télécharger maintenant.</string>
+    <string name="settings_title_downloads_wifi_only">Économiseur de données</string>
+    <string name="settings_description_downloads_wifi_only">Télécharger les jaquettes et les cœurs d\'émulation uniquement en Wi-Fi</string>
     <string name="core_download_title">Télécharger le cœur ?</string>
     <string name="core_download_message">Les jeux %1$s ont besoin du cœur %2$s (%3$s). Le télécharger maintenant ?</string>
     <string name="core_download_message_no_size">Les jeux %1$s ont besoin du cœur %2$s. Le télécharger maintenant ?</string>
@@ -351,4 +351,7 @@
     <string name="shader_filter_names_xbr">xBR (Exigeant)</string>
     <string name="downloads_section_library">Dans votre bibliothèque</string>
     <string name="downloads_section_other">Autres systèmes</string>
+    <string name="setup_data_saver_message">Lemuroid-S télécharge les jaquettes des jeux et les cœurs d\'émulation quand ils sont nécessaires. Avec l\'économiseur de données, il ne les télécharge qu\'en Wi-Fi, pour ne pas utiliser vos données mobiles. Vous pourrez le modifier plus tard dans les Paramètres.</string>
+    <string name="data_saver_turn_on">Activer</string>
+    <string name="data_saver_turn_off">Désactiver</string>
 </resources>

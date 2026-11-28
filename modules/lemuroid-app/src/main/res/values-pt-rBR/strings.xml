@@ -254,7 +254,7 @@
     <string name="settings_description_core_settings">Configurações de cada núcleo de emulação, compartilhadas pelos consoles que o usam</string>
     <string name="core_settings_play_first">Jogue um jogo com este núcleo uma vez para ver as configurações dele aqui.</string>
     <string name="settings_title_first_launch_setup">Abrir a configuração inicial de novo</string>
-    <string name="settings_description_first_launch_setup">Abrir de novo os cartões de configuração: pasta Lemuroid-S, pasta de ROMs, notificações, microfone, downloads e Importar saves</string>
+    <string name="settings_description_first_launch_setup">Abrir de novo os cartões de configuração: economia de dados, pasta Lemuroid-S, pasta de ROMs, notificações, microfone, downloads e Importar saves</string>
     <string name="home_import_saves_title">Importar saves</string>
     <string name="home_import_saves_message">Importe seus saves de outros emuladores ou pastas.</string>
     <string name="home_import_saves_action">Importar saves</string>
@@ -340,8 +340,8 @@
     <string name="reset_all_systems_description">Voltar cada sistema para Padrão</string>
     <string name="reset_all_systems_message">Isto volta esta configuração para Padrão em todos os sistemas.</string>
     <string name="reset_all_systems_action">Redefinir</string>
-    <string name="settings_title_downloads_wifi_only">Downloads automáticos somente pelo Wi-Fi</string>
-    <string name="settings_description_downloads_wifi_only">Núcleos e capas são baixados sozinhos somente pelo Wi-Fi. Se ao iniciar um jogo faltar o núcleo dele, você será perguntado se quer baixá-lo agora.</string>
+    <string name="settings_title_downloads_wifi_only">Economia de dados</string>
+    <string name="settings_description_downloads_wifi_only">Baixar capas dos jogos e núcleos dos emuladores somente pelo Wi-Fi</string>
     <string name="core_download_title">Baixar o núcleo?</string>
     <string name="core_download_message">Jogos de %1$s precisam do núcleo %2$s (%3$s). Baixar agora?</string>
     <string name="core_download_message_no_size">Jogos de %1$s precisam do núcleo %2$s. Baixar agora?</string>
@@ -351,4 +351,7 @@
     <string name="shader_filter_names_xbr">xBR (Exigente)</string>
     <string name="downloads_section_library">Na sua biblioteca</string>
     <string name="downloads_section_other">Outros sistemas</string>
+    <string name="setup_data_saver_message">O Lemuroid-S baixa capas dos jogos e núcleos dos emuladores quando são necessários. Com a economia de dados ativada, ele só baixa pelo Wi-Fi, para não usar dados móveis. Você pode mudar isso depois nas Configurações.</string>
+    <string name="data_saver_turn_on">Ativar</string>
+    <string name="data_saver_turn_off">Desativar</string>
 </resources>

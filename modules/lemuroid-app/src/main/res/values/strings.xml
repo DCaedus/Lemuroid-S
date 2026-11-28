@@ -116,7 +116,7 @@
     <string name="settings_description_core_settings">Settings of each emulator core, shared by the consoles that use it</string>
     <string name="core_settings_play_first">Play a game with this core once to show its settings here.</string>
     <string name="settings_title_first_launch_setup">Run first-launch setup again</string>
-    <string name="settings_description_first_launch_setup">Open the setup cards again: Lemuroid-S folder, ROMs folder, notifications, microphone, downloads and Import Saves</string>
+    <string name="settings_description_first_launch_setup">Open the setup cards again: data saver, Lemuroid-S folder, ROMs folder, notifications, microphone, downloads and Import Saves</string>
     <string name="home_import_saves_title">Import Saves</string>
     <string name="home_import_saves_message">Import your saves from other emulators or folders.</string>
     <string name="home_import_saves_action">Import Saves</string>
@@ -395,8 +395,8 @@
     <string name="reset_all_systems_description">Set every system back to Default</string>
     <string name="reset_all_systems_message">This sets this setting back to Default for every system.</string>
     <string name="reset_all_systems_action">Reset</string>
-    <string name="settings_title_downloads_wifi_only">Automatic downloads over Wi-Fi only</string>
-    <string name="settings_description_downloads_wifi_only">Cores and covers download by themselves only on Wi-Fi. Starting a game whose core is missing asks whether to download it now.</string>
+    <string name="settings_title_downloads_wifi_only">Data saver</string>
+    <string name="settings_description_downloads_wifi_only">Download game covers and emulator cores over Wi-Fi only</string>
     <string name="core_download_title">Download core?</string>
     <string name="core_download_message">%1$s games need the %2$s core (%3$s). Download it now?</string>
     <string name="core_download_message_no_size">%1$s games need the %2$s core. Download it now?</string>
@@ -404,4 +404,7 @@
     <string name="core_download_failed">Couldn\'t download the core. Check your connection and try again.</string>
     <string name="downloads_section_library">In your library</string>
     <string name="downloads_section_other">Other systems</string>
+    <string name="setup_data_saver_message">Lemuroid-S downloads game covers and emulator cores when they\'re needed. With data saver on, it only downloads them over Wi-Fi, so your mobile data isn\'t used. You can change this later in Settings.</string>
+    <string name="data_saver_turn_on">Turn on</string>
+    <string name="data_saver_turn_off">Turn off</string>
 </resources>

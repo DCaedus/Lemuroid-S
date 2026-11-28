@@ -254,7 +254,7 @@
     <string name="settings_description_core_settings">Configurações de cada núcleo de emulação, partilhadas pelas consolas que o utilizam</string>
     <string name="core_settings_play_first">Jogue uma vez um jogo com este núcleo para ver aqui as suas configurações.</string>
     <string name="settings_title_first_launch_setup">Abrir novamente a configuração inicial</string>
-    <string name="settings_description_first_launch_setup">Abrir novamente os cartões de configuração: pasta Lemuroid-S, pasta de ROMs, notificações, microfone, transferências e Importar jogos guardados</string>
+    <string name="settings_description_first_launch_setup">Abrir novamente os cartões de configuração: poupança de dados, pasta Lemuroid-S, pasta de ROMs, notificações, microfone, transferências e Importar jogos guardados</string>
     <string name="home_import_saves_title">Importar jogos guardados</string>
     <string name="home_import_saves_message">Importe os seus jogos guardados de outros emuladores ou pastas.</string>
     <string name="home_import_saves_action">Importar jogos guardados</string>
@@ -340,8 +340,8 @@
     <string name="reset_all_systems_description">Repor cada sistema em Predefinido</string>
     <string name="reset_all_systems_message">Isto repõe esta definição em Predefinido para todos os sistemas.</string>
     <string name="reset_all_systems_action">Repor</string>
-    <string name="settings_title_downloads_wifi_only">Transferências automáticas só por Wi-Fi</string>
-    <string name="settings_description_downloads_wifi_only">Os núcleos e as capas são transferidos automaticamente só por Wi-Fi. Se ao iniciar um jogo faltar o seu núcleo, é perguntado se o quer transferir agora.</string>
+    <string name="settings_title_downloads_wifi_only">Poupança de dados</string>
+    <string name="settings_description_downloads_wifi_only">Transferir capas dos jogos e núcleos dos emuladores só por Wi-Fi</string>
     <string name="core_download_title">Transferir o núcleo?</string>
     <string name="core_download_message">Os jogos de %1$s precisam do núcleo %2$s (%3$s). Transferir agora?</string>
     <string name="core_download_message_no_size">Os jogos de %1$s precisam do núcleo %2$s. Transferir agora?</string>
@@ -351,4 +351,7 @@
     <string name="shader_filter_names_xbr">xBR (Exigente)</string>
     <string name="downloads_section_library">Na sua biblioteca</string>
     <string name="downloads_section_other">Outros sistemas</string>
+    <string name="setup_data_saver_message">O Lemuroid-S transfere capas dos jogos e núcleos dos emuladores quando são precisos. Com a poupança de dados ativada, só os transfere por Wi-Fi, para não usar dados móveis. Pode alterar isto mais tarde nas Definições.</string>
+    <string name="data_saver_turn_on">Ativar</string>
+    <string name="data_saver_turn_off">Desativar</string>
 </resources>

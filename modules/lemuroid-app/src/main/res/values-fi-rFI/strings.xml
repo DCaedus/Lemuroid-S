@@ -248,7 +248,7 @@
     <string name="settings_description_core_settings">Kunkin emulaattoriytimen asetukset, yhteiset sitä käyttäville konsoleille</string>
     <string name="core_settings_play_first">Pelaa kerran peliä tällä ytimellä, niin sen asetukset näkyvät tässä.</string>
     <string name="settings_title_first_launch_setup">Suorita ensimmäinen käyttöönotto uudelleen</string>
-    <string name="settings_description_first_launch_setup">Avaa asetuskortit uudelleen: Lemuroid-S-kansio, ROM-kansio, ilmoitukset, mikrofoni, lataukset ja tallennusten tuonti</string>
+    <string name="settings_description_first_launch_setup">Avaa asetuskortit uudelleen: datansäästö, Lemuroid-S-kansio, ROM-kansio, ilmoitukset, mikrofoni, lataukset ja tallennusten tuonti</string>
     <string name="home_import_saves_title">Tuo tallennuksia</string>
     <string name="home_import_saves_message">Tuo tallennuksesi muista emulaattoreista tai kansioista.</string>
     <string name="home_import_saves_action">Tuo tallennuksia</string>
@@ -336,8 +336,8 @@
     <string name="reset_all_systems_description">Palauta jokainen järjestelmä oletukseksi</string>
     <string name="reset_all_systems_message">Tämä palauttaa asetuksen oletukseksi kaikille järjestelmille.</string>
     <string name="reset_all_systems_action">Palauta</string>
-    <string name="settings_title_downloads_wifi_only">Automaattiset lataukset vain Wi-Fin kautta</string>
-    <string name="settings_description_downloads_wifi_only">Ytimet ja kansikuvat latautuvat itsestään vain Wi-Fin kautta. Jos pelin ydin puuttuu käynnistettäessä, kysytään, ladataanko se nyt.</string>
+    <string name="settings_title_downloads_wifi_only">Datansäästö</string>
+    <string name="settings_description_downloads_wifi_only">Lataa pelien kansikuvat ja emulaattorien ytimet vain Wi-Fin kautta</string>
     <string name="core_download_title">Ladataanko ydin?</string>
     <string name="core_download_message">%1$s-pelit tarvitsevat ytimen %2$s (%3$s). Ladataanko se nyt?</string>
     <string name="core_download_message_no_size">%1$s-pelit tarvitsevat ytimen %2$s. Ladataanko se nyt?</string>
@@ -347,4 +347,7 @@
     <string name="shader_filter_names_xbr">xBR (Raskas)</string>
     <string name="downloads_section_library">Kirjastossasi</string>
     <string name="downloads_section_other">Muut järjestelmät</string>
+    <string name="setup_data_saver_message">Lemuroid-S lataa pelien kansikuvat ja emulaattorien ytimet, kun niitä tarvitaan. Kun datansäästö on päällä, ne ladataan vain Wi-Fin kautta, jotta mobiilidataa ei kulu. Voit muuttaa tätä myöhemmin asetuksissa.</string>
+    <string name="data_saver_turn_on">Ota käyttöön</string>
+    <string name="data_saver_turn_off">Poista käytöstä</string>
 </resources>

@@ -254,7 +254,7 @@
     <string name="settings_description_core_settings">Einstellungen der einzelnen Emulator-Cores, gemeinsam für alle Konsolen, die sie nutzen</string>
     <string name="core_settings_play_first">Spiele einmal ein Spiel mit diesem Core, damit seine Einstellungen hier erscheinen.</string>
     <string name="settings_title_first_launch_setup">Ersteinrichtung erneut starten</string>
-    <string name="settings_description_first_launch_setup">Einrichtungskarten erneut öffnen: Lemuroid-S-Ordner, ROM-Ordner, Benachrichtigungen, Mikrofon, Downloads und Spielstände importieren</string>
+    <string name="settings_description_first_launch_setup">Einrichtungskarten erneut öffnen: Datensparmodus, Lemuroid-S-Ordner, ROM-Ordner, Benachrichtigungen, Mikrofon, Downloads und Spielstände importieren</string>
     <string name="home_import_saves_title">Spielstände importieren</string>
     <string name="home_import_saves_message">Importiere deine Spielstände aus anderen Emulatoren oder Ordnern.</string>
     <string name="home_import_saves_action">Spielstände importieren</string>
@@ -340,8 +340,8 @@
     <string name="reset_all_systems_description">Jedes System wieder auf Standard setzen</string>
     <string name="reset_all_systems_message">Damit wird diese Einstellung für jedes System auf Standard zurückgesetzt.</string>
     <string name="reset_all_systems_action">Zurücksetzen</string>
-    <string name="settings_title_downloads_wifi_only">Automatische Downloads nur über WLAN</string>
-    <string name="settings_description_downloads_wifi_only">Cores und Cover werden von selbst nur über WLAN geladen. Fehlt beim Starten eines Spiels sein Core, wirst du gefragt, ob er jetzt geladen werden soll.</string>
+    <string name="settings_title_downloads_wifi_only">Datensparmodus</string>
+    <string name="settings_description_downloads_wifi_only">Spielcover und Emulator-Cores nur über WLAN herunterladen</string>
     <string name="core_download_title">Core herunterladen?</string>
     <string name="core_download_message">%1$s-Spiele brauchen den Core %2$s (%3$s). Jetzt herunterladen?</string>
     <string name="core_download_message_no_size">%1$s-Spiele brauchen den Core %2$s. Jetzt herunterladen?</string>
@@ -351,4 +351,7 @@
     <string name="shader_filter_names_xbr">xBR (Anspruchsvoll)</string>
     <string name="downloads_section_library">In deiner Bibliothek</string>
     <string name="downloads_section_other">Andere Systeme</string>
+    <string name="setup_data_saver_message">Lemuroid-S lädt Spielcover und Emulator-Cores herunter, wenn sie gebraucht werden. Mit dem Datensparmodus geschieht das nur über WLAN, damit keine mobilen Daten verbraucht werden. Du kannst das später in den Einstellungen ändern.</string>
+    <string name="data_saver_turn_on">Einschalten</string>
+    <string name="data_saver_turn_off">Ausschalten</string>
 </resources>

@@ -256,7 +256,7 @@
     <string name="settings_description_core_settings">각 에뮬레이터 코어의 설정으로, 해당 코어를 사용하는 콘솔이 함께 사용합니다</string>
     <string name="core_settings_play_first">이 코어로 게임을 한 번 실행하면 여기에 설정이 표시됩니다.</string>
     <string name="settings_title_first_launch_setup">처음 설정 다시 실행</string>
-    <string name="settings_description_first_launch_setup">설정 카드를 다시 엽니다: Lemuroid-S 폴더, ROM 폴더, 알림, 마이크, 다운로드, 세이브 가져오기</string>
+    <string name="settings_description_first_launch_setup">설정 카드를 다시 엽니다: 데이터 절약, Lemuroid-S 폴더, ROM 폴더, 알림, 마이크, 다운로드, 세이브 가져오기</string>
     <string name="home_import_saves_title">세이브 가져오기</string>
     <string name="home_import_saves_message">다른 에뮬레이터나 폴더에서 세이브를 가져옵니다.</string>
     <string name="home_import_saves_action">세이브 가져오기</string>
@@ -340,8 +340,8 @@
     <string name="reset_all_systems_description">모든 시스템을 기본값으로 되돌립니다</string>
     <string name="reset_all_systems_message">모든 시스템에서 이 설정을 기본값으로 되돌립니다.</string>
     <string name="reset_all_systems_action">초기화</string>
-    <string name="settings_title_downloads_wifi_only">자동 다운로드는 Wi-Fi에서만</string>
-    <string name="settings_description_downloads_wifi_only">코어와 커버는 Wi-Fi에서만 자동으로 다운로드됩니다. 게임을 시작할 때 코어가 없으면 지금 다운로드할지 묻습니다.</string>
+    <string name="settings_title_downloads_wifi_only">데이터 절약</string>
+    <string name="settings_description_downloads_wifi_only">게임 커버와 에뮬레이터 코어를 Wi-Fi에서만 다운로드</string>
     <string name="core_download_title">코어를 다운로드할까요?</string>
     <string name="core_download_message">%1$s 게임에는 %2$s 코어(%3$s)가 필요합니다. 지금 다운로드할까요?</string>
     <string name="core_download_message_no_size">%1$s 게임에는 %2$s 코어가 필요합니다. 지금 다운로드할까요?</string>
@@ -351,4 +351,7 @@
     <string name="shader_filter_names_xbr">xBR (고사양)</string>
     <string name="downloads_section_library">라이브러리에 있음</string>
     <string name="downloads_section_other">기타 시스템</string>
+    <string name="setup_data_saver_message">Lemuroid-S는 게임 커버와 에뮬레이터 코어를 필요할 때 다운로드합니다. 데이터 절약을 켜면 Wi-Fi에서만 다운로드하므로 모바일 데이터를 쓰지 않습니다. 나중에 설정에서 바꿀 수 있습니다.</string>
+    <string name="data_saver_turn_on">켜기</string>
+    <string name="data_saver_turn_off">끄기</string>
 </resources>

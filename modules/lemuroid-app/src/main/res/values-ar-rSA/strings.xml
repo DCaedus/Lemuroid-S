@@ -253,7 +253,7 @@
     <string name="settings_description_core_settings">إعدادات كل نواة محاكاة، مشتركة بين الأجهزة التي تستخدمها</string>
     <string name="core_settings_play_first">شغّل لعبة بهذه النواة مرة واحدة لتظهر إعداداتها هنا.</string>
     <string name="settings_title_first_launch_setup">إعادة تشغيل الإعداد الأولي</string>
-    <string name="settings_description_first_launch_setup">افتح بطاقات الإعداد مجددًا: مجلد Lemuroid-S، مجلد ROMs، الإشعارات، الميكروفون، التنزيلات واستيراد الحفظ</string>
+    <string name="settings_description_first_launch_setup">افتح بطاقات الإعداد مجددًا: توفير البيانات، مجلد Lemuroid-S، مجلد ROMs، الإشعارات، الميكروفون، التنزيلات واستيراد الحفظ</string>
     <string name="home_import_saves_title">استيراد ملفات الحفظ</string>
     <string name="home_import_saves_message">استورد ملفات الحفظ من محاكيات أو مجلدات أخرى.</string>
     <string name="home_import_saves_action">استيراد ملفات الحفظ</string>
@@ -339,8 +339,8 @@
     <string name="reset_all_systems_description">إرجاع كل نظام إلى الافتراضي</string>
     <string name="reset_all_systems_message">سيؤدي هذا إلى إرجاع هذا الإعداد إلى الافتراضي لكل نظام.</string>
     <string name="reset_all_systems_action">إعادة تعيين</string>
-    <string name="settings_title_downloads_wifi_only">التنزيلات التلقائية عبر Wi-Fi فقط</string>
-    <string name="settings_description_downloads_wifi_only">تُنزَّل النوى والأغلفة تلقائيًا عبر Wi-Fi فقط. عند بدء لعبة نواتها غير موجودة، يُسأل عن تنزيلها الآن.</string>
+    <string name="settings_title_downloads_wifi_only">توفير البيانات</string>
+    <string name="settings_description_downloads_wifi_only">تنزيل أغلفة الألعاب ونوى المحاكيات عبر Wi-Fi فقط</string>
     <string name="core_download_title">تنزيل النواة؟</string>
     <string name="core_download_message">تحتاج ألعاب %1$s إلى نواة %2$s (%3$s). هل تريد تنزيلها الآن؟</string>
     <string name="core_download_message_no_size">تحتاج ألعاب %1$s إلى نواة %2$s. هل تريد تنزيلها الآن؟</string>
@@ -350,4 +350,7 @@
     <string name="shader_filter_names_xbr">xBR (متطلب)</string>
     <string name="downloads_section_library">في مكتبتك</string>
     <string name="downloads_section_other">أنظمة أخرى</string>
+    <string name="setup_data_saver_message">يقوم Lemuroid-S بتنزيل أغلفة الألعاب ونوى المحاكيات عند الحاجة إليها. عند تشغيل توفير البيانات، يتم تنزيلها عبر Wi-Fi فقط حتى لا تُستخدم بيانات الجوال. يمكنك تغيير ذلك لاحقًا من الإعدادات.</string>
+    <string name="data_saver_turn_on">تشغيل</string>
+    <string name="data_saver_turn_off">إيقاف</string>
 </resources>

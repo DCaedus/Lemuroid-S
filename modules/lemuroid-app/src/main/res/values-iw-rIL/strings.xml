@@ -201,7 +201,7 @@
     <string name="settings_description_core_settings">ההגדרות של כל ליבת אמולציה, משותפות לקונסולות שמשתמשות בה</string>
     <string name="core_settings_play_first">יש להפעיל פעם אחת משחק עם הליבה הזו כדי לראות כאן את ההגדרות שלה.</string>
     <string name="settings_title_first_launch_setup">הפעלה מחדש של ההגדרה הראשונית</string>
-    <string name="settings_description_first_launch_setup">פתיחה מחדש של כרטיסי ההגדרה: תיקיית Lemuroid-S, תיקיית ROMs, התראות, מיקרופון, הורדות וייבוא שמירות</string>
+    <string name="settings_description_first_launch_setup">פתיחה מחדש של כרטיסי ההגדרה: חיסכון בנתונים, תיקיית Lemuroid-S, תיקיית ROMs, התראות, מיקרופון, הורדות וייבוא שמירות</string>
     <string name="home_import_saves_title">ייבוא שמירות</string>
     <string name="home_import_saves_message">ייבוא השמירות שלך מאמולטורים או מתיקיות אחרים.</string>
     <string name="home_import_saves_action">ייבוא שמירות</string>
@@ -330,8 +330,8 @@
     <string name="reset_all_systems_description">החזרת כל מערכת לברירת המחדל</string>
     <string name="reset_all_systems_message">פעולה זו מחזירה את ההגדרה הזו לברירת המחדל עבור כל מערכת.</string>
     <string name="reset_all_systems_action">איפוס</string>
-    <string name="settings_title_downloads_wifi_only">הורדות אוטומטיות רק ב-Wi-Fi</string>
-    <string name="settings_description_downloads_wifi_only">ליבות ועטיפות יורדות מעצמן רק ב-Wi-Fi. אם בהפעלת משחק חסרה הליבה שלו, תופיע שאלה אם להוריד אותה עכשיו.</string>
+    <string name="settings_title_downloads_wifi_only">חיסכון בנתונים</string>
+    <string name="settings_description_downloads_wifi_only">הורדת עטיפות משחקים וליבות אמולטור רק ב-Wi-Fi</string>
     <string name="core_download_title">להוריד ליבה?</string>
     <string name="core_download_message">משחקי %1$s צריכים את הליבה %2$s (%3$s). להוריד אותה עכשיו?</string>
     <string name="core_download_message_no_size">משחקי %1$s צריכים את הליבה %2$s. להוריד אותה עכשיו?</string>
@@ -343,4 +343,7 @@
     <string name="shader_filter_names_lcd">LCD (רשת פיקסלים)</string>
     <string name="downloads_section_library">בספרייה שלך</string>
     <string name="downloads_section_other">מערכות אחרות</string>
+    <string name="setup_data_saver_message">Lemuroid-S מוריד עטיפות משחקים וליבות אמולטור כשהן נחוצות. כשחיסכון בנתונים מופעל, ההורדה מתבצעת רק ב-Wi-Fi כדי לא להשתמש בחבילת הגלישה. אפשר לשנות זאת מאוחר יותר בהגדרות.</string>
+    <string name="data_saver_turn_on">הפעלה</string>
+    <string name="data_saver_turn_off">כיבוי</string>
 </resources>

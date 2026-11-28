@@ -254,7 +254,7 @@
     <string name="settings_description_core_settings">Ustawienia każdego rdzenia emulatora, wspólne dla konsol, które go używają</string>
     <string name="core_settings_play_first">Uruchom raz grę z tym rdzeniem, aby zobaczyć tu jego ustawienia.</string>
     <string name="settings_title_first_launch_setup">Uruchom ponownie pierwszą konfigurację</string>
-    <string name="settings_description_first_launch_setup">Otwórz ponownie karty konfiguracji: folder Lemuroid-S, folder ROM, powiadomienia, mikrofon, pobieranie i Importuj zapisy</string>
+    <string name="settings_description_first_launch_setup">Otwórz ponownie karty konfiguracji: oszczędzanie danych, folder Lemuroid-S, folder ROM, powiadomienia, mikrofon, pobieranie i Importuj zapisy</string>
     <string name="home_import_saves_title">Importuj zapisy</string>
     <string name="home_import_saves_message">Zaimportuj zapisy z innych emulatorów lub folderów.</string>
     <string name="home_import_saves_action">Importuj zapisy</string>
@@ -340,8 +340,8 @@
     <string name="reset_all_systems_description">Przywróć każdy system do Domyślnych</string>
     <string name="reset_all_systems_message">To przywróci to ustawienie do Domyślnego dla każdego systemu.</string>
     <string name="reset_all_systems_action">Resetuj</string>
-    <string name="settings_title_downloads_wifi_only">Automatyczne pobieranie tylko przez Wi-Fi</string>
-    <string name="settings_description_downloads_wifi_only">Rdzenie i okładki pobierają się same tylko przez Wi-Fi. Gdy przy uruchamianiu gry brakuje jej rdzenia, pojawi się pytanie, czy pobrać go teraz.</string>
+    <string name="settings_title_downloads_wifi_only">Oszczędzanie danych</string>
+    <string name="settings_description_downloads_wifi_only">Pobieraj okładki gier i rdzenie emulatorów tylko przez Wi-Fi</string>
     <string name="core_download_title">Pobrać rdzeń?</string>
     <string name="core_download_message">Gry na %1$s wymagają rdzenia %2$s (%3$s). Pobrać go teraz?</string>
     <string name="core_download_message_no_size">Gry na %1$s wymagają rdzenia %2$s. Pobrać go teraz?</string>
@@ -351,4 +351,7 @@
     <string name="shader_filter_names_xbr">xBR (Wymagający)</string>
     <string name="downloads_section_library">W Twojej bibliotece</string>
     <string name="downloads_section_other">Inne systemy</string>
+    <string name="setup_data_saver_message">Lemuroid-S pobiera okładki gier i rdzenie emulatorów, gdy są potrzebne. Przy włączonym oszczędzaniu danych pobiera je tylko przez Wi-Fi, aby nie zużywać danych komórkowych. Możesz to zmienić później w Ustawieniach.</string>
+    <string name="data_saver_turn_on">Włącz</string>
+    <string name="data_saver_turn_off">Wyłącz</string>
 </resources>

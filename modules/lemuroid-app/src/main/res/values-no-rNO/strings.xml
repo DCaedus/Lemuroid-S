@@ -254,7 +254,7 @@
     <string name="settings_description_core_settings">Innstillinger for hver emulator-core, delt av konsollene som bruker den</string>
     <string name="core_settings_play_first">Spill et spill med denne core-en én gang for å se innstillingene her.</string>
     <string name="settings_title_first_launch_setup">Kjør det første oppsettet på nytt</string>
-    <string name="settings_description_first_launch_setup">Åpne oppsettkortene igjen: Lemuroid-S-mappe, ROM-mappe, varsler, mikrofon, nedlastinger og Importer lagringer</string>
+    <string name="settings_description_first_launch_setup">Åpne oppsettkortene igjen: datasparing, Lemuroid-S-mappe, ROM-mappe, varsler, mikrofon, nedlastinger og Importer lagringer</string>
     <string name="home_import_saves_title">Importer lagrede spill</string>
     <string name="home_import_saves_message">Importer lagrede spill fra andre emulatorer eller mapper.</string>
     <string name="home_import_saves_action">Importer lagrede spill</string>
@@ -340,8 +340,8 @@
     <string name="reset_all_systems_description">Sett alle systemer tilbake til Standard</string>
     <string name="reset_all_systems_message">Dette setter denne innstillingen tilbake til Standard for alle systemer.</string>
     <string name="reset_all_systems_action">Tilbakestill</string>
-    <string name="settings_title_downloads_wifi_only">Automatiske nedlastinger bare over Wi-Fi</string>
-    <string name="settings_description_downloads_wifi_only">Kjerner og omslag lastes ned av seg selv bare over Wi-Fi. Mangler kjernen til et spill når du starter det, blir du spurt om den skal lastes ned nå.</string>
+    <string name="settings_title_downloads_wifi_only">Datasparing</string>
+    <string name="settings_description_downloads_wifi_only">Last ned spillomslag og emulatorkjerner bare over Wi-Fi</string>
     <string name="core_download_title">Laste ned kjerne?</string>
     <string name="core_download_message">%1$s-spill trenger kjernen %2$s (%3$s). Vil du laste den ned nå?</string>
     <string name="core_download_message_no_size">%1$s-spill trenger kjernen %2$s. Vil du laste den ned nå?</string>
@@ -351,4 +351,7 @@
     <string name="shader_filter_names_xbr">xBR (Krevende)</string>
     <string name="downloads_section_library">I biblioteket ditt</string>
     <string name="downloads_section_other">Andre systemer</string>
+    <string name="setup_data_saver_message">Lemuroid-S laster ned spillomslag og emulatorkjerner når de trengs. Med datasparing på lastes de bare ned over Wi-Fi, slik at mobildata ikke brukes. Du kan endre dette senere i Innstillinger.</string>
+    <string name="data_saver_turn_on">Slå på</string>
+    <string name="data_saver_turn_off">Slå av</string>
 </resources>
