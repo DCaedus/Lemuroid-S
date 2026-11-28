@@ -1,5 +1,7 @@
 package com.swordfish.lemuroid.app.utils.android.settings
 
+import androidx.compose.foundation.layout.widthIn
+import androidx.compose.foundation.clickable
 import androidx.compose.material3.Slider
 import androidx.compose.material3.ListItem
 import androidx.compose.foundation.layout.width
@@ -93,6 +95,26 @@ fun LemuroidSettingsMenuLink(
     action: (@Composable () -> Unit)? = null,
     onClick: () -> Unit,
 ) {
+    val compactHeight = LocalCompactSettingsRowHeight.current
+    if (compactHeight != null) {
+        // One line: the value (subtitle) goes on the right, smaller, instead of under the title.
+        val trailing = subtitle ?: action
+        ListItem(
+            modifier = Modifier.height(compactHeight).clickable(enabled = enabled, onClick = onClick),
+            colors = lemuroidSettingsColor(enabled),
+            leadingContent = icon,
+            headlineContent = title,
+            trailingContent =
+                trailing?.let { content ->
+                    {
+                        Box(modifier = Modifier.widthIn(max = COMPACT_VALUE_MAX_WIDTH)) {
+                            ProvideTextStyle(MaterialTheme.typography.bodySmall) { content() }
+                        }
+                    }
+                },
+        )
+        return
+    }
     SettingsMenuLink(
         modifier = compactRowModifier(),
         enabled = enabled,
@@ -257,3 +279,4 @@ private fun lemuroidSettingsColor(enabled: Boolean): ListItemColors {
 }
 
 private val COMPACT_SLIDER_WIDTH = 140.dp
+private val COMPACT_VALUE_MAX_WIDTH = 160.dp

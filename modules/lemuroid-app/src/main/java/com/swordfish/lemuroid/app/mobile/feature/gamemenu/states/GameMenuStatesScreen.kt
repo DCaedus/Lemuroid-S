@@ -1,5 +1,7 @@
 package com.swordfish.lemuroid.app.mobile.feature.gamemenu.states
 
+import com.swordfish.lemuroid.app.utils.android.settings.LocalCompactSettingsRowHeight
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.size
@@ -21,6 +23,8 @@ fun GameMenuStatesScreen(
 ) {
     val state = viewModel.uiStates.collectAsState(initial = GameMenuStatesViewModel.State())
 
+    // Lemuroid-S: state slots keep full rows (preview picture, date under the name).
+    CompositionLocalProvider(LocalCompactSettingsRowHeight provides null) {
     Column(modifier = Modifier.verticalScroll(rememberScrollState())) {
         state.value.entries.forEach { entry ->
             LemuroidSettingsMenuLink(
@@ -40,5 +44,6 @@ fun GameMenuStatesScreen(
                 onClick = { onStateClicked(entry.slot) },
             )
         }
+    }
     }
 }

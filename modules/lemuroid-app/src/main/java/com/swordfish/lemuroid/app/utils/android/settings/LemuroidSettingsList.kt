@@ -1,5 +1,6 @@
 package com.swordfish.lemuroid.app.utils.android.settings
 
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -51,7 +52,7 @@ fun LemuroidSettingsList(
 
     val safeSubtitle =
         if (state.value >= 0 && useSelectedValueAsSubtitle) {
-            { Text(text = items[state.value]) }
+            { Text(text = items[state.value], maxLines = 1, overflow = TextOverflow.Ellipsis) }
         } else {
             subtitle
         }
