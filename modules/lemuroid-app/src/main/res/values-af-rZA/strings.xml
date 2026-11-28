@@ -321,6 +321,10 @@
     <string name="reset_all_systems_message">Dit stel hierdie instelling terug na Verstek vir elke stelsel.</string>
     <string name="reset_all_systems_action">Stel terug</string>
     <string name="settings_title_downloads_wifi_only">Outomatiese aflaaie slegs oor Wi-Fi</string>
-    <string name="settings_description_downloads_wifi_only">Kerne en omslae laai self net oor Wi-Fi af. \'n Speletjie begin laai steeds sy kern op enige verbinding af.</string>
-    <string name="game_downloading_core">Laai die kern vir hierdie speletjie af…</string>
+    <string name="settings_description_downloads_wifi_only">Kerne en omslae laai self net oor Wi-Fi af. As \'n speletjie se kern ontbreek, vra dit of jy dit nou wil aflaai.</string>
+    <string name="core_download_title">Laai kern af?</string>
+    <string name="core_download_message">%1$s-speletjies het die %2$s-kern nodig (%3$s). Laai dit nou af?</string>
+    <string name="core_download_message_no_size">%1$s-speletjies het die %2$s-kern nodig. Laai dit nou af?</string>
+    <string name="core_downloading">Laai die %1$s-kern af…</string>
+    <string name="core_download_failed">Kon nie die kern aflaai nie. Gaan jou verbinding na en probeer weer.</string>
 </resources>

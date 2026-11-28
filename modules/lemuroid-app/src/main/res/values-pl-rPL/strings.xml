@@ -342,6 +342,10 @@
     <string name="reset_all_systems_message">To przywróci to ustawienie do Domyślnego dla każdego systemu.</string>
     <string name="reset_all_systems_action">Resetuj</string>
     <string name="settings_title_downloads_wifi_only">Automatyczne pobieranie tylko przez Wi-Fi</string>
-    <string name="settings_description_downloads_wifi_only">Rdzenie i okładki pobierają się same tylko przez Wi-Fi. Uruchomienie gry nadal pobiera jej rdzeń przy każdym połączeniu.</string>
-    <string name="game_downloading_core">Pobieranie rdzenia dla tej gry…</string>
+    <string name="settings_description_downloads_wifi_only">Rdzenie i okładki pobierają się same tylko przez Wi-Fi. Gdy przy uruchamianiu gry brakuje jej rdzenia, pojawi się pytanie, czy pobrać go teraz.</string>
+    <string name="core_download_title">Pobrać rdzeń?</string>
+    <string name="core_download_message">Gry na %1$s wymagają rdzenia %2$s (%3$s). Pobrać go teraz?</string>
+    <string name="core_download_message_no_size">Gry na %1$s wymagają rdzenia %2$s. Pobrać go teraz?</string>
+    <string name="core_downloading">Pobieranie rdzenia %1$s…</string>
+    <string name="core_download_failed">Nie udało się pobrać rdzenia. Sprawdź połączenie i spróbuj ponownie.</string>
 </resources>

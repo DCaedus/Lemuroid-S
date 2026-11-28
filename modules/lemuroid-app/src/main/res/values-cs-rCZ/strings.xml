@@ -341,6 +341,10 @@
     <string name="reset_all_systems_message">Tímto se toto nastavení vrátí na Výchozí pro všechny systémy.</string>
     <string name="reset_all_systems_action">Obnovit</string>
     <string name="settings_title_downloads_wifi_only">Automatické stahování jen přes Wi-Fi</string>
-    <string name="settings_description_downloads_wifi_only">Jádra a obaly se samy stahují jen přes Wi-Fi. Spuštění hry stáhne její jádro i přes jakékoli připojení.</string>
-    <string name="game_downloading_core">Stahuje se jádro pro tuto hru…</string>
+    <string name="settings_description_downloads_wifi_only">Jádra a obaly se samy stahují jen přes Wi-Fi. Když při spuštění hry chybí její jádro, zeptá se, zda ho stáhnout hned.</string>
+    <string name="core_download_title">Stáhnout jádro?</string>
+    <string name="core_download_message">Hry pro %1$s potřebují jádro %2$s (%3$s). Stáhnout ho teď?</string>
+    <string name="core_download_message_no_size">Hry pro %1$s potřebují jádro %2$s. Stáhnout ho teď?</string>
+    <string name="core_downloading">Stahuje se jádro %1$s…</string>
+    <string name="core_download_failed">Jádro se nepodařilo stáhnout. Zkontrolujte připojení a zkuste to znovu.</string>
 </resources>

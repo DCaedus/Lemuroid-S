@@ -342,6 +342,10 @@
     <string name="reset_all_systems_message">Этот параметр будет возвращён к значению по умолчанию для всех систем.</string>
     <string name="reset_all_systems_action">Сбросить</string>
     <string name="settings_title_downloads_wifi_only">Автоматические загрузки только по Wi-Fi</string>
-    <string name="settings_description_downloads_wifi_only">Ядра и обложки загружаются сами только по Wi-Fi. При запуске игры её ядро всё равно загружается через любое подключение.</string>
-    <string name="game_downloading_core">Загрузка ядра для этой игры…</string>
+    <string name="settings_description_downloads_wifi_only">Ядра и обложки загружаются сами только по Wi-Fi. Если при запуске игры её ядра нет, появится вопрос, загрузить ли его сейчас.</string>
+    <string name="core_download_title">Загрузить ядро?</string>
+    <string name="core_download_message">Для игр %1$s нужно ядро %2$s (%3$s). Загрузить его сейчас?</string>
+    <string name="core_download_message_no_size">Для игр %1$s нужно ядро %2$s. Загрузить его сейчас?</string>
+    <string name="core_downloading">Загрузка ядра %1$s…</string>
+    <string name="core_download_failed">Не удалось загрузить ядро. Проверьте подключение и повторите попытку.</string>
 </resources>

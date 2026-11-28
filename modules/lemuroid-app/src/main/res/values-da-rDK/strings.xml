@@ -342,6 +342,10 @@
     <string name="reset_all_systems_message">Dette sætter denne indstilling tilbage til Standard for alle systemer.</string>
     <string name="reset_all_systems_action">Nulstil</string>
     <string name="settings_title_downloads_wifi_only">Automatiske downloads kun over Wi-Fi</string>
-    <string name="settings_description_downloads_wifi_only">Kerner og covers downloades kun af sig selv over Wi-Fi. Når et spil startes, downloades dets kerne stadig på enhver forbindelse.</string>
-    <string name="game_downloading_core">Downloader kernen til dette spil…</string>
+    <string name="settings_description_downloads_wifi_only">Kerner og covers downloades kun af sig selv over Wi-Fi. Mangler et spils kerne, når det startes, bliver du spurgt, om den skal downloades nu.</string>
+    <string name="core_download_title">Download kerne?</string>
+    <string name="core_download_message">%1$s-spil kræver kernen %2$s (%3$s). Vil du downloade den nu?</string>
+    <string name="core_download_message_no_size">%1$s-spil kræver kernen %2$s. Vil du downloade den nu?</string>
+    <string name="core_downloading">Downloader kernen %1$s…</string>
+    <string name="core_download_failed">Kernen kunne ikke downloades. Tjek din forbindelse, og prøv igen.</string>
 </resources>

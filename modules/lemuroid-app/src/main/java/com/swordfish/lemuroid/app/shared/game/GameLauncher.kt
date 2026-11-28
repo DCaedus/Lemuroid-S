@@ -1,5 +1,13 @@
 package com.swordfish.lemuroid.app.shared.game
 
+import kotlin.coroutines.resume
+import kotlinx.coroutines.suspendCancellableCoroutine
+import android.widget.TextView
+import android.widget.ProgressBar
+import android.widget.LinearLayout
+import android.view.Gravity
+import android.text.format.Formatter
+import android.app.AlertDialog
 import timber.log.Timber
 import com.swordfish.lemuroid.lib.library.CoreID
 import com.swordfish.lemuroid.lib.core.CoreUpdater
@@ -47,7 +55,7 @@ class GameLauncher(
             }
             val system = GameSystem.findById(game.systemId)
             val coreConfig = coresSelection.getCoreConfigForSystem(system)
-            ensureCoreDownloaded(activity, coreConfig.coreID)
+            if (!ensureCoreDownloaded(activity, system, coreConfig.coreID)) return@launch
             gameLaunchTaskHandler.handleGameStart(activity.applicationContext)
             BaseGameActivity.launchGame(activity, coreConfig, game, loadSave, leanback)
         }
@@ -56,19 +64,96 @@ class GameLauncher(
     }
 
     /**
-     * Lemuroid-S: automatic core downloads may be waiting for Wi-Fi; starting a game gets its core
-     * right away, on any connection.
+     * Lemuroid-S: automatic core downloads may be waiting for Wi-Fi. When the game's core isn't on
+     * the device yet, asks whether to download it now (on any connection). Returns false when the
+     * game shouldn't start: the user said no, or the download failed.
      */
     private suspend fun ensureCoreDownloaded(
         activity: Activity,
+        system: GameSystem,
         coreID: CoreID,
-    ) {
+    ): Boolean {
         val context = activity.applicationContext
+        val status = runCatching { coreUpdater.coreStatus(context, listOf(coreID))[coreID] }.getOrNull()
+        if (status == null || status.installed) return true
+
+        val confirmed = withContext(Dispatchers.Main) { askToDownloadCore(activity, system, coreID, status.sizeBytes) }
+        if (!confirmed) return false
+
+        val progress = withContext(Dispatchers.Main) { showCoreDownloadProgress(activity, coreID) }
+        try {
+            runCatching { coreUpdater.downloadCores(context, listOf(coreID)) }
+                .onFailure { Timber.e(it, "Could not download core $coreID") }
+        } finally {
+            withContext(Dispatchers.Main) { runCatching { progress?.dismiss() } }
+        }
+
         val installed = runCatching { coreUpdater.coreStatus(context, listOf(coreID))[coreID]?.installed }.getOrNull()
-        if (installed != false) return
-        withContext(Dispatchers.Main) { activity.displayToast(R.string.game_downloading_core) }
-        runCatching { coreUpdater.downloadCores(context, listOf(coreID)) }
-            .onFailure { Timber.e(it, "Could not download core $coreID") }
+        if (installed == false) {
+            withContext(Dispatchers.Main) { activity.displayToast(R.string.core_download_failed) }
+            return false
+        }
+        return true
+    }
+
+    private suspend fun askToDownloadCore(
+        activity: Activity,
+        system: GameSystem,
+        coreID: CoreID,
+        sizeBytes: Long?,
+    ): Boolean =
+        suspendCancellableCoroutine { continuation ->
+            if (activity.isFinishing || activity.isDestroyed) {
+                continuation.resume(false)
+                return@suspendCancellableCoroutine
+            }
+            val systemName = activity.getString(system.titleResId)
+            val message =
+                if (sizeBytes != null) {
+                    activity.getString(
+                        R.string.core_download_message,
+                        systemName,
+                        coreID.coreDisplayName,
+                        Formatter.formatShortFileSize(activity, sizeBytes),
+                    )
+                } else {
+                    activity.getString(R.string.core_download_message_no_size, systemName, coreID.coreDisplayName)
+                }
+            val answer = { value: Boolean -> if (continuation.isActive) continuation.resume(value) }
+            val dialog =
+                AlertDialog.Builder(activity, android.R.style.Theme_DeviceDefault_Dialog_Alert)
+                    .setTitle(R.string.core_download_title)
+                    .setMessage(message)
+                    .setPositiveButton(R.string.downloads_action) { _, _ -> answer(true) }
+                    .setNegativeButton(R.string.cancel) { _, _ -> answer(false) }
+                    .setOnCancelListener { answer(false) }
+                    .show()
+            continuation.invokeOnCancellation { runCatching { dialog.dismiss() } }
+        }
+
+    private fun showCoreDownloadProgress(
+        activity: Activity,
+        coreID: CoreID,
+    ): AlertDialog? {
+        if (activity.isFinishing || activity.isDestroyed) return null
+        val padding = (24 * activity.resources.displayMetrics.density).toInt()
+        val content =
+            LinearLayout(activity).apply {
+                orientation = LinearLayout.HORIZONTAL
+                gravity = Gravity.CENTER_VERTICAL
+                setPadding(padding, padding, padding, padding)
+                addView(ProgressBar(activity))
+                addView(
+                    TextView(activity).apply {
+                        text = activity.getString(R.string.core_downloading, coreID.coreDisplayName)
+                        setPadding(padding, 0, 0, 0)
+                    },
+                )
+            }
+        return AlertDialog.Builder(activity, android.R.style.Theme_DeviceDefault_Dialog_Alert)
+            .setView(content)
+            .setCancelable(false)
+            .show()
     }
 
     private suspend fun waitForPreviousGame(activity: Activity): Boolean {

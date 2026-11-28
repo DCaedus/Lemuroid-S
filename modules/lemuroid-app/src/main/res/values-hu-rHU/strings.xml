@@ -321,6 +321,10 @@
     <string name="reset_all_systems_message">Ez a beállítást minden rendszernél Alapértelmezettre állítja vissza.</string>
     <string name="reset_all_systems_action">Visszaállítás</string>
     <string name="settings_title_downloads_wifi_only">Automatikus letöltés csak Wi-Fin</string>
-    <string name="settings_description_downloads_wifi_only">A magok és borítók maguktól csak Wi-Fin töltődnek le. Egy játék indítása bármilyen kapcsolaton letölti a magját.</string>
-    <string name="game_downloading_core">A játék magjának letöltése…</string>
+    <string name="settings_description_downloads_wifi_only">A magok és borítók maguktól csak Wi-Fin töltődnek le. Ha egy játék indításakor hiányzik a magja, megkérdezi, hogy letöltse-e most.</string>
+    <string name="core_download_title">Letöltöd a magot?</string>
+    <string name="core_download_message">A(z) %1$s játékokhoz a(z) %2$s mag kell (%3$s). Letöltöd most?</string>
+    <string name="core_download_message_no_size">A(z) %1$s játékokhoz a(z) %2$s mag kell. Letöltöd most?</string>
+    <string name="core_downloading">A(z) %1$s mag letöltése…</string>
+    <string name="core_download_failed">Nem sikerült letölteni a magot. Ellenőrizd a kapcsolatot, és próbáld újra.</string>
 </resources>

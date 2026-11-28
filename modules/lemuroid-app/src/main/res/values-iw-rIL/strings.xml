@@ -332,6 +332,10 @@
     <string name="reset_all_systems_message">פעולה זו מחזירה את ההגדרה הזו לברירת המחדל עבור כל מערכת.</string>
     <string name="reset_all_systems_action">איפוס</string>
     <string name="settings_title_downloads_wifi_only">הורדות אוטומטיות רק ב-Wi-Fi</string>
-    <string name="settings_description_downloads_wifi_only">ליבות ועטיפות יורדות מעצמן רק ב-Wi-Fi. הפעלת משחק עדיין מורידה את הליבה שלו בכל חיבור.</string>
-    <string name="game_downloading_core">מוריד את הליבה של המשחק הזה…</string>
+    <string name="settings_description_downloads_wifi_only">ליבות ועטיפות יורדות מעצמן רק ב-Wi-Fi. אם בהפעלת משחק חסרה הליבה שלו, תופיע שאלה אם להוריד אותה עכשיו.</string>
+    <string name="core_download_title">להוריד ליבה?</string>
+    <string name="core_download_message">משחקי %1$s צריכים את הליבה %2$s (%3$s). להוריד אותה עכשיו?</string>
+    <string name="core_download_message_no_size">משחקי %1$s צריכים את הליבה %2$s. להוריד אותה עכשיו?</string>
+    <string name="core_downloading">מוריד את הליבה %1$s…</string>
+    <string name="core_download_failed">לא ניתן היה להוריד את הליבה. בדקו את החיבור ונסו שוב.</string>
 </resources>

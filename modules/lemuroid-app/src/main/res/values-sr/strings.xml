@@ -342,6 +342,10 @@
     <string name="reset_all_systems_message">Ово враћа ово подешавање на Подразумевано за сваки систем.</string>
     <string name="reset_all_systems_action">Ресетуј</string>
     <string name="settings_title_downloads_wifi_only">Аутоматска преузимања само преко Wi-Fi мреже</string>
-    <string name="settings_description_downloads_wifi_only">Језгра и омоти се сами преузимају само преко Wi-Fi мреже. Покретање игре и даље преузима њено језгро преко било које везе.</string>
-    <string name="game_downloading_core">Преузима се језгро за ову игру…</string>
+    <string name="settings_description_downloads_wifi_only">Језгра и омоти се сами преузимају само преко Wi-Fi мреже. Ако при покретању игре недостаје њено језгро, бићеш упитан да ли да се преузме сада.</string>
+    <string name="core_download_title">Преузети језгро?</string>
+    <string name="core_download_message">Игре за %1$s захтевају језгро %2$s (%3$s). Преузети га сада?</string>
+    <string name="core_download_message_no_size">Игре за %1$s захтевају језгро %2$s. Преузети га сада?</string>
+    <string name="core_downloading">Преузима се језгро %1$s…</string>
+    <string name="core_download_failed">Језгро није могло да се преузме. Провери везу и покушај поново.</string>
 </resources>

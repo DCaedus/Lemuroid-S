@@ -339,6 +339,10 @@
     <string name="reset_all_systems_message">這會將此設定在所有系統上恢復為預設。</string>
     <string name="reset_all_systems_action">重設</string>
     <string name="settings_title_downloads_wifi_only">自動下載僅限 Wi-Fi</string>
-    <string name="settings_description_downloads_wifi_only">核心和封面僅在 Wi-Fi 下自動下載。啟動遊戲時，仍會在任何網路下下載其核心。</string>
-    <string name="game_downloading_core">正在下載此遊戲的核心…</string>
+    <string name="settings_description_downloads_wifi_only">核心和封面僅在 Wi-Fi 下自動下載。啟動遊戲時如果缺少其核心，會詢問是否立即下載。</string>
+    <string name="core_download_title">下載核心？</string>
+    <string name="core_download_message">%1$s 遊戲需要 %2$s 核心（%3$s）。現在下載嗎？</string>
+    <string name="core_download_message_no_size">%1$s 遊戲需要 %2$s 核心。現在下載嗎？</string>
+    <string name="core_downloading">正在下載 %1$s 核心…</string>
+    <string name="core_download_failed">無法下載核心。請檢查網路連線後再試一次。</string>
 </resources>

@@ -330,6 +330,10 @@
     <string name="reset_all_systems_message">Această setare va reveni la Implicit pentru fiecare sistem.</string>
     <string name="reset_all_systems_action">Resetează</string>
     <string name="settings_title_downloads_wifi_only">Descărcări automate doar prin Wi-Fi</string>
-    <string name="settings_description_downloads_wifi_only">Nucleele și copertele se descarcă singure doar prin Wi-Fi. Pornirea unui joc îi descarcă totuși nucleul pe orice conexiune.</string>
-    <string name="game_downloading_core">Se descarcă nucleul pentru acest joc…</string>
+    <string name="settings_description_downloads_wifi_only">Nucleele și copertele se descarcă singure doar prin Wi-Fi. Dacă la pornirea unui joc îi lipsește nucleul, ești întrebat dacă vrei să-l descarci acum.</string>
+    <string name="core_download_title">Descarci nucleul?</string>
+    <string name="core_download_message">Jocurile %1$s au nevoie de nucleul %2$s (%3$s). Îl descarci acum?</string>
+    <string name="core_download_message_no_size">Jocurile %1$s au nevoie de nucleul %2$s. Îl descarci acum?</string>
+    <string name="core_downloading">Se descarcă nucleul %1$s…</string>
+    <string name="core_download_failed">Nucleul nu a putut fi descărcat. Verifică conexiunea și încearcă din nou.</string>
 </resources>

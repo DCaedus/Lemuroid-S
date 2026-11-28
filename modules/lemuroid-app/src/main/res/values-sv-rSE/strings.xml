@@ -342,6 +342,10 @@
     <string name="reset_all_systems_message">Det här sätter tillbaka inställningen till Standard för alla system.</string>
     <string name="reset_all_systems_action">Återställ</string>
     <string name="settings_title_downloads_wifi_only">Automatiska nedladdningar endast via wifi</string>
-    <string name="settings_description_downloads_wifi_only">Kärnor och omslag laddas bara ned av sig själva via wifi. När du startar ett spel laddas dess kärna ändå ned på valfri anslutning.</string>
-    <string name="game_downloading_core">Laddar ned kärnan för det här spelet…</string>
+    <string name="settings_description_downloads_wifi_only">Kärnor och omslag laddas bara ned av sig själva via wifi. Saknas ett spels kärna när du startar det får du frågan om den ska laddas ned nu.</string>
+    <string name="core_download_title">Ladda ned kärna?</string>
+    <string name="core_download_message">%1$s-spel behöver kärnan %2$s (%3$s). Vill du ladda ned den nu?</string>
+    <string name="core_download_message_no_size">%1$s-spel behöver kärnan %2$s. Vill du ladda ned den nu?</string>
+    <string name="core_downloading">Laddar ned kärnan %1$s…</string>
+    <string name="core_download_failed">Det gick inte att ladda ned kärnan. Kontrollera anslutningen och försök igen.</string>
 </resources>

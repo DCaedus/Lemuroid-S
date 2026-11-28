@@ -342,6 +342,10 @@
     <string name="reset_all_systems_message">Αυτό επαναφέρει αυτή τη ρύθμιση στην Προεπιλογή για κάθε σύστημα.</string>
     <string name="reset_all_systems_action">Επαναφορά</string>
     <string name="settings_title_downloads_wifi_only">Αυτόματες λήψεις μόνο μέσω Wi-Fi</string>
-    <string name="settings_description_downloads_wifi_only">Οι πυρήνες και τα εξώφυλλα κατεβαίνουν αυτόματα μόνο μέσω Wi-Fi. Η έναρξη ενός παιχνιδιού κατεβάζει τον πυρήνα του με οποιαδήποτε σύνδεση.</string>
-    <string name="game_downloading_core">Λήψη του πυρήνα για αυτό το παιχνίδι…</string>
+    <string name="settings_description_downloads_wifi_only">Οι πυρήνες και τα εξώφυλλα κατεβαίνουν αυτόματα μόνο μέσω Wi-Fi. Αν λείπει ο πυρήνας ενός παιχνιδιού κατά την έναρξη, θα ερωτηθείτε αν θέλετε λήψη τώρα.</string>
+    <string name="core_download_title">Λήψη πυρήνα;</string>
+    <string name="core_download_message">Τα παιχνίδια %1$s χρειάζονται τον πυρήνα %2$s (%3$s). Λήψη τώρα;</string>
+    <string name="core_download_message_no_size">Τα παιχνίδια %1$s χρειάζονται τον πυρήνα %2$s. Λήψη τώρα;</string>
+    <string name="core_downloading">Λήψη του πυρήνα %1$s…</string>
+    <string name="core_download_failed">Δεν ήταν δυνατή η λήψη του πυρήνα. Ελέγξτε τη σύνδεσή σας και δοκιμάστε ξανά.</string>
 </resources>

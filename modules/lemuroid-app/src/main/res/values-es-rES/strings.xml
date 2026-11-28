@@ -342,6 +342,10 @@
     <string name="reset_all_systems_message">Esto vuelve a poner este ajuste en Predeterminado para todos los sistemas.</string>
     <string name="reset_all_systems_action">Restablecer</string>
     <string name="settings_title_downloads_wifi_only">Descargas automáticas solo con Wi-Fi</string>
-    <string name="settings_description_downloads_wifi_only">Los núcleos y las portadas se descargan solos solo con Wi-Fi. Al iniciar un juego se descarga su núcleo con cualquier conexión.</string>
-    <string name="game_downloading_core">Descargando el núcleo de este juego…</string>
+    <string name="settings_description_downloads_wifi_only">Los núcleos y las portadas se descargan solos solo con Wi-Fi. Si al iniciar un juego falta su núcleo, se pregunta si quieres descargarlo ahora.</string>
+    <string name="core_download_title">¿Descargar el núcleo?</string>
+    <string name="core_download_message">Los juegos de %1$s necesitan el núcleo %2$s (%3$s). ¿Descargarlo ahora?</string>
+    <string name="core_download_message_no_size">Los juegos de %1$s necesitan el núcleo %2$s. ¿Descargarlo ahora?</string>
+    <string name="core_downloading">Descargando el núcleo %1$s…</string>
+    <string name="core_download_failed">No se pudo descargar el núcleo. Comprueba la conexión e inténtalo de nuevo.</string>
 </resources>

@@ -342,6 +342,10 @@
     <string name="reset_all_systems_message">Damit wird diese Einstellung für jedes System auf Standard zurückgesetzt.</string>
     <string name="reset_all_systems_action">Zurücksetzen</string>
     <string name="settings_title_downloads_wifi_only">Automatische Downloads nur über WLAN</string>
-    <string name="settings_description_downloads_wifi_only">Cores und Cover werden von selbst nur über WLAN geladen. Beim Starten eines Spiels wird sein Core trotzdem über jede Verbindung geladen.</string>
-    <string name="game_downloading_core">Core für dieses Spiel wird heruntergeladen…</string>
+    <string name="settings_description_downloads_wifi_only">Cores und Cover werden von selbst nur über WLAN geladen. Fehlt beim Starten eines Spiels sein Core, wirst du gefragt, ob er jetzt geladen werden soll.</string>
+    <string name="core_download_title">Core herunterladen?</string>
+    <string name="core_download_message">%1$s-Spiele brauchen den Core %2$s (%3$s). Jetzt herunterladen?</string>
+    <string name="core_download_message_no_size">%1$s-Spiele brauchen den Core %2$s. Jetzt herunterladen?</string>
+    <string name="core_downloading">Core %1$s wird heruntergeladen…</string>
+    <string name="core_download_failed">Der Core konnte nicht heruntergeladen werden. Prüfe deine Verbindung und versuche es erneut.</string>
 </resources>

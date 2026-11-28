@@ -341,6 +341,10 @@
     <string name="reset_all_systems_message">سيؤدي هذا إلى إرجاع هذا الإعداد إلى الافتراضي لكل نظام.</string>
     <string name="reset_all_systems_action">إعادة تعيين</string>
     <string name="settings_title_downloads_wifi_only">التنزيلات التلقائية عبر Wi-Fi فقط</string>
-    <string name="settings_description_downloads_wifi_only">تُنزَّل النوى والأغلفة تلقائيًا عبر Wi-Fi فقط. بدء لعبة ما زال ينزّل نواتها على أي اتصال.</string>
-    <string name="game_downloading_core">جارٍ تنزيل نواة هذه اللعبة…</string>
+    <string name="settings_description_downloads_wifi_only">تُنزَّل النوى والأغلفة تلقائيًا عبر Wi-Fi فقط. عند بدء لعبة نواتها غير موجودة، يُسأل عن تنزيلها الآن.</string>
+    <string name="core_download_title">تنزيل النواة؟</string>
+    <string name="core_download_message">تحتاج ألعاب %1$s إلى نواة %2$s (%3$s). هل تريد تنزيلها الآن؟</string>
+    <string name="core_download_message_no_size">تحتاج ألعاب %1$s إلى نواة %2$s. هل تريد تنزيلها الآن؟</string>
+    <string name="core_downloading">جارٍ تنزيل نواة %1$s…</string>
+    <string name="core_download_failed">تعذّر تنزيل النواة. تحقّق من الاتصال وحاول مرة أخرى.</string>
 </resources>

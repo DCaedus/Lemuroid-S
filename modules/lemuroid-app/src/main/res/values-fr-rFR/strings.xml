@@ -342,6 +342,10 @@
     <string name="reset_all_systems_message">Ce réglage sera remis sur Par défaut pour tous les systèmes.</string>
     <string name="reset_all_systems_action">Réinitialiser</string>
     <string name="settings_title_downloads_wifi_only">Téléchargements automatiques en Wi-Fi uniquement</string>
-    <string name="settings_description_downloads_wifi_only">Les cœurs et les jaquettes se téléchargent d\'eux-mêmes uniquement en Wi-Fi. Lancer un jeu télécharge quand même son cœur sur n\'importe quelle connexion.</string>
-    <string name="game_downloading_core">Téléchargement du cœur de ce jeu…</string>
+    <string name="settings_description_downloads_wifi_only">Les cœurs et les jaquettes se téléchargent d\'eux-mêmes uniquement en Wi-Fi. Si le cœur d\'un jeu manque au lancement, l\'app demande s\'il faut le télécharger maintenant.</string>
+    <string name="core_download_title">Télécharger le cœur ?</string>
+    <string name="core_download_message">Les jeux %1$s ont besoin du cœur %2$s (%3$s). Le télécharger maintenant ?</string>
+    <string name="core_download_message_no_size">Les jeux %1$s ont besoin du cœur %2$s. Le télécharger maintenant ?</string>
+    <string name="core_downloading">Téléchargement du cœur %1$s…</string>
+    <string name="core_download_failed">Impossible de télécharger le cœur. Vérifiez votre connexion et réessayez.</string>
 </resources>

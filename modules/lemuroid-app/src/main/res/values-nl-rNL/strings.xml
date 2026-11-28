@@ -342,6 +342,10 @@
     <string name="reset_all_systems_message">Hiermee wordt deze instelling voor elk systeem teruggezet op Standaard.</string>
     <string name="reset_all_systems_action">Resetten</string>
     <string name="settings_title_downloads_wifi_only">Automatische downloads alleen via wifi</string>
-    <string name="settings_description_downloads_wifi_only">Cores en covers worden alleen via wifi vanzelf gedownload. Als je een game start, wordt de core ervan nog steeds via elke verbinding gedownload.</string>
-    <string name="game_downloading_core">Core voor deze game downloaden…</string>
+    <string name="settings_description_downloads_wifi_only">Cores en covers worden alleen via wifi vanzelf gedownload. Ontbreekt de core van een game bij het starten, dan wordt gevraagd of je die nu wilt downloaden.</string>
+    <string name="core_download_title">Core downloaden?</string>
+    <string name="core_download_message">%1$s-games hebben de core %2$s nodig (%3$s). Nu downloaden?</string>
+    <string name="core_download_message_no_size">%1$s-games hebben de core %2$s nodig. Nu downloaden?</string>
+    <string name="core_downloading">Core %1$s downloaden…</string>
+    <string name="core_download_failed">Kan de core niet downloaden. Controleer je verbinding en probeer het opnieuw.</string>
 </resources>

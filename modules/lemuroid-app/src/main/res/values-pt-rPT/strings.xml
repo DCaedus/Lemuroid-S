@@ -342,6 +342,10 @@
     <string name="reset_all_systems_message">Isto repõe esta definição em Predefinido para todos os sistemas.</string>
     <string name="reset_all_systems_action">Repor</string>
     <string name="settings_title_downloads_wifi_only">Transferências automáticas só por Wi-Fi</string>
-    <string name="settings_description_downloads_wifi_only">Os núcleos e as capas são transferidos automaticamente só por Wi-Fi. Ao iniciar um jogo, o núcleo é transferido na mesma em qualquer ligação.</string>
-    <string name="game_downloading_core">A transferir o núcleo deste jogo…</string>
+    <string name="settings_description_downloads_wifi_only">Os núcleos e as capas são transferidos automaticamente só por Wi-Fi. Se ao iniciar um jogo faltar o seu núcleo, é perguntado se o quer transferir agora.</string>
+    <string name="core_download_title">Transferir o núcleo?</string>
+    <string name="core_download_message">Os jogos de %1$s precisam do núcleo %2$s (%3$s). Transferir agora?</string>
+    <string name="core_download_message_no_size">Os jogos de %1$s precisam do núcleo %2$s. Transferir agora?</string>
+    <string name="core_downloading">A transferir o núcleo %1$s…</string>
+    <string name="core_download_failed">Não foi possível transferir o núcleo. Verifique a ligação e tente novamente.</string>
 </resources>
